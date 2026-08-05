@@ -1,12 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { DisclaimerBox } from '@/components/heartopia/disclaimer-box';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { StarRow } from '@/components/heartopia/star-row';
-import { COLORS } from '@/constants/heartopia-colors';
+import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { SHELLS } from '@/data/shells';
 
 const STARS_KEY = 'heartopia:schelpen:sterren';
@@ -19,6 +19,8 @@ const POLLUTANTS = [
 ];
 
 export default function OceanCleanupScreen() {
+  const colors = useHeartopiaColors();
+  const styles = useMemo(() => makeStyles(colors), [colors]);
   const [openShell, setOpenShell] = useState<string | null>(null);
   const [shellStars, setShellStars] = useState<Record<string, number>>({});
   const [shellMastery, setShellMastery] = useState<Record<string, boolean>>({});
@@ -189,33 +191,35 @@ export default function OceanCleanupScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: COLORS.bg },
-  content: { padding: 16, gap: 12 },
-  card: { backgroundColor: COLORS.card, borderRadius: 16, borderWidth: 1, borderColor: COLORS.line, padding: 14 },
-  cardTitle: { fontSize: 16, fontWeight: '700', color: COLORS.forest, marginBottom: 4 },
-  cardDesc: { fontSize: 12, color: COLORS.forestSoft, marginBottom: 4 },
-  cardText: { fontSize: 12, color: COLORS.forestSoft, lineHeight: 18 },
-  shellRow: { backgroundColor: '#F5FAF3', borderRadius: 10, overflow: 'hidden' },
-  shellHeader: { flexDirection: 'row', alignItems: 'center', gap: 8, padding: 8 },
-  shellEmoji: { fontSize: 18 },
-  shellText: { flex: 1 },
-  shellName: { fontSize: 12, fontWeight: '700', color: COLORS.forest },
-  shellLevel: { fontSize: 10, color: COLORS.skyDark },
-  masteryCheckbox: { width: 20, height: 20, borderRadius: 6, backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: COLORS.line, alignItems: 'center', justifyContent: 'center' },
-  shellBody: { paddingHorizontal: 8, paddingBottom: 8, gap: 6 },
-  shellInfoBox: { padding: 8, borderRadius: 8, backgroundColor: '#FFFBEF' },
-  shellInfoLabel: { fontSize: 11, fontWeight: '700', color: COLORS.forest, marginBottom: 2 },
-  shellInfoValue: { fontSize: 11, color: COLORS.forestSoft },
-  notDocumented: { fontSize: 11, color: COLORS.forestSoft },
-  masteryBox: { padding: 8, borderRadius: 8, backgroundColor: '#FFFBEF', borderWidth: 1, borderColor: COLORS.line, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  masteryBoxActive: { backgroundColor: '#FFF6DC', borderColor: '#F5E5A8' },
-  masteryLabel: { fontSize: 11, fontWeight: '700', color: COLORS.forestSoft },
-  masteryLabelActive: { color: '#B8860B' },
-  checkbox: { width: 20, height: 20, borderRadius: 6, backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: COLORS.line, alignItems: 'center', justifyContent: 'center' },
-  checkboxActive: { backgroundColor: COLORS.yellow, borderColor: COLORS.yellow },
-  checkmark: { fontSize: 12, color: '#FFFFFF', fontWeight: '700' },
-  pollutantBox: { padding: 8, borderRadius: 8, backgroundColor: '#F5FAF3' },
-  pollutantName: { fontSize: 12, fontWeight: '700', color: COLORS.forest },
-  pollutantDesc: { fontSize: 12, color: COLORS.forestSoft, marginTop: 2 },
-});
+function makeStyles(c: ThemeColors) {
+  return StyleSheet.create({
+    safeArea: { flex: 1, backgroundColor: c.bg },
+    content: { padding: 16, gap: 12 },
+    card: { backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.line, padding: 14 },
+    cardTitle: { fontSize: 16, fontWeight: '700', color: c.forest, marginBottom: 4 },
+    cardDesc: { fontSize: 12, color: c.forestSoft, marginBottom: 4 },
+    cardText: { fontSize: 12, color: c.forestSoft, lineHeight: 18 },
+    shellRow: { backgroundColor: c.surfaceSoft, borderRadius: 10, overflow: 'hidden' },
+    shellHeader: { flexDirection: 'row', alignItems: 'center', gap: 8, padding: 8 },
+    shellEmoji: { fontSize: 18 },
+    shellText: { flex: 1 },
+    shellName: { fontSize: 12, fontWeight: '700', color: c.forest },
+    shellLevel: { fontSize: 10, color: c.skyDark },
+    masteryCheckbox: { width: 20, height: 20, borderRadius: 6, backgroundColor: c.card, borderWidth: 1, borderColor: c.line, alignItems: 'center', justifyContent: 'center' },
+    shellBody: { paddingHorizontal: 8, paddingBottom: 8, gap: 6 },
+    shellInfoBox: { padding: 8, borderRadius: 8, backgroundColor: c.disclaimerBg },
+    shellInfoLabel: { fontSize: 11, fontWeight: '700', color: c.forest, marginBottom: 2 },
+    shellInfoValue: { fontSize: 11, color: c.forestSoft },
+    notDocumented: { fontSize: 11, color: c.forestSoft },
+    masteryBox: { padding: 8, borderRadius: 8, backgroundColor: c.disclaimerBg, borderWidth: 1, borderColor: c.line, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+    masteryBoxActive: { backgroundColor: c.warningBg, borderColor: c.warningBorder },
+    masteryLabel: { fontSize: 11, fontWeight: '700', color: c.forestSoft },
+    masteryLabelActive: { color: c.warningText },
+    checkbox: { width: 20, height: 20, borderRadius: 6, backgroundColor: c.card, borderWidth: 1, borderColor: c.line, alignItems: 'center', justifyContent: 'center' },
+    checkboxActive: { backgroundColor: c.yellow, borderColor: c.yellow },
+    checkmark: { fontSize: 12, color: '#FFFFFF', fontWeight: '700' },
+    pollutantBox: { padding: 8, borderRadius: 8, backgroundColor: c.surfaceSoft },
+    pollutantName: { fontSize: 12, fontWeight: '700', color: c.forest },
+    pollutantDesc: { fontSize: 12, color: c.forestSoft, marginTop: 2 },
+  });
+}

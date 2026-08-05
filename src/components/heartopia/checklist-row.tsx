@@ -1,6 +1,7 @@
+import { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { COLORS } from '@/constants/heartopia-colors';
+import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 
 export function ChecklistRow({
   label,
@@ -13,6 +14,8 @@ export function ChecklistRow({
   onPress: () => void;
   bold?: boolean;
 }) {
+  const colors = useHeartopiaColors();
+  const styles = useMemo(() => makeStyles(colors), [colors]);
   return (
     <Pressable style={styles.row} onPress={onPress}>
       <View style={[styles.checkbox, checked && styles.checkboxActive]}>{checked && <Text style={styles.checkmark}>✓</Text>}</View>
@@ -21,12 +24,14 @@ export function ChecklistRow({
   );
 }
 
-const styles = StyleSheet.create({
-  row: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14, borderRadius: 16, backgroundColor: COLORS.card, borderWidth: 1, borderColor: COLORS.line },
-  checkbox: { width: 24, height: 24, borderRadius: 6, backgroundColor: '#F5FAF3', borderWidth: 1, borderColor: COLORS.line, alignItems: 'center', justifyContent: 'center' },
-  checkboxActive: { backgroundColor: COLORS.yellow, borderColor: COLORS.yellow },
-  checkmark: { fontSize: 13, color: '#FFFFFF', fontWeight: '700' },
-  label: { flex: 1, fontSize: 14, color: COLORS.forest },
-  labelBold: { fontWeight: '700' },
-  labelChecked: { color: COLORS.forestSoft, textDecorationLine: 'line-through' },
-});
+function makeStyles(c: ThemeColors) {
+  return StyleSheet.create({
+    row: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14, borderRadius: 16, backgroundColor: c.card, borderWidth: 1, borderColor: c.line },
+    checkbox: { width: 24, height: 24, borderRadius: 6, backgroundColor: c.surfaceSoft, borderWidth: 1, borderColor: c.line, alignItems: 'center', justifyContent: 'center' },
+    checkboxActive: { backgroundColor: c.yellow, borderColor: c.yellow },
+    checkmark: { fontSize: 13, color: '#FFFFFF', fontWeight: '700' },
+    label: { flex: 1, fontSize: 14, color: c.forest },
+    labelBold: { fontWeight: '700' },
+    labelChecked: { color: c.forestSoft, textDecorationLine: 'line-through' },
+  });
+}

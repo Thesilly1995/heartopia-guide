@@ -1,8 +1,9 @@
 import { Link } from 'expo-router';
+import { useMemo } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { COLORS } from '@/constants/heartopia-colors';
+import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 
 const SECTIONS: { label: string; items: { href: string; icon: string; title: string; desc: string }[] }[] = [
   {
@@ -46,6 +47,8 @@ const SECTIONS: { label: string; items: { href: string; icon: string; title: str
 ];
 
 export default function HomeScreen() {
+  const colors = useHeartopiaColors();
+  const styles = useMemo(() => makeStyles(colors), [colors]);
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -75,26 +78,28 @@ export default function HomeScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: COLORS.bg },
-  scrollContent: { padding: 20, paddingBottom: 40, gap: 4 },
-  header: { paddingVertical: 20 },
-  welcome: { color: COLORS.forestSoft, fontSize: 14 },
-  title: { color: COLORS.forest, fontSize: 28, fontWeight: 'bold', marginTop: 4 },
-  section: { marginTop: 16, gap: 10 },
-  sectionLabel: { color: COLORS.forestSoft, fontSize: 14, marginBottom: 2 },
-  card: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: COLORS.card,
-    borderRadius: 16,
-    padding: 16,
-    borderWidth: 1,
-    borderColor: COLORS.line,
-    gap: 12,
-  },
-  cardIcon: { fontSize: 24 },
-  cardText: { flex: 1 },
-  cardTitle: { color: COLORS.forest, fontSize: 16, fontWeight: '600' },
-  cardDesc: { color: COLORS.forestSoft, fontSize: 12, marginTop: 2 },
-});
+function makeStyles(c: ThemeColors) {
+  return StyleSheet.create({
+    safeArea: { flex: 1, backgroundColor: c.bg },
+    scrollContent: { padding: 20, paddingBottom: 40, gap: 4 },
+    header: { paddingVertical: 20 },
+    welcome: { color: c.forestSoft, fontSize: 14 },
+    title: { color: c.forest, fontSize: 28, fontWeight: 'bold', marginTop: 4 },
+    section: { marginTop: 16, gap: 10 },
+    sectionLabel: { color: c.forestSoft, fontSize: 14, marginBottom: 2 },
+    card: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: c.card,
+      borderRadius: 16,
+      padding: 16,
+      borderWidth: 1,
+      borderColor: c.line,
+      gap: 12,
+    },
+    cardIcon: { fontSize: 24 },
+    cardText: { flex: 1 },
+    cardTitle: { color: c.forest, fontSize: 16, fontWeight: '600' },
+    cardDesc: { color: c.forestSoft, fontSize: 12, marginTop: 2 },
+  });
+}

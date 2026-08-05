@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ScreenHeader } from '@/components/heartopia/screen-header';
-import { COLORS } from '@/constants/heartopia-colors';
+import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { WILD_FRUIT } from '@/data/wild-fruit';
 import { WILD_MATERIALS } from '@/data/wild-materials';
 import { WILD_MUSHROOMS } from '@/data/wild-mushrooms';
@@ -15,6 +15,8 @@ const TABS = [
 ];
 
 export default function WildeIngredientenScreen() {
+  const colors = useHeartopiaColors();
+  const styles = useMemo(() => makeStyles(colors), [colors]);
   const [tab, setTab] = useState('fruit');
   const activeItems = TABS.find((t) => t.key === tab)!.items;
 
@@ -55,16 +57,18 @@ export default function WildeIngredientenScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: COLORS.bg },
-  listContent: { padding: 16, gap: 10 },
-  card: { flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: COLORS.card, borderRadius: 16, borderWidth: 1, borderColor: COLORS.line, padding: 14, marginBottom: 10 },
-  emojiBadge: { width: 44, height: 44, borderRadius: 22, backgroundColor: '#F5FAF3', alignItems: 'center', justifyContent: 'center' },
-  emoji: { fontSize: 20 },
-  cardText: { flex: 1 },
-  cardTitle: { fontSize: 16, fontWeight: '600', color: COLORS.forest },
-  cardSpot: { fontSize: 12, color: COLORS.forestSoft, marginTop: 2 },
-  priceBox: { alignItems: 'flex-end' },
-  price: { fontSize: 12, fontWeight: '700', color: COLORS.forest },
-  energy: { fontSize: 10, color: COLORS.forestSoft, marginTop: 2 },
-});
+function makeStyles(c: ThemeColors) {
+  return StyleSheet.create({
+    safeArea: { flex: 1, backgroundColor: c.bg },
+    listContent: { padding: 16, gap: 10 },
+    card: { flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.line, padding: 14, marginBottom: 10 },
+    emojiBadge: { width: 44, height: 44, borderRadius: 22, backgroundColor: c.iconBg, alignItems: 'center', justifyContent: 'center' },
+    emoji: { fontSize: 20 },
+    cardText: { flex: 1 },
+    cardTitle: { fontSize: 16, fontWeight: '600', color: c.forest },
+    cardSpot: { fontSize: 12, color: c.forestSoft, marginTop: 2 },
+    priceBox: { alignItems: 'flex-end' },
+    price: { fontSize: 12, fontWeight: '700', color: c.forest },
+    energy: { fontSize: 10, color: c.forestSoft, marginTop: 2 },
+  });
+}

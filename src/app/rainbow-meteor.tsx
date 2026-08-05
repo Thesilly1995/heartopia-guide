@@ -1,12 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { DisclaimerBox } from '@/components/heartopia/disclaimer-box';
 import { PinMap } from '@/components/heartopia/pin-map';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
-import { COLORS } from '@/constants/heartopia-colors';
+import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { METEOR_SPOTS } from '@/data/meteor-spots';
 import { RAINBOW_SPOTS } from '@/data/rainbow-spots';
 
@@ -23,6 +23,8 @@ const METEOR_DISCLAIMER =
 const EMPTY_TEXT = 'Niet actief op dit moment. Zodra dit weer gebeurt, komen de actuele locaties hier te staan.';
 
 export default function RainbowMeteorScreen() {
+  const colors = useHeartopiaColors();
+  const styles = useMemo(() => makeStyles(colors), [colors]);
   const [tab, setTab] = useState<'rainbow' | 'meteor'>('rainbow');
   const [checked, setChecked] = useState<Record<string, boolean>>({});
 
@@ -88,7 +90,7 @@ export default function RainbowMeteorScreen() {
           pins={spots}
           checked={prefixedChecked}
           onToggle={toggle}
-          pinColor={tab === 'rainbow' ? '#B78CD8' : COLORS.skyDark}
+          pinColor={tab === 'rainbow' ? '#B78CD8' : colors.skyDark}
           emptyText={EMPTY_TEXT}
         />
 
@@ -114,16 +116,18 @@ export default function RainbowMeteorScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: COLORS.bg },
-  content: { padding: 16, gap: 12 },
-  resetButton: { alignSelf: 'flex-end', paddingHorizontal: 10, paddingVertical: 5, borderRadius: 999, backgroundColor: '#EAF4F4' },
-  resetButtonText: { fontSize: 10, fontWeight: '700', color: COLORS.skyDark },
-  row: { flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: COLORS.card, borderRadius: 16, borderWidth: 1, borderColor: COLORS.line, padding: 12 },
-  numBadge: { width: 28, height: 28, borderRadius: 14, backgroundColor: '#EAF4FA', alignItems: 'center', justifyContent: 'center' },
-  numBadgeActive: { backgroundColor: COLORS.yellow },
-  numText: { fontSize: 12, fontWeight: '700', color: COLORS.skyDark },
-  numTextActive: { color: COLORS.forest },
-  desc: { flex: 1, fontSize: 12, color: COLORS.forest },
-  descChecked: { color: COLORS.forestSoft, textDecorationLine: 'line-through' },
-});
+function makeStyles(c: ThemeColors) {
+  return StyleSheet.create({
+    safeArea: { flex: 1, backgroundColor: c.bg },
+    content: { padding: 16, gap: 12 },
+    resetButton: { alignSelf: 'flex-end', paddingHorizontal: 10, paddingVertical: 5, borderRadius: 999, backgroundColor: c.chipBg },
+    resetButtonText: { fontSize: 10, fontWeight: '700', color: c.skyDark },
+    row: { flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.line, padding: 12 },
+    numBadge: { width: 28, height: 28, borderRadius: 14, backgroundColor: c.iconBg, alignItems: 'center', justifyContent: 'center' },
+    numBadgeActive: { backgroundColor: c.yellow },
+    numText: { fontSize: 12, fontWeight: '700', color: c.skyDark },
+    numTextActive: { color: c.forest },
+    desc: { flex: 1, fontSize: 12, color: c.forest },
+    descChecked: { color: c.forestSoft, textDecorationLine: 'line-through' },
+  });
+}

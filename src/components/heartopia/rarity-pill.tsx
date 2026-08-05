@@ -1,9 +1,10 @@
 import { StyleSheet, Text } from 'react-native';
 
-import { COLORS, ColorKey } from '@/constants/heartopia-colors';
+import { ColorKey, useHeartopiaColors } from '@/constants/heartopia-colors';
 
 export function RarityPill({ label, colorKey }: { label: string; colorKey: ColorKey }) {
-  const color = COLORS[colorKey] ?? COLORS.forestSoft;
+  const colors = useHeartopiaColors();
+  const color = colors[colorKey] ?? colors.forestSoft;
   return (
     <Text style={[styles.pill, { color, borderColor: color }]} numberOfLines={1}>
       {label}

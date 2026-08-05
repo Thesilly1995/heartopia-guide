@@ -1,12 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Clipboard from 'expo-clipboard';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { DisclaimerBox } from '@/components/heartopia/disclaimer-box';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
-import { COLORS } from '@/constants/heartopia-colors';
+import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { CODES } from '@/data/codes';
 
 const STORAGE_KEY = 'heartopia:codes:ingevuld';
@@ -15,6 +15,8 @@ const DISCLAIMER =
   'Codes wijzigen regelmatig. Deze lijst is zo actueel als ons laatste onderzoek — vraag me gerust om ze opnieuw op te zoeken als je twijfelt.';
 
 export default function CodesScreen() {
+  const colors = useHeartopiaColors();
+  const styles = useMemo(() => makeStyles(colors), [colors]);
   const [redeemed, setRedeemed] = useState<Record<string, boolean>>({});
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
 
@@ -87,22 +89,24 @@ export default function CodesScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: COLORS.bg },
-  listContent: { padding: 16, gap: 10 },
-  card: { backgroundColor: COLORS.card, borderRadius: 16, borderWidth: 1, borderColor: COLORS.line, padding: 14, marginBottom: 10 },
-  cardRedeemed: { opacity: 0.55 },
-  topRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8 },
-  codeButton: { flexDirection: 'row', alignItems: 'center', gap: 8, flex: 1 },
-  checkbox: { width: 20, height: 20, borderRadius: 6, backgroundColor: '#F5FAF3', borderWidth: 1, borderColor: COLORS.line, alignItems: 'center', justifyContent: 'center' },
-  checkboxActive: { backgroundColor: COLORS.yellow, borderColor: COLORS.yellow },
-  checkmark: { fontSize: 12, color: '#FFFFFF', fontWeight: '700' },
-  code: { fontSize: 16, fontWeight: '700', color: COLORS.forest, flexShrink: 1 },
-  codeRedeemed: { textDecorationLine: 'line-through' },
-  copyButton: { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 999, backgroundColor: '#EAF4F4' },
-  copyButtonActive: { backgroundColor: COLORS.yellow },
-  copyText: { fontSize: 10, fontWeight: '700', color: COLORS.skyDark },
-  copyTextActive: { color: COLORS.forest },
-  reward: { fontSize: 12, color: COLORS.forestSoft, marginTop: 8 },
-  expires: { fontSize: 10, color: COLORS.forestSoft, marginTop: 8 },
-});
+function makeStyles(c: ThemeColors) {
+  return StyleSheet.create({
+    safeArea: { flex: 1, backgroundColor: c.bg },
+    listContent: { padding: 16, gap: 10 },
+    card: { backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.line, padding: 14, marginBottom: 10 },
+    cardRedeemed: { opacity: 0.55 },
+    topRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8 },
+    codeButton: { flexDirection: 'row', alignItems: 'center', gap: 8, flex: 1 },
+    checkbox: { width: 20, height: 20, borderRadius: 6, backgroundColor: c.surfaceSoft, borderWidth: 1, borderColor: c.line, alignItems: 'center', justifyContent: 'center' },
+    checkboxActive: { backgroundColor: c.yellow, borderColor: c.yellow },
+    checkmark: { fontSize: 12, color: '#FFFFFF', fontWeight: '700' },
+    code: { fontSize: 16, fontWeight: '700', color: c.forest, flexShrink: 1 },
+    codeRedeemed: { textDecorationLine: 'line-through' },
+    copyButton: { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 999, backgroundColor: c.chipBg },
+    copyButtonActive: { backgroundColor: c.yellow },
+    copyText: { fontSize: 10, fontWeight: '700', color: c.skyDark },
+    copyTextActive: { color: c.forest },
+    reward: { fontSize: 12, color: c.forestSoft, marginTop: 8 },
+    expires: { fontSize: 10, color: c.forestSoft, marginTop: 8 },
+  });
+}

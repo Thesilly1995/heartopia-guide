@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -7,7 +7,7 @@ import { InfoCard } from '@/components/heartopia/info-card';
 import { LevelStepper } from '@/components/heartopia/level-stepper';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { StarRow } from '@/components/heartopia/star-row';
-import { COLORS } from '@/constants/heartopia-colors';
+import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { CAT_ACTIONS } from '@/data/cat-actions';
 import { CatItem, CATS } from '@/data/cats';
 import { DOG_ACTIONS } from '@/data/dog-actions';
@@ -20,6 +20,8 @@ const DOGS_NOTE =
   'Er zijn 37 hondenrassen in het spel — hier staan de bevestigde rassen. We vullen de lijst aan zodra er meer data bekend is. Let op: het favoriete eten verschilt per individuele hond, niet per ras.';
 
 export default function HuisdierenScreen() {
+  const colors = useHeartopiaColors();
+  const styles = useMemo(() => makeStyles(colors), [colors]);
   const [tab, setTab] = useState<'cats' | 'dogs'>('cats');
   const [openName, setOpenName] = useState<string | null>(null);
   const [bonds, setBonds] = useState<Record<string, number>>({});
@@ -158,27 +160,29 @@ export default function HuisdierenScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: COLORS.bg },
-  listContent: { padding: 16, gap: 10 },
-  headerInfo: { marginBottom: 10, gap: 8 },
-  infoRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  disclaimer: { padding: 12, borderRadius: 12, backgroundColor: '#FFFBEF', borderWidth: 1, borderColor: '#FBEBBD', color: COLORS.forestSoft, fontSize: 11 },
-  card: { backgroundColor: COLORS.card, borderRadius: 16, borderWidth: 1, borderColor: COLORS.line, overflow: 'hidden', marginBottom: 10 },
-  cardHeader: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14 },
-  emojiBadge: { width: 44, height: 44, borderRadius: 22, backgroundColor: '#FDF0F1', alignItems: 'center', justifyContent: 'center' },
-  emoji: { fontSize: 20 },
-  cardText: { flex: 1 },
-  cardTitle: { fontSize: 16, fontWeight: '600', color: COLORS.forest },
-  bondText: { fontSize: 12, fontWeight: '700', color: COLORS.yellow, marginTop: 2 },
-  chevron: { fontSize: 18, color: COLORS.forestSoft },
-  cardBody: { paddingHorizontal: 14, paddingBottom: 14 },
-  detailGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  mutedText: { fontSize: 12, color: COLORS.forestSoft },
-  bondBox: { marginTop: 10, padding: 10, borderRadius: 10, backgroundColor: '#FFFBEF', borderWidth: 1, borderColor: '#FBEBBD', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  bondBoxLabel: { fontSize: 12, fontWeight: '700', color: COLORS.forest },
-  actionsLabel: { fontSize: 12, fontWeight: '700', color: COLORS.forest, marginTop: 12, marginBottom: 6 },
-  actionsList: { gap: 6 },
-  actionRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 8, borderRadius: 8, backgroundColor: '#F5FAF3', gap: 8 },
-  actionLabel: { flex: 1, fontSize: 12, color: COLORS.forestSoft },
-});
+function makeStyles(c: ThemeColors) {
+  return StyleSheet.create({
+    safeArea: { flex: 1, backgroundColor: c.bg },
+    listContent: { padding: 16, gap: 10 },
+    headerInfo: { marginBottom: 10, gap: 8 },
+    infoRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+    disclaimer: { padding: 12, borderRadius: 12, backgroundColor: c.disclaimerBg, borderWidth: 1, borderColor: c.disclaimerBorder, color: c.forestSoft, fontSize: 11 },
+    card: { backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.line, overflow: 'hidden', marginBottom: 10 },
+    cardHeader: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14 },
+    emojiBadge: { width: 44, height: 44, borderRadius: 22, backgroundColor: c.iconBg, alignItems: 'center', justifyContent: 'center' },
+    emoji: { fontSize: 20 },
+    cardText: { flex: 1 },
+    cardTitle: { fontSize: 16, fontWeight: '600', color: c.forest },
+    bondText: { fontSize: 12, fontWeight: '700', color: c.yellow, marginTop: 2 },
+    chevron: { fontSize: 18, color: c.forestSoft },
+    cardBody: { paddingHorizontal: 14, paddingBottom: 14 },
+    detailGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+    mutedText: { fontSize: 12, color: c.forestSoft },
+    bondBox: { marginTop: 10, padding: 10, borderRadius: 10, backgroundColor: c.disclaimerBg, borderWidth: 1, borderColor: c.disclaimerBorder, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+    bondBoxLabel: { fontSize: 12, fontWeight: '700', color: c.forest },
+    actionsLabel: { fontSize: 12, fontWeight: '700', color: c.forest, marginTop: 12, marginBottom: 6 },
+    actionsList: { gap: 6 },
+    actionRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 8, borderRadius: 8, backgroundColor: c.surfaceSoft, gap: 8 },
+    actionLabel: { flex: 1, fontSize: 12, color: c.forestSoft },
+  });
+}

@@ -7,7 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { RarityPill } from '@/components/heartopia/rarity-pill';
 import { StarRow } from '@/components/heartopia/star-row';
-import { COLORS, ColorKey } from '@/constants/heartopia-colors';
+import { ColorKey, ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 
 export interface HobbyItem {
   name: string;
@@ -53,6 +53,9 @@ export function HobbyListScreen({
   gradient: [string, string];
   storageKey: string;
 }) {
+  const colors = useHeartopiaColors();
+  const styles = useMemo(() => makeStyles(colors), [colors]);
+
   const [openName, setOpenName] = useState<string | null>(null);
   const [query, setQuery] = useState('');
   const [maxLevel, setMaxLevel] = useState<number>(99);
@@ -161,7 +164,7 @@ export function HobbyListScreen({
           value={query}
           onChangeText={setQuery}
           placeholder="Zoeken op naam..."
-          placeholderTextColor={COLORS.forestSoft}
+          placeholderTextColor={colors.forestSoft}
           style={styles.searchInput}
         />
 
@@ -324,57 +327,59 @@ export function HobbyListScreen({
   );
 }
 
-const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: COLORS.bg },
-  header: { paddingHorizontal: 20, paddingTop: 16, paddingBottom: 16, borderBottomLeftRadius: 24, borderBottomRightRadius: 24 },
-  backButton: { alignSelf: 'flex-start', marginBottom: 8 },
-  backButtonText: { color: '#FFFFFF', fontSize: 14, fontWeight: '700' },
-  headerTitle: { color: '#FFFFFF', fontSize: 22, fontWeight: '700' },
-  headerCount: { color: '#FFFFFF', fontSize: 12, opacity: 0.9, marginTop: 2 },
-  searchInput: {
-    marginTop: 12,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    fontSize: 14,
-    color: COLORS.forest,
-  },
-  chipRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 8 },
-  chip: { paddingHorizontal: 10, paddingVertical: 5, borderRadius: 999, backgroundColor: 'rgba(255,255,255,0.25)' },
-  chipActive: { backgroundColor: '#FFFFFF' },
-  chipText: { fontSize: 11, fontWeight: '700', color: '#FFFFFF' },
-  chipTextActive: { color: COLORS.forest },
-  listContent: { padding: 16, gap: 10 },
-  disclaimer: { padding: 12, borderRadius: 12, backgroundColor: '#FFFBEF', borderWidth: 1, borderColor: '#FBEBBD', marginBottom: 10 },
-  disclaimerText: { fontSize: 11, color: COLORS.forestSoft },
-  card: { backgroundColor: COLORS.card, borderRadius: 16, borderWidth: 1, borderColor: COLORS.line, overflow: 'hidden', marginBottom: 10 },
-  cardHighlighted: { borderWidth: 2, borderColor: COLORS.yellow },
-  cardHeader: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14 },
-  emojiBadge: { width: 44, height: 44, borderRadius: 22, backgroundColor: COLORS.bg, alignItems: 'center', justifyContent: 'center' },
-  emoji: { fontSize: 20 },
-  cardText: { flex: 1 },
-  cardTitle: { fontSize: 16, fontWeight: '600', color: COLORS.forest },
-  badgeRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 4, flexWrap: 'wrap' },
-  levelBadge: { fontSize: 10, fontWeight: '700', color: COLORS.skyDark, backgroundColor: '#EAF4F4', paddingHorizontal: 8, paddingVertical: 2, borderRadius: 999 },
-  weatherBadge: { fontSize: 10, fontWeight: '700', color: '#B8860B', backgroundColor: '#FFF6DC', paddingHorizontal: 8, paddingVertical: 2, borderRadius: 999 },
-  starsText: { fontSize: 12, fontWeight: '700', color: COLORS.yellow },
-  chevron: { fontSize: 18, color: COLORS.forestSoft },
-  cardBody: { paddingHorizontal: 14, paddingBottom: 14 },
-  detailGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 4 },
-  detailBox: { flexBasis: '47%', flexGrow: 1, backgroundColor: '#F5FAF3', borderRadius: 10, padding: 8 },
-  detailBoxFull: { flexBasis: '100%' },
-  detailLabel: { fontSize: 11, fontWeight: '700', color: COLORS.forest },
-  detailValue: { fontSize: 12, color: COLORS.forestSoft, marginTop: 2 },
-  ingredientRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 4 },
-  ingredientPill: { fontSize: 11, color: COLORS.forestSoft, backgroundColor: '#FFFBEF', borderWidth: 1, borderColor: '#FBEBBD', paddingHorizontal: 8, paddingVertical: 3, borderRadius: 999 },
-  starBox: { marginTop: 12, padding: 10, borderRadius: 10, backgroundColor: '#FFFBEF', borderWidth: 1, borderColor: '#FBEBBD', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  starBoxLabel: { fontSize: 12, fontWeight: '700', color: COLORS.forest },
-  masteryBox: { marginTop: 8, padding: 10, borderRadius: 10, backgroundColor: '#F5FAF3', borderWidth: 1, borderColor: COLORS.line, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  masteryBoxActive: { backgroundColor: '#FFF6DC', borderColor: '#F5E5A8' },
-  masteryLabel: { fontSize: 12, fontWeight: '700', color: COLORS.forestSoft },
-  masteryLabelActive: { color: '#B8860B' },
-  checkbox: { width: 22, height: 22, borderRadius: 6, backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: COLORS.line, alignItems: 'center', justifyContent: 'center' },
-  checkboxActive: { backgroundColor: COLORS.yellow, borderColor: COLORS.yellow },
-  checkmark: { fontSize: 13, color: '#FFFFFF', fontWeight: '700' },
-});
+function makeStyles(c: ThemeColors) {
+  return StyleSheet.create({
+    safeArea: { flex: 1, backgroundColor: c.bg },
+    header: { paddingHorizontal: 20, paddingTop: 16, paddingBottom: 16, borderBottomLeftRadius: 24, borderBottomRightRadius: 24 },
+    backButton: { alignSelf: 'flex-start', marginBottom: 8 },
+    backButtonText: { color: '#FFFFFF', fontSize: 14, fontWeight: '700' },
+    headerTitle: { color: '#FFFFFF', fontSize: 22, fontWeight: '700' },
+    headerCount: { color: '#FFFFFF', fontSize: 12, opacity: 0.9, marginTop: 2 },
+    searchInput: {
+      marginTop: 12,
+      backgroundColor: c.card,
+      borderRadius: 12,
+      paddingHorizontal: 12,
+      paddingVertical: 8,
+      fontSize: 14,
+      color: c.forest,
+    },
+    chipRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 8 },
+    chip: { paddingHorizontal: 10, paddingVertical: 5, borderRadius: 999, backgroundColor: 'rgba(255,255,255,0.25)' },
+    chipActive: { backgroundColor: '#FFFFFF' },
+    chipText: { fontSize: 11, fontWeight: '700', color: '#FFFFFF' },
+    chipTextActive: { color: c.forest },
+    listContent: { padding: 16, gap: 10 },
+    disclaimer: { padding: 12, borderRadius: 12, backgroundColor: c.disclaimerBg, borderWidth: 1, borderColor: c.disclaimerBorder, marginBottom: 10 },
+    disclaimerText: { fontSize: 11, color: c.forestSoft },
+    card: { backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.line, overflow: 'hidden', marginBottom: 10 },
+    cardHighlighted: { borderWidth: 2, borderColor: c.yellow },
+    cardHeader: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14 },
+    emojiBadge: { width: 44, height: 44, borderRadius: 22, backgroundColor: c.iconBg, alignItems: 'center', justifyContent: 'center' },
+    emoji: { fontSize: 20 },
+    cardText: { flex: 1 },
+    cardTitle: { fontSize: 16, fontWeight: '600', color: c.forest },
+    badgeRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 4, flexWrap: 'wrap' },
+    levelBadge: { fontSize: 10, fontWeight: '700', color: c.skyDark, backgroundColor: c.chipBg, paddingHorizontal: 8, paddingVertical: 2, borderRadius: 999 },
+    weatherBadge: { fontSize: 10, fontWeight: '700', color: c.warningText, backgroundColor: c.warningBg, paddingHorizontal: 8, paddingVertical: 2, borderRadius: 999 },
+    starsText: { fontSize: 12, fontWeight: '700', color: c.yellow },
+    chevron: { fontSize: 18, color: c.forestSoft },
+    cardBody: { paddingHorizontal: 14, paddingBottom: 14 },
+    detailGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 4 },
+    detailBox: { flexBasis: '47%', flexGrow: 1, backgroundColor: c.surfaceSoft, borderRadius: 10, padding: 8 },
+    detailBoxFull: { flexBasis: '100%' },
+    detailLabel: { fontSize: 11, fontWeight: '700', color: c.forest },
+    detailValue: { fontSize: 12, color: c.forestSoft, marginTop: 2 },
+    ingredientRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 4 },
+    ingredientPill: { fontSize: 11, color: c.forestSoft, backgroundColor: c.disclaimerBg, borderWidth: 1, borderColor: c.disclaimerBorder, paddingHorizontal: 8, paddingVertical: 3, borderRadius: 999 },
+    starBox: { marginTop: 12, padding: 10, borderRadius: 10, backgroundColor: c.disclaimerBg, borderWidth: 1, borderColor: c.disclaimerBorder, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+    starBoxLabel: { fontSize: 12, fontWeight: '700', color: c.forest },
+    masteryBox: { marginTop: 8, padding: 10, borderRadius: 10, backgroundColor: c.surfaceSoft, borderWidth: 1, borderColor: c.line, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+    masteryBoxActive: { backgroundColor: c.warningBg, borderColor: c.warningBorder },
+    masteryLabel: { fontSize: 12, fontWeight: '700', color: c.forestSoft },
+    masteryLabelActive: { color: c.warningText },
+    checkbox: { width: 22, height: 22, borderRadius: 6, backgroundColor: c.card, borderWidth: 1, borderColor: c.line, alignItems: 'center', justifyContent: 'center' },
+    checkboxActive: { backgroundColor: c.yellow, borderColor: c.yellow },
+    checkmark: { fontSize: 13, color: '#FFFFFF', fontWeight: '700' },
+  });
+}

@@ -1,8 +1,11 @@
+import { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { COLORS } from '@/constants/heartopia-colors';
+import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 
 export function InfoCard({ label, value, full }: { label: string; value: string; full?: boolean }) {
+  const colors = useHeartopiaColors();
+  const styles = useMemo(() => makeStyles(colors), [colors]);
   return (
     <View style={[styles.box, full && styles.full]}>
       <Text style={styles.label}>{label}</Text>
@@ -11,9 +14,11 @@ export function InfoCard({ label, value, full }: { label: string; value: string;
   );
 }
 
-const styles = StyleSheet.create({
-  box: { flexBasis: '47%', flexGrow: 1, backgroundColor: '#F5FAF3', borderRadius: 10, padding: 8 },
-  full: { flexBasis: '100%' },
-  label: { fontSize: 11, fontWeight: '700', color: COLORS.forest },
-  value: { fontSize: 12, color: COLORS.forestSoft, marginTop: 2 },
-});
+function makeStyles(c: ThemeColors) {
+  return StyleSheet.create({
+    box: { flexBasis: '47%', flexGrow: 1, backgroundColor: c.surfaceSoft, borderRadius: 10, padding: 8 },
+    full: { flexBasis: '100%' },
+    label: { fontSize: 11, fontWeight: '700', color: c.forest },
+    value: { fontSize: 12, color: c.forestSoft, marginTop: 2 },
+  });
+}

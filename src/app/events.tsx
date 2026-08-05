@@ -1,12 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { DisclaimerBox } from '@/components/heartopia/disclaimer-box';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { StarRow } from '@/components/heartopia/star-row';
-import { COLORS } from '@/constants/heartopia-colors';
+import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { EVENT_BIRDS } from '@/data/event-birds';
 import { EVENT_FISH } from '@/data/event-fish';
 import { EVENT_RECIPES } from '@/data/event-recipes';
@@ -29,6 +29,8 @@ const TABS: { key: string; label: string; items: EventItem[] }[] = [
 ];
 
 export default function EventsScreen() {
+  const colors = useHeartopiaColors();
+  const styles = useMemo(() => makeStyles(colors), [colors]);
   const [tab, setTab] = useState('fish');
   const [stars, setStars] = useState<Record<string, number>>({});
 
@@ -113,20 +115,22 @@ export default function EventsScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: COLORS.bg },
-  listContent: { padding: 16, gap: 10 },
-  card: { backgroundColor: COLORS.card, borderRadius: 16, borderWidth: 1, borderColor: COLORS.line, padding: 14, marginBottom: 10 },
-  topRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
-  emojiBadge: { width: 40, height: 40, borderRadius: 20, backgroundColor: '#EAF4FA', alignItems: 'center', justifyContent: 'center' },
-  emoji: { fontSize: 18 },
-  cardText: { flex: 1 },
-  cardTitle: { fontSize: 15, fontWeight: '700', color: COLORS.forest },
-  starsText: { fontSize: 12, fontWeight: '700', color: COLORS.yellow, marginTop: 2 },
-  spot: { fontSize: 12, color: COLORS.forestSoft, marginTop: 8 },
-  ingredientRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 8 },
-  ingredientPill: { fontSize: 11, color: COLORS.forestSoft, backgroundColor: '#FFFBEF', borderWidth: 1, borderColor: '#FBEBBD', paddingHorizontal: 8, paddingVertical: 3, borderRadius: 999 },
-  note: { fontSize: 11, fontWeight: '700', color: COLORS.coralDark, marginTop: 8 },
-  starBox: { marginTop: 10, padding: 8, borderRadius: 8, backgroundColor: '#FFFBEF', borderWidth: 1, borderColor: '#FBEBBD', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  starBoxLabel: { fontSize: 12, fontWeight: '700', color: COLORS.forest },
-});
+function makeStyles(c: ThemeColors) {
+  return StyleSheet.create({
+    safeArea: { flex: 1, backgroundColor: c.bg },
+    listContent: { padding: 16, gap: 10 },
+    card: { backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.line, padding: 14, marginBottom: 10 },
+    topRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
+    emojiBadge: { width: 40, height: 40, borderRadius: 20, backgroundColor: c.iconBg, alignItems: 'center', justifyContent: 'center' },
+    emoji: { fontSize: 18 },
+    cardText: { flex: 1 },
+    cardTitle: { fontSize: 15, fontWeight: '700', color: c.forest },
+    starsText: { fontSize: 12, fontWeight: '700', color: c.yellow, marginTop: 2 },
+    spot: { fontSize: 12, color: c.forestSoft, marginTop: 8 },
+    ingredientRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 8 },
+    ingredientPill: { fontSize: 11, color: c.forestSoft, backgroundColor: c.disclaimerBg, borderWidth: 1, borderColor: c.disclaimerBorder, paddingHorizontal: 8, paddingVertical: 3, borderRadius: 999 },
+    note: { fontSize: 11, fontWeight: '700', color: c.coralDark, marginTop: 8 },
+    starBox: { marginTop: 10, padding: 8, borderRadius: 8, backgroundColor: c.disclaimerBg, borderWidth: 1, borderColor: c.disclaimerBorder, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+    starBoxLabel: { fontSize: 12, fontWeight: '700', color: c.forest },
+  });
+}

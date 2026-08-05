@@ -1,23 +1,28 @@
+import { useMemo } from 'react';
 import { StyleSheet, Text } from 'react-native';
 
-import { COLORS } from '@/constants/heartopia-colors';
+import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 
 export function DisclaimerBox({ text, warning }: { text: string; warning?: boolean }) {
+  const colors = useHeartopiaColors();
+  const styles = useMemo(() => makeStyles(colors), [colors]);
   return <Text style={[styles.box, warning && styles.warning]}>{text}</Text>;
 }
 
-const styles = StyleSheet.create({
-  box: {
-    padding: 12,
-    borderRadius: 12,
-    backgroundColor: '#FFFBEF',
-    borderWidth: 1,
-    borderColor: '#FBEBBD',
-    color: COLORS.forestSoft,
-    fontSize: 11,
-  },
-  warning: {
-    backgroundColor: '#FFF6DC',
-    borderColor: '#F5E5A8',
-  },
-});
+function makeStyles(c: ThemeColors) {
+  return StyleSheet.create({
+    box: {
+      padding: 12,
+      borderRadius: 12,
+      backgroundColor: c.disclaimerBg,
+      borderWidth: 1,
+      borderColor: c.disclaimerBorder,
+      color: c.forestSoft,
+      fontSize: 11,
+    },
+    warning: {
+      backgroundColor: c.warningBg,
+      borderColor: c.warningBorder,
+    },
+  });
+}

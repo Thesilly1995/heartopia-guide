@@ -1,12 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FlatList, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { DisclaimerBox } from '@/components/heartopia/disclaimer-box';
 import { PinMap } from '@/components/heartopia/pin-map';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
-import { COLORS } from '@/constants/heartopia-colors';
+import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { BUBBLE_LOCATIONS } from '@/data/bubble-locations';
 
 const STORAGE_KEY = 'heartopia:bubbels:vinkjes';
@@ -18,6 +18,8 @@ const ISLAND_MAP = require('@/assets/images/maps/island-map.jpg');
 const WHALEFALL_MAP = require('@/assets/images/maps/whalefall-map.jpg');
 
 export default function BubbelsScreen() {
+  const colors = useHeartopiaColors();
+  const styles = useMemo(() => makeStyles(colors), [colors]);
   const [checked, setChecked] = useState<Record<number, boolean>>({});
   const [view, setView] = useState<'map' | 'list'>('map');
 
@@ -83,7 +85,7 @@ export default function BubbelsScreen() {
       {view === 'map' ? (
         <ScrollView contentContainerStyle={styles.listContent}>
           {header}
-          <PinMap source={ISLAND_MAP} aspectRatio={825 / 799} pins={islandPins} checked={checked} onToggle={toggle} pinColor={COLORS.coral} />
+          <PinMap source={ISLAND_MAP} aspectRatio={825 / 799} pins={islandPins} checked={checked} onToggle={toggle} pinColor={colors.coral} />
           <Text style={styles.mapLabel}>🌊 16-19 (Whalefall Canyon)</Text>
           <PinMap
             source={WHALEFALL_MAP}
@@ -91,7 +93,7 @@ export default function BubbelsScreen() {
             pins={whalefallPins}
             checked={checked}
             onToggle={toggle}
-            pinColor={COLORS.skyDark}
+            pinColor={colors.skyDark}
           />
         </ScrollView>
       ) : (
@@ -120,25 +122,27 @@ export default function BubbelsScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: COLORS.bg },
-  listContent: { padding: 16, gap: 10 },
-  topRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  weekLabel: { fontSize: 16, fontWeight: '700', color: COLORS.forest },
-  resetButton: { paddingHorizontal: 10, paddingVertical: 5, borderRadius: 999, backgroundColor: '#EAF4F4' },
-  resetButtonText: { fontSize: 10, fontWeight: '700', color: COLORS.skyDark },
-  source: { fontSize: 10, color: COLORS.forestSoft, marginTop: -6 },
-  viewToggle: { flexDirection: 'row', gap: 8 },
-  viewChip: { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 999, backgroundColor: '#EAF4F4' },
-  viewChipActive: { backgroundColor: COLORS.coral },
-  viewChipText: { fontSize: 12, fontWeight: '700', color: COLORS.skyDark },
-  viewChipTextActive: { color: '#FFFFFF' },
-  mapLabel: { fontSize: 13, fontWeight: '700', color: COLORS.forest, marginTop: 4 },
-  row: { flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: COLORS.card, borderRadius: 16, borderWidth: 1, borderColor: COLORS.line, padding: 12, marginBottom: 10 },
-  numBadge: { width: 28, height: 28, borderRadius: 14, backgroundColor: '#EAF4FA', alignItems: 'center', justifyContent: 'center' },
-  numBadgeActive: { backgroundColor: COLORS.yellow },
-  numText: { fontSize: 12, fontWeight: '700', color: COLORS.skyDark },
-  numTextActive: { color: COLORS.forest },
-  desc: { flex: 1, fontSize: 12, color: COLORS.forest },
-  descChecked: { color: COLORS.forestSoft, textDecorationLine: 'line-through' },
-});
+function makeStyles(c: ThemeColors) {
+  return StyleSheet.create({
+    safeArea: { flex: 1, backgroundColor: c.bg },
+    listContent: { padding: 16, gap: 10 },
+    topRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+    weekLabel: { fontSize: 16, fontWeight: '700', color: c.forest },
+    resetButton: { paddingHorizontal: 10, paddingVertical: 5, borderRadius: 999, backgroundColor: c.chipBg },
+    resetButtonText: { fontSize: 10, fontWeight: '700', color: c.skyDark },
+    source: { fontSize: 10, color: c.forestSoft, marginTop: -6 },
+    viewToggle: { flexDirection: 'row', gap: 8 },
+    viewChip: { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 999, backgroundColor: c.chipBg },
+    viewChipActive: { backgroundColor: c.coral },
+    viewChipText: { fontSize: 12, fontWeight: '700', color: c.skyDark },
+    viewChipTextActive: { color: '#FFFFFF' },
+    mapLabel: { fontSize: 13, fontWeight: '700', color: c.forest, marginTop: 4 },
+    row: { flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.line, padding: 12, marginBottom: 10 },
+    numBadge: { width: 28, height: 28, borderRadius: 14, backgroundColor: c.iconBg, alignItems: 'center', justifyContent: 'center' },
+    numBadgeActive: { backgroundColor: c.yellow },
+    numText: { fontSize: 12, fontWeight: '700', color: c.skyDark },
+    numTextActive: { color: c.forest },
+    desc: { flex: 1, fontSize: 12, color: c.forest },
+    descChecked: { color: c.forestSoft, textDecorationLine: 'line-through' },
+  });
+}

@@ -1,17 +1,19 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { InfoCard } from '@/components/heartopia/info-card';
 import { LevelStepper } from '@/components/heartopia/level-stepper';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
-import { COLORS } from '@/constants/heartopia-colors';
+import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { WILD_ANIMALS, WILD_ANIMAL_MAX_BOND } from '@/data/wild-animals';
 
 const STORAGE_KEY = 'heartopia:wildedieren:vriendschap';
 
 export default function WildeDierenScreen() {
+  const colors = useHeartopiaColors();
+  const styles = useMemo(() => makeStyles(colors), [colors]);
   const [openName, setOpenName] = useState<string | null>(null);
   const [bonds, setBonds] = useState<Record<string, number>>({});
 
@@ -103,24 +105,26 @@ export default function WildeDierenScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: COLORS.bg },
-  listContent: { padding: 16, gap: 10 },
-  card: { backgroundColor: COLORS.card, borderRadius: 16, borderWidth: 1, borderColor: COLORS.line, overflow: 'hidden', marginBottom: 10 },
-  cardHeader: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14 },
-  emojiBadge: { width: 44, height: 44, borderRadius: 22, backgroundColor: '#F5FAF3', alignItems: 'center', justifyContent: 'center' },
-  emoji: { fontSize: 20 },
-  cardText: { flex: 1 },
-  cardTitle: { fontSize: 16, fontWeight: '600', color: COLORS.forest },
-  bondText: { fontSize: 12, fontWeight: '700', color: COLORS.yellow, marginTop: 2 },
-  chevron: { fontSize: 18, color: COLORS.forestSoft },
-  cardBody: { paddingHorizontal: 14, paddingBottom: 14 },
-  detailGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 4 },
-  detailLabel: { fontSize: 11, fontWeight: '700', color: COLORS.forest, marginBottom: 4 },
-  foodsBox: { flexBasis: '100%', backgroundColor: '#F5FAF3', borderRadius: 10, padding: 8 },
-  foodsRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 6 },
-  foodPill: { fontSize: 11, color: COLORS.forestSoft, backgroundColor: '#FFFBEF', borderWidth: 1, borderColor: '#FBEBBD', paddingHorizontal: 8, paddingVertical: 3, borderRadius: 999 },
-  note: { marginTop: 10, padding: 8, borderRadius: 8, backgroundColor: '#FFF6DC', borderWidth: 1, borderColor: '#F5E5A8', color: COLORS.coralDark, fontSize: 11, fontWeight: '700' },
-  bondBox: { marginTop: 10, padding: 10, borderRadius: 10, backgroundColor: '#FFFBEF', borderWidth: 1, borderColor: '#FBEBBD', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  bondBoxLabel: { fontSize: 12, fontWeight: '700', color: COLORS.forest },
-});
+function makeStyles(c: ThemeColors) {
+  return StyleSheet.create({
+    safeArea: { flex: 1, backgroundColor: c.bg },
+    listContent: { padding: 16, gap: 10 },
+    card: { backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.line, overflow: 'hidden', marginBottom: 10 },
+    cardHeader: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14 },
+    emojiBadge: { width: 44, height: 44, borderRadius: 22, backgroundColor: c.iconBg, alignItems: 'center', justifyContent: 'center' },
+    emoji: { fontSize: 20 },
+    cardText: { flex: 1 },
+    cardTitle: { fontSize: 16, fontWeight: '600', color: c.forest },
+    bondText: { fontSize: 12, fontWeight: '700', color: c.yellow, marginTop: 2 },
+    chevron: { fontSize: 18, color: c.forestSoft },
+    cardBody: { paddingHorizontal: 14, paddingBottom: 14 },
+    detailGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 4 },
+    detailLabel: { fontSize: 11, fontWeight: '700', color: c.forest, marginBottom: 4 },
+    foodsBox: { flexBasis: '100%', backgroundColor: c.surfaceSoft, borderRadius: 10, padding: 8 },
+    foodsRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 6 },
+    foodPill: { fontSize: 11, color: c.forestSoft, backgroundColor: c.disclaimerBg, borderWidth: 1, borderColor: c.disclaimerBorder, paddingHorizontal: 8, paddingVertical: 3, borderRadius: 999 },
+    note: { marginTop: 10, padding: 8, borderRadius: 8, backgroundColor: c.warningBg, borderWidth: 1, borderColor: c.warningBorder, color: c.coralDark, fontSize: 11, fontWeight: '700' },
+    bondBox: { marginTop: 10, padding: 10, borderRadius: 10, backgroundColor: c.disclaimerBg, borderWidth: 1, borderColor: c.disclaimerBorder, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+    bondBoxLabel: { fontSize: 12, fontWeight: '700', color: c.forest },
+  });
+}

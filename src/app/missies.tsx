@@ -1,11 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ChecklistRow } from '@/components/heartopia/checklist-row';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
-import { COLORS } from '@/constants/heartopia-colors';
+import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 
 const STORAGE_KEY = 'heartopia:missies:vinkjes';
 
@@ -42,6 +42,8 @@ const SHOPS = [
 
 
 export default function MissiesScreen() {
+  const colors = useHeartopiaColors();
+  const styles = useMemo(() => makeStyles(colors), [colors]);
   const [tab, setTab] = useState<'daily' | 'weekly'>('daily');
   const [checked, setChecked] = useState<Record<string, boolean>>({});
   const [shopsOpen, setShopsOpen] = useState(false);
@@ -121,23 +123,25 @@ export default function MissiesScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: COLORS.bg },
-  listContent: { padding: 16, gap: 10 },
-  resetRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 12, borderRadius: 12, backgroundColor: '#FFFBEF', borderWidth: 1, borderColor: '#FBEBBD' },
-  resetLabel: { fontSize: 12, fontWeight: '700', color: COLORS.forest },
-  resetText: { fontSize: 12, color: COLORS.forestSoft },
-  shopsCard: { backgroundColor: COLORS.card, borderRadius: 16, borderWidth: 1, borderColor: COLORS.line, overflow: 'hidden' },
-  shopsHeader: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14 },
-  checkbox: { width: 24, height: 24, borderRadius: 6, backgroundColor: '#F5FAF3', borderWidth: 1, borderColor: COLORS.line, alignItems: 'center', justifyContent: 'center' },
-  checkboxActive: { backgroundColor: COLORS.yellow, borderColor: COLORS.yellow },
-  checkmark: { fontSize: 13, color: '#FFFFFF', fontWeight: '700' },
-  shopsTitle: { flex: 1, fontSize: 14, fontWeight: '700', color: COLORS.forest },
-  chevron: { fontSize: 18, color: COLORS.forestSoft },
-  shopsList: { paddingHorizontal: 14, paddingBottom: 14, gap: 6 },
-  shopRow: { flexDirection: 'row', alignItems: 'center', gap: 8, padding: 8, borderRadius: 8, backgroundColor: '#F5FAF3' },
-  smallCheckbox: { width: 20, height: 20, borderRadius: 6, backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: COLORS.line, alignItems: 'center', justifyContent: 'center' },
-  checkmarkSmall: { fontSize: 11, color: '#FFFFFF', fontWeight: '700' },
-  shopLabel: { flex: 1, fontSize: 12, color: COLORS.forest },
-  shopLabelChecked: { color: COLORS.forestSoft, textDecorationLine: 'line-through' },
-});
+function makeStyles(c: ThemeColors) {
+  return StyleSheet.create({
+    safeArea: { flex: 1, backgroundColor: c.bg },
+    listContent: { padding: 16, gap: 10 },
+    resetRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 12, borderRadius: 12, backgroundColor: c.disclaimerBg, borderWidth: 1, borderColor: c.disclaimerBorder },
+    resetLabel: { fontSize: 12, fontWeight: '700', color: c.forest },
+    resetText: { fontSize: 12, color: c.forestSoft },
+    shopsCard: { backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.line, overflow: 'hidden' },
+    shopsHeader: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14 },
+    checkbox: { width: 24, height: 24, borderRadius: 6, backgroundColor: c.surfaceSoft, borderWidth: 1, borderColor: c.line, alignItems: 'center', justifyContent: 'center' },
+    checkboxActive: { backgroundColor: c.yellow, borderColor: c.yellow },
+    checkmark: { fontSize: 13, color: '#FFFFFF', fontWeight: '700' },
+    shopsTitle: { flex: 1, fontSize: 14, fontWeight: '700', color: c.forest },
+    chevron: { fontSize: 18, color: c.forestSoft },
+    shopsList: { paddingHorizontal: 14, paddingBottom: 14, gap: 6 },
+    shopRow: { flexDirection: 'row', alignItems: 'center', gap: 8, padding: 8, borderRadius: 8, backgroundColor: c.surfaceSoft },
+    smallCheckbox: { width: 20, height: 20, borderRadius: 6, backgroundColor: c.card, borderWidth: 1, borderColor: c.line, alignItems: 'center', justifyContent: 'center' },
+    checkmarkSmall: { fontSize: 11, color: '#FFFFFF', fontWeight: '700' },
+    shopLabel: { flex: 1, fontSize: 12, color: c.forest },
+    shopLabelChecked: { color: c.forestSoft, textDecorationLine: 'line-through' },
+  });
+}

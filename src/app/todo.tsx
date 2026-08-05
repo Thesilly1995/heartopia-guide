@@ -1,10 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ScreenHeader } from '@/components/heartopia/screen-header';
-import { COLORS } from '@/constants/heartopia-colors';
+import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 
 const STORAGE_KEY = 'heartopia:todo:lijst';
 
@@ -14,6 +14,8 @@ interface TodoItem {
 }
 
 export default function TodoScreen() {
+  const colors = useHeartopiaColors();
+  const styles = useMemo(() => makeStyles(colors), [colors]);
   const [items, setItems] = useState<TodoItem[]>([]);
   const [text, setText] = useState('');
 
@@ -65,7 +67,7 @@ export default function TodoScreen() {
               onChangeText={setText}
               onSubmitEditing={addItem}
               placeholder="Bijv. de nieuwe wijk afmaken, alle vlinders vangen..."
-              placeholderTextColor={COLORS.forestSoft}
+              placeholderTextColor={colors.forestSoft}
               style={styles.input}
             />
             <Pressable style={styles.addButton} onPress={addItem}>
@@ -90,19 +92,21 @@ export default function TodoScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: COLORS.bg },
-  listContent: { padding: 16, gap: 10 },
-  addRow: { flexDirection: 'row', gap: 8, marginBottom: 10 },
-  input: { flex: 1, borderWidth: 1, borderColor: COLORS.line, borderRadius: 12, paddingHorizontal: 12, paddingVertical: 8, fontSize: 14, color: COLORS.forest, backgroundColor: COLORS.card },
-  addButton: { paddingHorizontal: 16, borderRadius: 12, backgroundColor: COLORS.coral, alignItems: 'center', justifyContent: 'center' },
-  addButtonText: { color: '#FFFFFF', fontWeight: '700', fontSize: 13 },
-  emptyText: { fontSize: 12, color: COLORS.forestSoft, paddingHorizontal: 2 },
-  row: { flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: COLORS.card, borderRadius: 16, borderWidth: 1, borderColor: COLORS.line, padding: 12, marginBottom: 10 },
-  checkbox: { width: 22, height: 22, borderRadius: 6, backgroundColor: '#F5FAF3', borderWidth: 1, borderColor: COLORS.line, alignItems: 'center', justifyContent: 'center' },
-  checkboxActive: { backgroundColor: COLORS.yellow, borderColor: COLORS.yellow },
-  checkmark: { fontSize: 13, color: '#FFFFFF', fontWeight: '700' },
-  itemText: { flex: 1, fontSize: 14, color: COLORS.forest },
-  itemTextDone: { color: COLORS.forestSoft, textDecorationLine: 'line-through' },
-  removeText: { fontSize: 14, color: COLORS.forestSoft },
-});
+function makeStyles(c: ThemeColors) {
+  return StyleSheet.create({
+    safeArea: { flex: 1, backgroundColor: c.bg },
+    listContent: { padding: 16, gap: 10 },
+    addRow: { flexDirection: 'row', gap: 8, marginBottom: 10 },
+    input: { flex: 1, borderWidth: 1, borderColor: c.line, borderRadius: 12, paddingHorizontal: 12, paddingVertical: 8, fontSize: 14, color: c.forest, backgroundColor: c.card },
+    addButton: { paddingHorizontal: 16, borderRadius: 12, backgroundColor: c.coral, alignItems: 'center', justifyContent: 'center' },
+    addButtonText: { color: '#FFFFFF', fontWeight: '700', fontSize: 13 },
+    emptyText: { fontSize: 12, color: c.forestSoft, paddingHorizontal: 2 },
+    row: { flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.line, padding: 12, marginBottom: 10 },
+    checkbox: { width: 22, height: 22, borderRadius: 6, backgroundColor: c.surfaceSoft, borderWidth: 1, borderColor: c.line, alignItems: 'center', justifyContent: 'center' },
+    checkboxActive: { backgroundColor: c.yellow, borderColor: c.yellow },
+    checkmark: { fontSize: 13, color: '#FFFFFF', fontWeight: '700' },
+    itemText: { flex: 1, fontSize: 14, color: c.forest },
+    itemTextDone: { color: c.forestSoft, textDecorationLine: 'line-through' },
+    removeText: { fontSize: 14, color: c.forestSoft },
+  });
+}

@@ -1,13 +1,14 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { COLORS } from '@/constants/heartopia-colors';
+import { useHeartopiaColors } from '@/constants/heartopia-colors';
 
 export function StarRow({ value, onSet }: { value: number; onSet: (n: number) => void }) {
+  const colors = useHeartopiaColors();
   return (
     <View style={styles.row}>
       {[1, 2, 3, 4, 5].map((n) => (
         <Pressable key={n} onPress={() => onSet(n)} hitSlop={6}>
-          <Text style={[styles.star, { color: n <= value ? COLORS.yellow : COLORS.line }]}>★</Text>
+          <Text style={[styles.star, { color: n <= value ? colors.yellow : colors.line }]}>★</Text>
         </Pressable>
       ))}
     </View>
