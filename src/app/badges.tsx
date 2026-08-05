@@ -1,10 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Image } from 'expo-image';
 import { useEffect, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { DisclaimerBox } from '@/components/heartopia/disclaimer-box';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
+import { BADGE_ICON_MAP } from '@/constants/badge-icons';
 import { COLORS } from '@/constants/heartopia-colors';
 import { BADGES } from '@/data/badges';
 
@@ -44,7 +46,7 @@ export default function BadgesScreen() {
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <ScreenHeader gradient={['#FFD166', '#E8A24F']} icon="🏅" title="Badges" subtitle="Prestaties & profieltitels (D.G. Level 15+)" />
       <FlatList
-        data={[...visible, { name: '__divider__', emoji: '', hidden: true }, ...hidden]}
+        data={[...visible, { name: '__divider__', emoji: '', hidden: true, iconKey: null }, ...hidden]}
         keyExtractor={(item, i) => `${item.name}-${i}`}
         contentContainerStyle={styles.listContent}
         ListHeaderComponent={
@@ -63,12 +65,17 @@ export default function BadgesScreen() {
             );
           }
           const isEarned = earned[badge.name];
+          const iconSource = badge.iconKey ? BADGE_ICON_MAP[badge.iconKey] : null;
           return (
             <Pressable
               style={[styles.card, badge.hidden && styles.cardHidden]}
               onPress={() => toggle(badge.name)}>
               <View style={styles.emojiBadge}>
-                <Text style={styles.emoji}>{badge.emoji}</Text>
+                {iconSource ? (
+                  <Image source={iconSource} style={[styles.icon, !isEarned && styles.iconDimmed]} />
+                ) : (
+                  <Text style={styles.emoji}>{badge.emoji}</Text>
+                )}
                 {isEarned && (
                   <View style={styles.earnedOverlay}>
                     <Text style={styles.earnedCheck}>✓</Text>
@@ -93,6 +100,8 @@ const styles = StyleSheet.create({
   cardHidden: { backgroundColor: '#FFFBEF', borderColor: '#FBEBBD' },
   emojiBadge: { width: 56, height: 48, borderRadius: 10, backgroundColor: '#F5FAF3', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
   emoji: { fontSize: 20 },
+  icon: { width: '100%', height: '100%' },
+  iconDimmed: { opacity: 0.55 },
   earnedOverlay: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(255,209,102,0.55)', alignItems: 'center', justifyContent: 'center' },
   earnedCheck: { fontSize: 16, fontWeight: '700', color: COLORS.forest },
   name: { flex: 1, fontSize: 14, color: COLORS.forest },
