@@ -1,20 +1,15 @@
-import { StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { HobbyListScreen } from '@/components/heartopia/hobby-list-screen';
+import { COLORS } from '@/constants/heartopia-colors';
+import { RECIPES } from '@/data/recipes';
 
-export default function VissenScreen() {
+export default function KokenScreen() {
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <View style={styles.center}>
-        <Text style={styles.title}>Vissen 🎣</Text>
-        <Text style={styles.subtitle}>Hier komt de inhoud straks</Text>
-      </View>
-    </SafeAreaView>
+    <HobbyListScreen
+      title="Koken"
+      icon="🍳"
+      items={RECIPES}
+      gradient={[COLORS.coral, COLORS.yellow]}
+      storageKey="koken"
+    />
   );
 }
-
-const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: '#EFF7EC' },
-  center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  title: { fontSize: 24, fontWeight: 'bold', color: '#2B4739' },
-  subtitle: { fontSize: 14, color: '#6B8A7A', marginTop: 8 },
-});
