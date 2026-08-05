@@ -1,10 +1,18 @@
-import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect, useState } from 'react';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { DisclaimerBox } from '@/components/heartopia/disclaimer-box';
+import { PinMap } from '@/components/heartopia/pin-map';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { COLORS } from '@/constants/heartopia-colors';
+import { METEOR_SPOTS } from '@/data/meteor-spots';
+import { RAINBOW_SPOTS } from '@/data/rainbow-spots';
+
+const STORAGE_KEY = 'heartopia:rainbow-meteor:vinkjes';
+
+const ISLAND_MAP = require('@/assets/images/maps/island-map.jpg');
 
 const RAINBOW_DISCLAIMER =
   'De Rainbow-gebeurtenis duurt ~6 uur en de boeketten-locaties zijn steeds anders. Zodra hij actief is, kan je Claude vragen de actuele locaties op te zoeken/toe te voegen — die verschijnen dan hieronder.';
@@ -12,8 +20,50 @@ const RAINBOW_DISCLAIMER =
 const METEOR_DISCLAIMER =
   'Meteorenregen start willekeurig na 20:00 servertijd en duurt ~6 uur. De ertsplekken zijn steeds anders. Zodra het actief is, kan je Claude vragen de actuele locaties op te zoeken/toe te voegen — die verschijnen dan hieronder.';
 
+const EMPTY_TEXT = 'Niet actief op dit moment. Zodra dit weer gebeurt, komen de actuele locaties hier te staan.';
+
 export default function RainbowMeteorScreen() {
   const [tab, setTab] = useState<'rainbow' | 'meteor'>('rainbow');
+  const [checked, setChecked] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const raw = await AsyncStorage.getItem(STORAGE_KEY);
+        setChecked(raw ? JSON.parse(raw) : {});
+      } catch {
+        setChecked({});
+      }
+    })();
+  }, []);
+
+  const toggle = async (num: number) => {
+    const key = `${tab[0]}${num}`;
+    const updated = { ...checked, [key]: !checked[key] };
+    setChecked(updated);
+    try {
+      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+    } catch {
+      // opslaan mislukt
+    }
+  };
+
+  const resetAll = async () => {
+    setChecked({});
+    try {
+      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify({}));
+    } catch {
+      // opslaan mislukt
+    }
+  };
+
+  const spots = tab === 'rainbow' ? RAINBOW_SPOTS : METEOR_SPOTS;
+  const prefix = tab[0];
+  const prefixedChecked = Object.fromEntries(
+    Object.entries(checked)
+      .filter(([k]) => k.startsWith(prefix))
+      .map(([k, v]) => [Number(k.slice(1)), v])
+  );
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -29,13 +79,37 @@ export default function RainbowMeteorScreen() {
         activeTab={tab}
         onTabChange={(k) => setTab(k as 'rainbow' | 'meteor')}
       />
-      <View style={styles.content}>
+      <ScrollView contentContainerStyle={styles.content}>
         <DisclaimerBox text={tab === 'rainbow' ? RAINBOW_DISCLAIMER : METEOR_DISCLAIMER} warning />
-        <View style={styles.emptyBox}>
-          <Text style={styles.emptyEmoji}>{tab === 'rainbow' ? '🌈' : '☄️'}</Text>
-          <Text style={styles.emptyText}>Niet actief op dit moment. Zodra dit weer gebeurt, komen de actuele locaties hier te staan.</Text>
-        </View>
-      </View>
+
+        <PinMap
+          source={ISLAND_MAP}
+          aspectRatio={825 / 799}
+          pins={spots}
+          checked={prefixedChecked}
+          onToggle={toggle}
+          pinColor={tab === 'rainbow' ? '#B78CD8' : COLORS.skyDark}
+          emptyText={EMPTY_TEXT}
+        />
+
+        {spots.length > 0 && (
+          <Pressable style={styles.resetButton} onPress={resetAll}>
+            <Text style={styles.resetButtonText}>Voortgang resetten</Text>
+          </Pressable>
+        )}
+
+        {spots.map((spot) => {
+          const isChecked = prefixedChecked[spot.num];
+          return (
+            <Pressable key={spot.num} style={styles.row} onPress={() => toggle(spot.num)}>
+              <View style={[styles.numBadge, isChecked && styles.numBadgeActive]}>
+                <Text style={[styles.numText, isChecked && styles.numTextActive]}>{isChecked ? '✓' : spot.num}</Text>
+              </View>
+              <Text style={[styles.desc, isChecked && styles.descChecked]}>{spot.description}</Text>
+            </Pressable>
+          );
+        })}
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -43,7 +117,13 @@ export default function RainbowMeteorScreen() {
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: COLORS.bg },
   content: { padding: 16, gap: 12 },
-  emptyBox: { alignItems: 'center', justifyContent: 'center', padding: 40, borderRadius: 16, backgroundColor: COLORS.card, borderWidth: 1, borderColor: COLORS.line, gap: 10 },
-  emptyEmoji: { fontSize: 40 },
-  emptyText: { fontSize: 13, fontWeight: '700', color: COLORS.forest, textAlign: 'center' },
+  resetButton: { alignSelf: 'flex-end', paddingHorizontal: 10, paddingVertical: 5, borderRadius: 999, backgroundColor: '#EAF4F4' },
+  resetButtonText: { fontSize: 10, fontWeight: '700', color: COLORS.skyDark },
+  row: { flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: COLORS.card, borderRadius: 16, borderWidth: 1, borderColor: COLORS.line, padding: 12 },
+  numBadge: { width: 28, height: 28, borderRadius: 14, backgroundColor: '#EAF4FA', alignItems: 'center', justifyContent: 'center' },
+  numBadgeActive: { backgroundColor: COLORS.yellow },
+  numText: { fontSize: 12, fontWeight: '700', color: COLORS.skyDark },
+  numTextActive: { color: COLORS.forest },
+  desc: { flex: 1, fontSize: 12, color: COLORS.forest },
+  descChecked: { color: COLORS.forestSoft, textDecorationLine: 'line-through' },
 });

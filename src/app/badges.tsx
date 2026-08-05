@@ -40,7 +40,7 @@ export default function BadgesScreen() {
   };
 
   const visible = BADGES.filter((b) => !b.hidden);
-  const hidden = BADGES.filter((b) => b.hidden);
+  const hidden = BADGES.filter((b) => b.hidden).sort((a, b) => (a.iconKey ? 0 : 1) - (b.iconKey ? 0 : 1));
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
