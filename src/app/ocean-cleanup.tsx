@@ -83,6 +83,12 @@ export default function OceanCleanupScreen() {
                       </Text>
                       {shell.level !== null && <Text style={styles.shellLevel}>Lv.{shell.level}</Text>}
                     </View>
+                    <Pressable
+                      style={[styles.masteryCheckbox, shellMastery[shell.name] && styles.checkboxActive]}
+                      hitSlop={6}
+                      onPress={() => toggleShellMastery(shell.name)}>
+                      {shellMastery[shell.name] && <Text style={styles.checkmark}>✓</Text>}
+                    </Pressable>
                     <StarRow value={shellStars[shell.name] || 0} onSet={(n) => setShellStar(shell.name, n)} />
                   </Pressable>
 
@@ -196,6 +202,7 @@ const styles = StyleSheet.create({
   shellText: { flex: 1 },
   shellName: { fontSize: 12, fontWeight: '700', color: COLORS.forest },
   shellLevel: { fontSize: 10, color: COLORS.skyDark },
+  masteryCheckbox: { width: 20, height: 20, borderRadius: 6, backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: COLORS.line, alignItems: 'center', justifyContent: 'center' },
   shellBody: { paddingHorizontal: 8, paddingBottom: 8, gap: 6 },
   shellInfoBox: { padding: 8, borderRadius: 8, backgroundColor: '#FFFBEF' },
   shellInfoLabel: { fontSize: 11, fontWeight: '700', color: COLORS.forest, marginBottom: 2 },
