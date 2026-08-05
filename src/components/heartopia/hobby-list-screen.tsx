@@ -14,7 +14,7 @@ export interface HobbyItem {
   level: number;
   rarity: string;
   rarityColorKey: ColorKey;
-  xp: number;
+  xp?: number;
   emoji: string;
   spot?: string;
   watertype?: string;
@@ -22,6 +22,17 @@ export interface HobbyItem {
   weather?: string;
   tool?: string;
   ingredients?: string[];
+  growTime?: string;
+  seedPrice?: number;
+  method?: string;
+  sellPrice?: string;
+}
+
+export interface HobbySubTab {
+  key: string;
+  label: string;
+  items: HobbyItem[];
+  disclaimer?: string;
 }
 
 const LEVEL_FILTERS = ['Alle', 1, 3, 5, 7, 9] as const;
@@ -31,26 +42,32 @@ export function HobbyListScreen({
   title,
   icon,
   items,
+  subTabs,
   gradient,
   storageKey,
-  hasWeather = false,
 }: {
   title: string;
   icon: string;
-  items: HobbyItem[];
+  items?: HobbyItem[];
+  subTabs?: HobbySubTab[];
   gradient: [string, string];
   storageKey: string;
-  hasWeather?: boolean;
 }) {
   const [openName, setOpenName] = useState<string | null>(null);
   const [query, setQuery] = useState('');
   const [maxLevel, setMaxLevel] = useState<number>(99);
   const [weatherFilter, setWeatherFilter] = useState<(typeof WEATHER_FILTERS)[number]>('Alle');
+  const [activeSub, setActiveSub] = useState<string>(subTabs?.[0]?.key ?? '');
   const [stars, setStars] = useState<Record<string, number>>({});
   const [mastery, setMastery] = useState<Record<string, boolean>>({});
 
-  const starsStorageKey = `heartopia:${storageKey}:stars`;
-  const masteryStorageKey = `heartopia:${storageKey}:mastery`;
+  const activeTab = subTabs?.find((t) => t.key === activeSub);
+  const activeItems = subTabs ? (activeTab?.items ?? []) : (items ?? []);
+  const hasWeather = activeItems.length > 0 && activeItems[0].weather !== undefined;
+  const activeStorageKey = subTabs ? `${storageKey}:${activeSub}` : storageKey;
+
+  const starsStorageKey = `heartopia:${activeStorageKey}:stars`;
+  const masteryStorageKey = `heartopia:${activeStorageKey}:mastery`;
 
   useEffect(() => {
     (async () => {
@@ -91,7 +108,7 @@ export function HobbyListScreen({
   };
 
   const visibleItems = useMemo(() => {
-    const filtered = items
+    const filtered = activeItems
       .filter((item) => item.name.toLowerCase().includes(query.toLowerCase()))
       .filter((item) => maxLevel === 99 || item.level >= maxLevel);
 
@@ -102,7 +119,8 @@ export function HobbyListScreen({
       const bMatch = b.weather?.includes(weatherFilter) ? 1 : 0;
       return bMatch - aMatch;
     });
-  }, [items, query, maxLevel, weatherFilter]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeItems, query, maxLevel, weatherFilter]);
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -117,6 +135,26 @@ export function HobbyListScreen({
         <Text style={styles.headerTitle}>
           {icon} {title}
         </Text>
+
+        {subTabs && (
+          <View style={styles.chipRow}>
+            {subTabs.map((tab) => {
+              const active = activeSub === tab.key;
+              return (
+                <Pressable
+                  key={tab.key}
+                  onPress={() => {
+                    setActiveSub(tab.key);
+                    setOpenName(null);
+                  }}
+                  style={[styles.chip, active && styles.chipActive]}>
+                  <Text style={[styles.chipText, active && styles.chipTextActive]}>{tab.label}</Text>
+                </Pressable>
+              );
+            })}
+          </View>
+        )}
+
         <Text style={styles.headerCount}>{visibleItems.length} items in deze gids</Text>
 
         <TextInput
@@ -164,6 +202,13 @@ export function HobbyListScreen({
         data={visibleItems}
         keyExtractor={(item) => item.name}
         contentContainerStyle={styles.listContent}
+        ListHeaderComponent={
+          activeTab?.disclaimer ? (
+            <View style={styles.disclaimer}>
+              <Text style={styles.disclaimerText}>{activeTab.disclaimer}</Text>
+            </View>
+          ) : null
+        }
         renderItem={({ item }) => {
           const isOpen = openName === item.name;
           const weatherMatch = hasWeather && weatherFilter !== 'Alle' && !!item.weather?.includes(weatherFilter);
@@ -228,6 +273,32 @@ export function HobbyListScreen({
                     </View>
                   )}
 
+                  {item.growTime !== undefined && (
+                    <View style={styles.detailGrid}>
+                      <View style={styles.detailBox}>
+                        <Text style={styles.detailLabel}>Groeitijd</Text>
+                        <Text style={styles.detailValue}>{item.growTime}</Text>
+                      </View>
+                      <View style={styles.detailBox}>
+                        <Text style={styles.detailLabel}>Zaadprijs</Text>
+                        <Text style={styles.detailValue}>{item.seedPrice} 🪙</Text>
+                      </View>
+                    </View>
+                  )}
+
+                  {item.method !== undefined && (
+                    <View style={styles.detailGrid}>
+                      <View style={[styles.detailBox, styles.detailBoxFull]}>
+                        <Text style={styles.detailLabel}>Hoe krijg je dit</Text>
+                        <Text style={styles.detailValue}>{item.method}</Text>
+                      </View>
+                      <View style={[styles.detailBox, styles.detailBoxFull]}>
+                        <Text style={styles.detailLabel}>Verkoopprijs</Text>
+                        <Text style={styles.detailValue}>{item.sellPrice}</Text>
+                      </View>
+                    </View>
+                  )}
+
                   <View style={styles.starBox}>
                     <Text style={styles.starBoxLabel}>Hoogste resultaat</Text>
                     <StarRow value={stars[item.name] || 0} onSet={(n) => setItemStar(item.name, n)} />
@@ -275,6 +346,8 @@ const styles = StyleSheet.create({
   chipText: { fontSize: 11, fontWeight: '700', color: '#FFFFFF' },
   chipTextActive: { color: COLORS.forest },
   listContent: { padding: 16, gap: 10 },
+  disclaimer: { padding: 12, borderRadius: 12, backgroundColor: '#FFFBEF', borderWidth: 1, borderColor: '#FBEBBD', marginBottom: 10 },
+  disclaimerText: { fontSize: 11, color: COLORS.forestSoft },
   card: { backgroundColor: COLORS.card, borderRadius: 16, borderWidth: 1, borderColor: COLORS.line, overflow: 'hidden', marginBottom: 10 },
   cardHighlighted: { borderWidth: 2, borderColor: COLORS.yellow },
   cardHeader: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14 },

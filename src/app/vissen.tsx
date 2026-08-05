@@ -10,7 +10,6 @@ export default function VissenScreen() {
       items={FISH}
       gradient={[COLORS.sky, COLORS.coral]}
       storageKey="vissen"
-      hasWeather
     />
   );
 }
