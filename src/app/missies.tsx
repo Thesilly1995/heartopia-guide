@@ -4,7 +4,6 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ChecklistRow } from '@/components/heartopia/checklist-row';
-import { DisclaimerBox } from '@/components/heartopia/disclaimer-box';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { COLORS } from '@/constants/heartopia-colors';
 
@@ -17,8 +16,6 @@ const DAILY = [
   { key: 'd5', label: "Hobby's beoefenen (vissen, tuinieren, insecten, etc.)" },
   { key: 'd6', label: 'Huisdier voeren, aaien & trainen' },
   { key: 'd7', label: 'Wilde dieren voeren' },
-  { key: 'd8', label: 'Grote Zwervende Eik verzamelen (vandaag: plot 7)' },
-  { key: 'd9', label: 'Fluorietsteen verzamelen (vandaag: plot 2)' },
   { key: 'd10', label: 'Gewassen oogsten & water geven' },
   { key: 'd11', label: 'Bloemen checken & water geven' },
   { key: 'd12', label: "Ka Ching's winkel bekijken" },
@@ -43,8 +40,6 @@ const SHOPS = [
   { key: 's8', label: 'Vogelwinkel (Bailey)' },
 ];
 
-const OAK_DISCLAIMER =
-  'De plot-locatie van de Zwervende Eik en de Fluorietsteen wisselt elke dag. Deze app kan dat nog niet automatisch bijwerken — vraag me in de chat om de actuele plots op te zoeken wanneer je ze nodig hebt.';
 
 export default function MissiesScreen() {
   const [tab, setTab] = useState<'daily' | 'weekly'>('daily');
@@ -93,8 +88,6 @@ export default function MissiesScreen() {
           <Text style={styles.resetLabel}>Reset</Text>
           <Text style={styles.resetText}>{resetText}</Text>
         </View>
-
-        {tab === 'daily' && <DisclaimerBox text={OAK_DISCLAIMER} warning />}
 
         {items.map((item) => (
           <ChecklistRow key={item.key} label={item.label} checked={!!checked[item.key]} onPress={() => toggle(item.key)} />
