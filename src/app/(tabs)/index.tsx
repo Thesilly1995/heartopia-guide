@@ -9,6 +9,7 @@ import { useDailyPlots } from '@/data/daily-plots';
 import { useCurrentEventMeta } from '@/data/event-meta';
 import { useMeteorSpots } from '@/data/meteor-spots';
 import { useRainbowSpots } from '@/data/rainbow-spots';
+import { useSpecialWeatherForecast } from '@/data/special-weather';
 import { useLanguage } from '@/hooks/use-language';
 
 const SECTIONS: {
@@ -70,6 +71,7 @@ const STRINGS = {
     weather: 'Weer',
     weatherUntil: (t: string) => `tot ${t}`,
     weatherStale: 'Kan verouderd zijn',
+    forecastTitle: 'Bijzonder weer deze week',
   },
   en: {
     welcome: 'Welcome back to',
@@ -85,6 +87,7 @@ const STRINGS = {
     weather: 'Weather',
     weatherUntil: (t: string) => `until ${t}`,
     weatherStale: 'May be outdated',
+    forecastTitle: 'Special weather this week',
   },
 } as const;
 
@@ -98,6 +101,7 @@ export default function HomeScreen() {
   const rainbowSpots = useRainbowSpots();
   const meteorSpots = useMeteorSpots();
   const weather = useCurrentWeather();
+  const specialWeather = useSpecialWeatherForecast();
   const weatherDesc = !weather.label
     ? s.weather
     : weather.stale
@@ -129,6 +133,19 @@ export default function HomeScreen() {
             <Text style={styles.statusDesc}>{weatherDesc}</Text>
           </View>
         </View>
+
+        {specialWeather.length > 0 && (
+          <View style={styles.forecastCard}>
+            <Text style={styles.forecastTitle}>{s.forecastTitle}</Text>
+            {specialWeather.map((entry) => (
+              <View key={entry.startsAt + entry.kind} style={styles.forecastRow}>
+                <Text style={styles.forecastIcon}>{entry.emoji}</Text>
+                <Text style={styles.forecastLabel}>{entry.label}</Text>
+                <Text style={styles.forecastWhen}>{entry.whenLabel}</Text>
+              </View>
+            ))}
+          </View>
+        )}
 
         <Link href="/events" asChild>
           <TouchableOpacity style={styles.statusCard}>
@@ -226,6 +243,20 @@ function makeStyles(c: ThemeColors) {
     statusTitle: { color: c.forest, fontSize: 14, fontWeight: '700' },
     statusDesc: { color: c.forestSoft, fontSize: 11, marginTop: 1 },
     chevron: { fontSize: 16, color: c.forestSoft },
+    forecastCard: {
+      backgroundColor: c.card,
+      borderWidth: 1,
+      borderColor: c.line,
+      borderRadius: 16,
+      padding: 12,
+      marginTop: 4,
+      gap: 8,
+    },
+    forecastTitle: { color: c.forestSoft, fontSize: 11, fontWeight: '700', textTransform: 'uppercase' },
+    forecastRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+    forecastIcon: { fontSize: 16 },
+    forecastLabel: { flex: 1, color: c.forest, fontSize: 13, fontWeight: '600' },
+    forecastWhen: { color: c.forestSoft, fontSize: 12 },
     plotsCard: {
       flexDirection: 'row',
       justifyContent: 'space-around',

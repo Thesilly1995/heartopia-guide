@@ -59,6 +59,16 @@ export interface RemoteWeather {
   validUntil: string;
 }
 
+export type SpecialWeatherKind = 'rain' | 'rainbow' | 'warm_sun' | 'meteor';
+
+export interface RemoteSpecialWeatherEntry {
+  kind: SpecialWeatherKind;
+  labelNl: string;
+  labelEn: string;
+  /** ISO-timestamp (UTC) waarop dit blok begint — de weekvoorspelling uit het in-game telefoontje. */
+  startsAt: string;
+}
+
 export interface RemoteContentPayload {
   updatedAt: string;
   rainbowSpots?: RemoteMapSpot[];
@@ -66,6 +76,8 @@ export interface RemoteContentPayload {
   dailyPlots?: RemoteDailyPlots;
   event?: RemoteEventOverride;
   weather?: RemoteWeather;
+  /** Vooraf aangekondigde bijzondere weersomstandigheden deze week (regen/regenboog/warme zon/meteor) uit de in-game weekvoorspelling. Normaal weer wordt niet vermeld. */
+  specialWeather?: RemoteSpecialWeatherEntry[];
 }
 
 interface RemoteContentState {
