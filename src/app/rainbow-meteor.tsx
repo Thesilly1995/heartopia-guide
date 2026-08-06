@@ -7,8 +7,8 @@ import { DisclaimerBox } from '@/components/heartopia/disclaimer-box';
 import { PinMap } from '@/components/heartopia/pin-map';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
-import { METEOR_SPOTS } from '@/data/meteor-spots';
-import { RAINBOW_SPOTS } from '@/data/rainbow-spots';
+import { useMeteorSpots } from '@/data/meteor-spots';
+import { useRainbowSpots } from '@/data/rainbow-spots';
 import { useLanguage } from '@/hooks/use-language';
 
 const STORAGE_KEY = 'heartopia:rainbow-meteor:vinkjes';
@@ -47,6 +47,8 @@ export default function RainbowMeteorScreen() {
   const styles = useMemo(() => makeStyles(colors), [colors]);
   const { language } = useLanguage();
   const s = STRINGS[language];
+  const rainbowSpots = useRainbowSpots();
+  const meteorSpots = useMeteorSpots();
   const [tab, setTab] = useState<'rainbow' | 'meteor'>('rainbow');
   const [checked, setChecked] = useState<Record<string, boolean>>({});
 
@@ -81,7 +83,7 @@ export default function RainbowMeteorScreen() {
     }
   };
 
-  const spots = tab === 'rainbow' ? RAINBOW_SPOTS : METEOR_SPOTS;
+  const spots = tab === 'rainbow' ? rainbowSpots : meteorSpots;
   const prefix = tab[0];
   const prefixedChecked = Object.fromEntries(
     Object.entries(checked)

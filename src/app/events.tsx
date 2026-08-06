@@ -11,6 +11,7 @@ import { useEventBirds } from '@/data/event-birds';
 import { useEventFish } from '@/data/event-fish';
 import { useEventRecipes } from '@/data/event-recipes';
 import { useLanguage } from '@/hooks/use-language';
+import { RemoteEventRecipe, RemoteEventSighting, useRemoteContent } from '@/lib/remote-content';
 
 const STORAGE_KEY = 'heartopia:event:sterren';
 
@@ -43,16 +44,42 @@ const STRINGS = {
 
 type EventItem = { name: string; emoji: string; spot?: string; note?: string | null; ingredients?: string[] };
 
+function mapSighting(item: RemoteEventSighting, language: 'nl' | 'en'): EventItem {
+  return {
+    name: language === 'en' ? item.nameEn : item.nameNl,
+    spot: language === 'en' ? item.spotEn : item.spotNl,
+    note: language === 'en' ? item.noteEn : item.noteNl,
+    emoji: item.emoji,
+  };
+}
+
+function mapRecipe(item: RemoteEventRecipe, language: 'nl' | 'en'): EventItem {
+  return {
+    name: language === 'en' ? item.nameEn : item.nameNl,
+    ingredients: language === 'en' ? item.ingredientsEn : item.ingredientsNl,
+    emoji: item.emoji,
+  };
+}
+
 export default function EventsScreen() {
   const colors = useHeartopiaColors();
   const styles = useMemo(() => makeStyles(colors), [colors]);
   const { language } = useLanguage();
   const s = STRINGS[language];
-  const eventFish = useEventFish();
-  const eventBirds = useEventBirds();
-  const eventRecipes = useEventRecipes();
+  const bundledEventFish = useEventFish();
+  const bundledEventBirds = useEventBirds();
+  const bundledEventRecipes = useEventRecipes();
+  const { payload } = useRemoteContent();
+  const remoteEvent = payload?.event;
   const [tab, setTab] = useState('fish');
   const [stars, setStars] = useState<Record<string, number>>({});
+
+  const eventFish = remoteEvent ? remoteEvent.fish.map((item) => mapSighting(item, language)) : bundledEventFish;
+  const eventBirds = remoteEvent ? remoteEvent.birds.map((item) => mapSighting(item, language)) : bundledEventBirds;
+  const eventRecipes = remoteEvent ? remoteEvent.recipes.map((item) => mapRecipe(item, language)) : bundledEventRecipes;
+  const subtitle = remoteEvent
+    ? `🎉 ${language === 'en' ? remoteEvent.nameEn : remoteEvent.nameNl} · ${language === 'en' ? remoteEvent.datesEn : remoteEvent.datesNl}`
+    : s.subtitle;
 
   const TABS: { key: string; label: string; items: EventItem[] }[] = [
     { key: 'fish', label: s.fish, items: eventFish },
@@ -92,7 +119,7 @@ export default function EventsScreen() {
         gradient={['#3D7EA6', '#6EC6E8']}
         icon="🎉"
         title={s.title}
-        subtitle={s.subtitle}
+        subtitle={subtitle}
         tabs={TABS}
         activeTab={tab}
         onTabChange={setTab}

@@ -1,3 +1,8 @@
+import { useMemo } from 'react';
+
+import { useLanguage } from '@/hooks/use-language';
+import { useRemoteContent } from '@/lib/remote-content';
+
 export interface EventSpot {
   num: number;
   x: number;
@@ -5,5 +10,23 @@ export interface EventSpot {
   description: string;
 }
 
-// Wordt gevuld zodra de Meteorenregen actief is en de ertsplekken bekend zijn.
-export const METEOR_SPOTS: EventSpot[] = [];
+// Bundel-fallback: leeg totdat REMOTE_CONTENT_URL data levert, of totdat een
+// sessie de actuele ertsplekken handmatig invult. Zie docs/remote-content.md.
+const METEOR_SPOTS_FALLBACK: EventSpot[] = [];
+
+export function useMeteorSpots(): EventSpot[] {
+  const { language } = useLanguage();
+  const { payload } = useRemoteContent();
+
+  return useMemo(() => {
+    if (payload?.meteorSpots && payload.meteorSpots.length > 0) {
+      return payload.meteorSpots.map((spot) => ({
+        num: spot.num,
+        x: spot.x,
+        y: spot.y,
+        description: language === 'en' ? spot.descriptionEn : spot.descriptionNl,
+      }));
+    }
+    return METEOR_SPOTS_FALLBACK;
+  }, [payload, language]);
+}

@@ -2,6 +2,34 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-06 (later) — Remote-content infrastructuur voorbereid (rainbow/meteor/dagelijkse plots/event zonder appstore-update bijwerkbaar)
+
+**Uitgangspunt:** gebruiker wil de app straks in de Play Store zetten, en wil dat tijdgebonden content (rainbow-locaties, meteorenregen-ertsplekken, event, en de dagelijkse Zwervende Eik/Fluoriet-plot) bijgewerkt kan worden zonder telkens een nieuwe appversie door de store-review te moeten halen. Ik heb gevraagd waar die content gehost moet worden (nieuwe publieke GitHub-repo / Gist / pas later kiezen); die vraag is niet beantwoord (sessie werd onderbroken), dus heb ik de veilige default gekozen: de app-code voorbereiden met een instelbare URL, hostingkeuze blijft open.
+
+### Wat is gebouwd
+
+- **`src/constants/remote.ts`**: `REMOTE_CONTENT_URL` — nu `null`. Zodra er een hostingplek gekozen is (bv. een raw GitHub-link naar een JSON-bestand, of een Gist), hier invullen. Zolang dit `null` blijft, gedraagt de app zich exact als voorheen (geen netwerkverkeer, alle bundel-standaarden).
+- **`src/lib/remote-content.ts`**: gedeelde `useRemoteContent()`-hook — haalt één JSON-payload op, cachet in AsyncStorage, toont meteen gecachte/bundel-data terwijl op de achtergrond ververst wordt, faalt stil (blijft op cache/bundel staan) bij geen internet of als de URL niet is ingesteld. Eén fetch wordt gedeeld tussen alle schermen (geen dubbel ophalen).
+- **`docs/remote-content.md`**: het volledige JSON-schema + hosting-instructies, zodat een volgende sessie (of de gebruiker) precies weet hoe het bestand eruit moet zien en waar `REMOTE_CONTENT_URL` op te zetten.
+- **Rainbow/Meteor** (`src/data/rainbow-spots.ts`, `meteor-spots.ts`): van statische lege arrays omgezet naar `useRainbowSpots()`/`useMeteorSpots()`-hooks die remote data prefereren, met de bestaande lege bundel-fallback (ongewijzigd gedrag zolang er geen remote data is).
+- **Dagelijkse plots** (nieuw, bestond niet eerder in de app — wel als `TODAY_OAK_PLOT`/`TODAY_FLUORITE_PLOT` in het prototype maar nooit overgezet): `src/data/daily-plots.ts` + een kaartje op het homescreen ("Zwervende Eik vandaag" / "Fluoriet-plek vandaag"), toont "Onbekend — vraag het na" zolang er geen remote data is.
+- **Huidig Event** (`src/app/events.tsx`): als `payload.event` aanwezig is, overschrijft dat de titel/data/vissen/vogels/recepten; anders blijft de bestaande gebundelde Call of Whales-content (zoals nu al in de app) gewoon getoond.
+
+### Bekende bewuste keuzes
+
+- Geen hostingplek is nog gekozen — `REMOTE_CONTENT_URL` staat op `null`. De app werkt hierdoor identiek aan voor deze wijziging; dit is puur voorbereidend werk.
+- Getest via `expo start --web` + Playwright met `REMOTE_CONTENT_URL = null`: homescreen (incl. nieuw plots-kaartje), Rainbow & Meteorenregen, Huidig Event — geen console errors, gedrag ongewijzigd t.o.v. voor deze sessie.
+
+### Open ideeën / mogelijk vervolg
+
+- **Hostingplek kiezen** voor het JSON-bestand (zie `docs/remote-content.md` voor opties) en `REMOTE_CONTENT_URL` invullen.
+- **Play Store-publicatie**: `android.package` toevoegen aan `app.json`, `eas.json` opzetten, EAS-build maken, Play Console-account, privacyverklaring, content rating, store-listing (screenshots/beschrijving), en duidelijk maken dat het een onofficiële fan-gids is (geen officiële Heartopia-branding gebruiken).
+- Bubbels-locaties (`src/data/bubble-locations.ts`) zijn nu nog steeds volledig statisch — niet meegenomen in deze remote-content-ronde omdat de gebruiker specifiek rainbow/meteor/event/plots noemde. Kan op dezelfde manier aangepakt worden als er behoefte aan is.
+
+### Repo-status
+
+Alles gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-06 — Engelse vertaling (NL/EN taalwissel) toegevoegd
 
 **Uitgangspunt:** vorige sessie liet de EN-vertaling bewust achterwege voor snelheid; het session-bound prototype-bestand (met de echte `nameNl`/`nameEn`-paren) was niet meer bereikbaar. Gebruiker heeft `heartopiagidsprototype.jsx` opnieuw geüpload zodat de originele EN-content gebruikt kon worden i.p.v. machinevertaling te verzinnen.

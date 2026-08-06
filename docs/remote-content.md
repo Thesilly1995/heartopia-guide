@@ -1,0 +1,101 @@
+# Remote content (rainbow/meteor-locaties, dagelijkse plots, event-override)
+
+## Waarom
+
+Rainbow-boeketten, meteorenregen-ertsplekken, de dagelijkse Zwervende
+Eik-plot, de dagelijkse Fluoriet-plot, en het huidige event wisselen
+regelmatig (dagelijks tot wekelijks). Die data zit niet vast in de
+app — hij wordt bij het opstarten opgehaald van één JSON-bestand op
+een URL die jij kiest. Zo kan die content bijgewerkt worden zonder
+nieuwe appversie/Play Store-review.
+
+Zolang er geen URL is ingesteld (of het ophalen mislukt, bv. geen
+internet), valt de app terug op de vast-gebakken standaardwaarden —
+de app blijft dus altijd bruikbaar.
+
+## Hosting instellen
+
+1. Zet een JSON-bestand (zie schema hieronder) ergens publiek
+   toegankelijk neer — bijvoorbeeld:
+   - Een **raw GitHub-link** naar een JSON-bestand in een (eventueel
+     apart, publiek) repo: `https://raw.githubusercontent.com/<owner>/<repo>/main/heartopia-content.json`
+   - Een **GitHub Gist** (raw-link van een los bestand)
+   - Elke andere plek die een geldige `Content-Type: application/json`
+     (of tenminste geldige JSON-body) teruggeeft op een GET-request,
+     zonder authenticatie.
+2. Vul die URL in bij `REMOTE_CONTENT_URL` in
+   `src/constants/remote.ts`.
+3. Klaar — de app haalt de content automatisch op bij het opstarten
+   van elk scherm dat ervan afhangt, cachet hem lokaal (AsyncStorage),
+   en ververst op de achtergrond bij een volgende sessie.
+
+Bijwerken van de content zelf (nieuwe rainbow-locaties opzoeken,
+nieuw event invullen) gebeurt daarna gewoon door het JSON-bestand op
+die plek te overschrijven — dat kan in een chat-sessie met Claude,
+of handmatig.
+
+## JSON-schema
+
+Alle velden zijn optioneel — laat een sectie weg (of `null`) als die
+nog niet bekend is; de app valt dan terug op de bundel-standaard voor
+dat specifieke onderdeel.
+
+```json
+{
+  "updatedAt": "2026-08-10T12:00:00Z",
+  "rainbowSpots": [
+    { "num": 1, "x": 58, "y": 28, "descriptionNl": "Onsen Berg, oostkant", "descriptionEn": "Onsen Mountain, east side" }
+  ],
+  "meteorSpots": [
+    { "num": 1, "x": 34, "y": 19, "descriptionNl": "Noordwestelijk woestijngebied", "descriptionEn": "Northwest desert area" }
+  ],
+  "dailyPlots": {
+    "oakPlotNl": "Plot 7",
+    "oakPlotEn": "Plot 7",
+    "fluoritePlotNl": "Plot 2",
+    "fluoritePlotEn": "Plot 2"
+  },
+  "event": {
+    "nameNl": "Call of Whales",
+    "nameEn": "Call of Whales",
+    "datesNl": "11 juli – 22 augustus 2026",
+    "datesEn": "Jul 11 – Aug 22, 2026",
+    "fish": [
+      { "nameNl": "Sint-Jakobsschelp", "nameEn": "Scallop", "spotNl": "Walviszee", "spotEn": "Whale Sea", "noteNl": null, "noteEn": null, "emoji": "🐟" }
+    ],
+    "birds": [
+      { "nameNl": "Witvleugelstern", "nameEn": "White Winged Tern", "spotNl": "Bloemenveld", "spotEn": "Flower Field", "noteNl": null, "noteEn": null, "emoji": "🐦" }
+    ],
+    "recipes": [
+      { "nameNl": "IJskoud Oceaandrankje", "nameEn": "Ocean Iced Drink", "ingredientsNl": ["2x Spirulina Poeder", "2x Sterfruit"], "ingredientsEn": ["2x Spirulina Powder", "2x Starfruit"], "emoji": "🍽️" }
+    ]
+  }
+}
+```
+
+### Velduitleg
+
+- **`rainbowSpots` / `meteorSpots`**: lijst van pinnetjes op de
+  eilandkaart. `x`/`y` zijn percentages (0-100) t.o.v. de kaartafbeelding
+  (`assets/images/maps/island-map.jpg`), zelfde systeem als de
+  bestaande Bubbels-kaart. Laat de array leeg (`[]`) of weg als de
+  gebeurtenis niet actief is.
+- **`dailyPlots`**: de plot-naam zoals die in-game getoond wordt (bv.
+  `"Plot 7"`). Vaak identiek in NL/EN omdat het plot-nummers zijn.
+- **`event`**: een volledige override van het "Huidig Event"-scherm.
+  Als dit veld ontbreekt, blijft de bestaande gebundelde Call of
+  Whales-content (zoals nu al in de app zit) getoond worden — dit
+  veld hoeft dus pas ingevuld te worden zodra het volgende event
+  begint.
+
+## Waar dit in de code zit
+
+- `src/constants/remote.ts` — de URL-configuratie.
+- `src/lib/remote-content.ts` — het gedeelde fetch/cache-mechanisme
+  (`useRemoteContent()`) en de TypeScript-types voor het schema
+  hierboven.
+- `src/data/rainbow-spots.ts`, `src/data/meteor-spots.ts`,
+  `src/data/daily-plots.ts` — combineren de remote data met een
+  bundel-fallback en de huidige taal.
+- `src/app/events.tsx` — combineert `payload.event` met de gebundelde
+  `useEventFish()`/`useEventBirds()`/`useEventRecipes()`-hooks.

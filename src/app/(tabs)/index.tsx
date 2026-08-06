@@ -4,6 +4,7 @@ import { Platform, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, Vi
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
+import { useDailyPlots } from '@/data/daily-plots';
 import { useLanguage } from '@/hooks/use-language';
 
 const SECTIONS: {
@@ -51,8 +52,20 @@ const SECTIONS: {
 ];
 
 const STRINGS = {
-  nl: { welcome: 'Welkom terug in', title: 'Heartopia Gids' },
-  en: { welcome: 'Welcome back to', title: 'Heartopia Guide' },
+  nl: {
+    welcome: 'Welkom terug in',
+    title: 'Heartopia Gids',
+    todayOak: 'Zwervende Eik vandaag',
+    todayFluorite: 'Fluoriet-plek vandaag',
+    unknown: 'Onbekend — vraag het na',
+  },
+  en: {
+    welcome: 'Welcome back to',
+    title: 'Heartopia Guide',
+    todayOak: "Roaming Oak today",
+    todayFluorite: 'Fluorite spot today',
+    unknown: 'Unknown — ask to look it up',
+  },
 } as const;
 
 export default function HomeScreen() {
@@ -60,6 +73,7 @@ export default function HomeScreen() {
   const styles = useMemo(() => makeStyles(colors), [colors]);
   const { language, toggleLanguage } = useLanguage();
   const s = STRINGS[language];
+  const dailyPlots = useDailyPlots();
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -74,6 +88,23 @@ export default function HomeScreen() {
               <Text style={styles.langDivider}>/</Text>
               <Text style={[styles.langOption, language === 'en' && styles.langOptionActive]}>EN</Text>
             </Pressable>
+          </View>
+        </View>
+
+        <View style={styles.plotsCard}>
+          <View style={styles.plotsItem}>
+            <Text style={styles.plotsIcon}>🌳</Text>
+            <View>
+              <Text style={styles.plotsLabel}>{s.todayOak}</Text>
+              <Text style={styles.plotsValue}>{dailyPlots.oakPlot ?? s.unknown}</Text>
+            </View>
+          </View>
+          <View style={styles.plotsItem}>
+            <Text style={styles.plotsIcon}>💎</Text>
+            <View>
+              <Text style={styles.plotsLabel}>{s.todayFluorite}</Text>
+              <Text style={styles.plotsValue}>{dailyPlots.fluoritePlot ?? s.unknown}</Text>
+            </View>
           </View>
         </View>
 
@@ -110,6 +141,21 @@ function makeStyles(c: ThemeColors) {
     langOption: { fontSize: 12, fontWeight: '700', color: c.forestSoft },
     langOptionActive: { color: c.coral },
     langDivider: { fontSize: 12, color: c.line },
+    plotsCard: {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      alignItems: 'center',
+      backgroundColor: c.disclaimerBg,
+      borderWidth: 1,
+      borderColor: c.disclaimerBorder,
+      borderRadius: 16,
+      padding: 12,
+      marginTop: 4,
+    },
+    plotsItem: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+    plotsIcon: { fontSize: 18 },
+    plotsLabel: { color: c.forestSoft, fontSize: 10 },
+    plotsValue: { color: c.forest, fontSize: 13, fontWeight: '700', marginTop: 2 },
     section: { marginTop: 16, gap: 10 },
     sectionLabel: { color: c.forestSoft, fontSize: 14, marginBottom: 2 },
     card: {
