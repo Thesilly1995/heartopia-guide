@@ -9,7 +9,7 @@ import { useDailyPlots } from '@/data/daily-plots';
 import { useCurrentEventMeta } from '@/data/event-meta';
 import { useMeteorSpots } from '@/data/meteor-spots';
 import { useRainbowSpots } from '@/data/rainbow-spots';
-import { useSpecialWeatherForecast } from '@/data/special-weather';
+import { useWeekForecast } from '@/data/week-forecast';
 import { useLanguage } from '@/hooks/use-language';
 
 const SECTIONS: {
@@ -71,7 +71,7 @@ const STRINGS = {
     weather: 'Weer',
     weatherUntil: (t: string) => `tot ${t}`,
     weatherStale: 'Kan verouderd zijn',
-    forecastTitle: 'Bijzonder weer deze week',
+    forecastTitle: 'Weer deze week',
   },
   en: {
     welcome: 'Welcome back to',
@@ -87,7 +87,7 @@ const STRINGS = {
     weather: 'Weather',
     weatherUntil: (t: string) => `until ${t}`,
     weatherStale: 'May be outdated',
-    forecastTitle: 'Special weather this week',
+    forecastTitle: 'Weather this week',
   },
 } as const;
 
@@ -101,7 +101,7 @@ export default function HomeScreen() {
   const rainbowSpots = useRainbowSpots();
   const meteorSpots = useMeteorSpots();
   const weather = useCurrentWeather();
-  const specialWeather = useSpecialWeatherForecast();
+  const weekForecast = useWeekForecast();
   const weatherDesc = !weather.label
     ? s.weather
     : weather.stale
@@ -134,14 +134,16 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        {specialWeather.length > 0 && (
+        {weekForecast.length > 0 && (
           <View style={styles.forecastCard}>
             <Text style={styles.forecastTitle}>{s.forecastTitle}</Text>
-            {specialWeather.map((entry) => (
-              <View key={entry.startsAt + entry.kind} style={styles.forecastRow}>
+            {weekForecast.map((entry) => (
+              <View key={entry.date} style={styles.forecastRow}>
                 <Text style={styles.forecastIcon}>{entry.emoji}</Text>
-                <Text style={styles.forecastLabel}>{entry.label}</Text>
-                <Text style={styles.forecastWhen}>{entry.whenLabel}</Text>
+                <Text style={styles.forecastDay}>{entry.dayLabel}</Text>
+                <Text style={[styles.forecastLabel, entry.kind === 'normal' && styles.forecastLabelMuted]}>
+                  {entry.label}
+                </Text>
               </View>
             ))}
           </View>
@@ -255,8 +257,9 @@ function makeStyles(c: ThemeColors) {
     forecastTitle: { color: c.forestSoft, fontSize: 11, fontWeight: '700', textTransform: 'uppercase' },
     forecastRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
     forecastIcon: { fontSize: 16 },
-    forecastLabel: { flex: 1, color: c.forest, fontSize: 13, fontWeight: '600' },
-    forecastWhen: { color: c.forestSoft, fontSize: 12 },
+    forecastDay: { width: 70, color: c.forest, fontSize: 13, fontWeight: '700' },
+    forecastLabel: { flex: 1, textAlign: 'right', color: c.forest, fontSize: 13, fontWeight: '600' },
+    forecastLabelMuted: { color: c.forestSoft, fontWeight: '400' },
     plotsCard: {
       flexDirection: 'row',
       justifyContent: 'space-around',

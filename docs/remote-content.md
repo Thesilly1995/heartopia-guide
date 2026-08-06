@@ -76,9 +76,10 @@ dat specifieke onderdeel.
     "labelEn": "Rainbow",
     "validUntil": "2026-08-10T17:00:00Z"
   },
-  "specialWeather": [
-    { "kind": "meteor", "labelNl": "Meteorenregen", "labelEn": "Meteor Shower", "startsAt": "2026-08-12T13:00:00Z" },
-    { "kind": "rainbow", "labelNl": "Regenboog", "labelEn": "Rainbow", "startsAt": "2026-08-13T06:00:00Z" }
+  "weekForecast": [
+    { "date": "2026-08-07", "kind": "rain" },
+    { "date": "2026-08-08", "kind": "warm_sun" },
+    { "date": "2026-08-09", "kind": "normal" }
   ]
 }
 ```
@@ -109,15 +110,18 @@ dat specifieke onderdeel.
   dus dit veld moet elke keer dat het blok wisselt (07:00, 13:00,
   19:00, 01:00 servertijd) opnieuw gezet worden, bv. door het in een
   chat-sessie te vragen na te kijken.
-- **`specialWeather`**: de vooraf aangekondigde bijzondere
-  weersomstandigheden voor de komende week, zoals te zien in het
-  in-game weekvoorspelling-telefoontje. `kind` is `"rain"`,
-  `"rainbow"`, `"warm_sun"` (warme zon) of `"meteor"`.
-  **Normaal/standaard weer wordt hier bewust niet in opgenomen** — de
-  app toont dit als losse "Bijzonder weer deze week"-lijst op het
-  homescreen, en laat items automatisch verdwijnen zodra hun blok
-  (~6 uur vanaf `startsAt`) voorbij is. `startsAt` is het beginmoment
-  van dat blok, in UTC.
+- **`weekForecast`**: de weekvoorspelling uit het in-game
+  weekvoorspelling-telefoontje — één entry per kalenderdag (`date` als
+  `"YYYY-MM-DD"`, de lokale speldatum, geen terugkerende weekdag).
+  `kind` is `"normal"` (niks bijzonders), `"rain"`, `"rainbow"`,
+  `"warm_sun"` (warme zon) of `"meteor"`. In tegenstelling tot
+  `weather` hoef je hier geen `labelNl`/`labelEn` bij te zetten — de
+  app kent per `kind` een vaste NL/EN-tekst en icoon.
+  **Neem bewust ook de dagen zonder bijzonderheden op** (`kind:
+  "normal"`) — de app toont dit als een echte weekweergave (vandaag
+  t/m zondag) op het homescreen, niet alleen de uitschieters. Dagen
+  vóór vandaag worden automatisch niet meer getoond; je hoeft ze dus
+  niet te verwijderen zodra ze voorbij zijn.
 
 ## Waar dit in de code zit
 
@@ -127,11 +131,12 @@ dat specifieke onderdeel.
   hierboven.
 - `src/data/rainbow-spots.ts`, `src/data/meteor-spots.ts`,
   `src/data/daily-plots.ts`, `src/data/current-weather.ts`,
-  `src/data/special-weather.ts` — combineren de remote data met een
+  `src/data/week-forecast.ts` — combineren de remote data met een
   bundel-fallback en de huidige taal.
 - `src/data/event-meta.ts` — naam/data van het huidige event, gedeeld
   tussen het homescreen-kaartje en `src/app/events.tsx`.
 - `src/app/events.tsx` — combineert `payload.event` met de gebundelde
   `useEventFish()`/`useEventBirds()`/`useEventRecipes()`-hooks.
 - `src/app/(tabs)/index.tsx` — toont bovenaan het homescreen: weer,
-  huidig event, Rainbow/Meteorenregen-status, en de dagelijkse plots.
+  weekvoorspelling, huidig event, Rainbow/Meteorenregen-status, en de
+  dagelijkse plots.

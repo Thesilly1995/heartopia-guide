@@ -2,6 +2,34 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-06 (nog later, deel 2) — Weekweer herontworpen naar dagniveau + inhaalslag andere sessie
+
+**Uitgangspunt:** gebruiker had in een andere Claude-sessie (buiten deze chat) al drie dingen gedaan die hier niet gelogd waren — zie hieronder ter aanvulling. Daarna vroeg de gebruiker hier om het "Bijzonder weer deze week"-kaartje anders op te zetten: een echte weekweergave (vandaag t/m zondag) met per dag een status, óók de dagen zonder bijzonderheden (bv. "vrijdag regen, zaterdag warme zon, zondag normale zon/niks bijzonders") i.p.v. alleen bijzondere dagen te noemen.
+
+### Inhaalslag (niet door mij gebouwd, wel nu meegenomen)
+
+Een andere sessie had, zonder dit hier te loggen: `REMOTE_CONTENT_URL` live gezet (wijst naar `remote-content.json` in dit repo zelf via de publieke raw-GitHub-link — het repo is dus publiek gemaakt), een eerste versie van een "Bijzonder weer deze week"-kaartje gebouwd (blok-gebaseerd, `specialWeather`-veld, verborg normale dagen), en 6 schelpnamen bijgewerkt naar de spelupdate van 5 augustus. Ingehaald via `git pull` — alles compileert en werkt.
+
+### Wat is in déze sessie gebouwd
+
+- **`specialWeather` (blok-gebaseerd, `startsAt`) vervangen door `weekForecast`** (dag-gebaseerd, `date` als `"YYYY-MM-DD"`): één entry per kalenderdag, `kind` is nu ook `"normal"` naast `rain`/`rainbow`/`warm_sun`/`meteor`. Geen `labelNl`/`labelEn` meer nodig in de JSON — de app kent een vaste tekst/icoon per `kind` (`src/data/week-forecast.ts`, vervangt `special-weather.ts`).
+- Homescreen-kaartje toont nu alle resterende dagen van de week (vandaag t/m zondag), inclusief expliciete "Niks bijzonders"-dagen in een gedempte kleur i.p.v. weggelaten te worden.
+- `remote-content.json` bijgewerkt met de echte actuele weekvoorspelling (vrijdag 7 aug: regen, zaterdag 8 aug: warme zon, zondag 9 aug: niks bijzonders) — nog niet gepusht op het moment van committen van code, dus meteen meegenomen in dezelfde commit.
+
+### Bekende bewuste keuzes
+
+- `date` i.p.v. een terugkerende weekdag-naam, zodat er geen aannames nodig zijn over welke week het is — dagen vóór vandaag verdwijnen vanzelf uit de weergave, hoeven niet handmatig verwijderd te worden.
+- Getest met een gemockte payload (route-interceptie op de echte live raw-GitHub-URL, met de lokale `remote-content.json` als body) in beide talen — geen console errors, weekweergave en "niks bijzonders"-styling kloppen.
+
+### Open ideeën / mogelijk vervolg
+
+- Het huidige `weather`-blok (los van de weekvoorspelling) staat nog op verouderde data (`validUntil` van eerder vandaag) — iemand moet dit periodiek verversen, zie eerdere sessie-notities.
+- Hostingplek/Play Store-punten: ongewijzigd t.o.v. eerdere sessies.
+
+### Repo-status
+
+Alles gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-06 (nog later) — Event/rainbow/meteor bovenaan homescreen + live spelweer
 
 **Uitgangspunt:** vervolg op de remote-content-infrastructuur van eerder vandaag. Gebruiker wilde (1) het huidige event en de rainbow/meteorenregen-status ook als kaartje bovenaan het homescreen, net als het bestaande Zwervende Eik/Fluoriet-kaartje, en (2) het spelweer (Zonnig/Regen/Regenboog, wisselt elke 6 uur in vaste blokken van 07:00/13:00/19:00/01:00 servertijd) in de app. Gevraagd of het weer per blok voorspelbaar/vast is (dan met een pure klok-widget te doen) of willekeurig (dan moet het via dezelfde remote-content-route als de rest) — antwoord: willekeurig, dus optie B.

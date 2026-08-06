@@ -59,14 +59,12 @@ export interface RemoteWeather {
   validUntil: string;
 }
 
-export type SpecialWeatherKind = 'rain' | 'rainbow' | 'warm_sun' | 'meteor';
+export type WeekForecastKind = 'normal' | 'rain' | 'rainbow' | 'warm_sun' | 'meteor';
 
-export interface RemoteSpecialWeatherEntry {
-  kind: SpecialWeatherKind;
-  labelNl: string;
-  labelEn: string;
-  /** ISO-timestamp (UTC) waarop dit blok begint — de weekvoorspelling uit het in-game telefoontje. */
-  startsAt: string;
+export interface RemoteWeekForecastDay {
+  /** Kalenderdatum "YYYY-MM-DD" (lokale speldatum), niet een terugkerende weekdag. */
+  date: string;
+  kind: WeekForecastKind;
 }
 
 export interface RemoteContentPayload {
@@ -76,8 +74,12 @@ export interface RemoteContentPayload {
   dailyPlots?: RemoteDailyPlots;
   event?: RemoteEventOverride;
   weather?: RemoteWeather;
-  /** Vooraf aangekondigde bijzondere weersomstandigheden deze week (regen/regenboog/warme zon/meteor) uit de in-game weekvoorspelling. Normaal weer wordt niet vermeld. */
-  specialWeather?: RemoteSpecialWeatherEntry[];
+  /**
+   * De weekvoorspelling uit het in-game telefoontje: één entry per dag,
+   * inclusief dagen zonder bijzonderheden (`kind: "normal"`) — zo kan de app
+   * een echte weekweergave tonen i.p.v. alleen bijzondere dagen te noemen.
+   */
+  weekForecast?: RemoteWeekForecastDay[];
 }
 
 interface RemoteContentState {
