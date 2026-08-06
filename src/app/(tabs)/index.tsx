@@ -25,12 +25,12 @@ const SECTIONS: {
       { href: '/vogels', icon: '🐦', title: { nl: 'Vogels', en: 'Birds' }, desc: { nl: 'Vogelsoorten & plekken', en: 'Bird species & spots' } },
       { href: '/beeldhouwen', icon: '🏖️', title: { nl: 'Beeldhouwen', en: 'Sculpting' }, desc: { nl: 'Zand- en sneeuwsculpturen', en: 'Sand and snow sculptures' } },
       { href: '/ocean-cleanup', icon: '🌊', title: { nl: 'Ocean Cleanup', en: 'Ocean Cleanup' }, desc: { nl: 'Vervuiling opruimen & schelpen', en: 'Cleaning up pollution & shells' } },
+      { href: '/huisdieren', icon: '🐾', title: { nl: 'Dog & Cat Moments', en: 'Dog & Cat Moments' }, desc: { nl: 'Huisdieren adopteren & verzorgen', en: 'Adopt & care for pets' } },
     ],
   },
   {
-    label: { nl: 'Dieren', en: 'Animals' },
+    label: { nl: 'Extra', en: 'Extra' },
     items: [
-      { href: '/huisdieren', icon: '🐾', title: { nl: 'Dog & Cat Moments', en: 'Dog & Cat Moments' }, desc: { nl: 'Huisdieren adopteren & verzorgen', en: 'Adopt & care for pets' } },
       { href: '/wilde-dieren', icon: '🦊', title: { nl: 'Wilde Dieren', en: 'Wild Animals' }, desc: { nl: 'Voertroggen, eten & vriendschap', en: 'Feeding troughs, food & friendship' } },
       { href: '/wilde-ingredienten', icon: '🌿', title: { nl: 'Wilde Ingrediënten', en: 'Wild Ingredients' }, desc: { nl: 'Fruit, paddenstoelen & materialen', en: 'Fruit, mushrooms & materials' } },
     ],
@@ -38,10 +38,8 @@ const SECTIONS: {
   {
     label: { nl: 'Spel', en: 'Game' },
     items: [
-      { href: '/events', icon: '🎉', title: { nl: 'Huidig Event', en: 'Current Event' }, desc: { nl: 'Call of Whales', en: 'Call of Whales' } },
       { href: '/missies', icon: '📋', title: { nl: 'Missies', en: 'Missions' }, desc: { nl: 'Dagelijkse & wekelijkse taken', en: 'Daily & weekly tasks' } },
       { href: '/bubbels', icon: '🫧', title: { nl: 'Wekelijkse Bubbels', en: 'Weekly Bubbles' }, desc: { nl: 'Roze bubbels vol beloningen', en: 'Pink bubbles full of rewards' } },
-      { href: '/rainbow-meteor', icon: '🌈', title: { nl: 'Rainbow & Meteorenregen', en: 'Rainbow & Meteor Shower' }, desc: { nl: 'Boeketten & sterrenscherven', en: 'Bouquets & star shards' } },
       { href: '/badges', icon: '🏅', title: { nl: 'Badges', en: 'Badges' }, desc: { nl: 'Prestaties & profieltitels', en: 'Achievements & profile titles' } },
       { href: '/codes', icon: '🎁', title: { nl: 'Codes', en: 'Codes' }, desc: { nl: 'Actieve & verlopen codes', en: 'Active & expired codes' } },
     ],

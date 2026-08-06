@@ -12,10 +12,10 @@ const STORAGE_KEY = 'heartopia:missies:vinkjes';
 
 const DAILY = {
   nl: [
+    { key: 'd0', label: 'Dagelijkse check-in' },
     { key: 'd1', label: '5x Bewonersverzoek (Resident Requests)' },
     { key: 'd3', label: 'Winkel-restock bekijken (meubels & kleding)' },
     { key: 'd4', label: 'Post/mailbox controleren' },
-    { key: 'd5', label: "Hobby's beoefenen (vissen, tuinieren, insecten, etc.)" },
     { key: 'd6', label: 'Huisdier voeren, aaien & trainen' },
     { key: 'd7', label: 'Wilde dieren voeren' },
     { key: 'd10', label: 'Gewassen oogsten & water geven' },
@@ -25,10 +25,10 @@ const DAILY = {
     { key: 'd14', label: 'Laboratorium checken' },
   ],
   en: [
+    { key: 'd0', label: 'Daily check-in' },
     { key: 'd1', label: '5x Resident Request' },
     { key: 'd3', label: 'Check shop restock (furniture & clothing)' },
     { key: 'd4', label: 'Check mail/mailbox' },
-    { key: 'd5', label: 'Practice hobbies (fishing, gardening, insects, etc.)' },
     { key: 'd6', label: 'Feed, pet & train your pet' },
     { key: 'd7', label: 'Feed wild animals' },
     { key: 'd10', label: 'Harvest crops & water them' },

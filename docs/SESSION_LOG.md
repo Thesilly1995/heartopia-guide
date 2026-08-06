@@ -2,6 +2,23 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-06 (nog later, deel 5) — Homescreen-secties herschikt + missies bijgewerkt
+
+**Uitgangspunt:** vervolg op deel 3/4 (hieronder). Gebruiker wilde: (1) het kopje "Dieren" hernoemen naar "Extra", Dog & Cat Moments daaruit weghalen en onder Ocean Cleanup zetten (in de Hobby's-sectie dus), Wilde Dieren + Wilde Ingrediënten blijven achter onder "Extra"; (2) in de "Spel"-sectie Huidig Event en Rainbow & Meteorenregen weghalen, want die staan al als kaartjes bovenaan de homepage (dubbel); (3) bij de dagelijkse missies "Hobby's beoefenen" weghalen en daarvoor "Dagelijkse check-in" toevoegen.
+
+### Wat is gebouwd
+
+- **`src/app/(tabs)/index.tsx`**: `SECTIONS`-array aangepast — Dog & Cat Moments verplaatst naar het eind van de Hobby's-lijst (na Ocean Cleanup), sectielabel "Dieren"/"Animals" hernoemd naar "Extra" (nu alleen Wilde Dieren + Wilde Ingrediënten), Huidig Event en Rainbow & Meteorenregen uit de "Spel"-sectie verwijderd. De routes/schermen zelf (`/events`, `/rainbow-meteor`) bestaan nog gewoon en blijven bereikbaar via de kaartjes bovenaan het homescreen.
+- **`src/app/missies.tsx`**: `DAILY`-lijst — item `d5` ("Hobby's beoefenen") verwijderd, nieuw item `d0` ("Dagelijkse check-in"/"Daily check-in") toegevoegd als eerste rij.
+
+### Getest
+
+Via `expo start --web` + Playwright met gemockte `remote-content.json`: homescreen toont Hobby's (incl. Dog & Cat Moments als laatste), Extra (Wilde Dieren + Wilde Ingrediënten), Spel (Missies/Bubbels/Badges/Codes, geen Event/Rainbow meer) — en de Missies-pagina toont "Dagelijkse check-in" als eerste dagelijkse taak zonder "Hobby's beoefenen". Geen console errors.
+
+### Repo-status
+
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-06 (nog later, deel 4) — Weer-preview toont weekdagnaam i.p.v. "Vandaag"
 
 **Uitgangspunt:** vervolg op deel 3 (net hieronder). Gebruiker wilde dat de ingeklapte preview van het weer-kaartje de echte weekdagnaam toont (bv. "Dinsdag") in plaats van "Vandaag" — elke dag dus de actuele dag van de week.
