@@ -2,6 +2,35 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-06 (nog later, deel 7) — Echte premium-gate (test-toggle) voor het voortgangsdashboard
+
+**Uitgangspunt:** na het bouwen van de Premium-sectie (deel 6) vroeg de gebruiker of niet-premium gebruikers het dashboard/meldingen/cloud save niet zouden moeten kunnen zien/gebruiken. Antwoord was: klopte nog niet — er was helemaal geen premium/gratis-onderscheid, dashboard was voor iedereen gratis bruikbaar, en "Komt binnenkort" gold voor iedereen omdat de features nog niet bestaan. Gebruiker wilde dat alsnog gesimuleerd hebben: een lokale test-toggle die echt bepaalt of je bij het dashboard kan, zodat je kan voorproeven hoe het straks aanvoelt.
+
+### Wat is gebouwd
+
+- **`src/hooks/use-premium.tsx`** (nieuw): `PremiumProvider` + `usePremium()` — zelfde patroon als `use-language.tsx` (React Context, AsyncStorage-persistentie onder `heartopia:premium:test`, default `false`). Nadrukkelijk een test-schakelaar, geen echte toegangscontrole (geen server, geen account).
+- **`src/app/_layout.tsx`**: `PremiumProvider` toegevoegd (binnen `LanguageProvider`, buiten `ThemeProvider`), en `dashboard` als `Stack.Screen` geregistreerd (stond er nog niet bij, werkte al wel via file-based routing maar nu consistent met de rest).
+- **`src/app/dashboard.tsx`**: nu echt gated. Zonder premium: een centraal slotscherm ("Alleen voor Premium-leden") met uitleg + een knop "Word Premium-lid (test) 👑" die de test-toggle aanzet en meteen het echte dashboard toont. Mét premium: het bestaande dashboard, plus een badge "Premium actief (test)" met een link om de test-premium weer uit te zetten.
+- **`src/app/(tabs)/index.tsx`**: de "Premium"-sectiekop kreeg een pilletje ("Test: Premium AAN/UIT", zelfde stijl als de NL/EN-taalwissel) om de test-toggle ook vanaf het homescreen te bedienen. De Meldingen/Cloud Save-kaartjes (`href: null`) reageren nu op de premium-status: zonder premium toont een tik "Vereist Premium 👑", mét premium (het normale geval zodra er wel premium is, maar de feature nog niet bestaat) toont een tik gewoon "Komt binnenkort ✨" zoals voorheen.
+
+### Bekende bewuste keuzes
+
+- Nog steeds geen echte IAP — de knop "Word Premium-lid (test)" zet enkel de lokale AsyncStorage-vlag, geen betaling. Duidelijk gelabeld met "(test)" in zowel de knoptekst als een toelichtende regel eronder, zodat het niet per ongeluk voor een echte aankoop wordt aangezien.
+- Premium-status is device-lokaal (AsyncStorage), niet gekoppeld aan een account — dat is precies waarom Cloud Save als aparte, nog-niet-bestaande feature is blijven staan (zou premium-status ook syncen tussen toestellen, maar dat vereist eerst een account-systeem).
+
+### Getest
+
+Via `expo start --web` + Playwright: zonder premium toont het dashboard het slotscherm en tonen Meldingen/Cloud Save "Vereist Premium 👑" bij een tik; na tikken op "Word Premium-lid (test)" toont het dashboard meteen de echte voortgang, het homescreen-pilletje springt naar "AAN", en Meldingen/Cloud Save tonen daarna "Komt binnenkort ✨" i.p.v. het premium-verzoek — status blijft correct tussen schermen. EN gecontroleerd inclusief het pilletje zelf als aan/uit-schakelaar vanaf het homescreen. Geen console errors.
+
+### Open ideeën / mogelijk vervolg
+
+- Zodra er een echte IAP-integratie komt: de test-toggle vervangen door een echte aankoopflow (bv. RevenueCat), en de AsyncStorage-vlag vervangen door een serverside/entitlement-check.
+- Cloud save vereist alsnog een account-systeem — zie eerdere sessie-secties.
+
+### Repo-status
+
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-06 (nog later, deel 6) — Premium-sectie: werkend voortgangsdashboard + "komt binnenkort" voor meldingen/cloud save
 
 **Uitgangspunt:** gebruiker wil straks betaalde extra's in de app: een voortgangsdashboard (overzicht van alle catalogussen), push-meldingen voor events/weer, en cloud-save tussen toestellen. Afgesproken aanpak (na overleg): nu de UI bouwen, betaling/notificatie-backend/cloud-opslag pas aansluiten zodra de bijbehorende accounts/infrastructuur er is. Gebruiker gaf daarna nog een concrete vereenvoudiging mee: geen nep-instellingenschermen voor meldingen/cloud save bouwen — gewoon een "Komt binnenkort"-melding tonen bij een tik, tot de echte backend er is.

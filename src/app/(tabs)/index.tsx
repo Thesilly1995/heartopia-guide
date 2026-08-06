@@ -10,6 +10,7 @@ import { useMeteorSpots } from '@/data/meteor-spots';
 import { useRainbowSpots } from '@/data/rainbow-spots';
 import { useWeekForecast } from '@/data/week-forecast';
 import { useLanguage } from '@/hooks/use-language';
+import { usePremium } from '@/hooks/use-premium';
 
 const SECTIONS: {
   label: { nl: string; en: string };
@@ -70,6 +71,9 @@ const STRINGS = {
     inactive: 'Niet actief',
     forecastTitle: 'Weer deze week',
     comingSoon: 'Komt binnenkort ✨',
+    premiumRequired: 'Vereist Premium 👑',
+    premiumTestOn: 'Test: Premium AAN',
+    premiumTestOff: 'Test: Premium UIT',
   },
   en: {
     welcome: 'Welcome back to',
@@ -79,6 +83,9 @@ const STRINGS = {
     inactive: 'Not active',
     forecastTitle: 'Weather this week',
     comingSoon: 'Coming soon ✨',
+    premiumRequired: 'Requires Premium 👑',
+    premiumTestOn: 'Test: Premium ON',
+    premiumTestOff: 'Test: Premium OFF',
   },
 } as const;
 
@@ -86,6 +93,7 @@ export default function HomeScreen() {
   const colors = useHeartopiaColors();
   const styles = useMemo(() => makeStyles(colors), [colors]);
   const { language, toggleLanguage } = useLanguage();
+  const { premium, togglePremium } = usePremium();
   const s = STRINGS[language];
   const [forecastExpanded, setForecastExpanded] = useState(false);
   const [comingSoonKey, setComingSoonKey] = useState<string | null>(null);
@@ -174,48 +182,59 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        {SECTIONS.map((section) => (
-          <View key={section.label.nl} style={styles.section}>
-            <Text style={styles.sectionLabel}>{section.label[language]}</Text>
-            {section.items.map((item) => {
-              const itemKey = `${section.label.nl}:${item.title.nl}`;
-              if (item.href) {
+        {SECTIONS.map((section) => {
+          const isPremiumSection = section.label.nl === 'Premium';
+          return (
+            <View key={section.label.nl} style={styles.section}>
+              <View style={styles.sectionHeaderRow}>
+                <Text style={styles.sectionLabel}>{section.label[language]}</Text>
+                {isPremiumSection && (
+                  <Pressable style={styles.premiumTestPill} onPress={togglePremium} hitSlop={6}>
+                    <Text style={styles.premiumTestPillText}>{premium ? s.premiumTestOn : s.premiumTestOff}</Text>
+                  </Pressable>
+                )}
+              </View>
+              {section.items.map((item) => {
+                const itemKey = `${section.label.nl}:${item.title.nl}`;
+                if (item.href) {
+                  return (
+                    <Link key={itemKey} href={item.href as never} asChild>
+                      <TouchableOpacity style={styles.card}>
+                        <Text style={styles.cardIcon}>{item.icon}</Text>
+                        <View style={styles.cardText}>
+                          <Text style={styles.cardTitle}>{item.title[language]}</Text>
+                          <Text style={styles.cardDesc}>{item.desc[language]}</Text>
+                        </View>
+                      </TouchableOpacity>
+                    </Link>
+                  );
+                }
+                const isComingSoon = comingSoonKey === itemKey;
+                const lockedMessage = isPremiumSection && !premium ? s.premiumRequired : s.comingSoon;
                 return (
-                  <Link key={itemKey} href={item.href as never} asChild>
-                    <TouchableOpacity style={styles.card}>
-                      <Text style={styles.cardIcon}>{item.icon}</Text>
-                      <View style={styles.cardText}>
-                        <Text style={styles.cardTitle}>{item.title[language]}</Text>
-                        <Text style={styles.cardDesc}>{item.desc[language]}</Text>
-                      </View>
-                    </TouchableOpacity>
-                  </Link>
+                  <TouchableOpacity
+                    key={itemKey}
+                    style={styles.card}
+                    onPress={() => {
+                      setComingSoonKey(itemKey);
+                      setTimeout(() => {
+                        setComingSoonKey((current) => (current === itemKey ? null : current));
+                      }, 2200);
+                    }}
+                  >
+                    <Text style={styles.cardIcon}>{item.icon}</Text>
+                    <View style={styles.cardText}>
+                      <Text style={styles.cardTitle}>{item.title[language]}</Text>
+                      <Text style={[styles.cardDesc, isComingSoon && styles.cardDescComingSoon]}>
+                        {isComingSoon ? lockedMessage : item.desc[language]}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
                 );
-              }
-              const isComingSoon = comingSoonKey === itemKey;
-              return (
-                <TouchableOpacity
-                  key={itemKey}
-                  style={styles.card}
-                  onPress={() => {
-                    setComingSoonKey(itemKey);
-                    setTimeout(() => {
-                      setComingSoonKey((current) => (current === itemKey ? null : current));
-                    }, 2200);
-                  }}
-                >
-                  <Text style={styles.cardIcon}>{item.icon}</Text>
-                  <View style={styles.cardText}>
-                    <Text style={styles.cardTitle}>{item.title[language]}</Text>
-                    <Text style={[styles.cardDesc, isComingSoon && styles.cardDescComingSoon]}>
-                      {isComingSoon ? s.comingSoon : item.desc[language]}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              );
-            })}
-          </View>
-        ))}
+              })}
+            </View>
+          );
+        })}
       </ScrollView>
     </SafeAreaView>
   );
@@ -281,7 +300,10 @@ function makeStyles(c: ThemeColors) {
     plotsRowIcon: { fontSize: 18 },
     plotsRowText: { color: c.forest, fontSize: 13, fontWeight: '700' },
     section: { marginTop: 16, gap: 10 },
-    sectionLabel: { color: c.forestSoft, fontSize: 14, marginBottom: 2 },
+    sectionHeaderRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 2 },
+    sectionLabel: { color: c.forestSoft, fontSize: 14 },
+    premiumTestPill: { backgroundColor: c.surfaceSoft, borderWidth: 1, borderColor: c.line, borderRadius: 999, paddingHorizontal: 10, paddingVertical: 4 },
+    premiumTestPillText: { fontSize: 10, fontWeight: '700', color: c.forestSoft },
     card: {
       flexDirection: 'row',
       alignItems: 'center',
