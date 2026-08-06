@@ -4,7 +4,6 @@ import { Platform, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, Vi
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
-import { useCurrentWeather } from '@/data/current-weather';
 import { useDailyPlots } from '@/data/daily-plots';
 import { useCurrentEventMeta } from '@/data/event-meta';
 import { useMeteorSpots } from '@/data/meteor-spots';
@@ -68,9 +67,6 @@ const STRINGS = {
     meteorLabel: '☄️ Meteorenregen',
     active: 'Actief nu',
     inactive: 'Niet actief',
-    weather: 'Weer',
-    weatherUntil: (t: string) => `tot ${t}`,
-    weatherStale: 'Kan verouderd zijn',
     forecastTitle: 'Weer deze week',
   },
   en: {
@@ -84,9 +80,6 @@ const STRINGS = {
     meteorLabel: '☄️ Meteor Shower',
     active: 'Active now',
     inactive: 'Not active',
-    weather: 'Weather',
-    weatherUntil: (t: string) => `until ${t}`,
-    weatherStale: 'May be outdated',
     forecastTitle: 'Weather this week',
   },
 } as const;
@@ -100,15 +93,7 @@ export default function HomeScreen() {
   const eventMeta = useCurrentEventMeta();
   const rainbowSpots = useRainbowSpots();
   const meteorSpots = useMeteorSpots();
-  const weather = useCurrentWeather();
   const weekForecast = useWeekForecast();
-  const weatherDesc = !weather.label
-    ? s.weather
-    : weather.stale
-      ? s.weatherStale
-      : weather.validUntilLabel
-        ? s.weatherUntil(weather.validUntilLabel)
-        : s.weather;
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -126,14 +111,6 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        <View style={styles.statusCard}>
-          <Text style={styles.statusIcon}>{weather.emoji}</Text>
-          <View style={styles.statusText}>
-            <Text style={styles.statusTitle}>{weather.label ?? s.unknown}</Text>
-            <Text style={styles.statusDesc}>{weatherDesc}</Text>
-          </View>
-        </View>
-
         {weekForecast.length > 0 && (
           <View style={styles.forecastCard}>
             <Text style={styles.forecastTitle}>{s.forecastTitle}</Text>
@@ -141,9 +118,6 @@ export default function HomeScreen() {
               <View key={entry.date} style={styles.forecastRow}>
                 <Text style={styles.forecastIcon}>{entry.emoji}</Text>
                 <Text style={styles.forecastDay}>{entry.dayLabel}</Text>
-                <Text style={[styles.forecastLabel, entry.kind === 'normal' && styles.forecastLabelMuted]}>
-                  {entry.label}
-                </Text>
               </View>
             ))}
           </View>
@@ -257,9 +231,7 @@ function makeStyles(c: ThemeColors) {
     forecastTitle: { color: c.forestSoft, fontSize: 11, fontWeight: '700', textTransform: 'uppercase' },
     forecastRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
     forecastIcon: { fontSize: 16 },
-    forecastDay: { width: 70, color: c.forest, fontSize: 13, fontWeight: '700' },
-    forecastLabel: { flex: 1, textAlign: 'right', color: c.forest, fontSize: 13, fontWeight: '600' },
-    forecastLabelMuted: { color: c.forestSoft, fontWeight: '400' },
+    forecastDay: { color: c.forest, fontSize: 13, fontWeight: '700' },
     plotsCard: {
       flexDirection: 'row',
       justifyContent: 'space-around',

@@ -15,6 +15,7 @@ Een andere sessie had, zonder dit hier te loggen: `REMOTE_CONTENT_URL` live geze
 - **`specialWeather` (blok-gebaseerd, `startsAt`) vervangen door `weekForecast`** (dag-gebaseerd, `date` als `"YYYY-MM-DD"`): één entry per kalenderdag, `kind` is nu ook `"normal"` naast `rain`/`rainbow`/`warm_sun`/`meteor`. Geen `labelNl`/`labelEn` meer nodig in de JSON — de app kent een vaste tekst/icoon per `kind` (`src/data/week-forecast.ts`, vervangt `special-weather.ts`).
 - Homescreen-kaartje toont nu alle resterende dagen van de week (vandaag t/m zondag), inclusief expliciete "Niks bijzonders"-dagen in een gedempte kleur i.p.v. weggelaten te worden.
 - `remote-content.json` bijgewerkt met de echte actuele weekvoorspelling (vrijdag 7 aug: regen, zaterdag 8 aug: warme zon, zondag 9 aug: niks bijzonders) — nog niet gepusht op het moment van committen van code, dus meteen meegenomen in dezelfde commit.
+- Na feedback verder versimpeld: de tekstlabel per dag (bv. "Regen") is uit de weekweergave gehaald — alleen het icoontje + dagnaam blijft staan (icoon is zelfverklarend). Het losse "huidig weer nu"-kaartje (blok-gebaseerd, boven de weekweergave) is op verzoek helemaal verwijderd van het homescreen — `src/data/current-weather.ts` bestaat nog (ongebruikt, maar functioneel) mocht dit ooit elders nodig zijn, bv. om automatisch te tonen welke vissen/insecten passen bij het huidige weer.
 
 ### Bekende bewuste keuzes
 
@@ -23,7 +24,6 @@ Een andere sessie had, zonder dit hier te loggen: `REMOTE_CONTENT_URL` live geze
 
 ### Open ideeën / mogelijk vervolg
 
-- Het huidige `weather`-blok (los van de weekvoorspelling) staat nog op verouderde data (`validUntil` van eerder vandaag) — iemand moet dit periodiek verversen, zie eerdere sessie-notities.
 - Hostingplek/Play Store-punten: ongewijzigd t.o.v. eerdere sessies.
 
 ### Repo-status
