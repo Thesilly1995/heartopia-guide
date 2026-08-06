@@ -1,3 +1,7 @@
+import { useMemo } from 'react';
+
+import { useLanguage } from '@/hooks/use-language';
+
 export interface EventSightingItem {
   name: string;
   spot: string;
@@ -5,12 +9,36 @@ export interface EventSightingItem {
   emoji: string;
 }
 
-export const EVENT_FISH: EventSightingItem[] = [
-  { name: "Sint-Jakobsschelp", spot: "Walviszee", note: null, emoji: "🐟" },
-  { name: "Mandarijnvis", spot: "Walviszee", note: null, emoji: "🐟" },
-  { name: "Japanse Vliegende Inktvis", spot: "Walviszee", note: null, emoji: "🐟" },
-  { name: "Vuurvlieg-inktvis", spot: "Walviszee", note: null, emoji: "🐟" },
-  { name: "Platrugschildpad", spot: "Walviszee", note: null, emoji: "🐟" },
-  { name: "Olijfkleurige Zeeschildpad", spot: "Walviszee", note: null, emoji: "🐟" },
-  { name: "Zeenaaktslak", spot: "Walviszee (Neritic Shoal Event, praat met Vanya)", note: "Alleen beschikbaar in Fase 2 van het event", emoji: "🐌" },
+interface EventSightingRaw {
+  nameNl: string;
+  nameEn: string;
+  spotNl: string;
+  spotEn: string;
+  noteNl: string | null;
+  noteEn: string | null;
+  emoji: string;
+}
+
+const EVENT_FISH_RAW: EventSightingRaw[] = [
+  { nameNl: "Sint-Jakobsschelp", nameEn: "Scallop", spotNl: "Walviszee", spotEn: "Whale Sea", noteNl: null, noteEn: null, emoji: "🐟" },
+  { nameNl: "Mandarijnvis", nameEn: "Mandarin Fish", spotNl: "Walviszee", spotEn: "Whale Sea", noteNl: null, noteEn: null, emoji: "🐟" },
+  { nameNl: "Japanse Vliegende Inktvis", nameEn: "Japanese Flying Squid", spotNl: "Walviszee", spotEn: "Whale Sea", noteNl: null, noteEn: null, emoji: "🐟" },
+  { nameNl: "Vuurvlieg-inktvis", nameEn: "Firefly Squid", spotNl: "Walviszee", spotEn: "Whale Sea", noteNl: null, noteEn: null, emoji: "🐟" },
+  { nameNl: "Platrugschildpad", nameEn: "Flatback Turtle", spotNl: "Walviszee", spotEn: "Whale Sea", noteNl: null, noteEn: null, emoji: "🐟" },
+  { nameNl: "Olijfkleurige Zeeschildpad", nameEn: "Olive Ridley Turtle", spotNl: "Walviszee", spotEn: "Whale Sea", noteNl: null, noteEn: null, emoji: "🐟" },
+  { nameNl: "Zeenaaktslak", nameEn: "Sea Slug", spotNl: "Walviszee (Neritic Shoal Event, praat met Vanya)", spotEn: "Whale Sea (Neritic Shoal Event, talk to Vanya)", noteNl: "Alleen beschikbaar in Fase 2 van het event", noteEn: "Only available in Phase 2 of the event", emoji: "🐌" },
 ];
+
+export function useEventFish(): EventSightingItem[] {
+  const { language } = useLanguage();
+  return useMemo(
+    () =>
+      EVENT_FISH_RAW.map((r) => ({
+    name: language === 'en' ? r.nameEn : r.nameNl,
+    spot: language === 'en' ? r.spotEn : r.spotNl,
+    note: language === 'en' ? r.noteEn : r.noteNl,
+    emoji: r.emoji,
+      })),
+    [language]
+  );
+}

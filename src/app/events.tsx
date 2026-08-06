@@ -7,32 +7,59 @@ import { DisclaimerBox } from '@/components/heartopia/disclaimer-box';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { StarRow } from '@/components/heartopia/star-row';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
-import { EVENT_BIRDS } from '@/data/event-birds';
-import { EVENT_FISH } from '@/data/event-fish';
-import { EVENT_RECIPES } from '@/data/event-recipes';
+import { useEventBirds } from '@/data/event-birds';
+import { useEventFish } from '@/data/event-fish';
+import { useEventRecipes } from '@/data/event-recipes';
+import { useLanguage } from '@/hooks/use-language';
 
 const STORAGE_KEY = 'heartopia:event:sterren';
 
-const DISCLAIMER =
-  'Dit tabblad toont alleen content van het HUIDIGE event. Zodra dit event eindigt, vervangen we deze lijst door de vissen, insecten, vogels en recepten van het nieuwe event — oude event-content is dan niet meer te behalen.';
-
-const INSECTS_NOTE =
-  'Nog niet ontgrendeld deze season — insecten komen beschikbaar in Week 3 via Naniwa. We vullen dit aan zodra bekend.';
+const STRINGS = {
+  nl: {
+    title: 'Huidig Event',
+    subtitle: '🐋 Call of Whales · 11 juli – 22 augustus 2026',
+    disclaimer:
+      'Dit tabblad toont alleen content van het HUIDIGE event. Zodra dit event eindigt, vervangen we deze lijst door de vissen, insecten, vogels en recepten van het nieuwe event — oude event-content is dan niet meer te behalen.',
+    insectsNote: 'Nog niet ontgrendeld deze season — insecten komen beschikbaar in Week 3 via Naniwa. We vullen dit aan zodra bekend.',
+    fish: 'Vissen',
+    birds: 'Vogels',
+    recipes: 'Recepten',
+    insects: 'Insecten',
+    bestResult: 'Hoogste resultaat',
+  },
+  en: {
+    title: 'Current Event',
+    subtitle: '🐋 Call of Whales · Jul 11 – Aug 22, 2026',
+    disclaimer:
+      "This tab only shows content from the CURRENT event. Once this event ends, we'll replace this list with the fish, insects, birds and recipes of the new event — old event content can no longer be obtained then.",
+    insectsNote: "Not unlocked yet this season — insects become available in Week 3 via Naniwa. We'll fill this in once known.",
+    fish: 'Fish',
+    birds: 'Birds',
+    recipes: 'Recipes',
+    insects: 'Insects',
+    bestResult: 'Best result',
+  },
+} as const;
 
 type EventItem = { name: string; emoji: string; spot?: string; note?: string | null; ingredients?: string[] };
-
-const TABS: { key: string; label: string; items: EventItem[] }[] = [
-  { key: 'fish', label: 'Vissen', items: EVENT_FISH },
-  { key: 'birds', label: 'Vogels', items: EVENT_BIRDS },
-  { key: 'recipes', label: 'Recepten', items: EVENT_RECIPES },
-  { key: 'insects', label: 'Insecten', items: [] },
-];
 
 export default function EventsScreen() {
   const colors = useHeartopiaColors();
   const styles = useMemo(() => makeStyles(colors), [colors]);
+  const { language } = useLanguage();
+  const s = STRINGS[language];
+  const eventFish = useEventFish();
+  const eventBirds = useEventBirds();
+  const eventRecipes = useEventRecipes();
   const [tab, setTab] = useState('fish');
   const [stars, setStars] = useState<Record<string, number>>({});
+
+  const TABS: { key: string; label: string; items: EventItem[] }[] = [
+    { key: 'fish', label: s.fish, items: eventFish },
+    { key: 'birds', label: s.birds, items: eventBirds },
+    { key: 'recipes', label: s.recipes, items: eventRecipes },
+    { key: 'insects', label: s.insects, items: [] },
+  ];
 
   useEffect(() => {
     (async () => {
@@ -64,8 +91,8 @@ export default function EventsScreen() {
       <ScreenHeader
         gradient={['#3D7EA6', '#6EC6E8']}
         icon="🎉"
-        title="Huidig Event"
-        subtitle="🐋 Call of Whales · 11 juli – 22 augustus 2026"
+        title={s.title}
+        subtitle={s.subtitle}
         tabs={TABS}
         activeTab={tab}
         onTabChange={setTab}
@@ -76,8 +103,8 @@ export default function EventsScreen() {
         contentContainerStyle={styles.listContent}
         ListHeaderComponent={
           <View style={{ gap: 10, marginBottom: 10 }}>
-            <DisclaimerBox text={DISCLAIMER} />
-            {tab === 'insects' && <DisclaimerBox text={INSECTS_NOTE} warning />}
+            <DisclaimerBox text={s.disclaimer} />
+            {tab === 'insects' && <DisclaimerBox text={s.insectsNote} warning />}
           </View>
         }
         renderItem={({ item }) => (
@@ -105,7 +132,7 @@ export default function EventsScreen() {
             )}
             {item.note && <Text style={styles.note}>⚠️ {item.note}</Text>}
             <View style={styles.starBox}>
-              <Text style={styles.starBoxLabel}>Hoogste resultaat</Text>
+              <Text style={styles.starBoxLabel}>{s.bestResult}</Text>
               <StarRow value={stars[item.name] || 0} onSet={(n) => setItemStar(item.name, n)} />
             </View>
           </View>

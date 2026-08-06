@@ -9,22 +9,44 @@ import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { METEOR_SPOTS } from '@/data/meteor-spots';
 import { RAINBOW_SPOTS } from '@/data/rainbow-spots';
+import { useLanguage } from '@/hooks/use-language';
 
 const STORAGE_KEY = 'heartopia:rainbow-meteor:vinkjes';
 
 const ISLAND_MAP = require('@/assets/images/maps/island-map.jpg');
 
-const RAINBOW_DISCLAIMER =
-  'De Rainbow-gebeurtenis duurt ~6 uur en de boeketten-locaties zijn steeds anders. Zodra hij actief is, kan je Claude vragen de actuele locaties op te zoeken/toe te voegen — die verschijnen dan hieronder.';
-
-const METEOR_DISCLAIMER =
-  'Meteorenregen start willekeurig na 20:00 servertijd en duurt ~6 uur. De ertsplekken zijn steeds anders. Zodra het actief is, kan je Claude vragen de actuele locaties op te zoeken/toe te voegen — die verschijnen dan hieronder.';
-
-const EMPTY_TEXT = 'Niet actief op dit moment. Zodra dit weer gebeurt, komen de actuele locaties hier te staan.';
+const STRINGS = {
+  nl: {
+    title: 'Rainbow & Meteorenregen',
+    subtitle: 'Boeketten & sterrenscherven per gebeurtenis',
+    rainbowTab: '🌈 Rainbow',
+    meteorTab: '☄️ Meteorenregen',
+    rainbowDisclaimer:
+      'De Rainbow-gebeurtenis duurt ~6 uur en de boeketten-locaties zijn steeds anders. Zodra hij actief is, kan je Claude vragen de actuele locaties op te zoeken/toe te voegen — die verschijnen dan hieronder.',
+    meteorDisclaimer:
+      'Meteorenregen start willekeurig na 20:00 servertijd en duurt ~6 uur. De ertsplekken zijn steeds anders. Zodra het actief is, kan je Claude vragen de actuele locaties op te zoeken/toe te voegen — die verschijnen dan hieronder.',
+    emptyText: 'Niet actief op dit moment. Zodra dit weer gebeurt, komen de actuele locaties hier te staan.',
+    resetProgress: 'Voortgang resetten',
+  },
+  en: {
+    title: 'Rainbow & Meteor Shower',
+    subtitle: 'Bouquets & star shards per event',
+    rainbowTab: '🌈 Rainbow',
+    meteorTab: '☄️ Meteor Shower',
+    rainbowDisclaimer:
+      'The Rainbow event lasts ~6 hours and the bouquet locations differ every time. Once it becomes active, you can ask Claude to look up/add the current locations — they will then appear below.',
+    meteorDisclaimer:
+      'Meteor Shower starts randomly after 20:00 server time and lasts ~6 hours. The ore spots differ every time. Once it becomes active, you can ask Claude to look up/add the current locations — they will then appear below.',
+    emptyText: 'Not active right now. Once this happens again, the current locations will appear here.',
+    resetProgress: 'Reset progress',
+  },
+} as const;
 
 export default function RainbowMeteorScreen() {
   const colors = useHeartopiaColors();
   const styles = useMemo(() => makeStyles(colors), [colors]);
+  const { language } = useLanguage();
+  const s = STRINGS[language];
   const [tab, setTab] = useState<'rainbow' | 'meteor'>('rainbow');
   const [checked, setChecked] = useState<Record<string, boolean>>({});
 
@@ -72,17 +94,17 @@ export default function RainbowMeteorScreen() {
       <ScreenHeader
         gradient={['#B78CD8', '#6EC6E8']}
         icon="🌈☄️"
-        title="Rainbow & Meteorenregen"
-        subtitle="Boeketten & sterrenscherven per gebeurtenis"
+        title={s.title}
+        subtitle={s.subtitle}
         tabs={[
-          { key: 'rainbow', label: '🌈 Rainbow' },
-          { key: 'meteor', label: '☄️ Meteorenregen' },
+          { key: 'rainbow', label: s.rainbowTab },
+          { key: 'meteor', label: s.meteorTab },
         ]}
         activeTab={tab}
         onTabChange={(k) => setTab(k as 'rainbow' | 'meteor')}
       />
       <ScrollView contentContainerStyle={styles.content}>
-        <DisclaimerBox text={tab === 'rainbow' ? RAINBOW_DISCLAIMER : METEOR_DISCLAIMER} warning />
+        <DisclaimerBox text={tab === 'rainbow' ? s.rainbowDisclaimer : s.meteorDisclaimer} warning />
 
         <PinMap
           source={ISLAND_MAP}
@@ -91,12 +113,12 @@ export default function RainbowMeteorScreen() {
           checked={prefixedChecked}
           onToggle={toggle}
           pinColor={tab === 'rainbow' ? '#B78CD8' : colors.skyDark}
-          emptyText={EMPTY_TEXT}
+          emptyText={s.emptyText}
         />
 
         {spots.length > 0 && (
           <Pressable style={styles.resetButton} onPress={resetAll}>
-            <Text style={styles.resetButtonText}>Voortgang resetten</Text>
+            <Text style={styles.resetButtonText}>{s.resetProgress}</Text>
           </Pressable>
         )}
 

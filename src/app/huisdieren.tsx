@@ -8,20 +8,58 @@ import { LevelStepper } from '@/components/heartopia/level-stepper';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { StarRow } from '@/components/heartopia/star-row';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
-import { CAT_ACTIONS } from '@/data/cat-actions';
-import { CatItem, CATS } from '@/data/cats';
-import { DOG_ACTIONS } from '@/data/dog-actions';
-import { DogItem, DOGS } from '@/data/dogs';
+import { useCatActions } from '@/data/cat-actions';
+import { CatItem, useCats } from '@/data/cats';
+import { useDogActions } from '@/data/dog-actions';
+import { DogItem, useDogs } from '@/data/dogs';
+import { useLanguage } from '@/hooks/use-language';
 
 const BONDS_KEY = 'heartopia:huisdieren:vriendschap';
 const ACTIONS_KEY = 'heartopia:huisdieren:acties';
 
-const DOGS_NOTE =
-  'Er zijn 37 hondenrassen in het spel — hier staan de bevestigde rassen. We vullen de lijst aan zodra er meer data bekend is. Let op: het favoriete eten verschilt per individuele hond, niet per ras.';
+const DOGS_NOTE = {
+  nl: 'Er zijn 37 hondenrassen in het spel — hier staan de bevestigde rassen. We vullen de lijst aan zodra er meer data bekend is. Let op: het favoriete eten verschilt per individuele hond, niet per ras.',
+  en: "There are 37 dog breeds in the game — these are the confirmed breeds. We'll add more as data becomes known. Note: favorite food differs per individual dog, not per breed.",
+} as const;
+
+const STRINGS = {
+  nl: {
+    title: 'Dog & Cat Moments',
+    cats: 'Katten',
+    dogs: 'Honden',
+    adoptionSlots: 'Adoptieslots per level',
+    care: 'Verzorging',
+    careValue: 'Aaien, voeren, wassen, samen zijn, trucjes, wandelen',
+    size: 'Grootte',
+    specialAbility: 'Speciale eigenschap',
+    randomTraits: 'Favoriete eten en persoonlijkheid verschillen per individueel dier — ontdek het zelf!',
+    friendshipLevel: 'Vriendschapsniveau',
+    trainedActions: 'Getrainde Acties',
+  },
+  en: {
+    title: 'Dog & Cat Moments',
+    cats: 'Cats',
+    dogs: 'Dogs',
+    adoptionSlots: 'Adoption slots per level',
+    care: 'Care',
+    careValue: 'Petting, feeding, washing, hanging out, tricks, walking',
+    size: 'Size',
+    specialAbility: 'Special ability',
+    randomTraits: 'Favorite food and personality differ per individual animal — discover it yourself!',
+    friendshipLevel: 'Friendship level',
+    trainedActions: 'Trained Actions',
+  },
+} as const;
 
 export default function HuisdierenScreen() {
   const colors = useHeartopiaColors();
   const styles = useMemo(() => makeStyles(colors), [colors]);
+  const { language } = useLanguage();
+  const s = STRINGS[language];
+  const CAT_ACTIONS = useCatActions();
+  const CATS = useCats();
+  const DOG_ACTIONS = useDogActions();
+  const DOGS = useDogs();
   const [tab, setTab] = useState<'cats' | 'dogs'>('cats');
   const [openName, setOpenName] = useState<string | null>(null);
   const [bonds, setBonds] = useState<Record<string, number>>({});
@@ -74,10 +112,10 @@ export default function HuisdierenScreen() {
       <ScreenHeader
         gradient={['#E8A0A8', '#F5C6CC']}
         icon="🐾"
-        title="Dog & Cat Moments"
+        title={s.title}
         tabs={[
-          { key: 'cats', label: 'Katten' },
-          { key: 'dogs', label: 'Honden' },
+          { key: 'cats', label: s.cats },
+          { key: 'dogs', label: s.dogs },
         ]}
         activeTab={tab}
         onTabChange={(k) => {
@@ -92,11 +130,11 @@ export default function HuisdierenScreen() {
         ListHeaderComponent={
           <View style={styles.headerInfo}>
             <View style={styles.infoRow}>
-              <InfoCard label="Adoptieslots per level" value={tab === 'cats' ? 'Lv.1 / 2 / 5 / 7 / 9' : 'Lv.1 / 4 / 8'} />
-              <InfoCard label="Verzorging" value="Aaien, voeren, wassen, samen zijn, trucjes, wandelen" />
+              <InfoCard label={s.adoptionSlots} value={tab === 'cats' ? 'Lv.1 / 2 / 5 / 7 / 9' : 'Lv.1 / 4 / 8'} />
+              <InfoCard label={s.care} value={s.careValue} />
             </View>
             {tab === 'dogs' && (
-              <Text style={styles.disclaimer}>{DOGS_NOTE}</Text>
+              <Text style={styles.disclaimer}>{DOGS_NOTE[language]}</Text>
             )}
           </View>
         }
@@ -122,21 +160,19 @@ export default function HuisdierenScreen() {
                 <View style={styles.cardBody}>
                   {size || pet.ability ? (
                     <View style={styles.detailGrid}>
-                      {size && <InfoCard label="Grootte" value={size} />}
-                      {pet.ability && <InfoCard label="Speciale eigenschap" value={pet.ability} full />}
+                      {size && <InfoCard label={s.size} value={size} />}
+                      {pet.ability && <InfoCard label={s.specialAbility} value={pet.ability} full />}
                     </View>
                   ) : (
-                    <Text style={styles.mutedText}>
-                      Favoriete eten en persoonlijkheid verschillen per individueel dier — ontdek het zelf!
-                    </Text>
+                    <Text style={styles.mutedText}>{s.randomTraits}</Text>
                   )}
 
                   <View style={styles.bondBox}>
-                    <Text style={styles.bondBoxLabel}>Vriendschapsniveau</Text>
+                    <Text style={styles.bondBoxLabel}>{s.friendshipLevel}</Text>
                     <LevelStepper value={bonds[pet.name] || 0} max={15} onSet={(n) => setBond(pet.name, n)} />
                   </View>
 
-                  <Text style={styles.actionsLabel}>Getrainde Acties</Text>
+                  <Text style={styles.actionsLabel}>{s.trainedActions}</Text>
                   <View style={styles.actionsList}>
                     {petActions.map((action) => {
                       const mapKey = `${pet.name}::${action.key}`;

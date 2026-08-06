@@ -2,6 +2,10 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { useLanguage } from '@/hooks/use-language';
+
+const BACK_LABEL = { nl: '‹ Terug', en: '‹ Back' } as const;
+
 export interface ScreenHeaderTab {
   key: string;
   label: string;
@@ -24,13 +28,14 @@ export function ScreenHeader({
   activeTab?: string;
   onTabChange?: (key: string) => void;
 }) {
+  const { language } = useLanguage();
   return (
     <LinearGradient colors={gradient} style={styles.header} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}>
       <Pressable
         onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}
         hitSlop={8}
         style={styles.backButton}>
-        <Text style={styles.backButtonText}>‹ Terug</Text>
+        <Text style={styles.backButtonText}>{BACK_LABEL[language]}</Text>
       </Pressable>
 
       <Text style={styles.title}>

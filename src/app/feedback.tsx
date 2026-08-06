@@ -6,10 +6,38 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { DisclaimerBox } from '@/components/heartopia/disclaimer-box';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
+import { useLanguage } from '@/hooks/use-language';
 
 const STORAGE_KEY = 'heartopia:feedback:lijst';
 
-const DISCLAIMER = 'Deze feedback wordt lokaal op dit toestel opgeslagen — alleen jij ziet deze lijst.';
+const STRINGS = {
+  nl: {
+    title: 'Feedback',
+    subtitle: 'Deel je ideeën voor de gids',
+    disclaimer: 'Deze feedback wordt lokaal op dit toestel opgeslagen — alleen jij ziet deze lijst.',
+    namePlaceholder: 'Je naam (optioneel)',
+    ideaPlaceholder: 'Wat wil je toevoegen of veranderd zien?',
+    saving: 'Bezig met opslaan...',
+    done: 'Bedankt! ✓',
+    submit: 'Versturen',
+    recent: 'Eerder toegevoegde ideeën',
+    empty: 'Nog geen feedback — voeg de eerste toe!',
+    anonymous: 'Anoniem',
+  },
+  en: {
+    title: 'Feedback',
+    subtitle: 'Share your ideas for the guide',
+    disclaimer: 'This feedback is stored locally on this device — only you see this list.',
+    namePlaceholder: 'Your name (optional)',
+    ideaPlaceholder: 'What would you like to add or change?',
+    saving: 'Saving...',
+    done: 'Thanks! ✓',
+    submit: 'Submit',
+    recent: 'Previously added ideas',
+    empty: 'No feedback yet — add the first one!',
+    anonymous: 'Anonymous',
+  },
+} as const;
 
 interface FeedbackEntry {
   name: string;
@@ -20,6 +48,8 @@ interface FeedbackEntry {
 export default function FeedbackScreen() {
   const colors = useHeartopiaColors();
   const styles = useMemo(() => makeStyles(colors), [colors]);
+  const { language } = useLanguage();
+  const s = STRINGS[language];
   const [name, setName] = useState('');
   const [idea, setIdea] = useState('');
   const [entries, setEntries] = useState<FeedbackEntry[]>([]);
@@ -45,7 +75,7 @@ export default function FeedbackScreen() {
     try {
       const raw = await AsyncStorage.getItem(STORAGE_KEY);
       const list: FeedbackEntry[] = raw ? JSON.parse(raw) : [];
-      list.push({ name: name.trim() || 'Anoniem', idea: idea.trim(), date: new Date().toISOString().slice(0, 10) });
+      list.push({ name: name.trim() || s.anonymous, idea: idea.trim(), date: new Date().toISOString().slice(0, 10) });
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(list));
       setIdea('');
       setName('');
@@ -59,27 +89,27 @@ export default function FeedbackScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
-      <ScreenHeader gradient={['#6EC6E8', '#B78CD8']} icon="💡" title="Feedback" subtitle="Deel je ideeën voor de gids" />
+      <ScreenHeader gradient={['#6EC6E8', '#B78CD8']} icon="💡" title={s.title} subtitle={s.subtitle} />
       <FlatList
         data={entries}
         keyExtractor={(_, i) => String(i)}
         contentContainerStyle={styles.listContent}
         ListHeaderComponent={
           <View style={{ gap: 10, marginBottom: 10 }}>
-            <DisclaimerBox text={DISCLAIMER} />
+            <DisclaimerBox text={s.disclaimer} />
 
             <View style={styles.form}>
               <TextInput
                 value={name}
                 onChangeText={setName}
-                placeholder="Je naam (optioneel)"
+                placeholder={s.namePlaceholder}
                 placeholderTextColor={colors.forestSoft}
                 style={styles.input}
               />
               <TextInput
                 value={idea}
                 onChangeText={setIdea}
-                placeholder="Wat wil je toevoegen of veranderd zien?"
+                placeholder={s.ideaPlaceholder}
                 placeholderTextColor={colors.forestSoft}
                 multiline
                 numberOfLines={4}
@@ -90,13 +120,13 @@ export default function FeedbackScreen() {
                 disabled={!idea.trim() || status === 'saving'}
                 onPress={submit}>
                 <Text style={styles.submitText}>
-                  {status === 'saving' ? 'Bezig met opslaan...' : status === 'done' ? 'Bedankt! ✓' : 'Versturen'}
+                  {status === 'saving' ? s.saving : status === 'done' ? s.done : s.submit}
                 </Text>
               </Pressable>
             </View>
 
-            <Text style={styles.recentLabel}>Eerder toegevoegde ideeën</Text>
-            {entries.length === 0 && <Text style={styles.emptyText}>Nog geen feedback — voeg de eerste toe!</Text>}
+            <Text style={styles.recentLabel}>{s.recent}</Text>
+            {entries.length === 0 && <Text style={styles.emptyText}>{s.empty}</Text>}
           </View>
         }
         renderItem={({ item }) => (

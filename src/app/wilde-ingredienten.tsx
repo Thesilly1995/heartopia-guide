@@ -4,20 +4,31 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
-import { WILD_FRUIT } from '@/data/wild-fruit';
-import { WILD_MATERIALS } from '@/data/wild-materials';
-import { WILD_MUSHROOMS } from '@/data/wild-mushrooms';
+import { useWildFruit } from '@/data/wild-fruit';
+import { useWildMaterials } from '@/data/wild-materials';
+import { useWildMushrooms } from '@/data/wild-mushrooms';
+import { useLanguage } from '@/hooks/use-language';
 
-const TABS = [
-  { key: 'fruit', label: 'Fruit', items: WILD_FRUIT },
-  { key: 'mushrooms', label: 'Paddenstoelen', items: WILD_MUSHROOMS },
-  { key: 'materials', label: 'Materialen', items: WILD_MATERIALS },
-];
+const STRINGS = {
+  nl: { title: 'Wilde Ingrediënten', subtitle: 'Fruit, paddenstoelen & materialen om te rapen', fruit: 'Fruit', mushrooms: 'Paddenstoelen', materials: 'Materialen', energy: 'Energie' },
+  en: { title: 'Wild Ingredients', subtitle: 'Fruit, mushrooms & materials to forage', fruit: 'Fruit', mushrooms: 'Mushrooms', materials: 'Materials', energy: 'Energy' },
+} as const;
 
 export default function WildeIngredientenScreen() {
   const colors = useHeartopiaColors();
   const styles = useMemo(() => makeStyles(colors), [colors]);
+  const { language } = useLanguage();
+  const s = STRINGS[language];
+  const wildFruit = useWildFruit();
+  const wildMushrooms = useWildMushrooms();
+  const wildMaterials = useWildMaterials();
   const [tab, setTab] = useState('fruit');
+
+  const TABS = [
+    { key: 'fruit', label: s.fruit, items: wildFruit },
+    { key: 'mushrooms', label: s.mushrooms, items: wildMushrooms },
+    { key: 'materials', label: s.materials, items: wildMaterials },
+  ];
   const activeItems = TABS.find((t) => t.key === tab)!.items;
 
   return (
@@ -25,8 +36,8 @@ export default function WildeIngredientenScreen() {
       <ScreenHeader
         gradient={['#8FBF6E', '#E8A24F']}
         icon="🌿"
-        title="Wilde Ingrediënten"
-        subtitle="Fruit, paddenstoelen & materialen om te rapen"
+        title={s.title}
+        subtitle={s.subtitle}
         tabs={TABS}
         activeTab={tab}
         onTabChange={setTab}
@@ -48,7 +59,7 @@ export default function WildeIngredientenScreen() {
             </View>
             <View style={styles.priceBox}>
               <Text style={styles.price}>{item.sellPrice}</Text>
-              {item.energy !== '—' && <Text style={styles.energy}>Energie: {item.energy}</Text>}
+              {item.energy !== '—' && <Text style={styles.energy}>{s.energy}: {item.energy}</Text>}
             </View>
           </View>
         )}

@@ -1,3 +1,7 @@
+import { useMemo } from 'react';
+
+import { useLanguage } from '@/hooks/use-language';
+
 export interface DogItem {
   name: string;
   size: string;
@@ -5,10 +9,34 @@ export interface DogItem {
   emoji: string;
 }
 
-export const DOGS: DogItem[] = [
-  { name: "Poedel", size: "Klein", ability: null, emoji: "🐶" },
-  { name: "Corgi", size: "Klein", ability: null, emoji: "🐶" },
-  { name: "Husky", size: "Middel", ability: null, emoji: "🐶" },
-  { name: "Shiba Inu", size: "Middel", ability: null, emoji: "🐶" },
-  { name: "Golden Retriever", size: "Groot", ability: "Kan Goudzakjes als cadeau geven", emoji: "🐶" },
+interface DogRaw {
+  nameNl: string;
+  nameEn: string;
+  sizeNl: string;
+  sizeEn: string;
+  abilityNl: string | null;
+  abilityEn: string | null;
+  emoji: string;
+}
+
+const DOGS_RAW: DogRaw[] = [
+  { nameNl: "Poedel", nameEn: "Poodle", sizeNl: "Klein", sizeEn: "Small", abilityNl: null, abilityEn: null, emoji: "🐶" },
+  { nameNl: "Corgi", nameEn: "Corgi", sizeNl: "Klein", sizeEn: "Small", abilityNl: null, abilityEn: null, emoji: "🐶" },
+  { nameNl: "Husky", nameEn: "Husky", sizeNl: "Middel", sizeEn: "Medium", abilityNl: null, abilityEn: null, emoji: "🐶" },
+  { nameNl: "Shiba Inu", nameEn: "Shiba Inu", sizeNl: "Middel", sizeEn: "Medium", abilityNl: null, abilityEn: null, emoji: "🐶" },
+  { nameNl: "Golden Retriever", nameEn: "Golden Retriever", sizeNl: "Groot", sizeEn: "Large", abilityNl: "Kan Goudzakjes als cadeau geven", abilityEn: "Can gift Gold Pouches", emoji: "🐶" },
 ];
+
+export function useDogs(): DogItem[] {
+  const { language } = useLanguage();
+  return useMemo(
+    () =>
+      DOGS_RAW.map((r) => ({
+    name: language === 'en' ? r.nameEn : r.nameNl,
+    size: language === 'en' ? r.sizeEn : r.sizeNl,
+    ability: language === 'en' ? r.abilityEn : r.abilityNl,
+    emoji: r.emoji,
+      })),
+    [language]
+  );
+}

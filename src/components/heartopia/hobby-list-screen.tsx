@@ -8,6 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { RarityPill } from '@/components/heartopia/rarity-pill';
 import { StarRow } from '@/components/heartopia/star-row';
 import { ColorKey, ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
+import { useLanguage } from '@/hooks/use-language';
 
 export interface HobbyItem {
   name: string;
@@ -36,7 +37,50 @@ export interface HobbySubTab {
 }
 
 const LEVEL_FILTERS = ['Alle', 1, 3, 5, 7, 9] as const;
-const WEATHER_FILTERS = ['Alle', 'Zonnig', 'Regen', 'Regenboog'] as const;
+
+const WEATHER_WORDS = {
+  nl: ['Zonnig', 'Regen', 'Regenboog'],
+  en: ['Sunny', 'Rainy', 'Rainbow'],
+} as const;
+
+const STRINGS = {
+  nl: {
+    back: '‹ Terug',
+    itemsInGuide: (n: number) => `${n} items in deze gids`,
+    searchPlaceholder: 'Zoeken op naam...',
+    all: 'Alle',
+    allWeather: 'Alle weer',
+    spot: 'Plek',
+    time: 'Tijdstip',
+    weather: 'Weer',
+    tool: 'Gereedschap',
+    ingredients: 'Ingrediënten',
+    growTime: 'Groeitijd',
+    seedPrice: 'Zaadprijs',
+    method: 'Hoe krijg je dit',
+    sellPrice: 'Verkoopprijs',
+    bestResult: 'Hoogste resultaat',
+    masteryAchieved: 'Mastery behaald',
+  },
+  en: {
+    back: '‹ Back',
+    itemsInGuide: (n: number) => `${n} items in this guide`,
+    searchPlaceholder: 'Search by name...',
+    all: 'All',
+    allWeather: 'All weather',
+    spot: 'Spot',
+    time: 'Time',
+    weather: 'Weather',
+    tool: 'Tool',
+    ingredients: 'Ingredients',
+    growTime: 'Grow time',
+    seedPrice: 'Seed price',
+    method: 'How to get this',
+    sellPrice: 'Sell price',
+    bestResult: 'Best result',
+    masteryAchieved: 'Mastery achieved',
+  },
+} as const;
 
 export function HobbyListScreen({
   title,
@@ -55,16 +99,23 @@ export function HobbyListScreen({
 }) {
   const colors = useHeartopiaColors();
   const styles = useMemo(() => makeStyles(colors), [colors]);
+  const { language } = useLanguage();
+  const s = STRINGS[language];
+  const WEATHER_FILTERS = ['Alle', ...WEATHER_WORDS[language]] as const;
 
   const [openName, setOpenName] = useState<string | null>(null);
   const [query, setQuery] = useState('');
   const [maxLevel, setMaxLevel] = useState<number>(99);
-  const [weatherFilter, setWeatherFilter] = useState<(typeof WEATHER_FILTERS)[number]>('Alle');
+  const [weatherFilter, setWeatherFilter] = useState<string>('Alle');
   const [activeSub, setActiveSub] = useState<string>(subTabs?.[0]?.key ?? '');
   const [stars, setStars] = useState<Record<string, number>>({});
   const [mastery, setMastery] = useState<Record<string, boolean>>({});
 
-  const activeTab = subTabs?.find((t) => t.key === activeSub);
+  useEffect(() => {
+    setWeatherFilter('Alle');
+  }, [language]);
+
+  const activeTab = subTabs?.find((tab) => tab.key === activeSub);
   const activeItems = subTabs ? (activeTab?.items ?? []) : (items ?? []);
   const hasWeather = activeItems.length > 0 && activeItems[0].weather !== undefined;
   const activeStorageKey = subTabs ? `${storageKey}:${activeSub}` : storageKey;
@@ -132,7 +183,7 @@ export function HobbyListScreen({
           onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}
           hitSlop={8}
           style={styles.backButton}>
-          <Text style={styles.backButtonText}>‹ Terug</Text>
+          <Text style={styles.backButtonText}>{s.back}</Text>
         </Pressable>
 
         <Text style={styles.headerTitle}>
@@ -158,12 +209,12 @@ export function HobbyListScreen({
           </View>
         )}
 
-        <Text style={styles.headerCount}>{visibleItems.length} items in deze gids</Text>
+        <Text style={styles.headerCount}>{s.itemsInGuide(visibleItems.length)}</Text>
 
         <TextInput
           value={query}
           onChangeText={setQuery}
-          placeholder="Zoeken op naam..."
+          placeholder={s.searchPlaceholder}
           placeholderTextColor={colors.forestSoft}
           style={styles.searchInput}
         />
@@ -178,7 +229,7 @@ export function HobbyListScreen({
                 onPress={() => setMaxLevel(isAll ? 99 : (lvl as number))}
                 style={[styles.chip, active && styles.chipActive]}>
                 <Text style={[styles.chipText, active && styles.chipTextActive]}>
-                  {isAll ? 'Alle' : `Lv.${lvl}+`}
+                  {isAll ? s.all : `Lv.${lvl}+`}
                 </Text>
               </Pressable>
             );
@@ -190,7 +241,7 @@ export function HobbyListScreen({
             {WEATHER_FILTERS.map((w) => {
               const active = weatherFilter === w;
               const label =
-                w === 'Alle' ? 'Alle weer' : w === 'Zonnig' ? '☀️ Zonnig' : w === 'Regen' ? '🌧️ Regen' : '🌈 Regenboog';
+                w === 'Alle' ? s.allWeather : `${w === WEATHER_WORDS[language][0] ? '☀️' : w === WEATHER_WORDS[language][1] ? '🌧️' : '🌈'} ${w}`;
               return (
                 <Pressable key={w} onPress={() => setWeatherFilter(w)} style={[styles.chip, active && styles.chipActive]}>
                   <Text style={[styles.chipText, active && styles.chipTextActive]}>{label}</Text>
@@ -215,7 +266,8 @@ export function HobbyListScreen({
         renderItem={({ item }) => {
           const isOpen = openName === item.name;
           const weatherMatch = hasWeather && weatherFilter !== 'Alle' && !!item.weather?.includes(weatherFilter);
-          const weatherEmoji = weatherFilter === 'Zonnig' ? '☀️' : weatherFilter === 'Regen' ? '🌧️' : '🌈';
+          const weatherEmoji =
+            weatherFilter === WEATHER_WORDS[language][0] ? '☀️' : weatherFilter === WEATHER_WORDS[language][1] ? '🌧️' : '🌈';
           return (
             <View style={[styles.card, weatherMatch && styles.cardHighlighted]}>
               <Pressable style={styles.cardHeader} onPress={() => setOpenName(isOpen ? null : item.name)}>
@@ -241,17 +293,17 @@ export function HobbyListScreen({
                   {item.spot !== undefined && (
                     <View style={styles.detailGrid}>
                       <View style={styles.detailBox}>
-                        <Text style={styles.detailLabel}>Plek</Text>
+                        <Text style={styles.detailLabel}>{s.spot}</Text>
                         <Text style={styles.detailValue}>
                           {item.spot} ({item.watertype})
                         </Text>
                       </View>
                       <View style={styles.detailBox}>
-                        <Text style={styles.detailLabel}>Tijdstip</Text>
+                        <Text style={styles.detailLabel}>{s.time}</Text>
                         <Text style={styles.detailValue}>{item.time}</Text>
                       </View>
                       <View style={[styles.detailBox, styles.detailBoxFull]}>
-                        <Text style={styles.detailLabel}>Weer</Text>
+                        <Text style={styles.detailLabel}>{s.weather}</Text>
                         <Text style={styles.detailValue}>{item.weather}</Text>
                       </View>
                     </View>
@@ -260,11 +312,11 @@ export function HobbyListScreen({
                   {item.ingredients !== undefined && (
                     <View style={styles.detailGrid}>
                       <View style={[styles.detailBox, styles.detailBoxFull]}>
-                        <Text style={styles.detailLabel}>Gereedschap</Text>
+                        <Text style={styles.detailLabel}>{s.tool}</Text>
                         <Text style={styles.detailValue}>{item.tool}</Text>
                       </View>
                       <View style={[styles.detailBox, styles.detailBoxFull]}>
-                        <Text style={styles.detailLabel}>Ingrediënten</Text>
+                        <Text style={styles.detailLabel}>{s.ingredients}</Text>
                         <View style={styles.ingredientRow}>
                           {item.ingredients.map((ing) => (
                             <Text key={ing} style={styles.ingredientPill}>
@@ -279,11 +331,11 @@ export function HobbyListScreen({
                   {item.growTime !== undefined && (
                     <View style={styles.detailGrid}>
                       <View style={styles.detailBox}>
-                        <Text style={styles.detailLabel}>Groeitijd</Text>
+                        <Text style={styles.detailLabel}>{s.growTime}</Text>
                         <Text style={styles.detailValue}>{item.growTime}</Text>
                       </View>
                       <View style={styles.detailBox}>
-                        <Text style={styles.detailLabel}>Zaadprijs</Text>
+                        <Text style={styles.detailLabel}>{s.seedPrice}</Text>
                         <Text style={styles.detailValue}>{item.seedPrice} 🪙</Text>
                       </View>
                     </View>
@@ -292,18 +344,18 @@ export function HobbyListScreen({
                   {item.method !== undefined && (
                     <View style={styles.detailGrid}>
                       <View style={[styles.detailBox, styles.detailBoxFull]}>
-                        <Text style={styles.detailLabel}>Hoe krijg je dit</Text>
+                        <Text style={styles.detailLabel}>{s.method}</Text>
                         <Text style={styles.detailValue}>{item.method}</Text>
                       </View>
                       <View style={[styles.detailBox, styles.detailBoxFull]}>
-                        <Text style={styles.detailLabel}>Verkoopprijs</Text>
+                        <Text style={styles.detailLabel}>{s.sellPrice}</Text>
                         <Text style={styles.detailValue}>{item.sellPrice}</Text>
                       </View>
                     </View>
                   )}
 
                   <View style={styles.starBox}>
-                    <Text style={styles.starBoxLabel}>Hoogste resultaat</Text>
+                    <Text style={styles.starBoxLabel}>{s.bestResult}</Text>
                     <StarRow value={stars[item.name] || 0} onSet={(n) => setItemStar(item.name, n)} />
                   </View>
 
@@ -311,7 +363,7 @@ export function HobbyListScreen({
                     style={[styles.masteryBox, mastery[item.name] && styles.masteryBoxActive]}
                     onPress={() => toggleMastery(item.name)}>
                     <Text style={[styles.masteryLabel, mastery[item.name] && styles.masteryLabelActive]}>
-                      Mastery behaald
+                      {s.masteryAchieved}
                     </Text>
                     <View style={[styles.checkbox, mastery[item.name] && styles.checkboxActive]}>
                       {mastery[item.name] && <Text style={styles.checkmark}>✓</Text>}

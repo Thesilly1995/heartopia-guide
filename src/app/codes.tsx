@@ -7,16 +7,36 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { DisclaimerBox } from '@/components/heartopia/disclaimer-box';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
-import { CODES } from '@/data/codes';
+import { useCodes } from '@/data/codes';
+import { useLanguage } from '@/hooks/use-language';
 
 const STORAGE_KEY = 'heartopia:codes:ingevuld';
 
-const DISCLAIMER =
-  'Codes wijzigen regelmatig. Deze lijst is zo actueel als ons laatste onderzoek — vraag me gerust om ze opnieuw op te zoeken als je twijfelt.';
+const STRINGS = {
+  nl: {
+    title: 'Actieve Codes',
+    subtitle: 'Laatst gecontroleerd: 2 augustus 2026',
+    disclaimer: 'Codes wijzigen regelmatig. Deze lijst is zo actueel als ons laatste onderzoek — vraag me gerust om ze opnieuw op te zoeken als je twijfelt.',
+    copied: 'Gekopieerd!',
+    copy: 'Kopiëren',
+    expires: 'Verloopt',
+  },
+  en: {
+    title: 'Active Codes',
+    subtitle: 'Last checked: Aug 2, 2026',
+    disclaimer: "Codes change regularly. This list is as current as our last research — feel free to ask me to look them up again if you're unsure.",
+    copied: 'Copied!',
+    copy: 'Copy',
+    expires: 'Expires',
+  },
+} as const;
 
 export default function CodesScreen() {
   const colors = useHeartopiaColors();
   const styles = useMemo(() => makeStyles(colors), [colors]);
+  const { language } = useLanguage();
+  const s = STRINGS[language];
+  const CODES = useCodes();
   const [redeemed, setRedeemed] = useState<Record<string, boolean>>({});
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
 
@@ -49,14 +69,14 @@ export default function CodesScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
-      <ScreenHeader gradient={['#FF8FA3', '#FFB3C1']} icon="🎁" title="Actieve Codes" subtitle="Laatst gecontroleerd: 2 augustus 2026" />
+      <ScreenHeader gradient={['#FF8FA3', '#FFB3C1']} icon="🎁" title={s.title} subtitle={s.subtitle} />
       <FlatList
         data={CODES}
         keyExtractor={(item) => item.code}
         contentContainerStyle={styles.listContent}
         ListHeaderComponent={
           <View style={{ marginBottom: 10 }}>
-            <DisclaimerBox text={DISCLAIMER} />
+            <DisclaimerBox text={s.disclaimer} />
           </View>
         }
         renderItem={({ item: c }) => {
@@ -75,12 +95,12 @@ export default function CodesScreen() {
                 </Pressable>
                 <Pressable style={[styles.copyButton, isCopied && styles.copyButtonActive]} onPress={() => copyCode(c.code)}>
                   <Text style={[styles.copyText, isCopied && styles.copyTextActive]}>
-                    {isCopied ? 'Gekopieerd!' : 'Kopiëren'}
+                    {isCopied ? s.copied : s.copy}
                   </Text>
                 </Pressable>
               </View>
               <Text style={styles.reward}>{c.reward}</Text>
-              <Text style={styles.expires}>Verloopt: {c.expires}</Text>
+              <Text style={styles.expires}>{s.expires}: {c.expires}</Text>
             </View>
           );
         }}

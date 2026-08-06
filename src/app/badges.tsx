@@ -8,16 +8,34 @@ import { DisclaimerBox } from '@/components/heartopia/disclaimer-box';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { BADGE_ICON_MAP } from '@/constants/badge-icons';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
-import { BADGES } from '@/data/badges';
+import { useBadges } from '@/data/badges';
+import { useLanguage } from '@/hooks/use-language';
 
 const STORAGE_KEY = 'heartopia:badges:behaald';
 
-const DISCLAIMER =
-  '60+ badges, gebaseerd op een screenshot van jouw eigen Achievement-overzicht. Tik op het icoon om een badge als behaald te markeren, of gebruik de teller om voortgang bij te houden. Er zijn nog een aantal volledig verborgen badges die niet in deze lijst staan (nog geen naam bekend).';
+const STRINGS = {
+  nl: {
+    title: 'Badges',
+    subtitle: 'Prestaties & profieltitels (D.G. Level 15+)',
+    disclaimer:
+      '60+ badges, gebaseerd op een screenshot van jouw eigen Achievement-overzicht. Tik op het icoon om een badge als behaald te markeren, of gebruik de teller om voortgang bij te houden. Er zijn nog een aantal volledig verborgen badges die niet in deze lijst staan (nog geen naam bekend).',
+    hiddenDivider: '🔒 Verborgen Prestaties',
+  },
+  en: {
+    title: 'Badges',
+    subtitle: 'Achievements & profile titles (D.G. Level 15+)',
+    disclaimer:
+      "60+ badges, based on a screenshot of your own Achievement overview. Tap the icon to mark a badge as earned, or use the counter to track progress. There are still some fully hidden badges not in this list (name not yet known).",
+    hiddenDivider: '🔒 Hidden Achievements',
+  },
+} as const;
 
 export default function BadgesScreen() {
   const colors = useHeartopiaColors();
   const styles = useMemo(() => makeStyles(colors), [colors]);
+  const { language } = useLanguage();
+  const s = STRINGS[language];
+  const BADGES = useBadges();
   const [earned, setEarned] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
@@ -46,14 +64,14 @@ export default function BadgesScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
-      <ScreenHeader gradient={['#FFD166', '#E8A24F']} icon="🏅" title="Badges" subtitle="Prestaties & profieltitels (D.G. Level 15+)" />
+      <ScreenHeader gradient={['#FFD166', '#E8A24F']} icon="🏅" title={s.title} subtitle={s.subtitle} />
       <FlatList
         data={[...visible, { name: '__divider__', emoji: '', hidden: true, iconKey: null }, ...hidden]}
         keyExtractor={(item, i) => `${item.name}-${i}`}
         contentContainerStyle={styles.listContent}
         ListHeaderComponent={
           <View style={{ marginBottom: 10 }}>
-            <DisclaimerBox text={DISCLAIMER} />
+            <DisclaimerBox text={s.disclaimer} />
           </View>
         }
         renderItem={({ item: badge }) => {
@@ -61,7 +79,7 @@ export default function BadgesScreen() {
             return (
               <View style={styles.dividerRow}>
                 <View style={styles.dividerLine} />
-                <Text style={styles.dividerText}>🔒 Hidden Achievements</Text>
+                <Text style={styles.dividerText}>{s.hiddenDivider}</Text>
                 <View style={styles.dividerLine} />
               </View>
             );

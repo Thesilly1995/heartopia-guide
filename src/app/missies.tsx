@@ -6,44 +6,101 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChecklistRow } from '@/components/heartopia/checklist-row';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
+import { useLanguage } from '@/hooks/use-language';
 
 const STORAGE_KEY = 'heartopia:missies:vinkjes';
 
-const DAILY = [
-  { key: 'd1', label: '5x Bewonersverzoek (Resident Requests)' },
-  { key: 'd3', label: 'Winkel-restock bekijken (meubels & kleding)' },
-  { key: 'd4', label: 'Post/mailbox controleren' },
-  { key: 'd5', label: "Hobby's beoefenen (vissen, tuinieren, insecten, etc.)" },
-  { key: 'd6', label: 'Huisdier voeren, aaien & trainen' },
-  { key: 'd7', label: 'Wilde dieren voeren' },
-  { key: 'd10', label: 'Gewassen oogsten & water geven' },
-  { key: 'd11', label: 'Bloemen checken & water geven' },
-  { key: 'd12', label: "Ka Ching's winkel bekijken" },
-  { key: 'd13', label: 'Azure bekijken (indien actief event)' },
-  { key: 'd14', label: 'Laboratorium checken' },
-];
+const DAILY = {
+  nl: [
+    { key: 'd1', label: '5x Bewonersverzoek (Resident Requests)' },
+    { key: 'd3', label: 'Winkel-restock bekijken (meubels & kleding)' },
+    { key: 'd4', label: 'Post/mailbox controleren' },
+    { key: 'd5', label: "Hobby's beoefenen (vissen, tuinieren, insecten, etc.)" },
+    { key: 'd6', label: 'Huisdier voeren, aaien & trainen' },
+    { key: 'd7', label: 'Wilde dieren voeren' },
+    { key: 'd10', label: 'Gewassen oogsten & water geven' },
+    { key: 'd11', label: 'Bloemen checken & water geven' },
+    { key: 'd12', label: "Ka Ching's winkel bekijken" },
+    { key: 'd13', label: 'Azure bekijken (indien actief event)' },
+    { key: 'd14', label: 'Laboratorium checken' },
+  ],
+  en: [
+    { key: 'd1', label: '5x Resident Request' },
+    { key: 'd3', label: 'Check shop restock (furniture & clothing)' },
+    { key: 'd4', label: 'Check mail/mailbox' },
+    { key: 'd5', label: 'Practice hobbies (fishing, gardening, insects, etc.)' },
+    { key: 'd6', label: 'Feed, pet & train your pet' },
+    { key: 'd7', label: 'Feed wild animals' },
+    { key: 'd10', label: 'Harvest crops & water them' },
+    { key: 'd11', label: 'Check flowers & water them' },
+    { key: 'd12', label: "Check Ka Ching's shop" },
+    { key: 'd13', label: 'Check Azure (if an event is active)' },
+    { key: 'd14', label: 'Check the Laboratory' },
+  ],
+} as const;
 
-const WEEKLY = [
-  { key: 'w1', label: 'Wekelijkse taken afronden (D.G. Level 13+)' },
-  { key: 'w2', label: 'Roze Bubbels verzamelen' },
-  { key: 'w3', label: 'Event-weekdoelen (indien actief)' },
-];
+const WEEKLY = {
+  nl: [
+    { key: 'w1', label: 'Wekelijkse taken afronden (D.G. Level 13+)' },
+    { key: 'w2', label: 'Roze Bubbels verzamelen' },
+    { key: 'w3', label: 'Event-weekdoelen (indien actief)' },
+  ],
+  en: [
+    { key: 'w1', label: 'Complete weekly tasks (D.G. Level 13+)' },
+    { key: 'w2', label: 'Collect Pink Bubbles' },
+    { key: 'w3', label: 'Event weekly goals (if active)' },
+  ],
+} as const;
 
-const SHOPS = [
-  { key: 's1', label: 'Boekenwinkel' },
-  { key: 's2', label: 'Insectenwinkel (Naniwa)' },
-  { key: 's3', label: 'Viswinkel (Vanya)' },
-  { key: 's4', label: 'Tuinwinkel (Blanc)' },
-  { key: 's5', label: 'Instrumentenwinkel (Annie)' },
-  { key: 's6', label: 'Laboratorium (aanbiedingen)' },
-  { key: 's7', label: 'Kookwinkel (Massimo)' },
-  { key: 's8', label: 'Vogelwinkel (Bailey)' },
-];
+const SHOPS = {
+  nl: [
+    { key: 's1', label: 'Boekenwinkel' },
+    { key: 's2', label: 'Insectenwinkel (Naniwa)' },
+    { key: 's3', label: 'Viswinkel (Vanya)' },
+    { key: 's4', label: 'Tuinwinkel (Blanc)' },
+    { key: 's5', label: 'Instrumentenwinkel (Annie)' },
+    { key: 's6', label: 'Laboratorium (aanbiedingen)' },
+    { key: 's7', label: 'Kookwinkel (Massimo)' },
+    { key: 's8', label: 'Vogelwinkel (Bailey)' },
+  ],
+  en: [
+    { key: 's1', label: 'Book Shop' },
+    { key: 's2', label: 'Insect Shop (Naniwa)' },
+    { key: 's3', label: 'Fishing Shop (Vanya)' },
+    { key: 's4', label: 'Garden Shop (Blanc)' },
+    { key: 's5', label: 'Instrument Shop (Annie)' },
+    { key: 's6', label: 'Laboratory (offers)' },
+    { key: 's7', label: 'Cooking Shop (Massimo)' },
+    { key: 's8', label: 'Bird Shop (Bailey)' },
+  ],
+} as const;
 
+const STRINGS = {
+  nl: {
+    title: 'Missies',
+    daily: 'Dagelijks',
+    weekly: 'Wekelijks',
+    reset: 'Reset',
+    resetDaily: 'Elke dag om 6:00 (servertijd)',
+    resetWeekly: 'Elke maandag om 6:00 (servertijd)',
+    checkShops: 'Winkels checken',
+  },
+  en: {
+    title: 'Missions',
+    daily: 'Daily',
+    weekly: 'Weekly',
+    reset: 'Reset',
+    resetDaily: 'Every day at 6:00 (server time)',
+    resetWeekly: 'Every Monday at 6:00 (server time)',
+    checkShops: 'Check shops',
+  },
+} as const;
 
 export default function MissiesScreen() {
   const colors = useHeartopiaColors();
   const styles = useMemo(() => makeStyles(colors), [colors]);
+  const { language } = useLanguage();
+  const s = STRINGS[language];
   const [tab, setTab] = useState<'daily' | 'weekly'>('daily');
   const [checked, setChecked] = useState<Record<string, boolean>>({});
   const [shopsOpen, setShopsOpen] = useState(false);
@@ -69,25 +126,25 @@ export default function MissiesScreen() {
     }
   };
 
-  const items = tab === 'daily' ? DAILY : WEEKLY;
-  const resetText = tab === 'daily' ? 'Elke dag om 6:00 (servertijd)' : 'Elke maandag om 6:00 (servertijd)';
+  const items = tab === 'daily' ? DAILY[language] : WEEKLY[language];
+  const resetText = tab === 'daily' ? s.resetDaily : s.resetWeekly;
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <ScreenHeader
         gradient={['#E8A24F', '#F0C674']}
         icon="📋"
-        title="Missies"
+        title={s.title}
         tabs={[
-          { key: 'daily', label: 'Dagelijks' },
-          { key: 'weekly', label: 'Wekelijks' },
+          { key: 'daily', label: s.daily },
+          { key: 'weekly', label: s.weekly },
         ]}
         activeTab={tab}
         onTabChange={(k) => setTab(k as 'daily' | 'weekly')}
       />
       <ScrollView contentContainerStyle={styles.listContent}>
         <View style={styles.resetRow}>
-          <Text style={styles.resetLabel}>Reset</Text>
+          <Text style={styles.resetLabel}>{s.reset}</Text>
           <Text style={styles.resetText}>{resetText}</Text>
         </View>
 
@@ -101,12 +158,12 @@ export default function MissiesScreen() {
               <View style={[styles.checkbox, checked.shops_all && styles.checkboxActive]}>
                 {checked.shops_all && <Text style={styles.checkmark}>✓</Text>}
               </View>
-              <Text style={styles.shopsTitle}>Winkels checken</Text>
+              <Text style={styles.shopsTitle}>{s.checkShops}</Text>
               <Text style={styles.chevron}>{shopsOpen ? '⌄' : '›'}</Text>
             </Pressable>
             {shopsOpen && (
               <View style={styles.shopsList}>
-                {SHOPS.map((shop) => (
+                {SHOPS[language].map((shop) => (
                   <Pressable key={shop.key} style={styles.shopRow} onPress={() => toggle(shop.key)}>
                     <View style={[styles.smallCheckbox, checked[shop.key] && styles.checkboxActive]}>
                       {checked[shop.key] && <Text style={styles.checkmarkSmall}>✓</Text>}

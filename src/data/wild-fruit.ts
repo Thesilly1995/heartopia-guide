@@ -1,3 +1,7 @@
+import { useMemo } from 'react';
+
+import { useLanguage } from '@/hooks/use-language';
+
 export interface ForagedItem {
   name: string;
   spot: string;
@@ -6,9 +10,34 @@ export interface ForagedItem {
   emoji: string;
 }
 
-export const WILD_FRUIT: ForagedItem[] = [
-  { name: "Appel", spot: "Thuisfront: Noord & Oost", sellPrice: "28 🪙", energy: "+8", emoji: "🍎" },
-  { name: "Mandarijn", spot: "Thuisfront: West & Noord", sellPrice: "28 🪙", energy: "+8", emoji: "🍊" },
-  { name: "Bosbes", spot: "Thuisfront: West, Noord & Oost", sellPrice: "16 🪙", energy: "+5", emoji: "🫐" },
-  { name: "Framboos", spot: "Thuisfront: West", sellPrice: "26 🪙", energy: "+7", emoji: "🍓" },
+interface ForagedRaw {
+  nameNl: string;
+  nameEn: string;
+  spotNl: string;
+  spotEn: string;
+  sellPrice: string;
+  energy: string;
+  emoji: string;
+}
+
+const WILD_FRUIT_RAW: ForagedRaw[] = [
+  { nameNl: "Appel", nameEn: "Apple", spotNl: "Thuisfront: Noord & Oost", spotEn: "Home front: North & East", sellPrice: "28 🪙", energy: "+8", emoji: "🍎" },
+  { nameNl: "Mandarijn", nameEn: "Mandarin", spotNl: "Thuisfront: West & Noord", spotEn: "Home front: West & North", sellPrice: "28 🪙", energy: "+8", emoji: "🍊" },
+  { nameNl: "Bosbes", nameEn: "Blueberry", spotNl: "Thuisfront: West, Noord & Oost", spotEn: "Home front: West, North & East", sellPrice: "16 🪙", energy: "+5", emoji: "🫐" },
+  { nameNl: "Framboos", nameEn: "Raspberry", spotNl: "Thuisfront: West", spotEn: "Home front: West", sellPrice: "26 🪙", energy: "+7", emoji: "🍓" },
 ];
+
+export function useWildFruit(): ForagedItem[] {
+  const { language } = useLanguage();
+  return useMemo(
+    () =>
+      WILD_FRUIT_RAW.map((r) => ({
+    name: language === 'en' ? r.nameEn : r.nameNl,
+    spot: language === 'en' ? r.spotEn : r.spotNl,
+    sellPrice: r.sellPrice,
+    energy: r.energy,
+    emoji: r.emoji,
+      })),
+    [language]
+  );
+}

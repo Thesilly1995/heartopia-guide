@@ -5,8 +5,26 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
+import { useLanguage } from '@/hooks/use-language';
 
 const STORAGE_KEY = 'heartopia:todo:lijst';
+
+const STRINGS = {
+  nl: {
+    title: 'To-do',
+    subtitle: 'Wat wil je nog gaan doen in het spel?',
+    placeholder: 'Bijv. de nieuwe wijk afmaken, alle vlinders vangen...',
+    add: 'Toevoegen',
+    empty: 'Nog niks op je lijstje — voeg iets toe!',
+  },
+  en: {
+    title: 'To-do',
+    subtitle: 'What do you still want to do in the game?',
+    placeholder: 'E.g. finish the new district, catch all the butterflies...',
+    add: 'Add',
+    empty: 'Nothing on your list yet — add something!',
+  },
+} as const;
 
 interface TodoItem {
   text: string;
@@ -16,6 +34,8 @@ interface TodoItem {
 export default function TodoScreen() {
   const colors = useHeartopiaColors();
   const styles = useMemo(() => makeStyles(colors), [colors]);
+  const { language } = useLanguage();
+  const s = STRINGS[language];
   const [items, setItems] = useState<TodoItem[]>([]);
   const [text, setText] = useState('');
 
@@ -55,7 +75,7 @@ export default function TodoScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
-      <ScreenHeader gradient={['#8FBF6E', '#6EC6E8']} icon="📝" title="To-do" subtitle="Wat wil je nog gaan doen in het spel?" />
+      <ScreenHeader gradient={['#8FBF6E', '#6EC6E8']} icon="📝" title={s.title} subtitle={s.subtitle} />
       <FlatList
         data={items}
         keyExtractor={(_, i) => String(i)}
@@ -66,16 +86,16 @@ export default function TodoScreen() {
               value={text}
               onChangeText={setText}
               onSubmitEditing={addItem}
-              placeholder="Bijv. de nieuwe wijk afmaken, alle vlinders vangen..."
+              placeholder={s.placeholder}
               placeholderTextColor={colors.forestSoft}
               style={styles.input}
             />
             <Pressable style={styles.addButton} onPress={addItem}>
-              <Text style={styles.addButtonText}>Toevoegen</Text>
+              <Text style={styles.addButtonText}>{s.add}</Text>
             </Pressable>
           </View>
         }
-        ListEmptyComponent={<Text style={styles.emptyText}>Nog niks op je lijstje — voeg iets toe!</Text>}
+        ListEmptyComponent={<Text style={styles.emptyText}>{s.empty}</Text>}
         renderItem={({ item, index }) => (
           <View style={styles.row}>
             <Pressable style={[styles.checkbox, item.done && styles.checkboxActive]} onPress={() => toggleItem(index)}>

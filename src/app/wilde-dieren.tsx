@@ -7,13 +7,22 @@ import { InfoCard } from '@/components/heartopia/info-card';
 import { LevelStepper } from '@/components/heartopia/level-stepper';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
-import { WILD_ANIMALS, WILD_ANIMAL_MAX_BOND } from '@/data/wild-animals';
+import { WILD_ANIMAL_MAX_BOND, useWildAnimals } from '@/data/wild-animals';
+import { useLanguage } from '@/hooks/use-language';
 
 const STORAGE_KEY = 'heartopia:wildedieren:vriendschap';
+
+const STRINGS = {
+  nl: { title: 'Wilde Dieren', subtitle: 'Voertroggen, favoriet eten & vriendschap', feedingSpot: 'Voertrog', favoriteWeather: 'Favoriet weer', favoriteFood: 'Favoriete eten', friendshipLevel: 'Vriendschapsniveau' },
+  en: { title: 'Wild Animals', subtitle: 'Feeding troughs, favorite food & friendship', feedingSpot: 'Feeding trough', favoriteWeather: 'Favorite weather', favoriteFood: 'Favorite food', friendshipLevel: 'Friendship level' },
+} as const;
 
 export default function WildeDierenScreen() {
   const colors = useHeartopiaColors();
   const styles = useMemo(() => makeStyles(colors), [colors]);
+  const { language } = useLanguage();
+  const s = STRINGS[language];
+  const wildAnimals = useWildAnimals();
   const [openName, setOpenName] = useState<string | null>(null);
   const [bonds, setBonds] = useState<Record<string, number>>({});
 
@@ -43,11 +52,11 @@ export default function WildeDierenScreen() {
       <ScreenHeader
         gradient={['#8FBF6E', '#C9E6A8']}
         icon="🦊"
-        title="Wilde Dieren"
-        subtitle="Voertroggen, favoriet eten & vriendschap"
+        title={s.title}
+        subtitle={s.subtitle}
       />
       <FlatList
-        data={WILD_ANIMALS}
+        data={wildAnimals}
         keyExtractor={(item) => item.name}
         contentContainerStyle={styles.listContent}
         renderItem={({ item: animal }) => {
@@ -75,10 +84,10 @@ export default function WildeDierenScreen() {
               {isOpen && (
                 <View style={styles.cardBody}>
                   <View style={styles.detailGrid}>
-                    <InfoCard label="Voertrog" value={animal.spot} full />
-                    <InfoCard label="Favoriet weer" value={animal.weather} full />
+                    <InfoCard label={s.feedingSpot} value={animal.spot} full />
+                    <InfoCard label={s.favoriteWeather} value={animal.weather} full />
                     <View style={[styles.foodsBox]}>
-                      <Text style={styles.detailLabel}>Favoriete eten</Text>
+                      <Text style={styles.detailLabel}>{s.favoriteFood}</Text>
                       <View style={styles.foodsRow}>
                         {animal.foods.map((f) => (
                           <Text key={f} style={styles.foodPill}>
@@ -92,7 +101,7 @@ export default function WildeDierenScreen() {
                   {animal.note && <Text style={styles.note}>⚠️ {animal.note}</Text>}
 
                   <View style={styles.bondBox}>
-                    <Text style={styles.bondBoxLabel}>Vriendschapsniveau</Text>
+                    <Text style={styles.bondBoxLabel}>{s.friendshipLevel}</Text>
                     <LevelStepper value={bonds[animal.name] || 0} max={maxBond} onSet={(n) => setBond(animal.name, n)} />
                   </View>
                 </View>

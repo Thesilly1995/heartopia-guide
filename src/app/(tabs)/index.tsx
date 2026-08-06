@@ -1,72 +1,92 @@
 import { Link } from 'expo-router';
 import { useMemo } from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Platform, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
+import { useLanguage } from '@/hooks/use-language';
 
-const SECTIONS: { label: string; items: { href: string; icon: string; title: string; desc: string }[] }[] = [
+const SECTIONS: {
+  label: { nl: string; en: string };
+  items: { href: string; icon: string; title: { nl: string; en: string }; desc: { nl: string; en: string } }[];
+}[] = [
   {
-    label: "Hobby's",
+    label: { nl: "Hobby's", en: 'Hobbies' },
     items: [
-      { href: '/vissen', icon: '🎣', title: 'Vissen', desc: 'Vissoorten, plekken & tijden' },
-      { href: '/koken', icon: '🍳', title: 'Koken', desc: 'Recepten & ingrediënten' },
-      { href: '/tuinieren', icon: '🌱', title: 'Tuinieren', desc: 'Zaden, groei & oogst' },
-      { href: '/insecten', icon: '🦋', title: 'Insecten', desc: 'Vlinders, kevers & meer' },
-      { href: '/vogels', icon: '🐦', title: 'Vogels', desc: 'Vogelsoorten & plekken' },
-      { href: '/beeldhouwen', icon: '🏖️', title: 'Beeldhouwen', desc: 'Zand- en sneeuwsculpturen' },
-      { href: '/ocean-cleanup', icon: '🌊', title: 'Ocean Cleanup', desc: 'Vervuiling opruimen & schelpen' },
+      { href: '/vissen', icon: '🎣', title: { nl: 'Vissen', en: 'Fishing' }, desc: { nl: 'Vissoorten, plekken & tijden', en: 'Fish species, spots & times' } },
+      { href: '/koken', icon: '🍳', title: { nl: 'Koken', en: 'Cooking' }, desc: { nl: 'Recepten & ingrediënten', en: 'Recipes & ingredients' } },
+      { href: '/tuinieren', icon: '🌱', title: { nl: 'Tuinieren', en: 'Gardening' }, desc: { nl: 'Zaden, groei & oogst', en: 'Seeds, growth & harvest' } },
+      { href: '/insecten', icon: '🦋', title: { nl: 'Insecten', en: 'Insects' }, desc: { nl: 'Vlinders, kevers & meer', en: 'Butterflies, beetles & more' } },
+      { href: '/vogels', icon: '🐦', title: { nl: 'Vogels', en: 'Birds' }, desc: { nl: 'Vogelsoorten & plekken', en: 'Bird species & spots' } },
+      { href: '/beeldhouwen', icon: '🏖️', title: { nl: 'Beeldhouwen', en: 'Sculpting' }, desc: { nl: 'Zand- en sneeuwsculpturen', en: 'Sand and snow sculptures' } },
+      { href: '/ocean-cleanup', icon: '🌊', title: { nl: 'Ocean Cleanup', en: 'Ocean Cleanup' }, desc: { nl: 'Vervuiling opruimen & schelpen', en: 'Cleaning up pollution & shells' } },
     ],
   },
   {
-    label: 'Dieren',
+    label: { nl: 'Dieren', en: 'Animals' },
     items: [
-      { href: '/huisdieren', icon: '🐾', title: 'Dog & Cat Moments', desc: 'Huisdieren adopteren & verzorgen' },
-      { href: '/wilde-dieren', icon: '🦊', title: 'Wilde Dieren', desc: 'Voertroggen, eten & vriendschap' },
-      { href: '/wilde-ingredienten', icon: '🌿', title: 'Wilde Ingrediënten', desc: 'Fruit, paddenstoelen & materialen' },
+      { href: '/huisdieren', icon: '🐾', title: { nl: 'Dog & Cat Moments', en: 'Dog & Cat Moments' }, desc: { nl: 'Huisdieren adopteren & verzorgen', en: 'Adopt & care for pets' } },
+      { href: '/wilde-dieren', icon: '🦊', title: { nl: 'Wilde Dieren', en: 'Wild Animals' }, desc: { nl: 'Voertroggen, eten & vriendschap', en: 'Feeding troughs, food & friendship' } },
+      { href: '/wilde-ingredienten', icon: '🌿', title: { nl: 'Wilde Ingrediënten', en: 'Wild Ingredients' }, desc: { nl: 'Fruit, paddenstoelen & materialen', en: 'Fruit, mushrooms & materials' } },
     ],
   },
   {
-    label: 'Spel',
+    label: { nl: 'Spel', en: 'Game' },
     items: [
-      { href: '/events', icon: '🎉', title: 'Huidig Event', desc: 'Call of Whales' },
-      { href: '/missies', icon: '📋', title: 'Missies', desc: 'Dagelijkse & wekelijkse taken' },
-      { href: '/bubbels', icon: '🫧', title: 'Wekelijkse Bubbels', desc: 'Roze bubbels vol beloningen' },
-      { href: '/rainbow-meteor', icon: '🌈', title: 'Rainbow & Meteorenregen', desc: 'Boeketten & sterrenscherven' },
-      { href: '/badges', icon: '🏅', title: 'Badges', desc: 'Prestaties & profieltitels' },
-      { href: '/codes', icon: '🎁', title: 'Codes', desc: 'Actieve & verlopen codes' },
+      { href: '/events', icon: '🎉', title: { nl: 'Huidig Event', en: 'Current Event' }, desc: { nl: 'Call of Whales', en: 'Call of Whales' } },
+      { href: '/missies', icon: '📋', title: { nl: 'Missies', en: 'Missions' }, desc: { nl: 'Dagelijkse & wekelijkse taken', en: 'Daily & weekly tasks' } },
+      { href: '/bubbels', icon: '🫧', title: { nl: 'Wekelijkse Bubbels', en: 'Weekly Bubbles' }, desc: { nl: 'Roze bubbels vol beloningen', en: 'Pink bubbles full of rewards' } },
+      { href: '/rainbow-meteor', icon: '🌈', title: { nl: 'Rainbow & Meteorenregen', en: 'Rainbow & Meteor Shower' }, desc: { nl: 'Boeketten & sterrenscherven', en: 'Bouquets & star shards' } },
+      { href: '/badges', icon: '🏅', title: { nl: 'Badges', en: 'Badges' }, desc: { nl: 'Prestaties & profieltitels', en: 'Achievements & profile titles' } },
+      { href: '/codes', icon: '🎁', title: { nl: 'Codes', en: 'Codes' }, desc: { nl: 'Actieve & verlopen codes', en: 'Active & expired codes' } },
     ],
   },
   {
-    label: 'Overig',
+    label: { nl: 'Overig', en: 'Other' },
     items: [
-      { href: '/todo', icon: '📝', title: 'To-do', desc: 'Wat wil je nog gaan doen?' },
-      { href: '/feedback', icon: '💡', title: 'Feedback', desc: 'Deel je ideeën voor de gids' },
+      { href: '/todo', icon: '📝', title: { nl: 'To-do', en: 'To-do' }, desc: { nl: 'Wat wil je nog gaan doen?', en: 'What do you still want to do?' } },
+      { href: '/feedback', icon: '💡', title: { nl: 'Feedback', en: 'Feedback' }, desc: { nl: 'Deel je ideeën voor de gids', en: 'Share your ideas for the guide' } },
     ],
   },
 ];
 
+const STRINGS = {
+  nl: { welcome: 'Welkom terug in', title: 'Heartopia Gids' },
+  en: { welcome: 'Welcome back to', title: 'Heartopia Guide' },
+} as const;
+
 export default function HomeScreen() {
   const colors = useHeartopiaColors();
   const styles = useMemo(() => makeStyles(colors), [colors]);
+  const { language, toggleLanguage } = useLanguage();
+  const s = STRINGS[language];
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.header}>
-          <Text style={styles.welcome}>Welkom terug in</Text>
-          <Text style={styles.title}>Heartopia Gids</Text>
+          <View style={styles.headerTopRow}>
+            <View>
+              <Text style={styles.welcome}>{s.welcome}</Text>
+              <Text style={styles.title}>{s.title}</Text>
+            </View>
+            <Pressable style={styles.langSwitch} onPress={toggleLanguage} hitSlop={8}>
+              <Text style={[styles.langOption, language === 'nl' && styles.langOptionActive]}>NL</Text>
+              <Text style={styles.langDivider}>/</Text>
+              <Text style={[styles.langOption, language === 'en' && styles.langOptionActive]}>EN</Text>
+            </Pressable>
+          </View>
         </View>
 
         {SECTIONS.map((section) => (
-          <View key={section.label} style={styles.section}>
-            <Text style={styles.sectionLabel}>{section.label}</Text>
+          <View key={section.label.nl} style={styles.section}>
+            <Text style={styles.sectionLabel}>{section.label[language]}</Text>
             {section.items.map((item) => (
               <Link key={item.href} href={item.href as never} asChild>
                 <TouchableOpacity style={styles.card}>
                   <Text style={styles.cardIcon}>{item.icon}</Text>
                   <View style={styles.cardText}>
-                    <Text style={styles.cardTitle}>{item.title}</Text>
-                    <Text style={styles.cardDesc}>{item.desc}</Text>
+                    <Text style={styles.cardTitle}>{item.title[language]}</Text>
+                    <Text style={styles.cardDesc}>{item.desc[language]}</Text>
                   </View>
                 </TouchableOpacity>
               </Link>
@@ -82,9 +102,14 @@ function makeStyles(c: ThemeColors) {
   return StyleSheet.create({
     safeArea: { flex: 1, backgroundColor: c.bg },
     scrollContent: { padding: 20, paddingBottom: 40, gap: 4 },
-    header: { paddingVertical: 20 },
+    header: { paddingVertical: 20, paddingTop: Platform.OS === 'web' ? 56 : 20 },
+    headerTopRow: { flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between' },
     welcome: { color: c.forestSoft, fontSize: 14 },
     title: { color: c.forest, fontSize: 28, fontWeight: 'bold', marginTop: 4 },
+    langSwitch: { flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: c.card, borderWidth: 1, borderColor: c.line, borderRadius: 999, paddingHorizontal: 10, paddingVertical: 6, marginTop: 4 },
+    langOption: { fontSize: 12, fontWeight: '700', color: c.forestSoft },
+    langOptionActive: { color: c.coral },
+    langDivider: { fontSize: 12, color: c.line },
     section: { marginTop: 16, gap: 10 },
     sectionLabel: { color: c.forestSoft, fontSize: 14, marginBottom: 2 },
     card: {
