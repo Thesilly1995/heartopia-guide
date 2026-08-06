@@ -8,4 +8,5 @@
  * GitHub-link naar een JSON-bestand, of een Gist raw-link) zodra er een hostingplek
  * gekozen is, en die content kan daarna bijgewerkt worden zonder nieuwe appversie.
  */
-export const REMOTE_CONTENT_URL: string | null = null;
+export const REMOTE_CONTENT_URL: string | null =
+  'https://raw.githubusercontent.com/thesilly1995/heartopia-guide/main/remote-content.json';

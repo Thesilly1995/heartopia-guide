@@ -1,0 +1,17 @@
+{
+  "updatedAt": "2026-08-06T15:04:00Z",
+  "dailyPlots": {
+    "oakPlotNl": "Plot 2",
+    "oakPlotEn": "Plot 2",
+    "fluoritePlotNl": "Plot 2",
+    "fluoritePlotEn": "Plot 2"
+  },
+  "weather": {
+    "kind": "sunny",
+    "labelNl": "Zonnig",
+    "labelEn": "Sunny",
+    "validUntil": "2026-08-06T18:00:00Z"
+  },
+  "rainbowSpots": [],
+  "meteorSpots": []
+}
