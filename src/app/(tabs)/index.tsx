@@ -1,5 +1,5 @@
 import { Link } from 'expo-router';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Platform, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -59,12 +59,7 @@ const STRINGS = {
   nl: {
     welcome: 'Welkom terug in',
     title: 'Heartopia Gids',
-    todayOak: 'Zwervende Eik vandaag',
-    todayFluorite: 'Fluoriet-plek vandaag',
     unknown: 'Onbekend — vraag het na',
-    rainbowMeteor: 'Rainbow & Meteorenregen',
-    rainbowLabel: '🌈 Rainbow',
-    meteorLabel: '☄️ Meteorenregen',
     active: 'Actief nu',
     inactive: 'Niet actief',
     forecastTitle: 'Weer deze week',
@@ -72,12 +67,7 @@ const STRINGS = {
   en: {
     welcome: 'Welcome back to',
     title: 'Heartopia Guide',
-    todayOak: "Roaming Oak today",
-    todayFluorite: 'Fluorite spot today',
     unknown: 'Unknown — ask to look it up',
-    rainbowMeteor: 'Rainbow & Meteor Shower',
-    rainbowLabel: '🌈 Rainbow',
-    meteorLabel: '☄️ Meteor Shower',
     active: 'Active now',
     inactive: 'Not active',
     forecastTitle: 'Weather this week',
@@ -89,6 +79,7 @@ export default function HomeScreen() {
   const styles = useMemo(() => makeStyles(colors), [colors]);
   const { language, toggleLanguage } = useLanguage();
   const s = STRINGS[language];
+  const [forecastExpanded, setForecastExpanded] = useState(false);
   const dailyPlots = useDailyPlots();
   const eventMeta = useCurrentEventMeta();
   const rainbowSpots = useRainbowSpots();
@@ -111,18 +102,6 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        {weekForecast.length > 0 && (
-          <View style={styles.forecastCard}>
-            <Text style={styles.forecastTitle}>{s.forecastTitle}</Text>
-            {weekForecast.map((entry) => (
-              <View key={entry.date} style={styles.forecastRow}>
-                <Text style={styles.forecastIcon}>{entry.emoji}</Text>
-                <Text style={styles.forecastDay}>{entry.dayLabel}</Text>
-              </View>
-            ))}
-          </View>
-        )}
-
         <Link href="/events" asChild>
           <TouchableOpacity style={styles.statusCard}>
             <Text style={styles.statusIcon}>{eventMeta.emoji}</Text>
@@ -134,39 +113,55 @@ export default function HomeScreen() {
           </TouchableOpacity>
         </Link>
 
+        {weekForecast.length > 0 && (
+          <View style={styles.forecastCard}>
+            <Pressable
+              style={styles.forecastHeader}
+              onPress={() => setForecastExpanded((v) => !v)}
+              hitSlop={4}
+            >
+              <Text style={styles.forecastTitle}>{s.forecastTitle}</Text>
+              <View style={styles.forecastHeaderRight}>
+                {!forecastExpanded && (
+                  <View style={styles.forecastPreview}>
+                    <Text style={styles.forecastIcon}>{weekForecast[0].emoji}</Text>
+                    <Text style={styles.forecastDay}>{weekForecast[0].dayLabel}</Text>
+                  </View>
+                )}
+                <Text style={[styles.chevron, forecastExpanded && styles.chevronExpanded]}>›</Text>
+              </View>
+            </Pressable>
+            {forecastExpanded &&
+              weekForecast.map((entry) => (
+                <View key={entry.date} style={styles.forecastRow}>
+                  <Text style={styles.forecastIcon}>{entry.emoji}</Text>
+                  <Text style={styles.forecastDay}>{entry.dayLabel}</Text>
+                </View>
+              ))}
+          </View>
+        )}
+
         <Link href="/rainbow-meteor" asChild>
           <TouchableOpacity style={styles.plotsCard}>
-            <View style={styles.plotsItem}>
-              <Text style={styles.plotsIcon}>🌈</Text>
-              <View>
-                <Text style={styles.plotsLabel}>{s.rainbowLabel}</Text>
-                <Text style={styles.plotsValue}>{rainbowSpots.length > 0 ? s.active : s.inactive}</Text>
-              </View>
+            <View style={styles.plotsRow}>
+              <Text style={styles.plotsRowIcon}>🌈</Text>
+              <Text style={styles.plotsRowText}>{rainbowSpots.length > 0 ? s.active : s.inactive}</Text>
             </View>
-            <View style={styles.plotsItem}>
-              <Text style={styles.plotsIcon}>☄️</Text>
-              <View>
-                <Text style={styles.plotsLabel}>{s.meteorLabel}</Text>
-                <Text style={styles.plotsValue}>{meteorSpots.length > 0 ? s.active : s.inactive}</Text>
-              </View>
+            <View style={styles.plotsRow}>
+              <Text style={styles.plotsRowIcon}>☄️</Text>
+              <Text style={styles.plotsRowText}>{meteorSpots.length > 0 ? s.active : s.inactive}</Text>
             </View>
           </TouchableOpacity>
         </Link>
 
         <View style={styles.plotsCard}>
-          <View style={styles.plotsItem}>
-            <Text style={styles.plotsIcon}>🌳</Text>
-            <View>
-              <Text style={styles.plotsLabel}>{s.todayOak}</Text>
-              <Text style={styles.plotsValue}>{dailyPlots.oakPlot ?? s.unknown}</Text>
-            </View>
+          <View style={styles.plotsRow}>
+            <Text style={styles.plotsRowIcon}>🌳</Text>
+            <Text style={styles.plotsRowText}>{dailyPlots.oakPlot ?? s.unknown}</Text>
           </View>
-          <View style={styles.plotsItem}>
-            <Text style={styles.plotsIcon}>💎</Text>
-            <View>
-              <Text style={styles.plotsLabel}>{s.todayFluorite}</Text>
-              <Text style={styles.plotsValue}>{dailyPlots.fluoritePlot ?? s.unknown}</Text>
-            </View>
+          <View style={styles.plotsRow}>
+            <Text style={styles.plotsRowIcon}>💎</Text>
+            <Text style={styles.plotsRowText}>{dailyPlots.fluoritePlot ?? s.unknown}</Text>
           </View>
         </View>
 
@@ -219,6 +214,7 @@ function makeStyles(c: ThemeColors) {
     statusTitle: { color: c.forest, fontSize: 14, fontWeight: '700' },
     statusDesc: { color: c.forestSoft, fontSize: 11, marginTop: 1 },
     chevron: { fontSize: 16, color: c.forestSoft },
+    chevronExpanded: { transform: [{ rotate: '90deg' }] },
     forecastCard: {
       backgroundColor: c.card,
       borderWidth: 1,
@@ -228,6 +224,9 @@ function makeStyles(c: ThemeColors) {
       marginTop: 4,
       gap: 8,
     },
+    forecastHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+    forecastHeaderRight: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+    forecastPreview: { flexDirection: 'row', alignItems: 'center', gap: 6 },
     forecastTitle: { color: c.forestSoft, fontSize: 11, fontWeight: '700', textTransform: 'uppercase' },
     forecastRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
     forecastIcon: { fontSize: 16 },
@@ -243,10 +242,9 @@ function makeStyles(c: ThemeColors) {
       padding: 12,
       marginTop: 4,
     },
-    plotsItem: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-    plotsIcon: { fontSize: 18 },
-    plotsLabel: { color: c.forestSoft, fontSize: 10 },
-    plotsValue: { color: c.forest, fontSize: 13, fontWeight: '700', marginTop: 2 },
+    plotsRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+    plotsRowIcon: { fontSize: 18 },
+    plotsRowText: { color: c.forest, fontSize: 13, fontWeight: '700' },
     section: { marginTop: 16, gap: 10 },
     sectionLabel: { color: c.forestSoft, fontSize: 14, marginBottom: 2 },
     card: {

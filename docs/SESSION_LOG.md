@@ -2,6 +2,24 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-06 (nog later, deel 3) — Homescreen-volgorde en kaartjes-opmaak op verzoek aangepast
+
+**Uitgangspunt:** gebruiker gaf drie concrete feedbackpunten op het homescreen: (1) het "Weer deze week"-kaartje moet inklapbaar worden zodat het niet te lang wordt zodra vanaf volgende week alle 7 dagen erop staan, (2) het Event-kaartje moet bovenaan staan omdat dat nu een belangrijk onderwerp is, (3) de Rainbow/Meteorenregen- en Zwervende Eik/Fluoriet-kaartjes moeten dezelfde opmaak krijgen als het weer-kaartje: een icoon gevolgd door alleen actief/niet-actief of de plotnaam, zonder aparte labelregel erboven.
+
+### Wat is gebouwd (`src/app/(tabs)/index.tsx`)
+
+- **Volgorde aangepast**: Event-kaartje staat nu direct onder de header, vóór het weer-kaartje (was andersom).
+- **"Weer deze week" inklapbaar**: lokale `useState(false)`-toggle, header is nu een `Pressable` met titel + (indien ingeklapt) een preview van vandaag (icoon + dag) + een chevron die 90° roteert bij uitklappen. De volledige dagenlijst wordt alleen gerenderd als `forecastExpanded` true is.
+- **Rainbow/Meteor- en Eik/Fluoriet-kaartjes herstijld**: van een stacked layout (icoon boven label boven waarde, `plotsItem`/`plotsLabel`/`plotsValue`) naar een horizontale rij (icoon + waarde-tekst naast elkaar, `plotsRow`/`plotsRowIcon`/`plotsRowText`) — zelfde patroon als de weer-rijen. De losse bijschriften ("🌈 Rainbow", "Zwervende Eik vandaag", etc.) zijn vervallen; het icoon zelf identificeert nu wat er getoond wordt, zoals gevraagd. Bijbehorende ongebruikte STRINGS-velden (`rainbowLabel`, `meteorLabel`, `todayOak`, `todayFluorite`, `rainbowMeteor`) opgeruimd.
+
+### Getest
+
+Via `expo start --web` + Playwright, met `page.route()`-interceptie van `remote-content.json` (proxy in deze omgeving gaf 405 op een directe fetch naar raw.githubusercontent.com vanuit Chromium — geen probleem van de app zelf, alleen van deze testomgeving). Gecontroleerd: NL ingeklapt/uitgeklapt, EN, dark mode — Event bovenaan, weer-kaartje toont "Vrijdag" als preview en klapt naar Vrijdag/Zaterdag/Zondag uit met roterende chevron, rainbow/meteor en plots-kaartjes tonen icoon+tekst zonder labels. Geen console errors.
+
+### Repo-status
+
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-06 (nog later, deel 2) — Weekweer herontworpen naar dagniveau + inhaalslag andere sessie
 
 **Uitgangspunt:** gebruiker had in een andere Claude-sessie (buiten deze chat) al drie dingen gedaan die hier niet gelogd waren — zie hieronder ter aanvulling. Daarna vroeg de gebruiker hier om het "Bijzonder weer deze week"-kaartje anders op te zetten: een echte weekweergave (vandaag t/m zondag) met per dag een status, óók de dagen zonder bijzonderheden (bv. "vrijdag regen, zaterdag warme zon, zondag normale zon/niks bijzonders") i.p.v. alleen bijzondere dagen te noemen.
