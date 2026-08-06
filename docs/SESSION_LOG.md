@@ -2,6 +2,23 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-06 (nog later, deel 4) — Weer-preview toont weekdagnaam i.p.v. "Vandaag"
+
+**Uitgangspunt:** vervolg op deel 3 (net hieronder). Gebruiker wilde dat de ingeklapte preview van het weer-kaartje de echte weekdagnaam toont (bv. "Dinsdag") in plaats van "Vandaag" — elke dag dus de actuele dag van de week.
+
+### Wat is gebouwd
+
+- **`src/data/week-forecast.ts`**: `WeekForecastEntry` kreeg een extra veld `weekdayLabel` — altijd de weekdagnaam, ook voor vandaag (i.t.t. het bestaande `dayLabel`, dat voor vandaag "Vandaag"/"Today" blijft geven).
+- **`src/app/(tabs)/index.tsx`**: de ingeklapte preview van het weer-kaartje gebruikt nu `weekForecast[0].weekdayLabel` i.p.v. `dayLabel`. De uitgeklapte lijst blijft ongewijzigd "Vandaag" tonen voor de eerste rij — alleen de preview is aangepast.
+
+### Getest
+
+Via `expo start --web` + Playwright met een gemockte payload met een entry voor de systeemdatum van vandaag (2026-08-06, donderdag): preview toont "Donderdag", uitgeklapte lijst toont nog gewoon "Vandaag" op de eerste rij gevolgd door de overige dagen. Geen console errors.
+
+### Repo-status
+
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-06 (nog later, deel 3) — Homescreen-volgorde en kaartjes-opmaak op verzoek aangepast
 
 **Uitgangspunt:** gebruiker gaf drie concrete feedbackpunten op het homescreen: (1) het "Weer deze week"-kaartje moet inklapbaar worden zodat het niet te lang wordt zodra vanaf volgende week alle 7 dagen erop staan, (2) het Event-kaartje moet bovenaan staan omdat dat nu een belangrijk onderwerp is, (3) de Rainbow/Meteorenregen- en Zwervende Eik/Fluoriet-kaartjes moeten dezelfde opmaak krijgen als het weer-kaartje: een icoon gevolgd door alleen actief/niet-actief of de plotnaam, zonder aparte labelregel erboven.

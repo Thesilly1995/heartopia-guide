@@ -8,7 +8,10 @@ export interface WeekForecastEntry {
   kind: WeekForecastKind;
   label: string;
   emoji: string;
+  /** "Vandaag" voor de dag van vandaag, anders de weekdagnaam. */
   dayLabel: string;
+  /** Altijd de weekdagnaam, ook voor vandaag (bv. "Dinsdag") — voor plekken waar "Vandaag" niet duidelijk genoeg is. */
+  weekdayLabel: string;
 }
 
 const EMOJI: Record<WeekForecastKind, string> = {
@@ -76,6 +79,7 @@ export function useWeekForecast(): WeekForecastEntry[] {
           label: LABELS[language][entry.kind],
           emoji: EMOJI[entry.kind],
           dayLabel: isToday ? TODAY_LABEL[language] : weekday,
+          weekdayLabel: weekday,
         };
       });
   }, [payload, language]);

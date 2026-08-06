@@ -125,7 +125,7 @@ export default function HomeScreen() {
                 {!forecastExpanded && (
                   <View style={styles.forecastPreview}>
                     <Text style={styles.forecastIcon}>{weekForecast[0].emoji}</Text>
-                    <Text style={styles.forecastDay}>{weekForecast[0].dayLabel}</Text>
+                    <Text style={styles.forecastDay}>{weekForecast[0].weekdayLabel}</Text>
                   </View>
                 )}
                 <Text style={[styles.chevron, forecastExpanded && styles.chevronExpanded]}>›</Text>
