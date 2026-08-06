@@ -5,6 +5,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { useDailyPlots } from '@/data/daily-plots';
+import { useCurrentEventMeta } from '@/data/event-meta';
+import { useMeteorSpots } from '@/data/meteor-spots';
+import { useRainbowSpots } from '@/data/rainbow-spots';
 import { useLanguage } from '@/hooks/use-language';
 
 const SECTIONS: {
@@ -58,6 +61,11 @@ const STRINGS = {
     todayOak: 'Zwervende Eik vandaag',
     todayFluorite: 'Fluoriet-plek vandaag',
     unknown: 'Onbekend — vraag het na',
+    rainbowMeteor: 'Rainbow & Meteorenregen',
+    rainbowLabel: '🌈 Rainbow',
+    meteorLabel: '☄️ Meteorenregen',
+    active: 'Actief nu',
+    inactive: 'Niet actief',
   },
   en: {
     welcome: 'Welcome back to',
@@ -65,6 +73,11 @@ const STRINGS = {
     todayOak: "Roaming Oak today",
     todayFluorite: 'Fluorite spot today',
     unknown: 'Unknown — ask to look it up',
+    rainbowMeteor: 'Rainbow & Meteor Shower',
+    rainbowLabel: '🌈 Rainbow',
+    meteorLabel: '☄️ Meteor Shower',
+    active: 'Active now',
+    inactive: 'Not active',
   },
 } as const;
 
@@ -74,6 +87,9 @@ export default function HomeScreen() {
   const { language, toggleLanguage } = useLanguage();
   const s = STRINGS[language];
   const dailyPlots = useDailyPlots();
+  const eventMeta = useCurrentEventMeta();
+  const rainbowSpots = useRainbowSpots();
+  const meteorSpots = useMeteorSpots();
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -90,6 +106,36 @@ export default function HomeScreen() {
             </Pressable>
           </View>
         </View>
+
+        <Link href="/events" asChild>
+          <TouchableOpacity style={styles.statusCard}>
+            <Text style={styles.statusIcon}>{eventMeta.emoji}</Text>
+            <View style={styles.statusText}>
+              <Text style={styles.statusTitle}>{eventMeta.name}</Text>
+              <Text style={styles.statusDesc}>{eventMeta.dates}</Text>
+            </View>
+            <Text style={styles.chevron}>›</Text>
+          </TouchableOpacity>
+        </Link>
+
+        <Link href="/rainbow-meteor" asChild>
+          <TouchableOpacity style={styles.plotsCard}>
+            <View style={styles.plotsItem}>
+              <Text style={styles.plotsIcon}>🌈</Text>
+              <View>
+                <Text style={styles.plotsLabel}>{s.rainbowLabel}</Text>
+                <Text style={styles.plotsValue}>{rainbowSpots.length > 0 ? s.active : s.inactive}</Text>
+              </View>
+            </View>
+            <View style={styles.plotsItem}>
+              <Text style={styles.plotsIcon}>☄️</Text>
+              <View>
+                <Text style={styles.plotsLabel}>{s.meteorLabel}</Text>
+                <Text style={styles.plotsValue}>{meteorSpots.length > 0 ? s.active : s.inactive}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </Link>
 
         <View style={styles.plotsCard}>
           <View style={styles.plotsItem}>
@@ -141,6 +187,22 @@ function makeStyles(c: ThemeColors) {
     langOption: { fontSize: 12, fontWeight: '700', color: c.forestSoft },
     langOptionActive: { color: c.coral },
     langDivider: { fontSize: 12, color: c.line },
+    statusCard: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: c.card,
+      borderWidth: 1,
+      borderColor: c.line,
+      borderRadius: 16,
+      padding: 12,
+      marginTop: 4,
+      gap: 10,
+    },
+    statusIcon: { fontSize: 20 },
+    statusText: { flex: 1 },
+    statusTitle: { color: c.forest, fontSize: 14, fontWeight: '700' },
+    statusDesc: { color: c.forestSoft, fontSize: 11, marginTop: 1 },
+    chevron: { fontSize: 16, color: c.forestSoft },
     plotsCard: {
       flexDirection: 'row',
       justifyContent: 'space-around',

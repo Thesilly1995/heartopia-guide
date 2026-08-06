@@ -9,6 +9,7 @@ import { StarRow } from '@/components/heartopia/star-row';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { useEventBirds } from '@/data/event-birds';
 import { useEventFish } from '@/data/event-fish';
+import { useCurrentEventMeta } from '@/data/event-meta';
 import { useEventRecipes } from '@/data/event-recipes';
 import { useLanguage } from '@/hooks/use-language';
 import { RemoteEventRecipe, RemoteEventSighting, useRemoteContent } from '@/lib/remote-content';
@@ -18,7 +19,6 @@ const STORAGE_KEY = 'heartopia:event:sterren';
 const STRINGS = {
   nl: {
     title: 'Huidig Event',
-    subtitle: '🐋 Call of Whales · 11 juli – 22 augustus 2026',
     disclaimer:
       'Dit tabblad toont alleen content van het HUIDIGE event. Zodra dit event eindigt, vervangen we deze lijst door de vissen, insecten, vogels en recepten van het nieuwe event — oude event-content is dan niet meer te behalen.',
     insectsNote: 'Nog niet ontgrendeld deze season — insecten komen beschikbaar in Week 3 via Naniwa. We vullen dit aan zodra bekend.',
@@ -30,7 +30,6 @@ const STRINGS = {
   },
   en: {
     title: 'Current Event',
-    subtitle: '🐋 Call of Whales · Jul 11 – Aug 22, 2026',
     disclaimer:
       "This tab only shows content from the CURRENT event. Once this event ends, we'll replace this list with the fish, insects, birds and recipes of the new event — old event content can no longer be obtained then.",
     insectsNote: "Not unlocked yet this season — insects become available in Week 3 via Naniwa. We'll fill this in once known.",
@@ -77,9 +76,8 @@ export default function EventsScreen() {
   const eventFish = remoteEvent ? remoteEvent.fish.map((item) => mapSighting(item, language)) : bundledEventFish;
   const eventBirds = remoteEvent ? remoteEvent.birds.map((item) => mapSighting(item, language)) : bundledEventBirds;
   const eventRecipes = remoteEvent ? remoteEvent.recipes.map((item) => mapRecipe(item, language)) : bundledEventRecipes;
-  const subtitle = remoteEvent
-    ? `🎉 ${language === 'en' ? remoteEvent.nameEn : remoteEvent.nameNl} · ${language === 'en' ? remoteEvent.datesEn : remoteEvent.datesNl}`
-    : s.subtitle;
+  const eventMeta = useCurrentEventMeta();
+  const subtitle = `${eventMeta.emoji} ${eventMeta.name} · ${eventMeta.dates}`;
 
   const TABS: { key: string; label: string; items: EventItem[] }[] = [
     { key: 'fish', label: s.fish, items: eventFish },
