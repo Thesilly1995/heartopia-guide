@@ -2,6 +2,25 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-06 (nog later, deel 8) — Missies & Bubbels als statuskaartje bovenaan het homescreen
+
+**Uitgangspunt:** gebruiker wilde Missies en Wekelijkse Bubbels ook bovenaan het homescreen, in dezelfde stijl als het bestaande Rainbow/Meteorenregen-kaartje (icoon + korte statustekst, i.p.v. de gewone kaart-met-titel-en-beschrijving in de secties eronder). In tegenstelling tot Rainbow/Meteor hebben Missies en Bubbels geen "actief/niet actief"-concept (ze zijn altijd beschikbaar) — in plaats daarvan toont het kaartje de voortgang: hoeveel dagelijkse missies/bubbel-vinkjes je al hebt afgevinkt.
+
+### Wat is gebouwd
+
+- **`src/data/missions-progress.ts`** (nieuw): `useMissionsProgress()` — telt hoeveel van de dagelijkse missie-sleutels (dezelfde `d0`/`d1`/`d3`/... als in `src/app/missies.tsx`) zijn aangevinkt in `heartopia:missies:vinkjes`, tegenover het totaal.
+- **`src/data/bubbles-progress.ts`** (nieuw): `useBubblesProgress()` — zelfde idee voor `heartopia:bubbels:vinkjes` t.o.v. het aantal bubbel-locaties (19, via `useBubbleLocations()`).
+- Beide hooks verversen via `useFocusEffect` (uit `expo-router`) elke keer dat het homescreen focus krijgt, zelfde patroon als `useCatalogProgress()` voor het premium-dashboard.
+- **`src/app/(tabs)/index.tsx`**: nieuw kaartje in `plotsCard`-stijl direct onder het Zwervende Eik/Fluoriet-kaartje, met twee los tikbare rijen (elk een eigen `Link`, want ze gaan naar verschillende schermen — anders dan Rainbow/Meteor waar de hele kaart naar één scherm linkt): 📋 `{gedaan}/{totaal}` → `/missies`, 🫧 `{gedaan}/{totaal}` → `/bubbels`. Missies en Wekelijkse Bubbels zijn uit de "Spel"-sectie gehaald (die had alleen nog Badges en Codes over) — zelfde redenering als eerder bij Event/Rainbow-Meteor: niet dubbel tonen.
+
+### Getest
+
+Via `expo start --web` + Playwright: kaartje toont "0/11" en "0/19" bij een lege staat; na het aanvinken van "Dagelijkse check-in" op het Missies-scherm en terugkeren naar home sprong de teller naar "1/11" (bevestigt de focus-refresh). Tikken op de Bubbels-rij navigeert naar `/bubbels`. Geen console errors.
+
+### Repo-status
+
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-06 (nog later, deel 7) — Echte premium-gate (test-toggle) voor het voortgangsdashboard
 
 **Uitgangspunt:** na het bouwen van de Premium-sectie (deel 6) vroeg de gebruiker of niet-premium gebruikers het dashboard/meldingen/cloud save niet zouden moeten kunnen zien/gebruiken. Antwoord was: klopte nog niet — er was helemaal geen premium/gratis-onderscheid, dashboard was voor iedereen gratis bruikbaar, en "Komt binnenkort" gold voor iedereen omdat de features nog niet bestaan. Gebruiker wilde dat alsnog gesimuleerd hebben: een lokale test-toggle die echt bepaalt of je bij het dashboard kan, zodat je kan voorproeven hoe het straks aanvoelt.

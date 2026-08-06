@@ -4,9 +4,11 @@ import { Platform, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, Vi
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
+import { useBubblesProgress } from '@/data/bubbles-progress';
 import { useDailyPlots } from '@/data/daily-plots';
 import { useCurrentEventMeta } from '@/data/event-meta';
 import { useMeteorSpots } from '@/data/meteor-spots';
+import { useMissionsProgress } from '@/data/missions-progress';
 import { useRainbowSpots } from '@/data/rainbow-spots';
 import { useWeekForecast } from '@/data/week-forecast';
 import { useLanguage } from '@/hooks/use-language';
@@ -39,8 +41,6 @@ const SECTIONS: {
   {
     label: { nl: 'Spel', en: 'Game' },
     items: [
-      { href: '/missies', icon: '📋', title: { nl: 'Missies', en: 'Missions' }, desc: { nl: 'Dagelijkse & wekelijkse taken', en: 'Daily & weekly tasks' } },
-      { href: '/bubbels', icon: '🫧', title: { nl: 'Wekelijkse Bubbels', en: 'Weekly Bubbles' }, desc: { nl: 'Roze bubbels vol beloningen', en: 'Pink bubbles full of rewards' } },
       { href: '/badges', icon: '🏅', title: { nl: 'Badges', en: 'Badges' }, desc: { nl: 'Prestaties & profieltitels', en: 'Achievements & profile titles' } },
       { href: '/codes', icon: '🎁', title: { nl: 'Codes', en: 'Codes' }, desc: { nl: 'Actieve & verlopen codes', en: 'Active & expired codes' } },
     ],
@@ -102,6 +102,8 @@ export default function HomeScreen() {
   const rainbowSpots = useRainbowSpots();
   const meteorSpots = useMeteorSpots();
   const weekForecast = useWeekForecast();
+  const missionsProgress = useMissionsProgress();
+  const bubblesProgress = useBubblesProgress();
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -180,6 +182,21 @@ export default function HomeScreen() {
             <Text style={styles.plotsRowIcon}>💎</Text>
             <Text style={styles.plotsRowText}>{dailyPlots.fluoritePlot ?? s.unknown}</Text>
           </View>
+        </View>
+
+        <View style={styles.plotsCard}>
+          <Link href="/missies" asChild>
+            <TouchableOpacity style={styles.plotsRow}>
+              <Text style={styles.plotsRowIcon}>📋</Text>
+              <Text style={styles.plotsRowText}>{missionsProgress.done}/{missionsProgress.total}</Text>
+            </TouchableOpacity>
+          </Link>
+          <Link href="/bubbels" asChild>
+            <TouchableOpacity style={styles.plotsRow}>
+              <Text style={styles.plotsRowIcon}>🫧</Text>
+              <Text style={styles.plotsRowText}>{bubblesProgress.done}/{bubblesProgress.total}</Text>
+            </TouchableOpacity>
+          </Link>
         </View>
 
         {SECTIONS.map((section) => {
