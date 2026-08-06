@@ -13,7 +13,7 @@ import { useLanguage } from '@/hooks/use-language';
 
 const SECTIONS: {
   label: { nl: string; en: string };
-  items: { href: string; icon: string; title: { nl: string; en: string }; desc: { nl: string; en: string } }[];
+  items: { href: string | null; icon: string; title: { nl: string; en: string }; desc: { nl: string; en: string } }[];
 }[] = [
   {
     label: { nl: "Hobby's", en: 'Hobbies' },
@@ -45,6 +45,14 @@ const SECTIONS: {
     ],
   },
   {
+    label: { nl: 'Premium', en: 'Premium' },
+    items: [
+      { href: '/dashboard', icon: '📊', title: { nl: 'Voortgangsdashboard', en: 'Progress Dashboard' }, desc: { nl: 'Overzicht van je voortgang in alle catalogussen', en: 'Overview of your progress across all catalogs' } },
+      { href: null, icon: '🔔', title: { nl: 'Meldingen', en: 'Notifications' }, desc: { nl: 'Herinneringen bij nieuwe events & bijzonder weer', en: 'Reminders for new events & special weather' } },
+      { href: null, icon: '☁️', title: { nl: 'Cloud Save', en: 'Cloud Save' }, desc: { nl: 'Voortgang bewaren & gebruiken op een ander toestel', en: 'Save your progress & use it on another device' } },
+    ],
+  },
+  {
     label: { nl: 'Overig', en: 'Other' },
     items: [
       { href: '/todo', icon: '📝', title: { nl: 'To-do', en: 'To-do' }, desc: { nl: 'Wat wil je nog gaan doen?', en: 'What do you still want to do?' } },
@@ -61,6 +69,7 @@ const STRINGS = {
     active: 'Actief nu',
     inactive: 'Niet actief',
     forecastTitle: 'Weer deze week',
+    comingSoon: 'Komt binnenkort ✨',
   },
   en: {
     welcome: 'Welcome back to',
@@ -69,6 +78,7 @@ const STRINGS = {
     active: 'Active now',
     inactive: 'Not active',
     forecastTitle: 'Weather this week',
+    comingSoon: 'Coming soon ✨',
   },
 } as const;
 
@@ -78,6 +88,7 @@ export default function HomeScreen() {
   const { language, toggleLanguage } = useLanguage();
   const s = STRINGS[language];
   const [forecastExpanded, setForecastExpanded] = useState(false);
+  const [comingSoonKey, setComingSoonKey] = useState<string | null>(null);
   const dailyPlots = useDailyPlots();
   const eventMeta = useCurrentEventMeta();
   const rainbowSpots = useRainbowSpots();
@@ -166,17 +177,43 @@ export default function HomeScreen() {
         {SECTIONS.map((section) => (
           <View key={section.label.nl} style={styles.section}>
             <Text style={styles.sectionLabel}>{section.label[language]}</Text>
-            {section.items.map((item) => (
-              <Link key={item.href} href={item.href as never} asChild>
-                <TouchableOpacity style={styles.card}>
+            {section.items.map((item) => {
+              const itemKey = `${section.label.nl}:${item.title.nl}`;
+              if (item.href) {
+                return (
+                  <Link key={itemKey} href={item.href as never} asChild>
+                    <TouchableOpacity style={styles.card}>
+                      <Text style={styles.cardIcon}>{item.icon}</Text>
+                      <View style={styles.cardText}>
+                        <Text style={styles.cardTitle}>{item.title[language]}</Text>
+                        <Text style={styles.cardDesc}>{item.desc[language]}</Text>
+                      </View>
+                    </TouchableOpacity>
+                  </Link>
+                );
+              }
+              const isComingSoon = comingSoonKey === itemKey;
+              return (
+                <TouchableOpacity
+                  key={itemKey}
+                  style={styles.card}
+                  onPress={() => {
+                    setComingSoonKey(itemKey);
+                    setTimeout(() => {
+                      setComingSoonKey((current) => (current === itemKey ? null : current));
+                    }, 2200);
+                  }}
+                >
                   <Text style={styles.cardIcon}>{item.icon}</Text>
                   <View style={styles.cardText}>
                     <Text style={styles.cardTitle}>{item.title[language]}</Text>
-                    <Text style={styles.cardDesc}>{item.desc[language]}</Text>
+                    <Text style={[styles.cardDesc, isComingSoon && styles.cardDescComingSoon]}>
+                      {isComingSoon ? s.comingSoon : item.desc[language]}
+                    </Text>
                   </View>
                 </TouchableOpacity>
-              </Link>
-            ))}
+              );
+            })}
           </View>
         ))}
       </ScrollView>
@@ -259,5 +296,6 @@ function makeStyles(c: ThemeColors) {
     cardText: { flex: 1 },
     cardTitle: { color: c.forest, fontSize: 16, fontWeight: '600' },
     cardDesc: { color: c.forestSoft, fontSize: 12, marginTop: 2 },
+    cardDescComingSoon: { color: c.coralDark, fontWeight: '700' },
   });
 }

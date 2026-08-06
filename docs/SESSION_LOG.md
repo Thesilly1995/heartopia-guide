@@ -2,6 +2,35 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-06 (nog later, deel 6) — Premium-sectie: werkend voortgangsdashboard + "komt binnenkort" voor meldingen/cloud save
+
+**Uitgangspunt:** gebruiker wil straks betaalde extra's in de app: een voortgangsdashboard (overzicht van alle catalogussen), push-meldingen voor events/weer, en cloud-save tussen toestellen. Afgesproken aanpak (na overleg): nu de UI bouwen, betaling/notificatie-backend/cloud-opslag pas aansluiten zodra de bijbehorende accounts/infrastructuur er is. Gebruiker gaf daarna nog een concrete vereenvoudiging mee: geen nep-instellingenschermen voor meldingen/cloud save bouwen — gewoon een "Komt binnenkort"-melding tonen bij een tik, tot de echte backend er is.
+
+### Wat is gebouwd
+
+- **`src/data/catalog-progress.ts`** (nieuw): `useCatalogProgress()`-hook die voor de 7 catalogus-hobby's (Vissen, Koken, Tuinieren, Insecten, Vogels, Beeldhouwen, Ocean Cleanup) het aantal mastery-vinkjes optelt tegenover het totaal aantal items. Leest de bestáánde AsyncStorage-sleutels die de hobby-schermen zelf al gebruiken (`heartopia:<storageKey>:mastery`, en voor Ocean Cleanup de losse `heartopia:schelpen:sterren:mastery`) — geen nieuwe opslag nodig, dus meteen consistent met wat de gebruiker al heeft aangevinkt. Tuinieren en Beeldhouwen tellen hun twee subtabs (gewassen+bloemen resp. zand+sneeuw) bij elkaar op. Ververst via `useFocusEffect` (uit `expo-router`) elke keer dat het dashboardscherm focus krijgt.
+- **`src/app/dashboard.tsx`** (nieuw): het voortgangsdashboard zelf — een totaalbalk bovenaan (percentage + aantal mastery van het totaal over alle catalogussen samen) en daaronder één kaart per catalogus met eigen voortgangsbalk, tikbaar om naar dat hobbyscherm te gaan. Een disclaimer-regel bovenaan meldt dat dit een premium-functie is die voorlopig gratis werkt zolang er nog geen betaalopties zijn.
+- **`src/app/(tabs)/index.tsx`**: nieuwe sectie "Premium" tussen "Spel" en "Overig" met 3 kaarten: Voortgangsdashboard (linkt echt naar `/dashboard`), Meldingen en Cloud Save (geen route — `href: null`). `SECTIONS`-items met `href: null` renderen nu als `TouchableOpacity` i.p.v. `Link`; een tik zet 2,2 seconden lang de beschrijvingsregel op "Komt binnenkort ✨" (coral, vet) in plaats van te navigeren, daarna springt de tekst terug naar de normale beschrijving.
+
+### Bekende bewuste keuzes
+
+- Geen echte IAP/betaalflow, geen accountsysteem, geen pushmeldingen-backend — puur UI-voorbereiding zoals afgesproken. Het dashboard zelf is niet achter een betaalmuur gezet (kan nog niet, er is geen IAP) en is dus voor iedereen gewoon te gebruiken; dat staat expliciet in de disclaimer-tekst op het scherm.
+- "Komt binnenkort" is een lokale timeout-gebaseerde tekstwissel in de kaart zelf (geen native `Alert.alert`, geen aparte toast-component) — simpel, werkt identiek op web/native, en blijft consistent met de rest van de homescreen-kaartenstijl.
+
+### Getest
+
+Via `expo start --web` + Playwright met gemockte `remote-content.json`: Premium-sectie op homescreen (NL+EN), tik op Meldingen/Cloud Save toont "Komt binnenkort ✨"/"Coming soon ✨", tik op Voortgangsdashboard navigeert naar een werkend dashboard. Op het dashboard: alle 7 catalogi tonen het juiste totale aantal items (311 in totaal); na het aanvinken van één mastery-item op het Vissen-scherm en terugkeren naar het dashboard klopte de teller meteen (1/85, totaal 1/311) — bevestigt dat de `useFocusEffect`-refresh werkt. Geen console errors.
+
+### Open ideeën / mogelijk vervolg
+
+- IAP/betaling opzetten (RevenueCat oid.) zodra Play Store-publicatie een stap dichterbij is.
+- Pushmeldingen: Expo push notifications + een trigger-mechanisme voor "nieuw event"/"bijzonder weer" (vermoedelijk gekoppeld aan het bestaande remote-content-systeem).
+- Cloud save: een account-systeem (bv. Supabase/Firebase) nodig om AsyncStorage-voortgang (mastery/sterren per catalogus, missies-vinkjes, to-do, feedback) te syncen tussen toestellen.
+
+### Repo-status
+
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-06 (nog later, deel 5) — Homescreen-secties herschikt + missies bijgewerkt
 
 **Uitgangspunt:** vervolg op deel 3/4 (hieronder). Gebruiker wilde: (1) het kopje "Dieren" hernoemen naar "Extra", Dog & Cat Moments daaruit weghalen en onder Ocean Cleanup zetten (in de Hobby's-sectie dus), Wilde Dieren + Wilde Ingrediënten blijven achter onder "Extra"; (2) in de "Spel"-sectie Huidig Event en Rainbow & Meteorenregen weghalen, want die staan al als kaartjes bovenaan de homepage (dubbel); (3) bij de dagelijkse missies "Hobby's beoefenen" weghalen en daarvoor "Dagelijkse check-in" toevoegen.
