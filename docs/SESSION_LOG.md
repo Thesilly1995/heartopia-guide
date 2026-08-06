@@ -2,6 +2,32 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-06 (nog later) — Event/rainbow/meteor bovenaan homescreen + live spelweer
+
+**Uitgangspunt:** vervolg op de remote-content-infrastructuur van eerder vandaag. Gebruiker wilde (1) het huidige event en de rainbow/meteorenregen-status ook als kaartje bovenaan het homescreen, net als het bestaande Zwervende Eik/Fluoriet-kaartje, en (2) het spelweer (Zonnig/Regen/Regenboog, wisselt elke 6 uur in vaste blokken van 07:00/13:00/19:00/01:00 servertijd) in de app. Gevraagd of het weer per blok voorspelbaar/vast is (dan met een pure klok-widget te doen) of willekeurig (dan moet het via dezelfde remote-content-route als de rest) — antwoord: willekeurig, dus optie B.
+
+### Wat is gebouwd
+
+- **Event- en Rainbow/Meteor-kaartjes bovenaan**: tikbaar, navigeren naar `/events` resp. `/rainbow-meteor`. Rainbow/Meteor toont "Actief nu"/"Niet actief" op basis van of er remote spots binnenkomen.
+- **`src/data/event-meta.ts`**: naam/data van het huidige event (remote override of gebundelde Call of Whales-standaard) — nu gedeeld tussen `events.tsx` en het homescreen i.p.v. gedupliceerd.
+- **Spelweer** (`src/data/current-weather.ts`): nieuw `weather`-veld in het remote-content-schema — `kind` (`sunny`/`rain`/`rainbow`), `labelNl`/`labelEn`, en `validUntil` (ISO-timestamp UTC van het einde van het huidige 6-uursblok). De app rekent zelf niets uit over de blok-tijden zelf (geen aannames over de tijdzone van de speler of de server nodig) — degene die de content bijwerkt zet gewoon het eindtijdstip van het blok als UTC-timestamp. Als dat tijdstip verstreken is, toont de app "Kan verouderd zijn" i.p.v. te blijven doen alsof het klopt. Weer-kaartje staat helemaal bovenaan.
+- **Fetch-interval versoepeld**: `useRemoteContent()` haalt niet meer maar één keer per app-sessie op, maar ververst opnieuw zodra een scherm mount én de laatste geslaagde fetch >5 minuten geleden is — nodig omdat weer elke 6 uur wisselt en de oude "eenmalig ooit"-aanpak dat niet zou oppikken tijdens een langere sessie.
+
+### Bekende bewuste keuzes
+
+- Weer blijft, net als event/rainbow/meteor, afhankelijk van iemand die het handmatig bijwerkt (geen officiële API) — de infrastructuur maakt alleen de *verspreiding* naar gebruikers automatisch.
+- Getest met een gemockte remote-payload (via Playwright route-interceptie, `REMOTE_CONTENT_URL` tijdelijk op een test-URL gezet en daarna teruggezet naar `null`): alle vier kaartjes (weer, event, rainbow/meteor, dagelijkse plots) tonen correct actieve data, en het "verouderd weer"-pad (`validUntil` in het verleden) toont ook correct de stale-tekst. `REMOTE_CONTENT_URL` staat na deze sessie weer op `null` — app gedraagt zich identiek aan hiervoor totdat er een hostingplek gekozen wordt.
+
+### Open ideeën / mogelijk vervolg
+
+- Hostingplek kiezen voor het JSON-bestand (ongewijzigd t.o.v. vorige sessie, zie `docs/remote-content.md`).
+- Play Store-publicatie (ongewijzigd t.o.v. vorige sessie).
+- Zodra er een hostingplek is: iemand moet elke 6 uur het actuele weer + `validUntil` bijwerken in het JSON-bestand, wil dit kaartje kloppen — dat kan bijvoorbeeld door dit elke sessie even te vragen na te kijken, of op termijn een routine/trigger hiervoor in te stellen.
+
+### Repo-status
+
+Alles gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-06 (later) — Remote-content infrastructuur voorbereid (rainbow/meteor/dagelijkse plots/event zonder appstore-update bijwerkbaar)
 
 **Uitgangspunt:** gebruiker wil de app straks in de Play Store zetten, en wil dat tijdgebonden content (rainbow-locaties, meteorenregen-ertsplekken, event, en de dagelijkse Zwervende Eik/Fluoriet-plot) bijgewerkt kan worden zonder telkens een nieuwe appversie door de store-review te moeten halen. Ik heb gevraagd waar die content gehost moet worden (nieuwe publieke GitHub-repo / Gist / pas later kiezen); die vraag is niet beantwoord (sessie werd onderbroken), dus heb ik de veilige default gekozen: de app-code voorbereiden met een instelbare URL, hostingkeuze blijft open.

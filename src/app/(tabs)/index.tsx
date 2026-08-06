@@ -4,6 +4,7 @@ import { Platform, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, Vi
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
+import { useCurrentWeather } from '@/data/current-weather';
 import { useDailyPlots } from '@/data/daily-plots';
 import { useCurrentEventMeta } from '@/data/event-meta';
 import { useMeteorSpots } from '@/data/meteor-spots';
@@ -66,6 +67,9 @@ const STRINGS = {
     meteorLabel: '☄️ Meteorenregen',
     active: 'Actief nu',
     inactive: 'Niet actief',
+    weather: 'Weer',
+    weatherUntil: (t: string) => `tot ${t}`,
+    weatherStale: 'Kan verouderd zijn',
   },
   en: {
     welcome: 'Welcome back to',
@@ -78,6 +82,9 @@ const STRINGS = {
     meteorLabel: '☄️ Meteor Shower',
     active: 'Active now',
     inactive: 'Not active',
+    weather: 'Weather',
+    weatherUntil: (t: string) => `until ${t}`,
+    weatherStale: 'May be outdated',
   },
 } as const;
 
@@ -90,6 +97,14 @@ export default function HomeScreen() {
   const eventMeta = useCurrentEventMeta();
   const rainbowSpots = useRainbowSpots();
   const meteorSpots = useMeteorSpots();
+  const weather = useCurrentWeather();
+  const weatherDesc = !weather.label
+    ? s.weather
+    : weather.stale
+      ? s.weatherStale
+      : weather.validUntilLabel
+        ? s.weatherUntil(weather.validUntilLabel)
+        : s.weather;
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -104,6 +119,14 @@ export default function HomeScreen() {
               <Text style={styles.langDivider}>/</Text>
               <Text style={[styles.langOption, language === 'en' && styles.langOptionActive]}>EN</Text>
             </Pressable>
+          </View>
+        </View>
+
+        <View style={styles.statusCard}>
+          <Text style={styles.statusIcon}>{weather.emoji}</Text>
+          <View style={styles.statusText}>
+            <Text style={styles.statusTitle}>{weather.label ?? s.unknown}</Text>
+            <Text style={styles.statusDesc}>{weatherDesc}</Text>
           </View>
         </View>
 

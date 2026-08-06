@@ -1,13 +1,13 @@
-# Remote content (rainbow/meteor-locaties, dagelijkse plots, event-override)
+# Remote content (rainbow/meteor-locaties, dagelijkse plots, event-override, weer)
 
 ## Waarom
 
 Rainbow-boeketten, meteorenregen-ertsplekken, de dagelijkse Zwervende
-Eik-plot, de dagelijkse Fluoriet-plot, en het huidige event wisselen
-regelmatig (dagelijks tot wekelijks). Die data zit niet vast in de
-app — hij wordt bij het opstarten opgehaald van één JSON-bestand op
-een URL die jij kiest. Zo kan die content bijgewerkt worden zonder
-nieuwe appversie/Play Store-review.
+Eik-plot, de dagelijkse Fluoriet-plot, het huidige event, en het
+spelweer (wisselt elke 6 uur) wisselen regelmatig. Die data zit niet
+vast in de app — hij wordt bij het opstarten opgehaald van één
+JSON-bestand op een URL die jij kiest. Zo kan die content bijgewerkt
+worden zonder nieuwe appversie/Play Store-review.
 
 Zolang er geen URL is ingesteld (of het ophalen mislukt, bv. geen
 internet), valt de app terug op de vast-gebakken standaardwaarden —
@@ -69,6 +69,12 @@ dat specifieke onderdeel.
     "recipes": [
       { "nameNl": "IJskoud Oceaandrankje", "nameEn": "Ocean Iced Drink", "ingredientsNl": ["2x Spirulina Poeder", "2x Sterfruit"], "ingredientsEn": ["2x Spirulina Powder", "2x Starfruit"], "emoji": "🍽️" }
     ]
+  },
+  "weather": {
+    "kind": "rainbow",
+    "labelNl": "Regenboog",
+    "labelEn": "Rainbow",
+    "validUntil": "2026-08-10T17:00:00Z"
   }
 }
 ```
@@ -87,6 +93,18 @@ dat specifieke onderdeel.
   Whales-content (zoals nu al in de app zit) getoond worden — dit
   veld hoeft dus pas ingevuld te worden zodra het volgende event
   begint.
+- **`weather`**: het spelweer van dit moment. `kind` is `"sunny"`,
+  `"rain"` of `"rainbow"` (bepaalt het icoontje); `labelNl`/`labelEn`
+  zijn de weergegeven teksten (`"Zonnig"`/`"Sunny"`,
+  `"Regen"`/`"Rainy"`, `"Regenboog"`/`"Rainbow"`). `validUntil` is het
+  einde van het huidige 6-uursblok **in UTC**, bv. als het blok om
+  19:00 Nederlandse tijd eindigt in de zomer (UTC+2), zet je
+  `"...T17:00:00Z"`. Zodra dit tijdstip verstreken is, toont de app
+  het weer als "kan verouderd zijn" i.p.v. het gewoon te blijven
+  claimen — er is geen officiële API om dit automatisch te bepalen,
+  dus dit veld moet elke keer dat het blok wisselt (07:00, 13:00,
+  19:00, 01:00 servertijd) opnieuw gezet worden, bv. door het in een
+  chat-sessie te vragen na te kijken.
 
 ## Waar dit in de code zit
 
@@ -95,7 +113,11 @@ dat specifieke onderdeel.
   (`useRemoteContent()`) en de TypeScript-types voor het schema
   hierboven.
 - `src/data/rainbow-spots.ts`, `src/data/meteor-spots.ts`,
-  `src/data/daily-plots.ts` — combineren de remote data met een
-  bundel-fallback en de huidige taal.
+  `src/data/daily-plots.ts`, `src/data/current-weather.ts` —
+  combineren de remote data met een bundel-fallback en de huidige taal.
+- `src/data/event-meta.ts` — naam/data van het huidige event, gedeeld
+  tussen het homescreen-kaartje en `src/app/events.tsx`.
 - `src/app/events.tsx` — combineert `payload.event` met de gebundelde
   `useEventFish()`/`useEventBirds()`/`useEventRecipes()`-hooks.
+- `src/app/(tabs)/index.tsx` — toont bovenaan het homescreen: weer,
+  huidig event, Rainbow/Meteorenregen-status, en de dagelijkse plots.
