@@ -2,6 +2,33 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-06 (nog later, deel 10) — Mock advertentiebanner, verdwijnt met (test-)premium
+
+**Uitgangspunt:** vervolg op deel 9 — gebruiker kondigde daar aan later reclame in de app te willen zetten, met premium-leden reclamevrij. Gevraagd of dit nu al als UI-voorbereiding gebouwd mocht worden (zelfde aanpak als dashboard/meldingen/cloud save eerder), gebruiker zei ja.
+
+### Wat is gebouwd
+
+- **`src/components/heartopia/ad-banner.tsx`** (nieuw): `<AdBanner />` — een vaste balk onderin het scherm ("📢 Advertentie" + toelichting dat het een placeholder is), met `position: absolute` zodat hij zich gedraagt zoals een echte banner-ad-SDK dat ook zou doen (los van de scroll-content, boven op de bestaande schermen). Gebruikt `usePremium()`: rendert `null` zodra (test-)premium aan staat.
+- **`src/app/_layout.tsx`**: `<AdBanner />` toegevoegd op root-niveau, buiten de `<Stack>` maar binnen `ThemeProvider` — daardoor verschijnt hij automatisch op **elk** scherm zonder dat de losse schermbestanden aangepast hoefden te worden.
+
+### Bekende bewuste keuzes
+
+- Puur mock/placeholder — geen echt advertentienetwerk (AdMob o.i.d.) aangesloten. Dat vereist eigen accounts/SDK-integratie en hoort bij dezelfde categorie als de eerdere "later aansluiten"-features.
+- Absolute positionering i.p.v. ruimte reserveren in elk scherm's layout — dekt soms even de onderkant van scrollbare content af (zoals een echte banner-ad dat ook doet), geen aanpassingen aan bestaande schermen nodig.
+
+### Getest
+
+Via `expo start --web` + Playwright: banner zichtbaar onderin op zowel het homescreen als een willekeurig ander scherm (Vissen); na het aanzetten van de premium-test-toggle verdwijnt de banner meteen op alle schermen. Geen console errors.
+
+### Open ideeën / mogelijk vervolg
+
+- Weekweer van `hearto.ixtj.dev`: nog open, gebruiker stuurt een screenshot (zie deel 9).
+- Echte ad-SDK integratie zodra er een keuze is gemaakt (AdMob is de meest gangbare optie voor Expo/React Native).
+
+### Repo-status
+
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-06 (nog later, deel 9) — Sterren-totaal toegevoegd aan het voortgangsdashboard; reclame en weer-website nog open
 
 **Uitgangspunt:** gebruiker wilde op het voortgangsdashboard ook het totaal aantal sterren per catalogus zien (naast de bestaande mastery-%). Twee andere punten kwamen ter sprake maar zijn nog niet afgerond: (1) reclame in de app toevoegen met premium-leden reclamevrij (aangekondigd, nog niet expliciet gevraagd te bouwen — nog geen actie op ondernomen, staat open), (2) een externe website (`hearto.ixtj.dev`) met weersverwachtingen/tijden die de gebruiker wilde gebruiken voor de weekweer-data — deze site is geblokkeerd door het netwerkbeleid van deze sessie (403 op de egress-proxy, bevestigd via zowel WebFetch als curl), dus gebruiker stuurt in plaats daarvan een screenshot na.

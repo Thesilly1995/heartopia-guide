@@ -3,6 +3,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useColorScheme } from 'react-native';
 
 import { AnimatedSplashOverlay } from '@/components/animated-icon';
+import { AdBanner } from '@/components/heartopia/ad-banner';
 import { LanguageProvider } from '@/hooks/use-language';
 import { PremiumProvider } from '@/hooks/use-premium';
 
@@ -37,6 +38,7 @@ export default function RootLayout() {
             <Stack.Screen name="ocean-cleanup" />
             <Stack.Screen name="dashboard" />
           </Stack>
+          <AdBanner />
         </ThemeProvider>
       </PremiumProvider>
     </LanguageProvider>
