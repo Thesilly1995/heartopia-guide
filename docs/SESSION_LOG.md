@@ -2,6 +2,21 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-06 (nog later, deel 11) — Sessie afgesloten, vervolg in nieuwe chat
+
+Gebruiker rondt deze chat af en gaat verder in een nieuwe sessie. Alles uit deel 1 t/m 10 staat al gecommit en gepusht op `main` — niets onafgemaakt in de working tree.
+
+### Nog open bij de start van de volgende sessie
+
+- **Weekweer van `hearto.ixtj.dev`**: gebruiker wil een externe weer-website gebruiken om de `weekForecast`-data (en mogelijk tijden) in `remote-content.json` bij te werken. De site zelf én een reader-proxy (`r.jina.ai`) zijn allebei geblokkeerd door het netwerkbeleid van de Claude-sessie (403 op de egress-proxy — een bewuste organisatiebeslissing, dus niet omzeilen via een andere proxy/dienst). Gebruiker zou een **screenshot** sturen van het weerschema zodat de dagen/tijden alsnog handmatig overgenomen kunnen worden — dat is nog niet gebeurd.
+- **Reclame**: mock-banner staat er (deel 10), maar er is nog geen echt advertentienetwerk (bv. AdMob) aangesloten — bewust uitgesteld tot er een keuze is gemaakt.
+- **IAP/echte betaalflow, cloud save (account-systeem), pushmeldingen-backend**: nog steeds allemaal open, zie eerdere secties (deel 6 e.v.) voor de volledige toelichting waarom en de aanbevolen aanpak (RevenueCat resp. Supabase/Firebase resp. Expo push notifications).
+- **Play Store-publicatie**: ongewijzigd al meerdere sessies open (android package config, EAS build, privacyverklaring, store-listing).
+
+### Repo-status
+
+Werkboom schoon, alles gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-06 (nog later, deel 10) — Mock advertentiebanner, verdwijnt met (test-)premium
 
 **Uitgangspunt:** vervolg op deel 9 — gebruiker kondigde daar aan later reclame in de app te willen zetten, met premium-leden reclamevrij. Gevraagd of dit nu al als UI-voorbereiding gebouwd mocht worden (zelfde aanpak als dashboard/meldingen/cloud save eerder), gebruiker zei ja.
