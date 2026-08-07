@@ -15,6 +15,7 @@ const STRINGS = {
     subtitle: 'Mastery-voortgang in al je catalogussen',
     totalLabel: 'Totale voortgang',
     countLabel: (m: number, t: number) => `${m} / ${t} mastery behaald`,
+    starsLabel: (n: number, max: number) => `⭐ ${n} / ${max} sterren`,
     lockedTitle: 'Alleen voor Premium-leden',
     lockedText:
       'Het voortgangsdashboard laat in één oogopslag zien hoeveel mastery je hebt behaald in elke catalogus (Vissen, Koken, Tuinieren, Insecten, Vogels, Beeldhouwen, Ocean Cleanup).',
@@ -28,6 +29,7 @@ const STRINGS = {
     subtitle: 'Mastery progress across all your catalogs',
     totalLabel: 'Total progress',
     countLabel: (m: number, t: number) => `${m} / ${t} mastered`,
+    starsLabel: (n: number, max: number) => `⭐ ${n} / ${max} stars`,
     lockedTitle: 'Premium members only',
     lockedText:
       'The progress dashboard shows at a glance how much mastery you have achieved in every catalog (Fishing, Cooking, Gardening, Insects, Birds, Sculpting, Ocean Cleanup).',
@@ -89,8 +91,13 @@ function UnlockedDashboard({
   const catalogs = useCatalogProgress();
 
   const totals = catalogs.reduce(
-    (acc, cat) => ({ mastered: acc.mastered + cat.mastered, total: acc.total + cat.total }),
-    { mastered: 0, total: 0 }
+    (acc, cat) => ({
+      mastered: acc.mastered + cat.mastered,
+      total: acc.total + cat.total,
+      stars: acc.stars + cat.stars,
+      maxStars: acc.maxStars + cat.maxStars,
+    }),
+    { mastered: 0, total: 0, stars: 0, maxStars: 0 }
   );
   const totalPct = totals.total > 0 ? Math.round((totals.mastered / totals.total) * 100) : 0;
 
@@ -112,6 +119,7 @@ function UnlockedDashboard({
           <View style={[styles.progressFill, { width: `${totalPct}%` }]} />
         </View>
         <Text style={styles.totalCount}>{s.countLabel(totals.mastered, totals.total)}</Text>
+        <Text style={styles.totalStars}>{s.starsLabel(totals.stars, totals.maxStars)}</Text>
       </View>
 
       {catalogs.map((cat) => {
@@ -129,6 +137,7 @@ function UnlockedDashboard({
                   <View style={[styles.progressFillSmall, { width: `${pct}%` }]} />
                 </View>
                 <Text style={styles.cardCount}>{s.countLabel(cat.mastered, cat.total)}</Text>
+                <Text style={styles.cardStars}>{s.starsLabel(cat.stars, cat.maxStars)}</Text>
               </View>
             </TouchableOpacity>
           </Link>
@@ -166,6 +175,7 @@ function makeStyles(c: ThemeColors) {
     progressTrack: { height: 10, borderRadius: 999, backgroundColor: c.surfaceSoft, overflow: 'hidden' },
     progressFill: { height: '100%', borderRadius: 999, backgroundColor: c.coral },
     totalCount: { fontSize: 12, color: c.forestSoft },
+    totalStars: { fontSize: 12, color: c.forestSoft },
     card: {
       flexDirection: 'row',
       alignItems: 'center',
@@ -184,5 +194,6 @@ function makeStyles(c: ThemeColors) {
     progressTrackSmall: { height: 6, borderRadius: 999, backgroundColor: c.surfaceSoft, overflow: 'hidden' },
     progressFillSmall: { height: '100%', borderRadius: 999, backgroundColor: c.yellow },
     cardCount: { fontSize: 11, color: c.forestSoft },
+    cardStars: { fontSize: 11, color: c.forestSoft },
   });
 }

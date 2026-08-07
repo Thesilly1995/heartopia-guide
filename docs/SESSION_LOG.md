@@ -2,6 +2,28 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-06 (nog later, deel 9) — Sterren-totaal toegevoegd aan het voortgangsdashboard; reclame en weer-website nog open
+
+**Uitgangspunt:** gebruiker wilde op het voortgangsdashboard ook het totaal aantal sterren per catalogus zien (naast de bestaande mastery-%). Twee andere punten kwamen ter sprake maar zijn nog niet afgerond: (1) reclame in de app toevoegen met premium-leden reclamevrij (aangekondigd, nog niet expliciet gevraagd te bouwen — nog geen actie op ondernomen, staat open), (2) een externe website (`hearto.ixtj.dev`) met weersverwachtingen/tijden die de gebruiker wilde gebruiken voor de weekweer-data — deze site is geblokkeerd door het netwerkbeleid van deze sessie (403 op de egress-proxy, bevestigd via zowel WebFetch als curl), dus gebruiker stuurt in plaats daarvan een screenshot na.
+
+### Wat is gebouwd
+
+- **`src/data/catalog-progress.ts`**: `CatalogProgressEntry` kreeg `stars`/`maxStars`. Elke catalogus-def kreeg een `starsKeys`-lijst naast de bestaande `masteryKeys` (zelfde AsyncStorage-sleutels als de hobby-schermen al gebruiken voor sterren, bv. `heartopia:vissen:stars`; voor Ocean Cleanup is dat de losse `heartopia:schelpen:sterren` zonder `:mastery`-suffix, want dat IS al de sterren-sleutel). Nieuwe `sumStars()`-helper telt de sterwaarden (1-5 per item) bij elkaar op, i.p.v. alleen booleans te tellen zoals `sumBooleans()` (hernoemd van `countMastered`) voor mastery doet. `maxStars = total * 5`.
+- **`src/app/dashboard.tsx`**: elk catalogus-kaartje en de totaalkaart tonen nu een extra regel `⭐ {sterren} / {maxSterren} sterren` onder de mastery-telling.
+
+### Getest
+
+Via `expo start --web` + Playwright: een item op het Vissen-scherm op 3 sterren gezet, daarna (na premium via het test-pilletje aan te zetten) het dashboard geopend — Vissen toonde correct "⭐ 3 / 425 sterren" en de totaalkaart "⭐ 3 / 1555 sterren" (311 items × 5 = 1555, klopt). Geen console errors.
+
+### Open ideeën / mogelijk vervolg
+
+- **Reclame + premium-advertentievrij**: gebruiker kondigde dit aan maar er is nog niets voor gebouwd — moet nog uitgevraagd/gepland worden (zelfde "eerst UI, later echte integratie"-aanpak als bij de andere premium-features ligt voor de hand, met een mock-advertentiebanner die verdwijnt zodra de premium-test-toggle aan staat).
+- **Weekweer van `hearto.ixtj.dev`**: site is geblokkeerd voor deze sessie's netwerktoegang; gebruiker stuurt een screenshot om de dagen/tijden alsnog over te nemen in `remote-content.json`.
+
+### Repo-status
+
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-06 (nog later, deel 8) — Missies & Bubbels als statuskaartje bovenaan het homescreen
 
 **Uitgangspunt:** gebruiker wilde Missies en Wekelijkse Bubbels ook bovenaan het homescreen, in dezelfde stijl als het bestaande Rainbow/Meteorenregen-kaartje (icoon + korte statustekst, i.p.v. de gewone kaart-met-titel-en-beschrijving in de secties eronder). In tegenstelling tot Rainbow/Meteor hebben Missies en Bubbels geen "actief/niet actief"-concept (ze zijn altijd beschikbaar) — in plaats daarvan toont het kaartje de voortgang: hoeveel dagelijkse missies/bubbel-vinkjes je al hebt afgevinkt.
