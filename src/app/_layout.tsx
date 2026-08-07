@@ -1,9 +1,11 @@
 import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
+import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 
 import { AnimatedSplashOverlay } from '@/components/animated-icon';
 import { AdBanner } from '@/components/heartopia/ad-banner';
+import { initializeAdsIfNeeded } from '@/constants/ads';
 import { LanguageProvider } from '@/hooks/use-language';
 import { PremiumProvider } from '@/hooks/use-premium';
 
@@ -11,6 +13,9 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+  useEffect(() => {
+    initializeAdsIfNeeded();
+  }, []);
   return (
     <LanguageProvider>
       <PremiumProvider>
