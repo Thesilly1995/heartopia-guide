@@ -2,6 +2,35 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-07 (deel 12) — Weekweer bevestigd, HeartoCast-upload opgeruimd, AdMob-integratie voorbereid, wekelijkse reminder ingesteld
+
+**Uitgangspunt:** vervolg op deel 11. Gebruiker vroeg eerst naar de weekweer-update (open punt uit deel 9-11), daarna is een AdMob-account aangemaakt en gevraagd om de ad-integratie alvast te bouwen terwijl de AdMob-console verder wordt ingericht.
+
+### Weekweer
+
+- Gebruiker uploadde een opgeslagen HTML-pagina van `hearto.ixtj.dev` naar de repo-root — bleek de lege, niet-gehydrateerde paginaschil van een client-side gerenderde Next.js-app te zijn (geen forecast-data erin). Verwijderd; gebruiker stuurde in plaats daarvan screenshots.
+- Screenshots van de HeartoCast-tijdlijn bevestigden dat de datums onder de tijden echte kalenderdatums zijn (bv. "08/03 Mon" klopt met de kalender). 08/08 (warm_sun) en 08/09 (normal) kwamen exact overeen met de bestaande waarden in `remote-content.json` — alleen `updatedAt` bijgewerkt. 07/08 op verzoek van gebruiker overgeslagen.
+- **Wekelijkse reminder ingesteld** (Routine/trigger `trig_01NpC2y9MUgKJM1rDCvQRtbY`, cron `0 8 * * 0` = zondag 10:00 Europe/Amsterdam) die deze sessie elke zondag vraagt om een nieuwe HeartoCast-screenshot.
+
+### AdMob-integratie (voorbereiding, nog niet live)
+
+- `react-native-google-mobile-ads` (16.4.0) toegevoegd. Config-plugin in `app.json` met Google's officiële **test**-App-ID's als placeholder (`ca-app-pub-3940256099942544~...`) tot de echte AdMob-App-ID's er zijn.
+- **Belangrijke ontdekking**: een lazy `require()` van de native module binnen een `Platform.OS`-check is niet genoeg om Metro's web-bundeling te laten slagen — Metro volgt `require()`-calls statisch, ongeacht of de tak ooit wordt uitgevoerd, en crasht op `codegenNativeComponent`-imports die niet op web bestaan. **Oplossing**: platform-specifieke bestanden (Metro/Expo's ingebouwde resolutiemechanisme), niet lazy requires.
+  - `src/constants/ads.ts` (native, echte `mobileAds()/TestIds`) + `src/constants/ads.web.ts` (no-op stub).
+  - `src/components/heartopia/ad-banner.tsx` (native, echte `<BannerAd>`) + `src/components/heartopia/ad-banner.web.tsx` (de oude mock-placeholder, want AdMob heeft geen web-implementatie).
+- `mobileAds().initialize()` wordt bij app-start aangeroepen via `_layout.tsx` (native only, via het bestaande `ads.ts`/`ads.web.ts`-platformonderscheid).
+- Getest: `expo start --web` bundelt weer succesvol (voorheen crash), Playwright bevestigde geen console-errors en de mock-banner zichtbaar op het homescreen. **Niet** getest op een echt device/simulator — dat vereist een dev-client/EAS-build, want dit is een native module (werkt niet in Expo Go).
+
+### Nog open
+
+- **AdMob**: zodra gebruiker in de AdMob-console een app + banner-ad-unit heeft aangemaakt, de echte App-ID's in `app.json` en de banner-ad-unit-ID's in `PRODUCTION_BANNER_AD_UNIT_ID` (`src/constants/ads.ts`) invullen. Pas dan (en na een dev-client/EAS-build) is er echt getest of de banner op een device verschijnt.
+- **RevenueCat/Supabase/Expo push**: nog steeds open — gebruiker moet hiervoor accounts aanmaken (RevenueCat, Supabase, en voor IAP ook Apple Developer + Google Play Console; voor Android-push mogelijk een Firebase-project vanwege FCM v1).
+- Overige punten uit deel 11 (reclame was hiervan het enige dat nu is opgepakt) blijven staan: IAP/betaalflow, cloud save (account-systeem), pushmeldingen-backend, Play Store-publicatie.
+
+### Repo-status
+
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-06 (nog later, deel 11) — Sessie afgesloten, vervolg in nieuwe chat
 
 Gebruiker rondt deze chat af en gaat verder in een nieuwe sessie. Alles uit deel 1 t/m 10 staat al gecommit en gepusht op `main` — niets onafgemaakt in de working tree.
