@@ -20,6 +20,16 @@ Na het uitzetten van "Confirm email" heeft gebruiker zelf via de echte app-scher
 
 **Nog open:** herstel-pad (Herstellen vanaf cloud) nog niet expliciet bevestigd door gebruiker; gedrag op native/EAS-build nog niet getest (alleen web/Expo Go tot nu toe).
 
+### Herstel-pad alsnog bevestigd + web-only bug gevonden en gefixt (zelfde dag, vervolgsessie)
+
+De "niet expliciet getest"-regel hierboven bleek een echte bug te verbergen: gebruiker klikte op "Herstellen vanaf cloud" en zag niks gebeuren. Oorzaak: `Alert.alert` (gebruikt voor de bevestigingsvraag) is in `react-native-web` een lege no-op-stub (`node_modules/react-native-web/.../exports/Alert/index.js`: `static alert() {}`) — op web verscheen de confirm-dialoog dus nooit, en dus gebeurde er ook niks bij "bevestigen" (want er was niks om te bevestigen). Op native/Expo Go zou dit wél gewerkt hebben.
+
+**Fix in `src/app/cloud-save.tsx`**: `Alert.alert` vervangen door een eigen inline bevestigingsblokje (state `confirmingRestore`, met Annuleren/Herstellen-knoppen in de bestaande kaartstijl) — werkt identiek op web én native, geen platform-specifieke code nodig. Getest via een tijdelijke debug-route + Playwright (klik toont het bevestigingsblokje, geen console-errors), route erna weer verwijderd.
+
+**Definitief bevestigd door gebruiker via screenshots**: volledige cyclus werkt nu end-to-end — inloggen, "Nu back-uppen naar cloud" (✓ 3 items opgeslagen), "Herstellen vanaf cloud" → bevestigingsblokje → "✓ 3 items hersteld vanaf de cloud". Cloud Save is hiermee volledig af voor wat betreft de kernflow.
+
+**Nog steeds open:** gedrag op native/EAS-build nog niet getest (alleen web tot nu toe, al zou de Alert-bug daar sowieso niet gespeeld hebben).
+
 ## 2026-08-08 (deel 13) — Nieuwe badge, Google Play Console gestart, Cloud Save met Supabase voorbereid
 
 **Uitgangspunt:** vervolg op deel 12. Gebruiker meldde een nieuwe in-game badge, gaf een statusupdate over Google Play Console (identiteits-/telefoonverificatie loopt, mail volgt), besloot Apple Developer voorlopig over te slaan (99$/jaar, nu te duur) en gaf groen licht voor Supabase (cloud save).
