@@ -2,6 +2,42 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-08 (deel 13) — Nieuwe badge, Google Play Console gestart, Cloud Save met Supabase voorbereid
+
+**Uitgangspunt:** vervolg op deel 12. Gebruiker meldde een nieuwe in-game badge, gaf een statusupdate over Google Play Console (identiteits-/telefoonverificatie loopt, mail volgt), besloot Apple Developer voorlopig over te slaan (99$/jaar, nu te duur) en gaf groen licht voor Supabase (cloud save).
+
+### Nieuwe badge: "Current of Life" / "Stroming van het Leven"
+
+- Toegevoegd aan `src/data/badges.ts`, direct vóór de verborgen badges (nieuwste normale badge).
+- Gebruiker uploadde de originele unlock-screenshot (`image-1786199901536.png`) naar de repo-root. Bijgesneden met Pillow tot alleen het schild-icoon (meldingsbubbel/naam/datum weggehaald, klein resterend bubbel-fragment overgeschilderd met de achtergrondkleur) en opgeslagen als `assets/images/badges/current-of-life.jpg`; `iconKey` bijgewerkt, ruwe upload verwijderd.
+
+### Google Play Console
+
+Gebruiker toonde een screenshot van de lopende accountverificatie (identiteit + telefoonnummer) — nog niet afgerond, mail volgt. Zolang dit loopt: nog geen IAP-producten aanmaken in Play Console, nog niet publiceren. Apple Developer-account bewust overgeslagen voor nu (kosten) — kan later alsnog, RevenueCat/IAP op iOS wacht dus tot dat besluit verandert.
+
+### Cloud Save (voorbereiding, nog niet functioneel)
+
+- `@supabase/supabase-js` + `react-native-url-polyfill` toegevoegd.
+- `src/constants/supabase.ts`: Supabase-client met placeholder URL/anon-key (leeg tot het project bestaat). **Belangrijke ontdekking**: `expo-router`'s `web.output: "static"` rendert schermen ook server-side (Node) tijdens `expo start --web`/build — Supabase's auth-client crashte daar met "window is not defined" omdat AsyncStorage's web-implementatie op `window`/localStorage leunt. Opgelost met een in-memory-storage-fallback wanneer `typeof window === 'undefined'` (sessie-persistentie is server-side toch zinloos).
+- `src/hooks/use-auth.tsx`: `AuthProvider`/`useAuth()` — e-mail/wachtwoord sign up/in/out, sessie-state, met foutafhandeling als `getSession()` faalt (geen netwerk).
+- `src/data/cloud-sync.ts`: verzamelt alle lokale `heartopia:`-voortgang (AsyncStorage) tot één JSON-blob en zet die in een `cloud_saves`-tabel (push), en het omgekeerde (pull, overschrijft lokale voortgang na bevestiging). Gebruikte de nieuwe `getMany`/`setMany`-API van `@react-native-async-storage/async-storage` (deze repo zit op v3.1.1, een ingrijpend herschreven API zonder `multiGet`/`multiSet` — zie ook de AGENTS.md-waarschuwing dat Expo/dit ecosysteem sterk is veranderd).
+- `src/app/cloud-save.tsx`: nieuw scherm, zelfde premium-gate-patroon als `dashboard.tsx`. Daarna: "nog niet geconfigureerd" (huidige staat, want Supabase-project bestaat nog niet) → anders auth-formulier (toggle inloggen/account aanmaken) → anders account-paneel met "Nu back-uppen"/"Herstellen vanaf cloud" (met bevestigingsdialoog) en uitloggen.
+- Homescreen-tegel "Cloud Save" wijst nu naar `/cloud-save` i.p.v. de "Komt binnenkort"-placeholder (Meldingen staat nog wel op `href: null`).
+- `docs/supabase-setup.md` (nieuw): stap-voor-stap voor gebruiker — project aanmaken, e-mail-auth, het exacte SQL-schema + RLS-policies voor de `cloud_saves`-tabel, en waar de URL/anon-key in de code moeten.
+- Getest via `expo start --web` + Playwright: locked-state, "nog niet geconfigureerd"-state, en (met tijdelijk nep-config, nadien teruggezet naar lege placeholders) het auth-formulier — geen console-errors. **Nog niet getest met een echt Supabase-project** (bestaat nog niet) en niet op native/EAS-build.
+
+### Nog open
+
+- **Supabase**: gebruiker moet het project aanmaken en de stappen in `docs/supabase-setup.md` doorlopen, dan `SUPABASE_URL`/`SUPABASE_ANON_KEY` in `src/constants/supabase.ts` invullen. Pas dan is Cloud Save echt te testen (sign up, back-up, herstellen op een "ander toestel" simuleren).
+- **Google Play Console**: wachten op bevestigingsmail.
+- **AdMob**: ongewijzigd t.o.v. deel 12 — wacht op echte App-ID/ad-unit-ID's van gebruiker.
+- **Apple Developer / RevenueCat (iOS)**: bewust uitgesteld.
+- Overige punten uit deel 11/12 blijven staan: pushmeldingen-backend, Play Store-publicatie (package-config, EAS build, store-listing, privacyverklaring).
+
+### Repo-status
+
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-07 (deel 12) — Weekweer bevestigd, HeartoCast-upload opgeruimd, AdMob-integratie voorbereid, wekelijkse reminder ingesteld
 
 **Uitgangspunt:** vervolg op deel 11. Gebruiker vroeg eerst naar de weekweer-update (open punt uit deel 9-11), daarna is een AdMob-account aangemaakt en gevraagd om de ad-integratie alvast te bouwen terwijl de AdMob-console verder wordt ingericht.
