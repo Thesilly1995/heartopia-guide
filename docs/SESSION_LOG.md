@@ -2,6 +2,31 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-08 (deel 17) — Expo Go werkt niet meer, eas.json opgezet voor een development build
+
+**Aanleiding:** gebruiker probeerde de app op zijn Android-telefoon te openen via Expo Go en kreeg meerdere crashes/errors (screenshots). Kernoorzaak achterhaald: `TurboModuleRegistry.getEnforcing(...): 'RNGoogleMobileAdsModule' could not be found`. Sinds `react-native-google-mobile-ads` (echte AdMob-module, deel 12) is toegevoegd, kan dit project niet meer in de kale Expo Go-app draaien — Expo Go bevat alleen de standaard-modules, geen custom native modules zoals AdMob. De overige gemelde fouten (AsyncStorage "Native module is null", expo-router "Cannot read property 'ErrorBoundary' of undefined", "_layout.tsx missing default export") zijn gevolgschade van diezelfde mismatch, geen aparte bugs.
+
+**Fix (workflow, geen codewijziging aan de app zelf):** `eas.json` toegevoegd met drie standaard-profielen (`development`, `preview`, `production`). `development`/`preview` bouwen een direct installeerbare `.apk` (`distribution: internal`, `buildType: apk`) — dit is de "eigen Expo Go" die gebruiker één keer op zijn telefoon moet installeren om weer te kunnen testen. `production` blijft de standaard `.aab` voor de Play Store-upload later.
+
+**Gebruiker moet zelf** (vanaf zijn Windows-machine, met een gratis Expo/EAS-account):
+1. `git pull` zodat `eas.json` lokaal staat.
+2. `npm install -g eas-cli` (of `npx eas-cli` zonder installeren) + `eas login`.
+3. `eas build --profile development --platform android` — bouwt in de cloud (geen Android Studio nodig), vraagt bij de eerste keer om een EAS-project aan te maken/koppelen (schrijft een `projectId` in `app.json` — die wijziging moet gebruiker zelf committen/pushen na afloop).
+4. De resulterende `.apk` downloaden en op de telefoon installeren (normale sideload, dus "installeren van onbekende bron" toestaan).
+5. Daarna weer gewoon `npx expo start` gebruiken, maar verbinden vanuit de nieuw geïnstalleerde eigen app in plaats van Expo Go.
+
+**Let op voor later**: zodra de echte AdMob App-ID/ad-unit-ID's worden ingevuld (nog steeds Google's publieke test-ID's, zie deel 12), verandert de native config opnieuw — dan is een nieuwe development build nodig, het is dan niet meer genoeg om alleen JS/TS-code te wijzigen.
+
+### Nog open
+
+- Gebruiker moet de development build zelf uitvoeren (kan niet vanuit deze cloud-sessie, vereist eigen EAS-login).
+- `app.json` krijgt na de eerste `eas build` een `extra.eas.projectId` — moet nog gecommit/gepusht worden zodra dat gebeurd is.
+- Overige punten uit deel 16 blijven staan (AdMob-ID's, Play Console-verificatie, store-listing, pushmeldingen-backend).
+
+### Repo-status
+
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-08 (deel 16) — Ad-banner overlapte tab-balk gefixt, Expo-pakketten geüpdatet
 
 **Ad-banner/tab-balk-overlap**: gebruiker meldde dat de onderste menubalk (Home/Explore, `NativeTabs`) niet meer zichtbaar was, overlapt door de advertentiebanner. Oorzaak: `AdBanner` (`src/components/heartopia/ad-banner.tsx`) was los-zwevend (`position: absolute`) t.o.v. de hele app (root `_layout.tsx`), dus tekende hij over de native tab-balk heen op Home/Explore. Fix: op die twee routes (`/` en `/explore`, gedetecteerd via `usePathname()`) telt de banner nu `BottomTabInset` (bestaande constante uit `constants/theme.ts`, al gebruikt in het ongewijzigde Explore-scaffold voor exact hetzelfde doel) op bij de veilige-gebied-marge. Alleen `ad-banner.tsx` (native) aangepast — `ad-banner.web.tsx` niet, want web heeft geen onderste tab-balk (de "Expo Starter"-navbar zit daar bovenaan, zie deel 6). **Kon niet op een echt toestel getest worden vanuit deze sandbox** (alleen web-preview beschikbaar, en web volgt een ander codepad) — gebruiker moet zelf bevestigen dat de balk nu zichtbaar blijft.
