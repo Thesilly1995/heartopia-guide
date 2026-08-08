@@ -2,6 +2,16 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-08 (deel 16) — Ad-banner overlapte tab-balk gefixt, Expo-pakketten geüpdatet
+
+**Ad-banner/tab-balk-overlap**: gebruiker meldde dat de onderste menubalk (Home/Explore, `NativeTabs`) niet meer zichtbaar was, overlapt door de advertentiebanner. Oorzaak: `AdBanner` (`src/components/heartopia/ad-banner.tsx`) was los-zwevend (`position: absolute`) t.o.v. de hele app (root `_layout.tsx`), dus tekende hij over de native tab-balk heen op Home/Explore. Fix: op die twee routes (`/` en `/explore`, gedetecteerd via `usePathname()`) telt de banner nu `BottomTabInset` (bestaande constante uit `constants/theme.ts`, al gebruikt in het ongewijzigde Explore-scaffold voor exact hetzelfde doel) op bij de veilige-gebied-marge. Alleen `ad-banner.tsx` (native) aangepast — `ad-banner.web.tsx` niet, want web heeft geen onderste tab-balk (de "Expo Starter"-navbar zit daar bovenaan, zie deel 6). **Kon niet op een echt toestel getest worden vanuit deze sandbox** (alleen web-preview beschikbaar, en web volgt een ander codepad) — gebruiker moet zelf bevestigen dat de balk nu zichtbaar blijft.
+
+**Expo-update**: gebruiker zag een updatemelding. `npx expo install expo@latest` → 57.0.10 → 57.0.11 (nog steeds SDK 57, geen major-sprong — SDK 58 bestaat alleen als canary/pre-release, dus bewust niet genomen). `package.json`'s expo-versiebereik van `^` teruggezet naar `~` (Expo's eigen conventie voor SDK-pakketten). `npx expo install --check` gaf ook `expo-router` en `expo-symbols` als licht-achterlopend aan — mee-geüpdatet. `@react-native-async-storage/async-storage` blijft bewust op `^3.1.1` ondanks dat de checker `2.2.0` "verwacht": de Cloud Save-code (`data/cloud-sync.ts`) gebruikt de nieuwe v3-API (`getMany`/`setMany`, zie deel 13) die in 2.2.0 niet bestaat — downgraden zou Cloud Save breken. Getest: `tsc --noEmit` schoon, `expo start --web` + `/cloud-save`-route laden zonder fouten.
+
+### Repo-status
+
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-08 (deel 15) — App hernoemd naar Heartopedia, Android-pakketnaam vastgelegd
 
 **Uitgangspunt:** vervolg op deel 14 (herstel-pad-fix). Gebruiker was bezig in de AdMob-console met "Winkels aan app toevoegen" en moest daar een Android-pakketnaam invullen — dat veld bestond nog nergens (`app.json` had geen `android.package`). Voorgesteld: `com.thesilly1995.heartopiagids` (omgekeerde-domeinnotatie o.b.v. GitHub-username, aangezien er geen eigen domein is). Gebruiker akkoord, en gaf er meteen bij aan dat de definitieve appnaam **"Heartopedia"** wordt (niet langer "Heartopia-Guide"/"Heartopia Gids").
