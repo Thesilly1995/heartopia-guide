@@ -1,16 +1,17 @@
 {
   "expo": {
-    "name": "Heartopia-Guide",
-    "slug": "Heartopia-Guide",
+    "name": "Heartopedia",
+    "slug": "heartopedia",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "heartopiaguide",
+    "scheme": "heartopedia",
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/expo.icon"
     },
     "android": {
+      "package": "com.thesilly1995.heartopiagids",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
