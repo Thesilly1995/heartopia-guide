@@ -7,8 +7,9 @@ import { createClient } from '@supabase/supabase-js';
  * gewoon in de app-code te staan — de echte beveiliging zit in Postgres
  * Row Level Security (zie docs/supabase-setup.md), dit is geen geheime sleutel.
  */
-const SUPABASE_URL = '';
-const SUPABASE_ANON_KEY = '';
+const SUPABASE_URL = 'https://dhttdbbnxynaqycjlltd.supabase.co';
+const SUPABASE_ANON_KEY =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRodHRkYmJueHluYXF5Y2psbHRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxOTkyNDksImV4cCI6MjEwMTc3NTI0OX0.8pHh-8lOXt7J4_SSg5DE6L_Fcrp3ptZCyBlyoCcAYiE';
 
 export const isSupabaseConfigured = SUPABASE_URL.length > 0 && SUPABASE_ANON_KEY.length > 0;
 
