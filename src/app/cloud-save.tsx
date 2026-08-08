@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Alert, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ScreenHeader } from '@/components/heartopia/screen-header';
@@ -174,6 +174,7 @@ function AccountPanel({ s, styles, userId, email }: { s: Strings; styles: Return
   const { signOut } = useAuth();
   const [busy, setBusy] = useState<'backup' | 'restore' | null>(null);
   const [message, setMessage] = useState<string | null>(null);
+  const [confirmingRestore, setConfirmingRestore] = useState(false);
 
   const backup = async () => {
     setBusy('backup');
@@ -183,21 +184,13 @@ function AccountPanel({ s, styles, userId, email }: { s: Strings; styles: Return
     setMessage(error ?? s.backupDone(keyCount));
   };
 
-  const restore = () => {
-    Alert.alert(s.restoreConfirmTitle, s.restoreConfirmText, [
-      { text: s.cancel, style: 'cancel' },
-      {
-        text: s.confirm,
-        style: 'destructive',
-        onPress: async () => {
-          setBusy('restore');
-          setMessage(null);
-          const { error, restoredKeys } = await pullCloudSave(userId);
-          setBusy(null);
-          setMessage(error ?? (restoredKeys > 0 ? s.restoreDone(restoredKeys) : s.restoreEmpty));
-        },
-      },
-    ]);
+  const confirmRestore = async () => {
+    setConfirmingRestore(false);
+    setBusy('restore');
+    setMessage(null);
+    const { error, restoredKeys } = await pullCloudSave(userId);
+    setBusy(null);
+    setMessage(error ?? (restoredKeys > 0 ? s.restoreDone(restoredKeys) : s.restoreEmpty));
   };
 
   return (
@@ -208,9 +201,26 @@ function AccountPanel({ s, styles, userId, email }: { s: Strings; styles: Return
       <Pressable style={styles.primaryButton} disabled={busy !== null} onPress={backup}>
         <Text style={styles.primaryButtonText}>{busy === 'backup' ? s.working : s.backupButton}</Text>
       </Pressable>
-      <Pressable style={styles.secondaryButton} disabled={busy !== null} onPress={restore}>
-        <Text style={styles.secondaryButtonText}>{busy === 'restore' ? s.working : s.restoreButton}</Text>
-      </Pressable>
+
+      {confirmingRestore ? (
+        <View style={styles.confirmBox}>
+          <Text style={styles.confirmTitle}>{s.restoreConfirmTitle}</Text>
+          <Text style={styles.confirmText}>{s.restoreConfirmText}</Text>
+          <View style={styles.confirmButtonRow}>
+            <Pressable style={styles.confirmCancelButton} onPress={() => setConfirmingRestore(false)}>
+              <Text style={styles.confirmCancelText}>{s.cancel}</Text>
+            </Pressable>
+            <Pressable style={styles.confirmDestructiveButton} onPress={confirmRestore}>
+              <Text style={styles.confirmDestructiveText}>{s.confirm}</Text>
+            </Pressable>
+          </View>
+        </View>
+      ) : (
+        <Pressable style={styles.secondaryButton} disabled={busy !== null} onPress={() => setConfirmingRestore(true)}>
+          <Text style={styles.secondaryButtonText}>{busy === 'restore' ? s.working : s.restoreButton}</Text>
+        </Pressable>
+      )}
+
       {message && <Text style={styles.centerText}>{message}</Text>}
       <Pressable onPress={signOut} hitSlop={6}>
         <Text style={styles.linkText}>{s.signOut}</Text>
@@ -236,5 +246,13 @@ function makeStyles(c: ThemeColors) {
     secondaryButtonText: { color: c.forest, fontWeight: '700', fontSize: 14 },
     linkText: { fontSize: 12, color: c.forestSoft, textDecorationLine: 'underline', textAlign: 'center' },
     errorText: { fontSize: 12, color: c.coralDark },
+    confirmBox: { backgroundColor: c.surfaceSoft, borderWidth: 1, borderColor: c.line, borderRadius: 12, padding: 12, gap: 8 },
+    confirmTitle: { fontSize: 13, fontWeight: '700', color: c.forest },
+    confirmText: { fontSize: 12, color: c.forest, lineHeight: 17 },
+    confirmButtonRow: { flexDirection: 'row', gap: 8 },
+    confirmCancelButton: { flex: 1, backgroundColor: c.card, borderWidth: 1, borderColor: c.line, borderRadius: 10, paddingVertical: 9, alignItems: 'center' },
+    confirmCancelText: { color: c.forest, fontWeight: '700', fontSize: 13 },
+    confirmDestructiveButton: { flex: 1, backgroundColor: c.coral, borderRadius: 10, paddingVertical: 9, alignItems: 'center' },
+    confirmDestructiveText: { color: '#FFFFFF', fontWeight: '700', fontSize: 13 },
   });
 }
