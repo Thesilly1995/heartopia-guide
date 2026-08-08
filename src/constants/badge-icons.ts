@@ -68,4 +68,5 @@ export const BADGE_ICON_MAP: Record<string, ImageSourcePropType> = {
   'insect-catching-party': require('@/assets/images/badges/insect-catching-party.jpg'),
   'rainbow-messenger': require('@/assets/images/badges/rainbow-messenger.jpg'),
   'onsen-mountain-insect-king': require('@/assets/images/badges/onsen-mountain-insect-king.jpg'),
+  'current-of-life': require('@/assets/images/badges/current-of-life.jpg'),
 };
