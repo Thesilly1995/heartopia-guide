@@ -2,6 +2,23 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-08 (deel 18) — Eerste EAS development-build gaf "Gradle build failed", async-storage teruggezet als vermoedelijke oorzaak
+
+Gebruiker volgde deel 17's stappen (EXPO_TOKEN i.p.v. wachtwoord-login, want account is GitHub-SSO — CLI-wachtwoordlogin werkt dan niet). `eas build --profile development --platform android` startte, maar eindigde met "Gradle build failed with unknown error". De buildpagina op expo.dev kon ik niet inzien (vereist login op gebruikers-account + `expo.dev` is sowieso geblokkeerd voor het netwerkbeleid van deze sandbox) — `expo prebuild --platform android` lokaal gedraaid ter controle (geen Android SDK hier, dus geen echte Gradle-run mogelijk, wel de gegenereerde config gecontroleerd: package-naam/AdMob-manifest zagen er correct uit). Gegenereerde `android/`-map + package.json-scriptwijziging van prebuild weer verwijderd/gereverteerd na de check, niet gecommit.
+
+Gebruiker draaide zelf `npx expo doctor`: enige gefaalde check was `@react-native-async-storage/async-storage@3.1.1` vs verwachte `2.2.0` — exact de bewuste afwijking uit deel 13/16. Een major-versie-sprong in een native module kan de onderliggende Android/iOS-code veranderen, dus dit is een plausibele oorzaak voor de Gradle-crash. Teruggezet naar `2.2.0` (`npx expo install`), `src/data/cloud-sync.ts` weer omgezet naar de oude API (`multiGet`/`multiSet` i.p.v. `getMany`/`setMany`). `expo doctor`'s pakket-versie-check is nu schoon (de 2 overige gefaalde checks zijn netwerk-gerelateerd, niet project-gerelateerd). `tsc` schoon, `expo start --web` + `/cloud-save`- en `/todo`-routes laden zonder fouten.
+
+**Niet bevestigd**: of dit daadwerkelijk de Gradle-fout oplost — kon niet lokaal gereproduceerd worden (geen Android SDK in deze sandbox). Gebruiker moet de development build opnieuw draaien (`eas build --profile development --platform android`) om te zien of hij nu wél slaagt.
+
+### Nog open
+
+- Bevestigen of de development build nu slaagt; zo niet, de werkelijke Gradle-foutmelding uit de "Run gradlew"-fase op de buildpagina nodig om verder te zoeken.
+- Overige punten uit deel 17 blijven staan (AdMob-ID's, Play Console-verificatie, store-listing, pushmeldingen-backend, `app.json`'s `extra.eas.projectId` committen zodra de build een keer gelukt is).
+
+### Repo-status
+
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-08 (deel 17) — Expo Go werkt niet meer, eas.json opgezet voor een development build
 
 **Aanleiding:** gebruiker probeerde de app op zijn Android-telefoon te openen via Expo Go en kreeg meerdere crashes/errors (screenshots). Kernoorzaak achterhaald: `TurboModuleRegistry.getEnforcing(...): 'RNGoogleMobileAdsModule' could not be found`. Sinds `react-native-google-mobile-ads` (echte AdMob-module, deel 12) is toegevoegd, kan dit project niet meer in de kale Expo Go-app draaien — Expo Go bevat alleen de standaard-modules, geen custom native modules zoals AdMob. De overige gemelde fouten (AsyncStorage "Native module is null", expo-router "Cannot read property 'ErrorBoundary' of undefined", "_layout.tsx missing default export") zijn gevolgschade van diezelfde mismatch, geen aparte bugs.
