@@ -50,7 +50,7 @@ const SECTIONS: {
     items: [
       { href: '/dashboard', icon: '📊', title: { nl: 'Voortgangsdashboard', en: 'Progress Dashboard' }, desc: { nl: 'Overzicht van je voortgang in alle catalogussen', en: 'Overview of your progress across all catalogs' } },
       { href: null, icon: '🔔', title: { nl: 'Meldingen', en: 'Notifications' }, desc: { nl: 'Herinneringen bij nieuwe events & bijzonder weer', en: 'Reminders for new events & special weather' } },
-      { href: null, icon: '☁️', title: { nl: 'Cloud Save', en: 'Cloud Save' }, desc: { nl: 'Voortgang bewaren & gebruiken op een ander toestel', en: 'Save your progress & use it on another device' } },
+      { href: '/cloud-save', icon: '☁️', title: { nl: 'Cloud Save', en: 'Cloud Save' }, desc: { nl: 'Voortgang bewaren & gebruiken op een ander toestel', en: 'Save your progress & use it on another device' } },
     ],
   },
   {
