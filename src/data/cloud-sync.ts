@@ -13,9 +13,9 @@ const EXCLUDED_KEYS = new Set(['heartopia:premium:test', 'heartopia:remote-conte
 async function collectLocalSaveData(): Promise<Record<string, string>> {
   const allKeys = await AsyncStorage.getAllKeys();
   const keys = allKeys.filter((k) => k.startsWith(KEY_PREFIX) && !EXCLUDED_KEYS.has(k));
-  const entries = await AsyncStorage.getMany(keys);
+  const entries = await AsyncStorage.multiGet(keys);
   const data: Record<string, string> = {};
-  for (const [key, value] of Object.entries(entries)) {
+  for (const [key, value] of entries) {
     if (value !== null) data[key] = value;
   }
   return data;
@@ -36,7 +36,7 @@ export async function pullCloudSave(userId: string): Promise<{ error: string | n
   if (error) return { error: error.message, restoredKeys: 0, updatedAt: null };
   if (!row?.data) return { error: null, restoredKeys: 0, updatedAt: null };
 
-  const entries = row.data as Record<string, string>;
-  await AsyncStorage.setMany(entries);
-  return { error: null, restoredKeys: Object.keys(entries).length, updatedAt: row.updated_at ?? null };
+  const entries = Object.entries(row.data as Record<string, string>);
+  await AsyncStorage.multiSet(entries);
+  return { error: null, restoredKeys: entries.length, updatedAt: row.updated_at ?? null };
 }
