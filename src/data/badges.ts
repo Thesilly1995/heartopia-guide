@@ -71,6 +71,7 @@ const BADGES_RAW: BadgeRaw[] = [
   { nameNl: "Scherpschutter Basis", nameEn: "Sharpshooter Basics", emoji: "🎯", hidden: false, iconKey: "sharpshooter-basics" },
   { nameNl: "Samensmelten tot Eén", nameEn: "Merge into One", emoji: "👻", hidden: false, iconKey: "merge-into-one" },
   { nameNl: "Gedurfde Mysterieuze Grimkin", nameEn: "Bold Mysterious Grimkin", emoji: "👻", hidden: false, iconKey: "bold-mysterious-grimkin" },
+  { nameNl: "Stroming van het Leven", nameEn: "Current of Life", emoji: "🐋", hidden: false, iconKey: null },
   { nameNl: "Leider Bever", nameEn: "Leader Beaver", emoji: "🦫", hidden: true, iconKey: "leader-beaver" },
   { nameNl: "Mystic Tracker", nameEn: "Mystic Tracker", emoji: "🗺️", hidden: false, iconKey: "mystic-tracker" },
   { nameNl: "Gourmet Diplomaat", nameEn: "Gourmet Diplomat", emoji: "🔒", hidden: true, iconKey: "gourmet-diplomat" },
