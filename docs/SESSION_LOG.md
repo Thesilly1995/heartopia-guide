@@ -26,9 +26,31 @@ Gebruiker toonde een screenshot van de lopende accountverificatie (identiteit + 
 - `docs/supabase-setup.md` (nieuw): stap-voor-stap voor gebruiker — project aanmaken, e-mail-auth, het exacte SQL-schema + RLS-policies voor de `cloud_saves`-tabel, en waar de URL/anon-key in de code moeten.
 - Getest via `expo start --web` + Playwright: locked-state, "nog niet geconfigureerd"-state, en (met tijdelijk nep-config, nadien teruggezet naar lege placeholders) het auth-formulier — geen console-errors. **Nog niet getest met een echt Supabase-project** (bestaat nog niet) en niet op native/EAS-build.
 
+### Cloud Save — Supabase-project gekoppeld en getest (zelfde dag, vervolg)
+
+Gebruiker maakte het Supabase-project aan en stuurde de Project URL + anon key (JWT-vorm, `ref: dhttdbbnxynaqycjlltd` → `https://dhttdbbnxynaqycjlltd.supabase.co`) door. Ingevuld in `src/constants/supabase.ts` en gepusht.
+
+**Netwerk-obstakel in deze cloud-sessie:** deze cloud-omgeving ("Default") stond aanvankelijk op "Trusted network access" (beperkte allowlist: GitHub/npm/etc.) — verzoeken naar `*.supabase.co` kregen een 403 van de agent-proxy ("Host not in allowlist"). Gebruiker heeft de omgevingsinstelling zelf aangepast (niet via deze chat te doen — zit in de claude.ai/code-omgevingsinstellingen, niet in het algemene Settings-scherm) naar volledige netwerktoegang. Daarna werkte het meteen.
+
+**Extra val bij het testen:** Node's ingebouwde `fetch` (gebruikt door `@supabase/supabase-js`) leest `HTTPS_PROXY` niet vanzelf op Node 22 — testscripts moesten met `NODE_USE_ENV_PROXY=1 node ...` gedraaid worden. Dit is alleen relevant voor test/debug-scripts in deze sandbox, niet voor de app zelf (Expo/Metro's fetch-implementatie had hier geen last van, `expo start --web` werkte al zonder die vlag).
+
+**Live getest (los testscript, niet de app-UI) en bevestigd werkend:**
+- `cloud_saves`-tabel + RLS bestaan en zijn correct (SQL uit `docs/supabase-setup.md` door gebruiker gedraaid in de SQL Editor).
+- Sign-up werkt (nieuwe gebruiker aangemaakt in `auth.users`).
+- **"Confirm email" staat aan** (Supabase-default) — sign-in geeft `Email not confirmed` tot de gebruiker de bevestigingsmail aanklikt. Dit is verwacht gedrag, zie stap 2 in `docs/supabase-setup.md` als je dit tijdens testen wil uitzetten.
+- RLS blokkeert ongeauthenticeerde reads (anon-key-only request op de tabel geeft 0 rijen).
+- Er staat nog één test-gebruiker (`heartopiatest<timestamp>@gmail.com`, onbevestigd, nep e-mailadres) in `auth.users` van dit testscript — kan opgeruimd worden via Authentication → Users in het Supabase-dashboard, verder onschadelijk.
+- App zelf (via `expo start --web`) toont nu het echte login-formulier op `/cloud-save` i.p.v. de "nog niet geconfigureerd"-melding, geen console-errors.
+
+**Nog niet getest:** een volledige back-up/herstel-cyclus via de app-UI zelf met een bevestigd account (het losse testscript deed dit via de API, niet via de schermen), en gedrag op native/EAS-build.
+
+### Keep-alive Routine voor Supabase Free-tier
+
+Supabase's gratis tier pauzeert projecten na ~7 dagen zonder API-activiteit. Op verzoek van gebruiker een Routine aangemaakt (`trig_01AAH6a8Va74qJU45B1r7mAu`, "Heartopia Supabase keep-alive ping") die elke 3 dagen (`0 9 */3 * *`, UTC) een verse sessie spawnt die één `curl`-verzoek naar de `cloud_saves`-tabel doet (met de anon key, hardcoded in de trigger-prompt — dit is de publieke/niet-geheime key). Bij HTTP 200: stille afsluiting, geen bericht. Bij iets anders: rapporteert dat als eindbericht, wat een pushmelding naar gebruiker triggert (notifications: push=true, email=false). Zo hoeft gebruiker nooit zelf te controleren of het project nog leeft.
+
 ### Nog open
 
-- **Supabase**: gebruiker moet het project aanmaken en de stappen in `docs/supabase-setup.md` doorlopen, dan `SUPABASE_URL`/`SUPABASE_ANON_KEY` in `src/constants/supabase.ts` invullen. Pas dan is Cloud Save echt te testen (sign up, back-up, herstellen op een "ander toestel" simuleren).
+- **Cloud Save**: e-mailbevestiging afronden voor een testaccount en de volledige back-up/herstel-flow via de echte app-UI doorlopen (niet alleen via testscript). Testgebruiker uit deel 13 evt. opruimen in Supabase-dashboard.
 - **Google Play Console**: wachten op bevestigingsmail.
 - **AdMob**: ongewijzigd t.o.v. deel 12 — wacht op echte App-ID/ad-unit-ID's van gebruiker.
 - **Apple Developer / RevenueCat (iOS)**: bewust uitgesteld.
@@ -36,7 +58,7 @@ Gebruiker toonde een screenshot van de lopende accountverificatie (identiteit + 
 
 ### Repo-status
 
-Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide` (inclusief de echte Supabase-config in `src/constants/supabase.ts` — dit is de publieke anon key, geen geheim, beveiliging zit in RLS).
 
 ## 2026-08-07 (deel 12) — Weekweer bevestigd, HeartoCast-upload opgeruimd, AdMob-integratie voorbereid, wekelijkse reminder ingesteld
 
