@@ -64,8 +64,8 @@ const SECTIONS: {
 
 const STRINGS = {
   nl: {
-    welcome: 'Welkom terug in',
-    title: 'Heartopia Gids',
+    welcome: 'Welkom bij',
+    title: 'Heartopedia',
     unknown: 'Onbekend — vraag het na',
     active: 'Actief nu',
     inactive: 'Niet actief',
@@ -76,8 +76,8 @@ const STRINGS = {
     premiumTestOff: 'Test: Premium UIT',
   },
   en: {
-    welcome: 'Welcome back to',
-    title: 'Heartopia Guide',
+    welcome: 'Welcome to',
+    title: 'Heartopedia',
     unknown: 'Unknown — ask to look it up',
     active: 'Active now',
     inactive: 'Not active',
