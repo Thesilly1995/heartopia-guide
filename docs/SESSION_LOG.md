@@ -2,6 +2,24 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-08 (deel 14) — AdMob-plugin-fout opgelost, Cloud Save end-to-end bevestigd werkend
+
+**Uitgangspunt:** vervolg op deel 13, andere chat-sessie (deze zat oorspronkelijk in het `website-1`-project, omgeschakeld naar `heartopia-guide`). Gebruiker liep lokaal tegen twee dingen aan die hier zijn opgelost.
+
+### `PluginError: Failed to resolve plugin for module "react-native-google-mobile-ads"`
+
+Gebruiker kreeg dit bij `npx expo start` op zijn Windows-checkout. Oorzaak: een parallelle sessie had `react-native-google-mobile-ads` als config-plugin aan `app.json` en als dependency aan `package.json` toegevoegd en gepusht (samen met een grote batch ander werk: Cloud Save/Supabase, `dashboard.tsx`, AdMob-bannercomponenten, `week-forecast.ts` als vervanger van `special-weather.ts`) — de lokale checkout had die commits nog niet gepulled/geïnstalleerd. Bevestigd door het hier zelf te pullen + `npm install` + `npx expo config --type prebuild` + `tsc --noEmit`: alles resolvet en compileert schoon zodra `node_modules` up-to-date is. **Fix:** `git pull` + `npm install` vóór `npx expo start`. Geen codewijziging nodig — puur een lokale-installatie-achterstand, zelfde categorie fout als eerdere ontbrekende dependencies.
+
+### Cloud Save — "email rate limit exceeded" bij account aanmaken
+
+Gebruiker kreeg deze foutmelding op het "Account aanmaken"-formulier. Dit is een Supabase-limiet op de ingebouwde e-mailservice (bevestigingsmail bij sign-up), niet een app-bug — de gratis/standaard SMTP staat maar een paar e-mails per uur toe, en die limiet werd geraakt tijdens het testen. Gebruiker vond via Authentication in het Supabase-dashboard de instelling om **"Confirm email"** uit te zetten (zat al even zoeken: niet bij "OAuth Apps", wel bij **Sign In / Providers** → Email-provider).
+
+### Cloud Save — volledig end-to-end bevestigd werkend (via de app-UI, niet alleen testscript)
+
+Na het uitzetten van "Confirm email" heeft gebruiker zelf via de echte app-schermen (niet een los testscript zoals in deel 13) een account aangemaakt, ingelogd, en op "Nu back-uppen naar cloud" getikt — resultaat: "✓ 3 items opgeslagen in de cloud" zichtbaar in de UI, inclusief het account-paneel met back-uppen/herstellen/uitloggen. Hiermee is de laatste openstaande "nog niet getest"-regel uit deel 13 (volledige back-up/herstel-cyclus via de app-UI zelf) afgevinkt voor het back-up-pad. Herstellen-knop is nog niet expliciet getest door gebruiker.
+
+**Nog open:** herstel-pad (Herstellen vanaf cloud) nog niet expliciet bevestigd door gebruiker; gedrag op native/EAS-build nog niet getest (alleen web/Expo Go tot nu toe).
+
 ## 2026-08-08 (deel 13) — Nieuwe badge, Google Play Console gestart, Cloud Save met Supabase voorbereid
 
 **Uitgangspunt:** vervolg op deel 12. Gebruiker meldde een nieuwe in-game badge, gaf een statusupdate over Google Play Console (identiteits-/telefoonverificatie loopt, mail volgt), besloot Apple Developer voorlopig over te slaan (99$/jaar, nu te duur) en gaf groen licht voor Supabase (cloud save).
