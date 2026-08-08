@@ -2,6 +2,26 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-08 (deel 15) — App hernoemd naar Heartopedia, Android-pakketnaam vastgelegd
+
+**Uitgangspunt:** vervolg op deel 14 (herstel-pad-fix). Gebruiker was bezig in de AdMob-console met "Winkels aan app toevoegen" en moest daar een Android-pakketnaam invullen — dat veld bestond nog nergens (`app.json` had geen `android.package`). Voorgesteld: `com.thesilly1995.heartopiagids` (omgekeerde-domeinnotatie o.b.v. GitHub-username, aangezien er geen eigen domein is). Gebruiker akkoord, en gaf er meteen bij aan dat de definitieve appnaam **"Heartopedia"** wordt (niet langer "Heartopia-Guide"/"Heartopia Gids").
+
+**Gewijzigd in `app.json`:**
+- `name`/`slug`: `"Heartopia-Guide"` → `"Heartopedia"` / `"heartopedia"` (geen EAS-project gekoppeld, dus veilig om slug nu nog te wijzigen).
+- `scheme`: `"heartopiaguide"` → `"heartopedia"`.
+- `android.package`: nieuw, `"com.thesilly1995.heartopiagids"` — **belangrijk: moet exact (incl. hoofdletters) matchen met wat in AdMob en straks Play Console wordt ingevuld.** Pakketnaam zelf bevat bewust nog "heartopiagids" (afwijkend van de nieuwe appnaam "Heartopedia") — is al aan gebruiker bevestigd zo, pakketnaam is achteraf toch niet meer te wijzigen na publicatie dus geen reden om 'm nu nog aan te passen.
+
+Gevalideerd met `npx expo config --type public`. Geen `ios.bundleIdentifier` gezet — Apple Developer is nog steeds bewust uitgesteld (zie deel 13).
+
+### Nog open
+
+- Gebruiker moet dezelfde pakketnaam (`com.thesilly1995.heartopiagids`) straks ook exact zo invullen bij het aanmaken van de Play Console-listing.
+- Overige punten uit deel 14 blijven staan: AdMob-App-ID/ad-unit-ID's nog invullen (nu nog Google's publieke test-ID's in de `react-native-google-mobile-ads`-plugin-config), Google Play Console-verificatie, EAS-build/`eas.json`, pushmeldingen-backend, store-listing.
+
+### Repo-status
+
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-08 (deel 14) — AdMob-plugin-fout opgelost, Cloud Save end-to-end bevestigd werkend
 
 **Uitgangspunt:** vervolg op deel 13, andere chat-sessie (deze zat oorspronkelijk in het `website-1`-project, omgeschakeld naar `heartopia-guide`). Gebruiker liep lokaal tegen twee dingen aan die hier zijn opgelost.
