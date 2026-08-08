@@ -2,6 +2,26 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-08 (deel 20) — Kotlin-versie-fix bleek zelf kapot, AdMob-bibliotheek gedowngraded als echte oplossing
+
+**Vervolg op deel 19.** Twee git-sync-issues onderweg, zelfde categorie als eerder: (1) gebruiker had de Kotlin-fix nog niet gepulld voor de eerste hertest (opgelost met opnieuw `git pull`, ditmaal zonder file-conflict), (2) een `app.json`-conflict tussen de lokale EAS-`projectId` (die `eas build` er zelf in had gezet) en mijn gepushte wijziging — opgelost met `git stash` → `git pull` → `git stash pop` (auto-merge, geen conflict) i.p.v. de eerdere blunte "gooi lokale wijzigingen weg"-aanpak, omdat de projectId ditmaal wél bewaard moest blijven. Project-ID gecommit/gepusht door gebruiker.
+
+**De Kotlin-versie-fix uit deel 19 bleek niet goed genoeg**: de build kwam verder (root-project-log toonde `kotlin: 2.3.0`), maar `react-native-safe-area-context` — die daarvoor prima compileerde — brak nu óók, met kotlin-stdlib-fouten ("Unresolved reference 'mapOf'" etc.) en dezelfde soort Kotlin-metadata-mismatch als bij AdMob. Conclusie: `expo-build-properties`' `android.kotlinVersion`-override propageert in deze Expo/RN-new-architecture Gradle-opzet niet schoon naar alle sub-modules — sommige compileren nog met de oude 2.1.0-compiler terwijl kotlin-stdlib al naar 2.3.0 was opgetrokken, een kapotte tussenstaat die npm-modules brak die eerst niet stuk waren.
+
+**Echte fix**: Kotlin-versie-override volledig teruggedraaid (`expo-build-properties` weer verwijderd — geen nettoresultaat, dus geen reden om 'm te houden). In plaats daarvan `react-native-google-mobile-ads` teruggezet naar exact `16.0.0` (was `^16.4.0`, geïnstalleerd met `npx expo install` zodat het gepind staat zonder `^`, om te voorkomen dat een toekomstige `npm install` weer stilzwijgend naar een kapotte versie springt). Onderbouwd i.p.v. gegokt: publicatiedata opgehaald van `dl.google.com` (Google's eigen Maven-repo) en `repo1.maven.org` (Kotlin/JetBrains) — Kotlin 2.3.0 verscheen pas op 16 december 2025; `play-services-ads 24.6.0` (wat `react-native-google-mobile-ads@16.0.0` binnenhaalt) is van 8 september 2025, dus onmogelijk met Kotlin 2.3 gecompileerd. Ter vergelijking: `play-services-ads 25.0.0` (gebruikt door de tussenliggende 16.1.0–16.3.4-releases) is van februari 2026, ná Kotlin 2.3.0 — dus geen betrouwbaar veiliger alternatief, vandaar de sprong helemaal terug naar `16.0.0`/`24.6.0`.
+
+**Niet bevestigd**: of dit de build daadwerkelijk laat slagen — nog steeds geen Android SDK in deze sandbox om zelf te verifiëren. Gebruiker moet de build opnieuw draaien.
+
+### Nog open
+
+- Bevestigen of `eas build --profile preview --platform android` nu slaagt.
+- Zodra een build een keer lukt: de `.apk` op het toestel installeren en testen (dit was het oorspronkelijke doel van deel 17-20).
+- Overige punten uit eerdere delen blijven staan (echte AdMob-ID's invullen i.p.v. Google's testwaarden — let op: dat vereist dan weer een nieuwe build —, Play Console-verificatie, store-listing, pushmeldingen-backend).
+
+### Repo-status
+
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-08 (deel 19) — Echte oorzaak Gradle-fout gevonden: Kotlin-versie t.o.v. Play Services Ads
 
 **Vervolg op deel 18.** De async-storage-terugzet loste de build niet op. Gebruiker liep tegen een `git pull`-conflict aan (lokale, niet-gecommitte wijzigingen aan `package.json`/`package-lock.json` blokkeerden de pull — opgelost met `git checkout -- package.json package-lock.json` gevolgd door `git pull`). Daarna leverde een `preview`-build (i.p.v. `development`) eindelijk de volledige Gradle-log op, met de echte fout:
