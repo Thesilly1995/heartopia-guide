@@ -2,6 +2,30 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-08 (deel 19) — Echte oorzaak Gradle-fout gevonden: Kotlin-versie t.o.v. Play Services Ads
+
+**Vervolg op deel 18.** De async-storage-terugzet loste de build niet op. Gebruiker liep tegen een `git pull`-conflict aan (lokale, niet-gecommitte wijzigingen aan `package.json`/`package-lock.json` blokkeerden de pull — opgelost met `git checkout -- package.json package-lock.json` gevolgd door `git pull`). Daarna leverde een `preview`-build (i.p.v. `development`) eindelijk de volledige Gradle-log op, met de echte fout:
+
+```
+:react-native-google-mobile-ads:compileReleaseKotlin FAILED
+Module was compiled with an incompatible version of Kotlin. The binary version of its metadata is 2.3.0, expected version is 2.1.0.
+```
+
+**Oorzaak**: `react-native-google-mobile-ads@16.4.0` trekt `com.google.android.gms:play-services-ads:25.4.0` binnen (hardcoded in het pakket zelf, via `sdkVersions.android.googleMobileAds` in `node_modules/react-native-google-mobile-ads/package.json` — niet overrideable zonder het pakket te downgraden). Die Google-library is gecompileerd met Kotlin 2.3.0, terwijl Expo SDK 57 standaard Kotlin 2.1.20 gebruikt — een oudere Kotlin-compiler kan geen metadata lezen die door een nieuwere is gegenereerd.
+
+**Fix**: `expo-build-properties` toegevoegd (nieuwe dependency + plugin-entry in `app.json`) met `android.kotlinVersion: "2.3.0"`. Dit is de door Expo ondersteunde manier om zulke Gradle-instellingen te overriden zonder de (niet-gecommitte, telkens opnieuw gegenereerde) `android/`-map zelf te bewerken. Bevestigd via lokale `expo prebuild` dat de instelling doorkomt in `android/gradle.properties`. Overwogen alternatief (react-native-google-mobile-ads downgraden naar een oudere `play-services-ads`-versie) bewust niet gekozen: geen manier om zonder een echte Android SDK/Gradle-run te verifiëren of oudere versies wél compatibel zijn, terwijl Kotlin-versie omhoog zetten een goed-ondersteunde, voorwaarts-compatibele richting is (een nieuwere Kotlin-compiler kan oudere metadata gewoon lezen).
+
+**Niet bevestigd**: of dit de build daadwerkelijk laat slagen — kon niet lokaal gereproduceerd worden (geen Android SDK in deze sandbox, zie ook deel 18). Gebruiker moet de build opnieuw draaien.
+
+### Nog open
+
+- Bevestigen of `eas build --profile preview --platform android` nu slaagt.
+- Overige punten uit deel 17/18 blijven staan (AdMob-ID's, Play Console-verificatie, store-listing, pushmeldingen-backend, `app.json`'s `extra.eas.projectId` committen zodra een build een keer gelukt is).
+
+### Repo-status
+
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-08 (deel 18) — Eerste EAS development-build gaf "Gradle build failed", async-storage teruggezet als vermoedelijke oorzaak
 
 Gebruiker volgde deel 17's stappen (EXPO_TOKEN i.p.v. wachtwoord-login, want account is GitHub-SSO — CLI-wachtwoordlogin werkt dan niet). `eas build --profile development --platform android` startte, maar eindigde met "Gradle build failed with unknown error". De buildpagina op expo.dev kon ik niet inzien (vereist login op gebruikers-account + `expo.dev` is sowieso geblokkeerd voor het netwerkbeleid van deze sandbox) — `expo prebuild --platform android` lokaal gedraaid ter controle (geen Android SDK hier, dus geen echte Gradle-run mogelijk, wel de gegenereerde config gecontroleerd: package-naam/AdMob-manifest zagen er correct uit). Gegenereerde `android/`-map + package.json-scriptwijziging van prebuild weer verwijderd/gereverteerd na de check, niet gecommit.
