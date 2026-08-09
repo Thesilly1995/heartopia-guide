@@ -81,7 +81,11 @@ export function useWeekForecast(): WeekForecastEntry[] {
           date: entry.date,
           kinds,
           label: kinds.map((k) => LABELS[language][k]).join(' + '),
-          emoji: kinds.map((k) => EMOJI[k]).join(''),
+          // Spatie tussen iconen i.p.v. direct aan elkaar plakken — zonder scheiding
+          // bleek een tweede emoji (bv. ☄️ naast 😎) op sommige Android-toestellen niet
+          // zichtbaar te zijn, waarschijnlijk een glyph-clipping-eigenaardigheid bij
+          // direct aaneengesloten emoji.
+          emoji: kinds.map((k) => EMOJI[k]).join(' '),
           dayLabel: isToday ? TODAY_LABEL[language] : weekday,
           weekdayLabel: weekday,
         };
