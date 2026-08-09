@@ -81,8 +81,8 @@ const STRINGS = {
     daily: 'Dagelijks',
     weekly: 'Wekelijks',
     reset: 'Reset',
-    resetDaily: 'Elke dag om 6:00 (servertijd)',
-    resetWeekly: 'Elke maandag om 6:00 (servertijd)',
+    resetDaily: 'Elke dag om 7:00 (servertijd)',
+    resetWeekly: 'Elke zaterdag om 7:00 (servertijd)',
     checkShops: 'Winkels checken',
   },
   en: {
@@ -90,8 +90,8 @@ const STRINGS = {
     daily: 'Daily',
     weekly: 'Weekly',
     reset: 'Reset',
-    resetDaily: 'Every day at 6:00 (server time)',
-    resetWeekly: 'Every Monday at 6:00 (server time)',
+    resetDaily: 'Every day at 7:00 (server time)',
+    resetWeekly: 'Every Saturday at 7:00 (server time)',
     checkShops: 'Check shops',
   },
 } as const;
