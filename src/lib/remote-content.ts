@@ -14,6 +14,17 @@ export interface RemoteMapSpot {
   descriptionEn: string;
 }
 
+export interface RemoteBubbleSpot extends RemoteMapSpot {
+  /** true = onderwater op de Whalefall Canyon-kaart, false = hoofdeiland-kaart. */
+  underwater: boolean;
+}
+
+export interface RemoteBubbleWeek {
+  weekLabelNl: string;
+  weekLabelEn: string;
+  spots: RemoteBubbleSpot[];
+}
+
 export interface RemoteDailyPlots {
   oakPlotNl: string;
   oakPlotEn: string;
@@ -81,6 +92,8 @@ export interface RemoteContentPayload {
   updatedAt: string;
   rainbowSpots?: RemoteMapSpot[];
   meteorSpots?: RemoteMapSpot[];
+  /** Wekelijkse roze-bubbels-locaties (verspringen elke zaterdag 6:00) — ontbreekt dit veld, dan valt de app terug op de gebundelde (verouderde) standaardlijst. */
+  bubbleWeek?: RemoteBubbleWeek;
   dailyPlots?: RemoteDailyPlots;
   /** Meerdaagse plot-kalender (bv. weken vooruit uit een in-game-kalenderafbeelding) — heeft voorrang op `dailyPlots` als er een entry voor vandaag in staat. */
   dailyPlotsCalendar?: RemoteDailyPlotDay[];

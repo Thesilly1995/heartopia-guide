@@ -33,6 +33,31 @@
   },
   "rainbowSpots": [],
   "meteorSpots": [],
+  "bubbleWeek": {
+    "weekLabelNl": "Deze week (8-14 aug 2026)",
+    "weekLabelEn": "This week (Aug 8-14, 2026)",
+    "spots": [
+      { "num": 1, "x": 31, "y": 10, "underwater": false, "descriptionNl": "Hoofdeiland, noordpunt", "descriptionEn": "Main island, north tip" },
+      { "num": 2, "x": 33, "y": 18, "underwater": false, "descriptionNl": "Hoofdeiland, net onder locatie 1", "descriptionEn": "Main island, just below spot 1" },
+      { "num": 3, "x": 29, "y": 23, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk bij locatie 2", "descriptionEn": "Main island, west of spot 2" },
+      { "num": 4, "x": 44, "y": 25, "underwater": false, "descriptionNl": "Hoofdeiland, oostelijk bij locatie 3", "descriptionEn": "Main island, east of spot 3" },
+      { "num": 5, "x": 39, "y": 43, "underwater": false, "descriptionNl": "Hoofdeiland, verbindingspunt midden-noord", "descriptionEn": "Main island, north-central connector spot" },
+      { "num": 6, "x": 21, "y": 51, "underwater": false, "descriptionNl": "Hoofdeiland, zuidwestelijk gebied", "descriptionEn": "Main island, southwest area" },
+      { "num": 7, "x": 22, "y": 60, "underwater": false, "descriptionNl": "Hoofdeiland, onder locatie 6", "descriptionEn": "Main island, below spot 6" },
+      { "num": 8, "x": 20, "y": 66, "underwater": false, "descriptionNl": "Hoofdeiland, zuidwestpunt", "descriptionEn": "Main island, southwest tip" },
+      { "num": 9, "x": 35, "y": 66, "underwater": false, "descriptionNl": "Hoofdeiland, rechts van locatie 8", "descriptionEn": "Main island, right of spot 8" },
+      { "num": 10, "x": 35, "y": 73, "underwater": false, "descriptionNl": "Hoofdeiland, onder locatie 9", "descriptionEn": "Main island, below spot 9" },
+      { "num": 11, "x": 65, "y": 64, "underwater": false, "descriptionNl": "Hoofdeiland, zuidoostelijk gebied", "descriptionEn": "Main island, southeast area" },
+      { "num": 12, "x": 68, "y": 71, "underwater": false, "descriptionNl": "Hoofdeiland, onder locatie 11", "descriptionEn": "Main island, below spot 11" },
+      { "num": 13, "x": 77, "y": 63, "underwater": false, "descriptionNl": "Hoofdeiland, oostkust bij locatie 11", "descriptionEn": "Main island, east coast near spot 11" },
+      { "num": 14, "x": 79, "y": 57, "underwater": false, "descriptionNl": "Hoofdeiland, oostkust boven locatie 13", "descriptionEn": "Main island, east coast above spot 13" },
+      { "num": 15, "x": 80, "y": 50, "underwater": false, "descriptionNl": "Hoofdeiland, noordoostpunt", "descriptionEn": "Main island, northeast tip" },
+      { "num": 16, "x": 66, "y": 71, "underwater": true, "descriptionNl": "Whalefall Canyon, onderaan het cluster", "descriptionEn": "Whalefall Canyon, bottom of the cluster" },
+      { "num": 17, "x": 70, "y": 69, "underwater": true, "descriptionNl": "Whalefall Canyon, boven locatie 16", "descriptionEn": "Whalefall Canyon, above spot 16" },
+      { "num": 18, "x": 66, "y": 63, "underwater": true, "descriptionNl": "Whalefall Canyon, boven locatie 17", "descriptionEn": "Whalefall Canyon, above spot 17" },
+      { "num": 19, "x": 54, "y": 59, "underwater": true, "descriptionNl": "Whalefall Canyon, meest westelijke punt van het cluster", "descriptionEn": "Whalefall Canyon, westernmost point of the cluster" }
+    ]
+  },
   "weekForecast": [
     { "date": "2026-08-09", "kinds": ["normal"] },
     { "date": "2026-08-10", "kinds": ["warm_sun"] },

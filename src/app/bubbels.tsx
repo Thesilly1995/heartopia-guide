@@ -7,7 +7,7 @@ import { DisclaimerBox } from '@/components/heartopia/disclaimer-box';
 import { PinMap } from '@/components/heartopia/pin-map';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
-import { useBubbleLocations } from '@/data/bubble-locations';
+import { useBubbleLocations, useBubbleWeekLabel } from '@/data/bubble-locations';
 import { useLanguage } from '@/hooks/use-language';
 
 const STORAGE_KEY = 'heartopia:bubbels:vinkjes';
@@ -17,8 +17,7 @@ const STRINGS = {
     title: 'Wekelijkse Bubbels',
     subtitle: 'Roze bubbels vol beloningen',
     disclaimer:
-      'Er zijn elke week 19 roze bubbels (15 op het hoofdeiland, 4 onderwater in Whalefall Canyon), op vaste plekken die week — maar de exacte plekken en beloningen wisselen elke zaterdag. Deze app kan geen live locaties bijhouden; vraag me in de chat om de actuele lijst op te zoeken wanneer je hem nodig hebt.',
-    week: 'Deze week (1-8 aug 2026)',
+      'Er zijn elke week 19 roze bubbels (15 op het hoofdeiland, 4 onderwater in Whalefall Canyon) — de exacte plekken en beloningen wisselen elke zaterdag om 6:00. De kaart hieronder toont de plekken van deze week.',
     resetAll: 'Alles resetten',
     source: 'Bron: community-kaart (Illuminight)',
     map: '🗺️ Kaart',
@@ -29,8 +28,7 @@ const STRINGS = {
     title: 'Weekly Bubbles',
     subtitle: 'Pink bubbles full of rewards',
     disclaimer:
-      "There are 19 pink bubbles every week (15 on the main island, 4 underwater in Whalefall Canyon), at fixed spots for that week — but the exact spots and rewards change every Saturday. This app can't track live locations; just ask me in the chat to look up the current list whenever you need it.",
-    week: 'This week (Aug 1-8, 2026)',
+      'There are 19 pink bubbles every week (15 on the main island, 4 underwater in Whalefall Canyon) — the exact spots and rewards change every Saturday at 6:00. The map below shows this week\'s spots.',
     resetAll: 'Reset all',
     source: 'Source: community map (Illuminight)',
     map: '🗺️ Map',
@@ -48,6 +46,7 @@ export default function BubbelsScreen() {
   const { language } = useLanguage();
   const s = STRINGS[language];
   const BUBBLE_LOCATIONS = useBubbleLocations();
+  const weekLabel = useBubbleWeekLabel();
   const [checked, setChecked] = useState<Record<number, boolean>>({});
   const [view, setView] = useState<'map' | 'list'>('map');
 
@@ -87,7 +86,7 @@ export default function BubbelsScreen() {
   const header = (
     <View style={{ gap: 10, marginBottom: 10 }}>
       <View style={styles.topRow}>
-        <Text style={styles.weekLabel}>{s.week}</Text>
+        <Text style={styles.weekLabel}>{weekLabel}</Text>
         <Pressable style={styles.resetButton} onPress={resetAll}>
           <Text style={styles.resetButtonText}>{s.resetAll}</Text>
         </Pressable>

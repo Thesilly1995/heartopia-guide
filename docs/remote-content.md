@@ -49,6 +49,14 @@ dat specifieke onderdeel.
   "meteorSpots": [
     { "num": 1, "x": 34, "y": 19, "descriptionNl": "Noordwestelijk woestijngebied", "descriptionEn": "Northwest desert area" }
   ],
+  "bubbleWeek": {
+    "weekLabelNl": "Deze week (8-14 aug 2026)",
+    "weekLabelEn": "This week (Aug 8-14, 2026)",
+    "spots": [
+      { "num": 1, "x": 31, "y": 10, "underwater": false, "descriptionNl": "Hoofdeiland, noordpunt", "descriptionEn": "Main island, north tip" },
+      { "num": 16, "x": 66, "y": 71, "underwater": true, "descriptionNl": "Whalefall Canyon, onderaan het cluster", "descriptionEn": "Whalefall Canyon, bottom of the cluster" }
+    ]
+  },
   "dailyPlotsCalendar": [
     { "date": "2026-08-09", "oakPlotNl": "Plot 6", "oakPlotEn": "Plot 6", "fluoritePlotNl": "Plot 11", "fluoritePlotEn": "Plot 11" },
     { "date": "2026-08-10", "oakPlotNl": "🌲 Bos", "oakPlotEn": "🌲 Forest", "fluoritePlotNl": "Plot 7", "fluoritePlotEn": "Plot 7" },
@@ -91,6 +99,14 @@ dat specifieke onderdeel.
   (`assets/images/maps/island-map.jpg`), zelfde systeem als de
   bestaande Bubbels-kaart. Laat de array leeg (`[]`) of weg als de
   gebeurtenis niet actief is.
+- **`bubbleWeek`**: de 19 roze-bubbels-locaties van deze week (15 op de
+  hoofdeiland-kaart `island-map.jpg`, 4 onderwater op de Whalefall
+  Canyon-kaart `whalefall-map.jpg`, onderscheiden via `underwater`).
+  Verspringt elke zaterdag 6:00 — `weekLabelNl`/`weekLabelEn` is de
+  getoonde weekaanduiding (bv. `"Deze week (8-14 aug 2026)"`), `spots`
+  gebruikt hetzelfde `num`/`x`/`y`-systeem als `rainbowSpots`/
+  `meteorSpots`. Ontbreekt dit veld, dan valt de app terug op een
+  gebundelde (verouderde) standaardlijst.
 - **`dailyPlotsCalendar`**: één entry per kalenderdag (`date` als
   `"YYYY-MM-DD"`) met de Zwervende Eik-plot en Fluoriet-plot van die
   dag — meestal `"Plot <nummer>"` (vaak identiek in NL/EN omdat het

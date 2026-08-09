@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 
 import { useLanguage } from '@/hooks/use-language';
+import { useRemoteContent } from '@/lib/remote-content';
 
 export interface BubbleLocation {
   num: number;
@@ -41,17 +42,44 @@ const BUBBLE_LOCATIONS_RAW: BubbleLocationRaw[] = [
   { descriptionNl: "Whalefall Canyon, westzijde bij de kwallenpoel", descriptionEn: "Whalefall Canyon, west side near the jellyfish pool", num: 19, x: 34, y: 72, underwater: true },
 ];
 
+const FALLBACK_WEEK_LABEL = { nl: 'Deze week (verouderde voorbeelddata)', en: 'This week (outdated sample data)' };
+
+/**
+ * Roze-bubbels-locaties verspringen elke zaterdag 6:00 naar nieuwe plekken.
+ * Komt er uit `remote-content.json` (`bubbleWeek`), dan is dat de actuele lijst
+ * voor deze week; zonder remote content valt de app terug op een gebundelde
+ * (per definitie verouderde) standaardlijst, puur om het scherm nooit leeg te
+ * laten zijn.
+ */
 export function useBubbleLocations(): BubbleLocation[] {
   const { language } = useLanguage();
-  return useMemo(
-    () =>
-      BUBBLE_LOCATIONS_RAW.map((r) => ({
-    description: language === 'en' ? r.descriptionEn : r.descriptionNl,
-    num: r.num,
-    x: r.x,
-    y: r.y,
-    underwater: r.underwater,
-      })),
-    [language]
-  );
+  const { payload } = useRemoteContent();
+
+  return useMemo(() => {
+    const remoteSpots = payload?.bubbleWeek?.spots;
+    if (remoteSpots && remoteSpots.length > 0) {
+      return remoteSpots.map((r) => ({
+        description: language === 'en' ? r.descriptionEn : r.descriptionNl,
+        num: r.num,
+        x: r.x,
+        y: r.y,
+        underwater: r.underwater,
+      }));
+    }
+    return BUBBLE_LOCATIONS_RAW.map((r) => ({
+      description: language === 'en' ? r.descriptionEn : r.descriptionNl,
+      num: r.num,
+      x: r.x,
+      y: r.y,
+      underwater: r.underwater,
+    }));
+  }, [payload, language]);
+}
+
+export function useBubbleWeekLabel(): string {
+  const { language } = useLanguage();
+  const { payload } = useRemoteContent();
+  const week = payload?.bubbleWeek;
+  if (!week) return FALLBACK_WEEK_LABEL[language];
+  return language === 'en' ? week.weekLabelEn : week.weekLabelNl;
 }
