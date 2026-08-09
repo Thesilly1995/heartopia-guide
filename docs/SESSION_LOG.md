@@ -2,6 +2,36 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-09 (deel 22) — Missies-resettijd gefixt, emoji-clipping-fix bevestigd, codes-check-routine, plot-kalender vooruit ingepland
+
+**Missies-resettijden**: gebruiker gaf door dat het echte in-game schema "elke dag 7:00" (was 6:00 in de app) en wekelijkse reset "elke zaterdag 7:00" (was "elke maandag 6:00") is. Beide teksten in `src/app/missies.tsx` gecorrigeerd (NL+EN).
+
+**Emoji-clipping-fix bevestigd**: de spatie-tussen-iconen-fix uit het vorige deel (hittegolf+meteorenregen op één dag) is door gebruiker bevestigd werkend op zijn development-build.
+
+**Nieuwe routine: codes-check woensdag & zondag** (`trig_01Bxi1rBTD1wiB5Tb4r3SkiQ`, cron `0 8 * * 0,3`, bindt aan deze sessie zoals de weekweer-routine). Doorzoekt het web naar nieuwe Heartopia-redemption-codes, vergelijkt met `src/data/codes.ts`, werkt bij + commit/push als er iets nieuws is, blijft stil als niet.
+
+**Feedback-scherm — belangrijke beperking bevestigd aan gebruiker**: het Feedback-scherm (`src/app/feedback.tsx`) slaat nog steeds puur lokaal op (AsyncStorage, per toestel) — er is geen backend aan gekoppeld, dus feedback die toekomstige gebruikers via de gepubliceerde app insturen, komt **niet** bij de gebruiker (developer) terecht. Dit was al zo sinds de prototype-conversie (deel 1), nu expliciet benoemd omdat de gebruiker ernaar vroeg. **Nog niet opgelost** — zou met de nu al bestaande Supabase-infrastructuur (cloud save) relatief eenvoudig alsnog gekoppeld kunnen worden aan een gedeelde tabel, maar is nog niet gebouwd; gebruiker moet aangeven of ze dit wil.
+
+### Plot-kalender: eik/fluoriet-plots weken vooruit ingepland
+
+Gebruiker stuurde een in-game-kalenderafbeelding (Japanse UI, "無垢な蛍石ツルツルオーク場所" = zuivere-fluoriet/gladde-oak-locaties) met per dag de eik- en fluoriet-plotnummers voor de rest van juli t/m 31 augustus 2026. Op dagen zonder plot toont de afbeelding een locatienaam i.p.v. een nummer: "松林" (dennenbos) onder de eik-kolom, "遺跡" (ruïne) onder de fluoriet-kolom.
+
+- `src/lib/remote-content.ts`: nieuw veld `dailyPlotsCalendar` (array met datum + eik/fluoriet per dag) naast het oudere enkelvoudige `dailyPlots` (blijft als terugval bestaan).
+- `src/data/daily-plots.ts`: `useDailyPlots()` zoekt eerst een kalender-entry voor vandaag, valt anders terug op `dailyPlots`, anders op `null` (ongewijzigd "onbekend, vraag het na"-gedrag).
+- `remote-content.json`: kalender ingevuld van vandaag (9 augustus) t/m 31 augustus — 23 dagen. Geen-plot-dagen krijgen `"🌲 Bos"`/`"🌲 Forest"` (eik) of `"🏛️ Ruïne"`/`"🏛️ Ruins"` (fluoriet) i.p.v. een plotnummer, op verzoek van gebruiker (emoji + woord voor de zekerheid, na de emoji-clipping-ervaring van hierboven).
+- `docs/remote-content.md` bijgewerkt met het nieuwe schema.
+- **Kanttekening**: de kalenderwaarden zijn handmatig uit de afbeelding overgenomen (geen OCR-tool gebruikt) — bij twijfel over een specifieke dag waard om even te laten spot-checken door gebruiker, vooral bij drukke/kleine cijfers.
+
+### Nog open
+
+- Feedback-backend (zie boven) — wachten op beslissing gebruiker.
+- Overige punten uit eerdere delen blijven staan: echte AdMob-ID's invullen, Google Play Console-verificatie, store-listing, pushmeldingen-backend.
+- Rainbow/meteor-locaties: gebruiker gaf aan dat hij, zodra dat event actief is, een afbeelding met de boeket-/ertsplek-locaties stuurt (nog niet ontvangen).
+
+### Repo-status
+
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-09 (deel 21) — Development/preview-build eindelijk gelukt + weekweer bijgewerkt
 
 **Bevestigd door gebruiker: de `preview`-build is geslaagd en de `.apk` staat op zijn telefoon.** Dit sluit de build-saga uit deel 17-20 af (Expo Go werkte niet meer door de echte AdMob-native-module → Gradle/Kotlin-versiebotsing met Google's Play Services Ads → uiteindelijk opgelost door `react-native-google-mobile-ads` te pinnen op exact `16.0.0`/`play-services-ads 24.6.0`, zie deel 20 voor de onderbouwing). **Nog niet apart bevestigd: de EXPO_TOKEN-login-stap moest een tweede keer herhaald worden** (nieuw terminalvenster = env var weg) — gebruiker gewezen op `setx EXPO_TOKEN "..."` als permanente oplossing voor volgende keren, i.p.v. steeds opnieuw `$env:EXPO_TOKEN` per sessie.
