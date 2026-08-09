@@ -2,6 +2,24 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-09 (deel 25) — Play Store-publicatie in kaart gebracht, privacyverklaring geschreven en gepubliceerd
+
+Gebruiker vroeg wat er nog moet gebeuren voor Play Store-publicatie. Overzicht gegeven: (1) Google Play Console-verificatie — nog in behandeling, geen nieuws; (2) echte AdMob-ID's — kan pas zodra Play Console klaar is en de app daar is aangemeld; (3) production-build (`eas build --profile production --platform android`) — uitgelegd, bewust nog niet gedaan omdat de AdMob-ID's toch weer een nieuwe build vereisen; (4) privacyverklaring — gebouwd (zie hieronder); (5) Data Safety-formulier en (6) store-listing — beide zitten in Play Console zelf, dus ook pas mogelijk zodra de verificatie rond is.
+
+**Publisher-naam bevestigd**: gebruiker maakte een nieuw ontwikkelaarsaccount aan onder de naam **GamerDex** (`gamerdex0826@gmail.com`) — matcht de eerder geziene EAS-accountnaam "gamerdex" uit de build-logs. Dit e-mailadres is nu het officiële contactpunt in de privacyverklaring.
+
+**Privacyverklaring**: `docs/privacy-policy.html` (NL+EN, gebaseerd op de app's eigen kleurenpalet uit `heartopia-colors.ts` voor herkenbaarheid) — beschrijft de daadwerkelijke gegevenspraktijken: Cloud Save (e-mail/wachtwoord via Supabase + spelvoortgang-back-up), Feedback (naam optioneel + tekst, zichtbaar voor alle gebruikers), AdMob-advertenties (advertentie-ID, alleen niet-Premium). Vermeldt expliciet dat het een onofficiële fan-app is. Gepubliceerd als Artifact voor een directe openbare link: https://claude.ai/code/artifact/f70c2a59-1ef4-441c-aab0-670257df2744 — bronbestand blijft ook in de repo staan. Visueel gecontroleerd in licht/donker thema via Playwright-screenshot.
+
+### Nog open
+
+- Alles hangt nu aan Google Play Console-verificatie — zodra die binnen is: AdMob koppelen, Data Safety-formulier, store-listing, en dan pas de "echte" production-build met echte AdMob-ID's.
+- Rainbow/meteor-locaties: gebruiker stuurt een afbeelding zodra dat event actief is (nog niet ontvangen).
+- Meteor-icoon-fix v2 (deel 23-24) nog te bevestigen of definitief goed staat (gebruiker zei dat het weekweer-kaartje klopt, dus vermoedelijk wel — niet expliciet nogmaals genoemd).
+
+### Repo-status
+
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-09 (deel 24) — Weekweer + feedback bevestigd werkend, feedback-meldingsroutine toegevoegd
 
 Gebruiker bevestigde: het weekweer-kaartje (incl. de meteor-icoon-fix v2) klopt nu helemaal, en het gedeelde Feedback-scherm werkt end-to-end (getest, test-rijtje weer verwijderd uit Supabase door gebruiker zelf).
