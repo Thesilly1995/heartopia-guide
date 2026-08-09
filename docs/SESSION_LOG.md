@@ -2,6 +2,21 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-09 (deel 24) — Weekweer + feedback bevestigd werkend, feedback-meldingsroutine toegevoegd
+
+Gebruiker bevestigde: het weekweer-kaartje (incl. de meteor-icoon-fix v2) klopt nu helemaal, en het gedeelde Feedback-scherm werkt end-to-end (getest, test-rijtje weer verwijderd uit Supabase door gebruiker zelf).
+
+**Nieuwe routine**: `trig_01UhVBLdV83EHVyMsfpAFCFK` ("Heartopia feedback-check"), elke 6 uur (`50 */6 * * *`, server-geankerd op aanmaakminuut), spawnt een verse sessie die de `feedback`-tabel bevraagt op rijen van de laatste ~7 uur via de Supabase REST API (curl, geen repo-checkout nodig). Leeg → stil afsluiten. Nieuwe feedback → eindbericht met aantal + naam/tekst per item, wat een pushmelding naar gebruiker triggert (notifications: push=true, email=false). Zelfde patroon als de Supabase-keep-alive-routine uit deel 13.
+
+### Nog open
+
+- Rainbow/meteor-locaties: gebruiker stuurt een afbeelding zodra dat event actief is (nog niet ontvangen).
+- Overige punten uit eerdere delen blijven staan: echte AdMob-ID's invullen, Google Play Console-verificatie, store-listing, pushmeldingen-backend (voor de app zelf, niet te verwarren met deze ontwikkelaars-gerichte feedback-meldingsroutine).
+
+### Repo-status
+
+Geen codewijzigingen deze sectie — alleen een nieuwe Routine aangemaakt (geen repo-commit nodig).
+
 ## 2026-08-09 (deel 23) — Meteor-icoon-fix v2 (aparte Text-elementen), Feedback gekoppeld aan Supabase
 
 **Meteor-icoon nog steeds onzichtbaar na de spatie-fix uit deel 22.** Gebruiker stuurde een screenshot: op woensdag werd wél ruimte gereserveerd voor een tweede icoon (de dagnaam-tekst stond verder naar rechts dan bij andere dagen), maar het icoon zelf verscheen niet — terwijl diezelfde ☄️-emoji op donderdag (alleen meteor, geen combinatie) prima rendert. Dat wijst op een glyph-shaping-eigenaardigheid specifiek bij meerdere emoji in dezelfde tekst-run op dit toestel, niet op een ontbrekend lettertype-glyph. Robuustere fix: `WeekForecastEntry.emoji` is nu `string[]` (één per conditie) i.p.v. samengevoegde string; elk icoon krijgt in `(tabs)/index.tsx` zijn eigen `<Text>`-element i.p.v. samen in één tekstnode — sluit cross-emoji-font-shaping-interferentie binnen één Text-run volledig uit als foutbron. **Nog niet opnieuw bevestigd door gebruiker** (vereist weer een nieuwe build of live-reload via de net opgezette development-build).
