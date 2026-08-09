@@ -2,6 +2,35 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-09 (deel 23) — Meteor-icoon-fix v2 (aparte Text-elementen), Feedback gekoppeld aan Supabase
+
+**Meteor-icoon nog steeds onzichtbaar na de spatie-fix uit deel 22.** Gebruiker stuurde een screenshot: op woensdag werd wél ruimte gereserveerd voor een tweede icoon (de dagnaam-tekst stond verder naar rechts dan bij andere dagen), maar het icoon zelf verscheen niet — terwijl diezelfde ☄️-emoji op donderdag (alleen meteor, geen combinatie) prima rendert. Dat wijst op een glyph-shaping-eigenaardigheid specifiek bij meerdere emoji in dezelfde tekst-run op dit toestel, niet op een ontbrekend lettertype-glyph. Robuustere fix: `WeekForecastEntry.emoji` is nu `string[]` (één per conditie) i.p.v. samengevoegde string; elk icoon krijgt in `(tabs)/index.tsx` zijn eigen `<Text>`-element i.p.v. samen in één tekstnode — sluit cross-emoji-font-shaping-interferentie binnen één Text-run volledig uit als foutbron. **Nog niet opnieuw bevestigd door gebruiker** (vereist weer een nieuwe build of live-reload via de net opgezette development-build).
+
+### Feedback-scherm gekoppeld aan Supabase
+
+Gebruiker bevestigde: ja, feedback moet bij de ontwikkelaar terechtkomen — tot nu toe puur lokaal per toestel (AsyncStorage), nooit gezien door de ontwikkelaar.
+
+- `docs/supabase-setup.md`: nieuwe SQL-sectie voor een `feedback`-tabel. Bewust **geen** per-gebruiker-RLS zoals `cloud_saves` — open insert+select via de anon key, geen login nodig (matcht het "gedeeld ideeënbord"-idee uit het originele prototype vóór de RN-conversie, lage drempel om feedback te geven). Kanttekening expliciet gedocumenteerd: de anon key is publiek, dus dit is geen spamfilter/moderatie, acceptabel risico voor een klein fan-project.
+- `src/app/feedback.tsx`: AsyncStorage-opslag vervangen door Supabase select (laatste 50, nieuwste eerst)/insert. "Niet geconfigureerd"-fallback en foutmeldingen bij laad-/verzendfouten, zelfde patroon als `cloud-save.tsx`. Disclaimer-tekst aangepast van "alleen jij ziet dit" naar expliciet "gedeeld".
+- Getest: query-vorm bevestigd correct tegen de live Supabase-instantie (tabel bestaat nog niet → nette `PGRST205`-fout via het los testscript, geen crash-pad in de code).
+- **Gebruiker moet nog** de SQL uit `docs/supabase-setup.md` draaien in de Supabase SQL Editor voordat dit scherm echt werkt.
+
+### Overige kleine dingen uit deel 22 afgehandeld
+
+- Nieuwe routine: codes-check woensdag & zondag (`trig_01Bxi1rBTD1wiB5Tb4r3SkiQ`).
+- Plot-kalender (deel 22) door gebruiker gecontroleerd en akkoord bevonden — geen correcties nodig.
+
+### Nog open
+
+- Bevestigen dat de meteor-icoon-fix v2 nu wél werkt (nieuwe build/reload nodig).
+- Gebruiker moet de `feedback`-tabel-SQL nog draaien in Supabase.
+- Rainbow/meteor-locaties: gebruiker stuurt een afbeelding zodra dat event actief is (nog niet ontvangen).
+- Overige punten uit eerdere delen blijven staan: echte AdMob-ID's invullen, Google Play Console-verificatie, store-listing, pushmeldingen-backend.
+
+### Repo-status
+
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-09 (deel 22) — Missies-resettijd gefixt, emoji-clipping-fix bevestigd, codes-check-routine, plot-kalender vooruit ingepland
 
 **Missies-resettijden**: gebruiker gaf door dat het echte in-game schema "elke dag 7:00" (was 6:00 in de app) en wekelijkse reset "elke zaterdag 7:00" (was "elke maandag 6:00") is. Beide teksten in `src/app/missies.tsx` gecorrigeerd (NL+EN).
