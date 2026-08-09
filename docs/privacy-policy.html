@@ -1,0 +1,337 @@
+<title>Privacybeleid — Heartopedia</title>
+<style>
+  :root {
+    --bg: #EFF7EC;
+    --card: #FFFFFF;
+    --surface-soft: #F5FAF3;
+    --line: #DCEBD8;
+    --forest: #2B4739;
+    --forest-soft: #55705F;
+    --coral: #FF8FA3;
+    --coral-dark: #C94F68;
+    --yellow: #FFD166;
+    --note-bg: #FFFBEF;
+    --note-border: #FBEBBD;
+    --note-text: #8A6A1E;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #121B16;
+      --card: #1E2C24;
+      --surface-soft: #25352C;
+      --line: #2C3D33;
+      --forest: #EAF3EA;
+      --forest-soft: #9AB3A5;
+      --coral: #FF9CB0;
+      --coral-dark: #FFB4C4;
+      --yellow: #FFD166;
+      --note-bg: #332B18;
+      --note-border: #4F4423;
+      --note-text: #E8C468;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #121B16;
+    --card: #1E2C24;
+    --surface-soft: #25352C;
+    --line: #2C3D33;
+    --forest: #EAF3EA;
+    --forest-soft: #9AB3A5;
+    --coral: #FF9CB0;
+    --coral-dark: #FFB4C4;
+    --yellow: #FFD166;
+    --note-bg: #332B18;
+    --note-border: #4F4423;
+    --note-text: #E8C468;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--forest);
+    font-family: Georgia, "Iowan Old Style", "Palatino Linotype", "Noto Serif", serif;
+    font-size: 16px;
+    line-height: 1.65;
+    margin: 0;
+    padding: 0 20px 80px;
+  }
+
+  .wrap {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .banner {
+    margin: 0 -20px 32px;
+    padding: 44px 20px 30px;
+    background: linear-gradient(135deg, var(--coral), var(--yellow));
+    color: #fff;
+  }
+
+  .banner-inner {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .banner .eyebrow {
+    font-family: ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.92;
+  }
+
+  .banner h1 {
+    font-family: ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+    font-size: clamp(28px, 5vw, 38px);
+    font-weight: 800;
+    margin: 6px 0 8px;
+    text-wrap: balance;
+  }
+
+  .banner p {
+    font-family: ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+    margin: 0;
+    font-size: 14.5px;
+    opacity: 0.95;
+  }
+
+  h2 {
+    font-family: ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+    color: var(--coral-dark);
+    font-size: 19px;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    margin: 40px 0 12px;
+    text-wrap: balance;
+  }
+
+  h2 .num {
+    font-variant-numeric: tabular-nums;
+    color: var(--forest-soft);
+    font-weight: 700;
+    margin-right: 8px;
+  }
+
+  p { margin: 0 0 14px; }
+  ul { margin: 0 0 14px; padding-left: 22px; }
+  li { margin-bottom: 8px; }
+  strong { color: var(--forest); }
+
+  a {
+    color: var(--coral-dark);
+    text-decoration-color: var(--coral);
+    text-underline-offset: 3px;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 18px 20px;
+  }
+
+  .note {
+    background: var(--note-bg);
+    border: 1px solid var(--note-border);
+    color: var(--note-text);
+    border-radius: 14px;
+    padding: 16px 18px;
+    font-family: ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.55;
+    margin: 0 0 30px;
+  }
+
+  .note strong { color: inherit; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14.5px;
+    margin: 4px 0 14px;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 10px 10px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+
+  th {
+    font-family: ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--forest-soft);
+    font-weight: 700;
+  }
+
+  .table-wrap { overflow-x: auto; }
+
+  .meta {
+    font-family: ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+    font-size: 12.5px;
+    color: var(--forest-soft);
+  }
+
+  .lang-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 56px 0 8px;
+  }
+
+  .lang-divider::before,
+  .lang-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  .lang-divider span {
+    font-family: ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--forest-soft);
+  }
+
+  footer {
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    font-family: ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+    font-size: 12.5px;
+    color: var(--forest-soft);
+  }
+</style>
+
+<div class="banner">
+  <div class="banner-inner">
+    <div class="eyebrow">Heartopedia · GamerDex</div>
+    <h1>Privacybeleid</h1>
+    <p>Laatst bijgewerkt: 9 augustus 2026 · Last updated: August 9, 2026</p>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="note">
+    🌱 <strong>Heartopedia</strong> is een onofficiële, door fans gemaakte gids voor de mobiele game <strong>Heartopia</strong>. De app is niet gemaakt door, en niet verbonden aan, de officiële ontwikkelaars of uitgevers van Heartopia.
+  </div>
+
+  <p class="meta">NEDERLANDS</p>
+
+  <h2><span class="num">1.</span>Wie is verantwoordelijk voor deze app</h2>
+  <p>Heartopedia wordt gemaakt en onderhouden door <strong>GamerDex</strong> (eenmanszaak/hobbyproject, geen onderdeel van een groter bedrijf). Vragen over privacy of gegevens kun je sturen naar <a href="mailto:gamerdex0826@gmail.com">gamerdex0826@gmail.com</a>.</p>
+
+  <h2><span class="num">2.</span>Welke gegevens verzamelt de app</h2>
+  <p>De meeste onderdelen van Heartopedia (catalogussen, badges, missies, to-do-lijst) werken volledig lokaal op je toestel — daarvoor wordt niets naar ons verstuurd. Alleen bij de onderstaande, optionele functies worden gegevens gedeeld:</p>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>Functie</th><th>Welke gegevens</th><th>Waarom</th></tr>
+      <tr>
+        <td>Cloud Save (account aanmaken)</td>
+        <td>E-mailadres en wachtwoord (versleuteld opgeslagen door onze database-provider Supabase)</td>
+        <td>Om in te loggen en je voortgang te herstellen op een ander toestel</td>
+      </tr>
+      <tr>
+        <td>Cloud Save (back-uppen)</td>
+        <td>Je spelvoortgang binnen de app: mastery/sterren, missies, to-do-lijst — gekoppeld aan je account</td>
+        <td>Zodat je 'm kan terugzetten wanneer je dat zelf kiest</td>
+      </tr>
+      <tr>
+        <td>Feedback versturen</td>
+        <td>Je ingevoerde naam (optioneel) en feedbacktekst</td>
+        <td>Zichtbaar voor alle gebruikers van de app én voor ons, om de gids te verbeteren</td>
+      </tr>
+      <tr>
+        <td>Advertenties (niet-Premium gebruikers)</td>
+        <td>Advertentie-ID en apparaatgegevens, verzameld door Google AdMob</td>
+        <td>Om (gepersonaliseerde) advertenties te tonen — zie Google's eigen privacybeleid hieronder</td>
+      </tr>
+    </table>
+  </div>
+
+  <h2><span class="num">3.</span>Wie heeft toegang tot deze gegevens</h2>
+  <ul>
+    <li><strong>Supabase</strong> (database/authenticatie-provider) — host de accountgegevens en back-ups. Zie <a href="https://supabase.com/privacy" target="_blank" rel="noopener">supabase.com/privacy</a>.</li>
+    <li><strong>Google AdMob</strong> (advertenties) — alleen voor gebruikers zonder Premium. Zie <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's privacybeleid</a>.</li>
+    <li>Feedback die je instuurt is zichtbaar voor <strong>alle gebruikers</strong> van de app (gedeeld ideeënbord) en voor GamerDex.</li>
+  </ul>
+  <p>We verkopen geen gegevens aan derden.</p>
+
+  <h2><span class="num">4.</span>Bewaartermijn en verwijderen</h2>
+  <p>Accountgegevens en back-ups blijven bewaard zolang je account bestaat. Wil je je account of ingestuurde feedback laten verwijderen, mail dan naar <a href="mailto:gamerdex0826@gmail.com">gamerdex0826@gmail.com</a> — we verwijderen dit dan zo snel mogelijk.</p>
+
+  <h2><span class="num">5.</span>Kinderen</h2>
+  <p>Heartopedia is een algemene fan-gids en verzamelt niet bewust extra gegevens van kinderen. Gebruik je Cloud Save als ouder/verzorger namens een kind, gebruik dan bij voorkeur je eigen e-mailadres.</p>
+
+  <h2><span class="num">6.</span>Wijzigingen in dit beleid</h2>
+  <p>Als deze app nieuwe functies krijgt die andere gegevens verzamelen, werken we dit beleid bij en passen we de datum bovenaan aan.</p>
+
+  <div class="lang-divider"><span>English</span></div>
+
+  <h2><span class="num">1.</span>Who is responsible for this app</h2>
+  <p>Heartopedia is made and maintained by <strong>GamerDex</strong> (sole developer / hobby project, not part of a larger company). Questions about privacy or your data can be sent to <a href="mailto:gamerdex0826@gmail.com">gamerdex0826@gmail.com</a>.</p>
+
+  <h2><span class="num">2.</span>What data the app collects</h2>
+  <p>Most of Heartopedia (catalogs, badges, missions, to-do list) works entirely on your device — nothing is sent to us for those. Data is only shared for the optional features below:</p>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>Feature</th><th>Data</th><th>Why</th></tr>
+      <tr>
+        <td>Cloud Save (account)</td>
+        <td>Email address and password (stored by our database provider, Supabase)</td>
+        <td>To sign in and restore your progress on another device</td>
+      </tr>
+      <tr>
+        <td>Cloud Save (backup)</td>
+        <td>Your in-app progress: mastery/stars, missions, to-do list — tied to your account</td>
+        <td>So you can restore it whenever you choose to</td>
+      </tr>
+      <tr>
+        <td>Sending feedback</td>
+        <td>Your entered name (optional) and feedback text</td>
+        <td>Visible to all app users and to us, to improve the guide</td>
+      </tr>
+      <tr>
+        <td>Ads (non-Premium users)</td>
+        <td>Advertising ID and device data, collected by Google AdMob</td>
+        <td>To show (personalized) ads — see Google's own privacy policy below</td>
+      </tr>
+    </table>
+  </div>
+
+  <h2><span class="num">3.</span>Who has access to this data</h2>
+  <ul>
+    <li><strong>Supabase</strong> (database/auth provider) — hosts account data and backups. See <a href="https://supabase.com/privacy" target="_blank" rel="noopener">supabase.com/privacy</a>.</li>
+    <li><strong>Google AdMob</strong> (ads) — non-Premium users only. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's privacy policy</a>.</li>
+    <li>Feedback you submit is visible to <strong>all app users</strong> (shared idea board) and to GamerDex.</li>
+  </ul>
+  <p>We do not sell data to third parties.</p>
+
+  <h2><span class="num">4.</span>Retention and deletion</h2>
+  <p>Account data and backups are kept as long as your account exists. To request deletion of your account or submitted feedback, email <a href="mailto:gamerdex0826@gmail.com">gamerdex0826@gmail.com</a> — we'll remove it as soon as possible.</p>
+
+  <h2><span class="num">5.</span>Children</h2>
+  <p>Heartopedia is a general-audience fan guide and does not knowingly collect extra data from children. If you use Cloud Save as a parent/guardian on behalf of a child, we recommend using your own email address.</p>
+
+  <h2><span class="num">6.</span>Changes to this policy</h2>
+  <p>If this app adds new features that collect different data, we'll update this policy and the date at the top.</p>
+
+  <footer>
+    Heartopedia is an unofficial fan project. Not affiliated with, endorsed by, or connected to the official developers or publishers of Heartopia.
+  </footer>
+
+</div>
