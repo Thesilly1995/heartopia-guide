@@ -2,6 +2,28 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-09 (deel 26) — Bubbels-locaties naar remote-content verplaatst + zaterdag-routine
+
+Gebruiker stuurde twee screenshots (Chinese community-kaart-app "心动小镇"/甜甜包) met de roze-bubbels-locaties voor 8-14 augustus: hoofdeiland-kaart (1-15) en Whalefall Canyon-kaart (16-19). Bubbels-locaties stonden tot nu toe volledig hardcoded in de app (één vaste, inmiddels verouderde snapshot) — de disclaimer zei letterlijk "vraag het in de chat", wat voor echte eindgebruikers zonder chat-toegang niet werkt. Zelfde soort upgrade als eerder bij rainbow/meteor-spots en de plot-kalender: nu ook via `remote-content.json` bijwerkbaar.
+
+- `src/lib/remote-content.ts`: nieuw `RemoteBubbleSpot` (= `RemoteMapSpot` + `underwater`) en `RemoteBubbleWeek` (weekLabel NL/EN + spots-array), nieuw `bubbleWeek`-veld op de payload.
+- `src/data/bubble-locations.ts`: `useBubbleLocations()` gebruikt `bubbleWeek.spots` als beschikbaar, anders terugval op de oude gebundelde standaardlijst (nooit een leeg scherm). Nieuwe `useBubbleWeekLabel()`-hook voor de "Deze week (...)"-tekst, die eerder hardcoded was.
+- `src/app/bubbels.tsx`: disclaimer herschreven (geen "vraag het in de chat" meer — de kaart is nu gewoon actueel), weeklabel dynamisch.
+- `remote-content.json`: `bubbleWeek` gevuld met de locaties van deze week. **Coördinaten met de hand overgenomen uit de screenshots (geen pixel-meettool beschikbaar)** — minder zeker dan de plot-kalender uit deel 22 omdat de bubbel-pins dit keer dicht op elkaar geclusterd stonden (vooral Whalefall Canyon 16-19); gebruiker gevraagd om te spot-checken.
+- `docs/remote-content.md` bijgewerkt.
+
+**Nieuwe routine**: `trig_011NBBTxtdw4JHnzTgWMdo5g` ("Heartopia bubbels — zaterdag screenshot"), elke zaterdag 8:00 UTC (bubbels verversen om 6:00 in-game) — vraagt gebruiker om de twee kaartscreenshots, zelfde bind-aan-deze-sessie-patroon als de HeartoCast-weer-routine (deel 12) en de codes-routine (deel 22).
+
+### Nog open
+
+- Gebruiker moet de bubbel-coördinaten van deze week nog spot-checken in de app.
+- Rainbow/meteor-locaties: gebruiker stuurt een afbeelding zodra dat event actief is (nog niet ontvangen).
+- Overige punten uit eerdere delen blijven staan (Play Store-publicatie hangt op Google Play Console-verificatie).
+
+### Repo-status
+
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-09 (deel 25) — Play Store-publicatie in kaart gebracht, privacyverklaring geschreven en gepubliceerd
 
 Gebruiker vroeg wat er nog moet gebeuren voor Play Store-publicatie. Overzicht gegeven: (1) Google Play Console-verificatie — nog in behandeling, geen nieuws; (2) echte AdMob-ID's — kan pas zodra Play Console klaar is en de app daar is aangemeld; (3) production-build (`eas build --profile production --platform android`) — uitgelegd, bewust nog niet gedaan omdat de AdMob-ID's toch weer een nieuwe build vereisen; (4) privacyverklaring — gebouwd (zie hieronder); (5) Data Safety-formulier en (6) store-listing — beide zitten in Play Console zelf, dus ook pas mogelijk zodra de verificatie rond is.
