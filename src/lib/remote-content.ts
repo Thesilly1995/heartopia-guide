@@ -59,12 +59,13 @@ export interface RemoteWeather {
   validUntil: string;
 }
 
-export type WeekForecastKind = 'normal' | 'rain' | 'rainbow' | 'warm_sun' | 'meteor';
+export type WeekForecastKind = 'normal' | 'rain' | 'rainbow' | 'warm_sun' | 'meteor' | 'heatwave';
 
 export interface RemoteWeekForecastDay {
   /** Kalenderdatum "YYYY-MM-DD" (lokale speldatum), niet een terugkerende weekdag. */
   date: string;
-  kind: WeekForecastKind;
+  /** Meestal 1 element, maar een dag kan meerdere bijzonderheden tegelijk hebben (bv. hittegolf + meteorenregen). */
+  kinds: WeekForecastKind[];
 }
 
 export interface RemoteContentPayload {

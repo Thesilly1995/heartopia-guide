@@ -5,7 +5,7 @@ import { useRemoteContent, WeekForecastKind } from '@/lib/remote-content';
 
 export interface WeekForecastEntry {
   date: string;
-  kind: WeekForecastKind;
+  kinds: WeekForecastKind[];
   label: string;
   emoji: string;
   /** "Vandaag" voor de dag van vandaag, anders de weekdagnaam. */
@@ -20,6 +20,7 @@ const EMOJI: Record<WeekForecastKind, string> = {
   rainbow: '🌈',
   warm_sun: '☀️',
   meteor: '☄️',
+  heatwave: '😎',
 };
 
 const LABELS = {
@@ -29,6 +30,7 @@ const LABELS = {
     rainbow: 'Regenboog',
     warm_sun: 'Warme zon',
     meteor: 'Meteorenregen',
+    heatwave: 'Hittegolf',
   },
   en: {
     normal: 'Nothing special',
@@ -36,6 +38,7 @@ const LABELS = {
     rainbow: 'Rainbow',
     warm_sun: 'Warm sun',
     meteor: 'Meteor shower',
+    heatwave: 'Heatwave',
   },
 } as const;
 
@@ -73,11 +76,12 @@ export function useWeekForecast(): WeekForecastEntry[] {
       .map((entry) => {
         const isToday = entry.date === today;
         const weekday = WEEKDAYS[language][new Date(`${entry.date}T00:00:00`).getDay()];
+        const kinds = entry.kinds.length > 0 ? entry.kinds : (['normal'] as WeekForecastKind[]);
         return {
           date: entry.date,
-          kind: entry.kind,
-          label: LABELS[language][entry.kind],
-          emoji: EMOJI[entry.kind],
+          kinds,
+          label: kinds.map((k) => LABELS[language][k]).join(' + '),
+          emoji: kinds.map((k) => EMOJI[k]).join(''),
           dayLabel: isToday ? TODAY_LABEL[language] : weekday,
           weekdayLabel: weekday,
         };

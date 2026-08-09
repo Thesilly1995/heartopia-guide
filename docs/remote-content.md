@@ -77,9 +77,10 @@ dat specifieke onderdeel.
     "validUntil": "2026-08-10T17:00:00Z"
   },
   "weekForecast": [
-    { "date": "2026-08-07", "kind": "rain" },
-    { "date": "2026-08-08", "kind": "warm_sun" },
-    { "date": "2026-08-09", "kind": "normal" }
+    { "date": "2026-08-07", "kinds": ["rain"] },
+    { "date": "2026-08-08", "kinds": ["warm_sun"] },
+    { "date": "2026-08-09", "kinds": ["normal"] },
+    { "date": "2026-08-12", "kinds": ["heatwave", "meteor"] }
   ]
 }
 ```
@@ -113,12 +114,16 @@ dat specifieke onderdeel.
 - **`weekForecast`**: de weekvoorspelling uit het in-game
   weekvoorspelling-telefoontje — één entry per kalenderdag (`date` als
   `"YYYY-MM-DD"`, de lokale speldatum, geen terugkerende weekdag).
-  `kind` is `"normal"` (niks bijzonders), `"rain"`, `"rainbow"`,
-  `"warm_sun"` (warme zon) of `"meteor"`. In tegenstelling tot
+  `kinds` is een **array** (meestal 1 element, maar een dag kan
+  meerdere bijzonderheden tegelijk hebben, bv. hittegolf + meteorenregen
+  op dezelfde dag — dan gewoon beide in de array zetten, de app toont
+  dan beide iconen/teksten achter elkaar). Geldige waarden: `"normal"`
+  (niks bijzonders), `"rain"`, `"rainbow"`, `"warm_sun"` (warme zon),
+  `"meteor"` of `"heatwave"` (hittegolf). In tegenstelling tot
   `weather` hoef je hier geen `labelNl`/`labelEn` bij te zetten — de
-  app kent per `kind` een vaste NL/EN-tekst en icoon.
-  **Neem bewust ook de dagen zonder bijzonderheden op** (`kind:
-  "normal"`) — de app toont dit als een echte weekweergave (vandaag
+  app kent per waarde een vaste NL/EN-tekst en icoon.
+  **Neem bewust ook de dagen zonder bijzonderheden op** (`kinds:
+  ["normal"]`) — de app toont dit als een echte weekweergave (vandaag
   t/m zondag) op het homescreen, niet alleen de uitschieters. Dagen
   vóór vandaag worden automatisch niet meer getoond; je hoeft ze dus
   niet te verwijderen zodra ze voorbij zijn.
