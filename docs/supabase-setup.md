@@ -48,6 +48,39 @@ create policy "Users can update their own save"
 Dit zorgt ervoor dat elke gebruiker alleen zijn/haar eigen rij kan lezen/schrijven —
 niemand kan bij andermans voortgang, ook niet via de anon key.
 
+## 3b. Feedback-tabel toevoegen (gedeeld feedback-scherm)
+
+Het Feedback-scherm (`src/app/feedback.tsx`) sloeg feedback aanvankelijk alleen lokaal
+op (alleen de inzender zag het). Om feedback van alle gebruikers binnen te krijgen, nog
+een tweede tabel aanmaken — zelfde SQL Editor, nieuwe query:
+
+```sql
+create table feedback (
+  id uuid primary key default gen_random_uuid(),
+  name text,
+  idea text not null check (char_length(idea) between 1 and 1000),
+  created_at timestamptz not null default now()
+);
+
+alter table feedback enable row level security;
+
+create policy "Anyone can submit feedback"
+  on feedback for insert
+  with check (char_length(idea) > 0);
+
+create policy "Anyone can read feedback"
+  on feedback for select
+  using (true);
+```
+
+In tegenstelling tot `cloud_saves` is dit **geen** per-gebruiker-beveiligde tabel —
+iedereen (ook zonder in te loggen, via de anon key) kan feedback toevoegen én de hele
+lijst lezen. Dat is bewust: feedback geven moet laagdrempelig zijn (geen account
+nodig), en het idee is een gedeeld ideeënbord zoals in het originele prototype. Let
+op: de anon key is publiek (zit in de app), dus iedereen die dat weet kan in theorie
+rechtstreeks (buiten de app om) naar deze tabel schrijven — voor een klein
+fan-gids-project is dat een acceptabel risico, maar het is geen spamfilter/moderatie.
+
 ## 4. App koppelen
 
 Project Settings → API, en kopieer:
@@ -71,3 +104,7 @@ Er is geen automatische/achtergrond-sync — de gebruiker moet zelf op "Nu
 back-uppen" / "Herstellen vanaf cloud" tikken. Dat kan later uitgebreid worden
 (bv. automatisch back-uppen bij het sluiten van de app) zodra dit basisstuk
 getest is.
+
+- **Feedback**: iedereen kan zonder in te loggen een idee versturen (naam optioneel)
+  en ziet de laatst toegevoegde ideeën van alle gebruikers — geen aparte login nodig,
+  werkt zodra de `feedback`-tabel hierboven is aangemaakt.

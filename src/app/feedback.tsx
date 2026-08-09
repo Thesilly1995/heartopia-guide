@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useMemo, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -6,20 +5,22 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { DisclaimerBox } from '@/components/heartopia/disclaimer-box';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
+import { isSupabaseConfigured, supabase } from '@/constants/supabase';
 import { useLanguage } from '@/hooks/use-language';
-
-const STORAGE_KEY = 'heartopia:feedback:lijst';
 
 const STRINGS = {
   nl: {
     title: 'Feedback',
     subtitle: 'Deel je ideeën voor de gids',
-    disclaimer: 'Deze feedback wordt lokaal op dit toestel opgeslagen — alleen jij ziet deze lijst.',
+    disclaimer: 'Deze feedback wordt gedeeld — iedereen die de app opent kan de lijst zien, geen account nodig.',
+    notConfigured: 'Feedback is nog niet beschikbaar — de backend wordt nog opgezet.',
     namePlaceholder: 'Je naam (optioneel)',
     ideaPlaceholder: 'Wat wil je toevoegen of veranderd zien?',
-    saving: 'Bezig met opslaan...',
+    saving: 'Bezig met versturen...',
     done: 'Bedankt! ✓',
     submit: 'Versturen',
+    error: 'Versturen mislukt — probeer het later opnieuw.',
+    loadError: 'Laden mislukt — probeer het later opnieuw.',
     recent: 'Eerder toegevoegde ideeën',
     empty: 'Nog geen feedback — voeg de eerste toe!',
     anonymous: 'Anoniem',
@@ -27,12 +28,15 @@ const STRINGS = {
   en: {
     title: 'Feedback',
     subtitle: 'Share your ideas for the guide',
-    disclaimer: 'This feedback is stored locally on this device — only you see this list.',
+    disclaimer: 'This feedback is shared — everyone who opens the app can see the list, no account needed.',
+    notConfigured: 'Feedback is not available yet — the backend is still being set up.',
     namePlaceholder: 'Your name (optional)',
     ideaPlaceholder: 'What would you like to add or change?',
-    saving: 'Saving...',
+    saving: 'Submitting...',
     done: 'Thanks! ✓',
     submit: 'Submit',
+    error: 'Submitting failed — please try again later.',
+    loadError: 'Loading failed — please try again later.',
     recent: 'Previously added ideas',
     empty: 'No feedback yet — add the first one!',
     anonymous: 'Anonymous',
@@ -40,6 +44,7 @@ const STRINGS = {
 } as const;
 
 interface FeedbackEntry {
+  id: string;
   name: string;
   idea: string;
   date: string;
@@ -54,45 +59,68 @@ export default function FeedbackScreen() {
   const [idea, setIdea] = useState('');
   const [entries, setEntries] = useState<FeedbackEntry[]>([]);
   const [status, setStatus] = useState<'saving' | 'done' | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const loadEntries = async () => {
-    try {
-      const raw = await AsyncStorage.getItem(STORAGE_KEY);
-      const list: FeedbackEntry[] = raw ? JSON.parse(raw) : [];
-      setEntries(list.slice().reverse());
-    } catch {
-      setEntries([]);
+    const { data, error: fetchError } = await supabase
+      .from('feedback')
+      .select('id, name, idea, created_at')
+      .order('created_at', { ascending: false })
+      .limit(50);
+    if (fetchError) {
+      setError(s.loadError);
+      return;
     }
+    setError(null);
+    setEntries(
+      (data ?? []).map((row) => ({
+        id: row.id,
+        name: row.name?.trim() || s.anonymous,
+        idea: row.idea,
+        date: String(row.created_at).slice(0, 10),
+      }))
+    );
   };
 
   useEffect(() => {
-    loadEntries();
-  }, []);
+    if (isSupabaseConfigured) loadEntries();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [language]);
 
   const submit = async () => {
     if (!idea.trim()) return;
     setStatus('saving');
-    try {
-      const raw = await AsyncStorage.getItem(STORAGE_KEY);
-      const list: FeedbackEntry[] = raw ? JSON.parse(raw) : [];
-      list.push({ name: name.trim() || s.anonymous, idea: idea.trim(), date: new Date().toISOString().slice(0, 10) });
-      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-      setIdea('');
-      setName('');
-      setStatus('done');
-      await loadEntries();
-      setTimeout(() => setStatus(null), 2000);
-    } catch {
+    setError(null);
+    const { error: insertError } = await supabase.from('feedback').insert({ name: name.trim() || null, idea: idea.trim() });
+    if (insertError) {
       setStatus(null);
+      setError(s.error);
+      return;
     }
+    setIdea('');
+    setName('');
+    setStatus('done');
+    await loadEntries();
+    setTimeout(() => setStatus(null), 2000);
   };
+
+  if (!isSupabaseConfigured) {
+    return (
+      <SafeAreaView style={styles.safeArea} edges={['top']}>
+        <ScreenHeader gradient={['#6EC6E8', '#B78CD8']} icon="💡" title={s.title} subtitle={s.subtitle} />
+        <View style={styles.centerContent}>
+          <Text style={styles.centerText}>{s.notConfigured}</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <ScreenHeader gradient={['#6EC6E8', '#B78CD8']} icon="💡" title={s.title} subtitle={s.subtitle} />
       <FlatList
         data={entries}
-        keyExtractor={(_, i) => String(i)}
+        keyExtractor={(item) => item.id}
         contentContainerStyle={styles.listContent}
         ListHeaderComponent={
           <View style={{ gap: 10, marginBottom: 10 }}>
@@ -104,6 +132,7 @@ export default function FeedbackScreen() {
                 onChangeText={setName}
                 placeholder={s.namePlaceholder}
                 placeholderTextColor={colors.forestSoft}
+                maxLength={100}
                 style={styles.input}
               />
               <TextInput
@@ -113,8 +142,10 @@ export default function FeedbackScreen() {
                 placeholderTextColor={colors.forestSoft}
                 multiline
                 numberOfLines={4}
+                maxLength={1000}
                 style={[styles.input, styles.textarea]}
               />
+              {error && <Text style={styles.errorText}>{error}</Text>}
               <Pressable
                 style={[styles.submitButton, !idea.trim() && styles.submitButtonDisabled]}
                 disabled={!idea.trim() || status === 'saving'}
@@ -145,6 +176,8 @@ export default function FeedbackScreen() {
 function makeStyles(c: ThemeColors) {
   return StyleSheet.create({
     safeArea: { flex: 1, backgroundColor: c.bg },
+    centerContent: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32 },
+    centerText: { fontSize: 13, color: c.forestSoft, textAlign: 'center', lineHeight: 19 },
     listContent: { padding: 16 },
     form: { backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.line, padding: 14, gap: 8 },
     input: { borderWidth: 1, borderColor: c.line, borderRadius: 12, paddingHorizontal: 12, paddingVertical: 8, fontSize: 14, color: c.forest },
@@ -152,6 +185,7 @@ function makeStyles(c: ThemeColors) {
     submitButton: { backgroundColor: c.coral, borderRadius: 12, paddingVertical: 10, alignItems: 'center' },
     submitButtonDisabled: { backgroundColor: c.line },
     submitText: { color: '#FFFFFF', fontWeight: '700', fontSize: 14 },
+    errorText: { fontSize: 12, color: c.coralDark },
     recentLabel: { fontSize: 12, fontWeight: '700', color: c.forest, paddingHorizontal: 2 },
     emptyText: { fontSize: 12, color: c.forestSoft, paddingHorizontal: 2 },
     entryCard: { backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.line, padding: 12, marginBottom: 10 },
