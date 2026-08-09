@@ -7,7 +7,10 @@ export interface WeekForecastEntry {
   date: string;
   kinds: WeekForecastKind[];
   label: string;
-  emoji: string;
+  /** Eén emoji per kind, apart te renderen in eigen <Text>-elementen — samen in
+   *  één tekst-string zetten liet op sommige Android-toestellen de tweede emoji
+   *  onzichtbaar worden (glyph-shaping-eigenaardigheid bij aaneengesloten emoji). */
+  emoji: string[];
   /** "Vandaag" voor de dag van vandaag, anders de weekdagnaam. */
   dayLabel: string;
   /** Altijd de weekdagnaam, ook voor vandaag (bv. "Dinsdag") — voor plekken waar "Vandaag" niet duidelijk genoeg is. */
@@ -81,11 +84,7 @@ export function useWeekForecast(): WeekForecastEntry[] {
           date: entry.date,
           kinds,
           label: kinds.map((k) => LABELS[language][k]).join(' + '),
-          // Spatie tussen iconen i.p.v. direct aan elkaar plakken — zonder scheiding
-          // bleek een tweede emoji (bv. ☄️ naast 😎) op sommige Android-toestellen niet
-          // zichtbaar te zijn, waarschijnlijk een glyph-clipping-eigenaardigheid bij
-          // direct aaneengesloten emoji.
-          emoji: kinds.map((k) => EMOJI[k]).join(' '),
+          emoji: kinds.map((k) => EMOJI[k]),
           dayLabel: isToday ? TODAY_LABEL[language] : weekday,
           weekdayLabel: weekday,
         };

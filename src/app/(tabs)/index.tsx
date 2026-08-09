@@ -143,7 +143,11 @@ export default function HomeScreen() {
               <View style={styles.forecastHeaderRight}>
                 {!forecastExpanded && (
                   <View style={styles.forecastPreview}>
-                    <Text style={styles.forecastIcon}>{weekForecast[0].emoji}</Text>
+                    <View style={styles.forecastIconRow}>
+                      {weekForecast[0].emoji.map((icon, i) => (
+                        <Text key={i} style={styles.forecastIcon}>{icon}</Text>
+                      ))}
+                    </View>
                     <Text style={styles.forecastDay}>{weekForecast[0].weekdayLabel}</Text>
                   </View>
                 )}
@@ -153,7 +157,11 @@ export default function HomeScreen() {
             {forecastExpanded &&
               weekForecast.map((entry) => (
                 <View key={entry.date} style={styles.forecastRow}>
-                  <Text style={styles.forecastIcon}>{entry.emoji}</Text>
+                  <View style={styles.forecastIconRow}>
+                    {entry.emoji.map((icon, i) => (
+                      <Text key={i} style={styles.forecastIcon}>{icon}</Text>
+                    ))}
+                  </View>
                   <Text style={styles.forecastDay}>{entry.dayLabel}</Text>
                 </View>
               ))}
@@ -300,6 +308,7 @@ function makeStyles(c: ThemeColors) {
     forecastPreview: { flexDirection: 'row', alignItems: 'center', gap: 6 },
     forecastTitle: { color: c.forestSoft, fontSize: 11, fontWeight: '700', textTransform: 'uppercase' },
     forecastRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+    forecastIconRow: { flexDirection: 'row', alignItems: 'center', gap: 4 },
     forecastIcon: { fontSize: 16 },
     forecastDay: { color: c.forest, fontSize: 13, fontWeight: '700' },
     plotsCard: {
