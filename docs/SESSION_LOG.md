@@ -2,6 +2,21 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-09 (deel 27) — Kaart-coördinaten-tool gebouwd (precisie-probleem uit deel 26)
+
+Gebruiker meldde dat er "veel bubbels verkeerd" stonden na de met-het-oog-geschatte coördinaten uit deel 26, en vroeg om een preciezer hulpmiddel. **Ontdekking**: de twee bubbel-screenshots van deel 26 bleken niet als bestand toegankelijk (`/root/.claude/uploads/<session-scratchpad-id>/` bevatte wel andere eerder-in-de-sessie geplakte afbeeldingen, maar niet die twee) — dus geen pixel-exacte hercontrole van deel 26 zelf mogelijk vanuit deze sessie.
+
+**Oplossing**: `docs/coordinate-picker-tool.html` — losstaande, puur client-side tool (geen dependencies, geen netwerkverkeer): afbeelding uploaden/slepen/plakken (Ctrl+V), op elke pin klikken (percentage wordt berekend relatief aan het canvas-element, dus schermgrootte-onafhankelijk correct), optioneel per punt een omschrijving typen, en de resulterende array direct kopiëren in het `remote-content.json`-`spots`-formaat (`num`/`x`/`y`/`underwater`/`descriptionNl`/`descriptionEn`). Gebruiker kan dit voortaan zelf gebruiken (ook zonder de screenshot naar Claude te hoeven sturen) voor bubbels, regenboog- en meteorenregen-locaties. Getest met Playwright (afbeelding laden, meerdere punten klikken/verwijderen/omschrijving bewerken — JSON klopt in alle gevallen). Gepubliceerd als Artifact: https://claude.ai/code/artifact/bd5dc40e-cdf1-4f02-a0eb-f2b98cf7c228
+
+### Nog open
+
+- De bubbel-coördinaten uit deel 26 staan er nog steeds met de (mogelijk onnauwkeurige) met-het-oog-schatting in — gebruiker kan de nieuwe tool gebruiken om ze te herzien, of gewoon wachten tot de volgende zaterdag-refresh.
+- Overige punten uit eerdere delen blijven staan (Play Store-publicatie hangt op Google Play Console-verificatie).
+
+### Repo-status
+
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-09 (deel 26) — Bubbels-locaties naar remote-content verplaatst + zaterdag-routine
 
 Gebruiker stuurde twee screenshots (Chinese community-kaart-app "心动小镇"/甜甜包) met de roze-bubbels-locaties voor 8-14 augustus: hoofdeiland-kaart (1-15) en Whalefall Canyon-kaart (16-19). Bubbels-locaties stonden tot nu toe volledig hardcoded in de app (één vaste, inmiddels verouderde snapshot) — de disclaimer zei letterlijk "vraag het in de chat", wat voor echte eindgebruikers zonder chat-toegang niet werkt. Zelfde soort upgrade als eerder bij rainbow/meteor-spots en de plot-kalender: nu ook via `remote-content.json` bijwerkbaar.
