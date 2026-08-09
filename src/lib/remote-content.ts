@@ -21,6 +21,15 @@ export interface RemoteDailyPlots {
   fluoritePlotEn: string;
 }
 
+export interface RemoteDailyPlotDay {
+  /** Kalenderdatum "YYYY-MM-DD" (lokale speldatum). */
+  date: string;
+  oakPlotNl: string;
+  oakPlotEn: string;
+  fluoritePlotNl: string;
+  fluoritePlotEn: string;
+}
+
 export interface RemoteEventSighting {
   nameNl: string;
   nameEn: string;
@@ -73,6 +82,8 @@ export interface RemoteContentPayload {
   rainbowSpots?: RemoteMapSpot[];
   meteorSpots?: RemoteMapSpot[];
   dailyPlots?: RemoteDailyPlots;
+  /** Meerdaagse plot-kalender (bv. weken vooruit uit een in-game-kalenderafbeelding) — heeft voorrang op `dailyPlots` als er een entry voor vandaag in staat. */
+  dailyPlotsCalendar?: RemoteDailyPlotDay[];
   event?: RemoteEventOverride;
   weather?: RemoteWeather;
   /**

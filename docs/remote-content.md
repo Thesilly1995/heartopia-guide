@@ -49,12 +49,11 @@ dat specifieke onderdeel.
   "meteorSpots": [
     { "num": 1, "x": 34, "y": 19, "descriptionNl": "Noordwestelijk woestijngebied", "descriptionEn": "Northwest desert area" }
   ],
-  "dailyPlots": {
-    "oakPlotNl": "Plot 7",
-    "oakPlotEn": "Plot 7",
-    "fluoritePlotNl": "Plot 2",
-    "fluoritePlotEn": "Plot 2"
-  },
+  "dailyPlotsCalendar": [
+    { "date": "2026-08-09", "oakPlotNl": "Plot 6", "oakPlotEn": "Plot 6", "fluoritePlotNl": "Plot 11", "fluoritePlotEn": "Plot 11" },
+    { "date": "2026-08-10", "oakPlotNl": "🌲 Bos", "oakPlotEn": "🌲 Forest", "fluoritePlotNl": "Plot 7", "fluoritePlotEn": "Plot 7" },
+    { "date": "2026-08-29", "oakPlotNl": "Plot 12", "oakPlotEn": "Plot 12", "fluoritePlotNl": "🏛️ Ruïne", "fluoritePlotEn": "🏛️ Ruins" }
+  ],
   "event": {
     "nameNl": "Call of Whales",
     "nameEn": "Call of Whales",
@@ -92,8 +91,18 @@ dat specifieke onderdeel.
   (`assets/images/maps/island-map.jpg`), zelfde systeem als de
   bestaande Bubbels-kaart. Laat de array leeg (`[]`) of weg als de
   gebeurtenis niet actief is.
-- **`dailyPlots`**: de plot-naam zoals die in-game getoond wordt (bv.
-  `"Plot 7"`). Vaak identiek in NL/EN omdat het plot-nummers zijn.
+- **`dailyPlotsCalendar`**: één entry per kalenderdag (`date` als
+  `"YYYY-MM-DD"`) met de Zwervende Eik-plot en Fluoriet-plot van die
+  dag — meestal `"Plot <nummer>"` (vaak identiek in NL/EN omdat het
+  plot-nummers zijn). Op dagen dat de eik/fluoriet niet op een plot
+  staat (in-game-kalender toont dan een locatienaam i.p.v. een
+  nummer): gebruik `"🌲 Bos"`/`"🌲 Forest"` voor de eik, `"🏛️ Ruïne"`/`"🏛️ Ruins"`
+  voor de fluoriet. Werkt goed vooruit-ingevuld (bv. een hele maand in
+  één keer uit een in-game-kalenderafbeelding) — de app zoekt zelf de
+  entry voor vandaag op, dagen buiten bereik tonen gewoon "onbekend".
+  Het oudere `dailyPlots`-veld (één vaste waarde, geen datum) wordt nog
+  ondersteund als terugval-formaat maar is achterhaald zodra deze
+  kalender een entry voor vandaag heeft.
 - **`event`**: een volledige override van het "Huidig Event"-scherm.
   Als dit veld ontbreekt, blijft de bestaande gebundelde Call of
   Whales-content (zoals nu al in de app zit) getoond worden — dit
