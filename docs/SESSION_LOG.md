@@ -2,6 +2,29 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-09 (deel 21) — Development/preview-build eindelijk gelukt + weekweer bijgewerkt
+
+**Bevestigd door gebruiker: de `preview`-build is geslaagd en de `.apk` staat op zijn telefoon.** Dit sluit de build-saga uit deel 17-20 af (Expo Go werkte niet meer door de echte AdMob-native-module → Gradle/Kotlin-versiebotsing met Google's Play Services Ads → uiteindelijk opgelost door `react-native-google-mobile-ads` te pinnen op exact `16.0.0`/`play-services-ads 24.6.0`, zie deel 20 voor de onderbouwing). **Nog niet apart bevestigd: de EXPO_TOKEN-login-stap moest een tweede keer herhaald worden** (nieuw terminalvenster = env var weg) — gebruiker gewezen op `setx EXPO_TOKEN "..."` als permanente oplossing voor volgende keren, i.p.v. steeds opnieuw `$env:EXPO_TOKEN` per sessie.
+
+### Weekweer (9-16 augustus) + nieuwe conditie "hittegolf"
+
+Wekelijkse HeartoCast-reminder (routine uit deel 12) vuurde. Kon de site niet automatisch screenshotten (`hearto.ixtj.dev` blokkeert headless/geautomatiseerd browserverkeer — curl komt er wel doorheen met een browser-UA, maar Chromium via Playwright kreeg steeds `ERR_CONNECTION_RESET`, ook met proxy/CA correct ingesteld; waarschijnlijk TLS-fingerprint-gebaseerde bot-detectie op de site zelf). Gebruiker gaf de week in plaats daarvan door als tekst, en vroeg om een nieuwe conditie "hittegolf" (🌞🕶️-idee, Unicode heeft geen zon+zonnebril-combi dus 😎 gebruikt) — met woensdag zowel hittegolf als meteorenregen tegelijk, wat het bestaande schema (één `kind` per dag) niet kon uitdrukken.
+
+- `src/lib/remote-content.ts`: `RemoteWeekForecastDay.kind` (enkelvoud) → `kinds` (array). Nieuwe `WeekForecastKind`-waarde `'heatwave'`.
+- `src/data/week-forecast.ts`: emoji/label worden nu samengesteld uit alle `kinds` van een dag (join), i.p.v. één-op-één opzoeken.
+- `docs/remote-content.md`: schema-doc bijgewerkt naar het `kinds`-array-formaat, met voorbeeld van een dag met twee condities.
+- `remote-content.json`: nieuwe week 9-16 augustus; oude 7/8 augustus-entries (voorbij) verwijderd.
+- **Testkanttekening**: kon de live-fetch niet zichtbaar in de browser-preview bevestigen — de proxy-laag in deze sandbox is te traag voor de interne fetch-timeout van de app (`ERR_ABORTED`), dus de app viel terug op "geen data" i.p.v. te crashen (correct, veilig gedrag, geen bug). In plaats daarvan de exacte hook-logica (filter/sort/map) in een los Node-scriptje tegen de echte gepushte `remote-content.json` gedraaid — output klopte precies (incl. "😎☄️ Hittegolf + Meteorenregen" op woensdag).
+
+### Nog open
+
+- Gebruiker gaat nu de geïnstalleerde testversie op zijn telefoon proberen (eerste keer sinds de AdMob-integratie dat dit weer kan) — nog geen feedback daarover.
+- Overige punten uit eerdere delen blijven staan: echte AdMob-ID's invullen i.p.v. Google's testwaarden (vereist weer een nieuwe build zodra dat gebeurt), Google Play Console-verificatie, store-listing, pushmeldingen-backend.
+
+### Repo-status
+
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-08 (deel 20) — Kotlin-versie-fix bleek zelf kapot, AdMob-bibliotheek gedowngraded als echte oplossing
 
 **Vervolg op deel 19.** Twee git-sync-issues onderweg, zelfde categorie als eerder: (1) gebruiker had de Kotlin-fix nog niet gepulld voor de eerste hertest (opgelost met opnieuw `git pull`, ditmaal zonder file-conflict), (2) een `app.json`-conflict tussen de lokale EAS-`projectId` (die `eas build` er zelf in had gezet) en mijn gepushte wijziging — opgelost met `git stash` → `git pull` → `git stash pop` (auto-merge, geen conflict) i.p.v. de eerdere blunte "gooi lokale wijzigingen weg"-aanpak, omdat de projectId ditmaal wél bewaard moest blijven. Project-ID gecommit/gepusht door gebruiker.
