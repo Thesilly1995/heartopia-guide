@@ -2,6 +2,31 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-10 (deel 29) — AdMob-voorbereiding, Whalefall-coördinaten afgesloten, Data Safety-navigatie geholpen
+
+**Uitgangspunt:** vervolg op deel 28, nieuwe sessie (deze zat oorspronkelijk in het `website-1`-project, `heartopia-guide` toegevoegd en overgeschakeld). Terwijl gebruiker wacht op de production-build (in de wachtrij bij EAS — dat is normaal gedrag op het gratis plan, geen herhaling van het vastloop-probleem uit deel 28).
+
+**Whalefall Canyon-bubbelcoördinaten (16-19)**: gebruiker bevestigde expliciet dat deze **niet** aangepast hoeven te worden — het open punt uit deel 28 is hiermee afgesloten, geen actie nodig.
+
+**Google Play Console-navigatie**: gebruiker zocht het Data Safety-formulier. "Beveiligd met Play" bleek een ander onderdeel te zijn (Play Integrity/apparaatcontroles, niet vereist voor een klein fan-project — advies: op de standaardoptie "Geen integriteitscheck" laten staan). Doorverwezen naar Publicatieoverzicht → "Naar het dashboard"-link voor de volledige publicatie-checklist (Store-vermelding, Contentclassificatie, Doelgroep, Gegevensveiligheid). Nog niet bevestigd dat gebruiker het formulier daadwerkelijk gevonden heeft.
+
+**AdMob-voorbereiding** (code-kant, geen echte ID's — die moet gebruiker zelf in de AdMob-console aanmaken):
+- `src/constants/ads.ts`: `PRODUCTION_BANNER_AD_UNIT_ID.ios` mag nu `null` blijven (i.p.v. verplicht ingevuld) — `getBannerAdUnitId()` valt per-platform terug op de test-ID als er geen productie-ID is. Zo hoeft alleen Android ingevuld te worden zolang er geen Apple Developer-account is (bewust uitgesteld, zie deel 13), zonder dat de code daarop hoeft te wachten.
+- `docs/admob-setup.md` (nieuw): stap-voor-stap voor gebruiker — app + banner-advertentie-eenheid aanmaken in AdMob, precies welke twee plekken (`app.json` `androidAppId` + `ads.ts` `android`) de resulterende ID's moeten krijgen, waarom daarna een nieuwe build nodig is, en een waarschuwing over "invalid traffic" (testapparaat toevoegen i.p.v. zelf op de echte advertentie klikken/kijken tijdens testen).
+
+### Nog open
+
+- Bevestigen of de production-build (nog in de wachtrij bij begin van deze sessie) doorloopt.
+- Zodra build slaagt: `.aab` uploaden naar Play Console Internal Testing.
+- Data Safety-formulier: gebruiker moet nog bevestigen dat het gevonden is en invullen (tabel met te declareren data-types stond al klaar vanuit deel 28/eerdere sessie, gebaseerd op `docs/privacy-policy.html`).
+- AdMob: gebruiker moet zelf `docs/admob-setup.md` doorlopen (account/app/ad-unit aanmaken in de AdMob-console) — code is klaar om de ID's te ontvangen.
+- Home/Bubbels store-listing-screenshots: gebruiker moet die zelf op een echt toestel schieten.
+- Overige punten uit deel 28 blijven staan: pushmeldingen-backend.
+
+### Repo-status
+
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-09/10 (deel 28) — Bubbel-kaart-mismatch gevonden en gefixt, Play Store-listing voorbereid, Google Play Console-verificatie binnen, production-build-gedoe
 
 ### Bubbels: community-kaart-crop kwam niet overeen met de app-kaart
