@@ -2,6 +2,44 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-09/10 (deel 28) — Bubbel-kaart-mismatch gevonden en gefixt, Play Store-listing voorbereid, Google Play Console-verificatie binnen, production-build-gedoe
+
+### Bubbels: community-kaart-crop kwam niet overeen met de app-kaart
+
+Na deel 27 (coordinate-picker-tool) bleek bij het overleggen van de twee kaarten dat de geplaatste bubbel-pinnetjes in de app niet klopten. **Oorzaak gevonden**: de community-referentiekaart (甜甜包/心动小镇-screenshots) en de kaart die de app zelf gebruikt (`assets/images/maps/island-map.jpg`) hebben een **andere crop/framing** — de app-kaart zoomt strakker in op het eiland (minder water eromheen) dan de community-kaart. Dezelfde x/y-percentages kwamen daardoor niet overeen tussen de twee afbeeldingen.
+
+**Fix**: `island-map.jpg` en `whalefall-map.jpg` (de daadwerkelijke app-assets) rechtstreeks naar gebruiker gestuurd, zodat die de coordinate-picker-tool (deel 27) opnieuw kon gebruiken tegen de échte app-kaart i.p.v. de community-screenshot, met de genummerde community-kaart als visuele referentie ernaast. Resultaat: hoofdeiland (1-15) coördinaten in `remote-content.json` twee keer gecorrigeerd (eerst tegen community-kaart — bleek fout — daarna tegen de echte app-kaart — door gebruiker bevestigd). Whalefall Canyon (16-19) hield gebruiker de oorspronkelijke (deel 26) schatting aan, expliciet als "in orde" bevestigd ondanks dezelfde onderliggende crop-risico's — dus die zijn **niet** herverifieerd tegen de echte app-kaart.
+
+**Les voor toekomstige kaart-locatie-updates (rainbow/meteor/bubbels)**: gebruik altijd de daadwerkelijke app-kaartafbeelding (`assets/images/maps/*.jpg`) als achtergrond in de coordinate-picker-tool, nooit een community-screenshot direct — ook al lijkt de framing op het oog vergelijkbaar.
+
+### Play Store store-listing voorbereid
+
+- `docs/play-store-listing.md` (nieuw): app-naam, korte + volledige beschrijving in NL en EN, klaar om te kopiëren naar Play Console → Store presence → Main store listing. Karakterlimieten geverifieerd (naam ≤30, korte beschrijving ≤80).
+- Screenshots gegenereerd via `expo start --web` + Playwright (412×915 viewport, phone-formaat): Vissen (uitgeklapte kaart), Badges (echte spelicoontjes), Missies — alle drie direct bruikbaar. Home en Bubbels hadden een kanttekening: deze sandbox kon geen live remote-content ophalen (zelfde terugkerende proxy/timeout-beperking als eerdere delen), dus die screenshots tonen fallback-tekst ("Onbekend — vraag het na" / "verouderde voorbeelddata") i.p.v. echte data. Gebruiker geadviseerd die twee zelf op eigen toestel te schieten.
+- Web-only "Expo Starter"-navbar (bekend scaffold-artefact, zie deel 6) weggecrop't uit de Home-screenshot.
+
+### Google Play Console-verificatie binnen
+
+Gebruiker ontving bevestiging: identiteitsverificatie geslaagd. App aangemaakt in Play Console onder de naam "Heartopedia" met pakketnaam `com.thesilly1995.heartopiagids`. Gebruiker is nu bezig met de Internal Testing-track (app-bundle uploaden).
+
+### Production-build: eerste poging liep vast, tweede poging gestart
+
+Eerste `eas build --profile production --platform android` bleef **1u23m hangen op "Bouw in uitvoering"** (normaal 10-15 min totaal) — geen foutmelding, gewoon niet verder komend. Tegelijk gaf `expo doctor` patch-versie-mismatches (`expo` 57.0.11→verwacht 57.0.12, plus `expo-router`, `expo-constants`, `expo-splash-screen`, `@expo/ui`). Niet zeker of dit de oorzaak van het vasthangen was, maar bijgewerkt naar de laatste patch-versies (met `~`-ranges, zelfde conventie als eerder) omdat het sowieso schoner is en geen kwaad kan. Gebruiker heeft de vastgelopen build geannuleerd en een nieuwe gestart na `git pull && npm install` — **uitkomst nog niet bekend bij einde van deze sessie.**
+
+### Nog open
+
+- **Bevestigen of de nieuwe production-build wel binnen normale tijd doorloopt** — als 'ie weer vastloopt, is de patch-versie-fix niet de (enige) oorzaak en moet er dieper gezocht worden (mogelijk EAS-infrastructuurprobleem, navraag bij Expo-support overwegen).
+- Zodra de build slaagt: `.aab` uploaden naar Play Console Internal Testing (gebruiker was daar al mee bezig).
+- Whalefall Canyon (16-19) bubbel-coördinaten zijn **niet** geverifieerd tegen de echte app-kaart — mogelijk alsnog de moeite waard om te doen zodra er weer bubbel-onderhoud is (volgende zaterdag).
+- Home/Bubbels store-listing-screenshots: gebruiker moet deze twee nog zelf vanaf een echt toestel schieten.
+- AdMob: nog steeds test-ID's — nu de app in Play Console staat, kan gebruiker de app aan AdMob toevoegen en echte ID's genereren (vereist daarna weer een nieuwe build).
+- Data Safety-formulier in Play Console nog invullen (info staat al klaar in `docs/privacy-policy.html`).
+- Overige punten uit eerdere delen (pushmeldingen-backend) blijven staan.
+
+### Repo-status
+
+Alles gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`. Geen openstaande lokale wijzigingen.
+
 ## 2026-08-09 (deel 27) — Kaart-coördinaten-tool gebouwd (precisie-probleem uit deel 26)
 
 Gebruiker meldde dat er "veel bubbels verkeerd" stonden na de met-het-oog-geschatte coördinaten uit deel 26, en vroeg om een preciezer hulpmiddel. **Ontdekking**: de twee bubbel-screenshots van deel 26 bleken niet als bestand toegankelijk (`/root/.claude/uploads/<session-scratchpad-id>/` bevatte wel andere eerder-in-de-sessie geplakte afbeeldingen, maar niet die twee) — dus geen pixel-exacte hercontrole van deel 26 zelf mogelijk vanuit deze sessie.
