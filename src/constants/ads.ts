@@ -10,7 +10,7 @@ import mobileAds, { TestIds } from 'react-native-google-mobile-ads';
  * een AdMob-account door "invalid traffic" laten blokkeren.
  */
 const PRODUCTION_BANNER_AD_UNIT_ID: { android: string | null; ios: string | null } = {
-  android: null,
+  android: 'ca-app-pub-4511788652457861/5234614952',
   ios: null,
 };
 
