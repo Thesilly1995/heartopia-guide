@@ -2,6 +2,27 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-11 (deel 31) — Nieuwe ideeën voor na de lancering, AdMob-ID's ingevuld
+
+**AdMob**: gebruiker maakte de banner-advertentie-eenheid aan. Echte App-ID (`ca-app-pub-4511788652457861~6547696624`) en banner-ad-unit-ID (`ca-app-pub-4511788652457861/5234614952`) ingevuld in `app.json` en `src/constants/ads.ts` (Android; iOS blijft test-ID). **Vereist een nieuwe EAS-build** om zichtbaar te worden — nog niet gedraaid, gebruiker wacht bewust op de uitslag van de lopende Play Console-review voordat de volgende build gestart wordt (kan dan meteen ook het nieuwe app-icoon meenemen).
+
+**Nieuw idee — Tips & tricks-tabblad in Premium** (expliciet **niet voor nu**, pas oppakken zodra de app volledig live/gepubliceerd is): gebruiker wil een los tabblad met tips & tricks toevoegen aan de Premium-sectie. Nog geen verdere invulling/inhoud besproken.
+
+**In-app review-prompt**: gebruiker vroeg of Google/Apple automatisch een "beoordeel deze app"-popup tonen. Antwoord: nee, dat moet zelf gebouwd worden via `expo-store-review` (roept Google's In-App Review API / Apple's StoreKit-equivalent aan), bewust op een logisch moment in de app (bv. na een paar sessies of een positieve actie zoals een badge behalen). Nog niet aanwezig in de codebase (gecheckt, geen `expo-store-review`/`requestReview`-referenties). Nog niet besloten of/wanneer dit gebouwd wordt.
+
+### Nog open
+
+- Uitslag Play Console-review afwachten (gebruiker meldt dit zelf, ik kan dit niet zelf volgen/gemeld krijgen).
+- Nieuwe production-build: neemt AdMob-ID's + nieuw app-icoon mee, bewust uitgesteld tot na de review-uitslag.
+- **Pushmeldingen-backend** — zie waarschuwing in deel 30, niet vergeten vóór productie.
+- **Premium/IAP**: RevenueCat-account staat, prijs €4,99 eenmalig vastgesteld, code/build nog te doen (samen met AdMob/pushmeldingen-batch).
+- **Nieuw, post-lancering**: Tips & tricks-tabblad in Premium (idee, nog niet uitgewerkt).
+- **Nieuw, nog te beslissen**: in-app review-prompt (`expo-store-review`) toevoegen of niet.
+
+### Repo-status
+
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-11 (deel 30) — Play Console-formulieren volledig doorlopen, nieuw app-icoon, screenshots, app ingediend voor review
 
 **Uitgangspunt:** vervolg op deel 29, zelfde sessie. Production-build kwam door de wachtrij (gratis EAS-plan, normaal gedrag — geen storing, bevestigd via status.expo.dev).
