@@ -2,6 +2,51 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-11 (deel 30) — Play Console-formulieren volledig doorlopen, nieuw app-icoon, screenshots, app ingediend voor review
+
+**Uitgangspunt:** vervolg op deel 29, zelfde sessie. Production-build kwam door de wachtrij (gratis EAS-plan, normaal gedrag — geen storing, bevestigd via status.expo.dev).
+
+**Play Console-formulieren, allemaal met gebruiker doorlopen:**
+- **Data Safety**: volledig ingevuld — e-mailadres/wachtwoord (verzameld, niet gedeeld), feedback-tekst (verzameld, niet gedeeld), app-voortgang (verzameld, niet gedeeld), advertentie-ID (verzameld ÉN gedeeld met Google AdMob, doel: advertenties).
+- **Doelgroep**: per ongeluk "kinderen" aangevinkt gehad (triggerde Gezinsbeleid-vereiste) — door gebruiker gecorrigeerd naar 13+.
+- **App access-verklaring**: "Ja" (Cloud Save vereist login) — test-account aangemaakt via Supabase Auth REST API (`playreviewer@heartopedia.app` / `HeartoReview2026!`), bevestigd werkend (signup + losse login-check beide 200).
+- **Financiële functies**: "Mijn app bevat geen financiële functies" (Premium/IAP bestaat nog niet echt, zie onder).
+- **Gezondheidsapps**: "Mijn app heeft geen gezondheidsfuncties".
+- **Contentclassificatie**: "Ja" op gebruikersinhoud delen (Feedback-scherm) + "Ja" op online-inhoud (Feedback + remote-content), "Nee" op alle moderatie/blokkeren/rapporteren-vragen (klopt met de code — geen van die features bestaat).
+- **Advertentie-ID-verklaring** (apart van Data Safety, sinds Android 13 verplicht): "Ja", doel "Advertenties of marketing".
+- **AI-items-verklaring**: "Items labelen als AI" gekozen — app-icoon en functieafbeelding zijn AI-gegenereerde illustratie, screenshots niet (zijn echte schermopnames).
+- **Categorie + tags**: "Amusement" (Entertainment), tags Encyclopedie + Boeken en referentie.
+- **Store-listing tekst (en-US)**: Engelse korte/volledige beschrijving uit `docs/play-store-listing.md` gekopieerd.
+
+**Nieuw app-icoon**: gebruiker liet een AI-gegenereerd personage (meisje met cowboyhoed en boek "Heartopedia") maken, bewust afwijkend van de officiële Heartopia-spelstijl op mijn advies (IP-overweging). **Belangrijke technische val**: het eerste "transparante" PNG dat gebruiker stuurde had geen echte alfa-transparantie — het schaakbordpatroon (transparantie-indicator) bleek als gewone grijze/witte pixels gebakken, niet als PNG-alfakanaal geëxporteerd (alfa was overal 255). Opgelost door het schaakbordpatroon programmatisch te herkennen (grijswaarde-detectie + connected-component vanaf de randen, met `scipy.ndimage.label`) en om te zetten naar echte transparantie — werkte goed, schone uitsnede met correcte silhouet-vorm geverifieerd. Verwerkt tot:
+- `assets/images/icon.png`, `android-icon-foreground.png`, `android-icon-monochrome.png` (gecommit) — **vereist een nieuwe EAS-build om zichtbaar te worden op een toestel**, zelfde caveat als AdMob-config-wijzigingen.
+- Functieafbeelding (1024×500, koraal-geel verloop met personage) — alleen store-listing-asset, geen repo-bestand nodig.
+- Play Store-icoon 512×512 — los bestand naar gebruiker gestuurd, geen repo-wijziging.
+
+**Screenshots**: `expo start --web` + Playwright (eigen script, `chromium@1194` uit `/opt/pw-browsers`, viewport 540×960 @2x → 1080×1920 output, voldoet aan zowel telefoon- als tablet-formaateisen). 5 schermen: Home (web-only "Expo Starter"-navbar programmatisch weggecrop't), Vissen, Badges, Missies, Bubbels. Home toont "Onbekend — vraag het na" (dagelijkse plots) en Bubbels toont "verouderde voorbeelddata" — beide de eerlijke fallback-tekst omdat deze sandbox geen live remote-content kan ophalen (bekende, terugkerende beperking, zie eerdere delen). Functioneel correct maar niet het mooiste plaatje; gebruiker nog niet teruggekomen of dit vervangen wordt door eigen live-toestel-screenshots.
+
+**App ingediend voor review** (gesloten testrelease, Alpha-track). Gebruiker vroeg naar doorlooptijd: geschat een paar uur tot ~7 dagen (nieuw ontwikkelaarsaccount, extra controle door Google is normaal). Melding komt per e-mail van Google Play.
+
+**AdMob**: gebruiker gevraagd of dit al kan vóór de review klaar is — bevestigd: **ja, kan nu al**, AdMob-app handmatig aanmaken (zonder Play Store-koppeling) is volledig onafhankelijk van de Play Console-reviewstatus.
+
+**Premium/IAP-status gecheckt** (`src/hooks/use-premium.tsx`): nog steeds **puur een lokale AsyncStorage-test-toggle** (`heartopia:premium:test`), geen echte betaalflow, geen RevenueCat/App Store/Play Billing-koppeling. Niet iets dat "al kan" met de testapp — vereist nog een hele IAP-integratie (zie deel 6/11 e.v. voor de aanbevolen RevenueCat-aanpak).
+
+### ⚠️ BELANGRIJK — niet vergeten vóór productie-publicatie
+
+Gebruiker vroeg expliciet om hier extra aan herinnerd te worden, anders wordt dit mogelijk vergeten: **pushmeldingen-backend** staat nog volledig open (zie eerdere delen voor de stappen: `expo-notifications` + Firebase-project/FCM + nieuwe EAS-build + trigger-routine). Bewust achteraan gepland (vereist toch weer een build, kan gecombineerd worden met de AdMob-ID-build), maar dit is de laatste keer dat we het er niet over hebben gehad voordat de app naar productie gaat — **volgende sessie die aan publicatie werkt: dit als checklist-item benoemen, niet stilzwijgend overslaan.**
+
+### Nog open
+
+- Uitslag van de ingediende gesloten-testrelease-review afwachten.
+- AdMob: gebruiker kan nu al de app/ad-unit aanmaken in de AdMob-console (`docs/admob-setup.md`), ID's invullen, nieuwe build.
+- **Pushmeldingen-backend — zie waarschuwing hierboven, niet vergeten vóór productie.**
+- Premium/IAP: nog volledig te bouwen (RevenueCat-integratie), momenteel alleen test-toggle.
+- Home/Bubbels-screenshots: eventueel vervangen door eigen live-toestel-versies (huidige tonen fallback-tekst, functioneel maar niet ideaal).
+
+### Repo-status
+
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-10 (deel 29) — AdMob-voorbereiding, Whalefall-coördinaten afgesloten, Data Safety-navigatie geholpen
 
 **Uitgangspunt:** vervolg op deel 28, nieuwe sessie (deze zat oorspronkelijk in het `website-1`-project, `heartopia-guide` toegevoegd en overgeschakeld). Terwijl gebruiker wacht op de production-build (in de wachtrij bij EAS — dat is normaal gedrag op het gratis plan, geen herhaling van het vastloop-probleem uit deel 28).
