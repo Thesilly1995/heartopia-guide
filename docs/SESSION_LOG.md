@@ -35,12 +35,20 @@ Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wa
 
 Gebruiker vroeg expliciet om hier extra aan herinnerd te worden, anders wordt dit mogelijk vergeten: **pushmeldingen-backend** staat nog volledig open (zie eerdere delen voor de stappen: `expo-notifications` + Firebase-project/FCM + nieuwe EAS-build + trigger-routine). Bewust achteraan gepland (vereist toch weer een build, kan gecombineerd worden met de AdMob-ID-build), maar dit is de laatste keer dat we het er niet over hebben gehad voordat de app naar productie gaat — **volgende sessie die aan publicatie werkt: dit als checklist-item benoemen, niet stilzwijgend overslaan.**
 
+### Premium/IAP: prijs bepaald, bouwen uitgesteld tot de build-batch
+
+Gebruiker vroeg of nu al met echte Premium/IAP begonnen kan worden, of beter wachten. Advies: **account-voorbereiding nu, code/build later** — RevenueCat vereist net als AdMob/pushmeldingen een nieuwe native module en dus een nieuwe EAS-build; logischer om dat te combineren met de toch al geplande AdMob-ID-build en pushmeldingen-build dan een vierde aparte build-ronde te starten. Play Console in-app-producten aanmaken kan ook, maar heeft meer zin ná de huidige review.
+
+**Prijsafspraak**: eenmalige aankoop (**geen abonnement**) — gebruiker opperde €5, geadviseerd **€4,99** (gangbare prijstemplate-conventie in Play Console, i.p.v. een rond bedrag). Netto na Google's 15%-fee (kleine-ontwikkelaar-tarief): ongeveer **€4,24 per verkoop** (vuistregelberekening, exacte bedrag kan iets afwijken afhankelijk van btw-afhandeling per land — Google treedt in de EU vaak op als merchant of record).
+
+Gebruiker gaat nu zelf een **RevenueCat-account aanmaken** (geen code/build-actie hiervoor nodig).
+
 ### Nog open
 
 - Uitslag van de ingediende gesloten-testrelease-review afwachten.
-- AdMob: gebruiker kan nu al de app/ad-unit aanmaken in de AdMob-console (`docs/admob-setup.md`), ID's invullen, nieuwe build.
+- AdMob: gebruiker kan nu al de app/ad-unit aanmaken in de AdMob-console (`docs/admob-setup.md`), ID's invullen.
 - **Pushmeldingen-backend — zie waarschuwing hierboven, niet vergeten vóór productie.**
-- Premium/IAP: nog volledig te bouwen (RevenueCat-integratie), momenteel alleen test-toggle.
+- **Premium/IAP**: RevenueCat-account wordt door gebruiker aangemaakt; prijs vastgesteld op €4,99 eenmalig. Code-integratie + Play Console in-app-product bewust **samen met AdMob-ID's en pushmeldingen in één toekomstige build-batch** oppakken, niet apart.
 - Home/Bubbels-screenshots: eventueel vervangen door eigen live-toestel-versies (huidige tonen fallback-tekst, functioneel maar niet ideaal).
 
 ### Repo-status
