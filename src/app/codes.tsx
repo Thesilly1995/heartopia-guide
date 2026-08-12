@@ -15,7 +15,7 @@ const STORAGE_KEY = 'heartopia:codes:ingevuld';
 const STRINGS = {
   nl: {
     title: 'Actieve Codes',
-    subtitle: 'Laatst gecontroleerd: 2 augustus 2026',
+    subtitle: 'Laatst gecontroleerd: 12 augustus 2026',
     disclaimer: 'Codes wijzigen regelmatig. Deze lijst is zo actueel als ons laatste onderzoek — vraag me gerust om ze opnieuw op te zoeken als je twijfelt.',
     copied: 'Gekopieerd!',
     copy: 'Kopiëren',
@@ -23,7 +23,7 @@ const STRINGS = {
   },
   en: {
     title: 'Active Codes',
-    subtitle: 'Last checked: Aug 2, 2026',
+    subtitle: 'Last checked: Aug 12, 2026',
     disclaimer: "Codes change regularly. This list is as current as our last research — feel free to ask me to look them up again if you're unsure.",
     copied: 'Copied!',
     copy: 'Copy',

@@ -17,12 +17,8 @@ interface CodeRaw {
 }
 
 const CODES_RAW: CodeRaw[] = [
-  { rewardNl: "30x Maanlichtkristallen, 10x Wensterren, en andere materialen", rewardEn: "30x Moonlight Crystals, 10x Wishing Stars, and other resources", expiresNl: "31 jul 2026 (mogelijk verlengd)", expiresEn: "Jul 31, 2026 (may be extended)", code: "halfyear180" },
-  { rewardNl: "40x Maanlichtkristallen, 20x Wensterren, en andere materialen", rewardEn: "40x Moonlight Crystals, 20x Wishing Stars, and other resources", expiresNl: "31 jul 2026 (mogelijk verlengd)", expiresEn: "Jul 31, 2026 (may be extended)", code: "Cherish180" },
-  { rewardNl: "100x Maanlichtkristallen", rewardEn: "100x Moonlight Crystals", expiresNl: "31 jul 2026 (mogelijk verlengd)", expiresEn: "Jul 31, 2026 (may be extended)", code: "180daysjoy" },
-  { rewardNl: "100x Maanlichtkristallen", rewardEn: "100x Moonlight Crystals", expiresNl: "31 jul 2026 (mogelijk verlengd)", expiresEn: "Jul 31, 2026 (may be extended)", code: "callofwhales0709" },
-  { rewardNl: "100x Maanlichtkristallen", rewardEn: "100x Moonlight Crystals", expiresNl: "31 jul 2026 (mogelijk verlengd)", expiresEn: "Jul 31, 2026 (may be extended)", code: "oceanguardians" },
   { rewardNl: "5x Kleurrijke Skyrocket Blauw, 5x Kleurrijke Sparkler Roze", rewardEn: "5x Colorful Skyrocket Blue, 5x Colorful Sparkler Pink", expiresNl: "Onbekend, recent toegevoegd", expiresEn: "Unknown, recently added", code: "2026summerlights" },
+  { rewardNl: "3x Wensterren, 1x Zwervende Eik Hout, 3x Koffiebonen", rewardEn: "3x Wishing Stars, 1x Roaming Oak Timber, 3x Coffee Beans", expiresNl: "Onbekend, recent toegevoegd", expiresEn: "Unknown, recently added", code: "p3m7r5q9k2" },
   { rewardNl: "3x Wensterren, 2x kleurstoffen, 1x Vlekkeloze fluoriet", rewardEn: "3x Wishing Stars, 2x Dyes, 1x Flawless Fluorite", expiresNl: "30 sep 2026, 17:59", expiresEn: "Sep 30, 2026, 17:59", code: "m9a3q7k2r5n4" },
   { rewardNl: "3x Wensterren, 2x kleurstoffen, 1x Vlekkeloze fluoriet", rewardEn: "3x Wishing Stars, 2x Dyes, 1x Flawless Fluorite", expiresNl: "30 sep 2026, 17:59", expiresEn: "Sep 30, 2026, 17:59", code: "p2k8n5r7q1a6" },
 ];
