@@ -48,8 +48,8 @@ export function useFlowers(): FlowerItem[] {
   return useMemo(
     () =>
       FLOWERS_RAW.map((r) => ({
-    name: language === 'en' ? r.nameEn : r.nameNl,
-    rarity: language === 'en' ? r.rarityEn : r.rarityNl,
+    name: r.nameEn,
+    rarity: r.rarityEn,
     growTime: language === 'en' ? r.growTimeEn : r.growTimeNl,
     level: r.level,
     rarityColorKey: r.rarityColorKey,

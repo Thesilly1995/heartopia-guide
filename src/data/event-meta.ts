@@ -23,13 +23,13 @@ export function useCurrentEventMeta(): CurrentEventMeta {
 
   if (remote) {
     return {
-      name: language === 'en' ? remote.nameEn : remote.nameNl,
+      name: remote.nameEn,
       dates: language === 'en' ? remote.datesEn : remote.datesNl,
       emoji: '🎉',
     };
   }
   return {
-    name: language === 'en' ? BUNDLED_EVENT.nameEn : BUNDLED_EVENT.nameNl,
+    name: BUNDLED_EVENT.nameEn,
     dates: language === 'en' ? BUNDLED_EVENT.datesEn : BUNDLED_EVENT.datesNl,
     emoji: BUNDLED_EVENT.emoji,
   };

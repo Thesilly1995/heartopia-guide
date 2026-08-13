@@ -128,10 +128,10 @@ export function useFish(): FishItem[] {
   return useMemo(
     () =>
       FISH_RAW.map((r) => ({
-    name: language === 'en' ? r.nameEn : r.nameNl,
-    rarity: language === 'en' ? r.rarityEn : r.rarityNl,
-    spot: language === 'en' ? r.spotEn : r.spotNl,
-    watertype: language === 'en' ? r.watertypeEn : r.watertypeNl,
+    name: r.nameEn,
+    rarity: r.rarityEn,
+    spot: r.spotEn,
+    watertype: r.watertypeEn,
     time: language === 'en' ? r.timeEn : r.timeNl,
     weather: language === 'en' ? r.weatherEn : r.weatherNl,
     level: r.level,

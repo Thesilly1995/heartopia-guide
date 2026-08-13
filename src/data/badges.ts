@@ -1,7 +1,5 @@
 import { useMemo } from 'react';
 
-import { useLanguage } from '@/hooks/use-language';
-
 export interface BadgeItem {
   name: string;
   emoji: string;
@@ -92,15 +90,14 @@ const BADGES_RAW: BadgeRaw[] = [
 ];
 
 export function useBadges(): BadgeItem[] {
-  const { language } = useLanguage();
   return useMemo(
     () =>
       BADGES_RAW.map((r) => ({
-    name: language === 'en' ? r.nameEn : r.nameNl,
+    name: r.nameEn,
     emoji: r.emoji,
     hidden: r.hidden,
     iconKey: r.iconKey,
       })),
-    [language]
+    []
   );
 }

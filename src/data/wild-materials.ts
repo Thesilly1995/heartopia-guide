@@ -1,7 +1,5 @@
 import { useMemo } from 'react';
 
-import { useLanguage } from '@/hooks/use-language';
-
 export interface ForagedItem {
   name: string;
   spot: string;
@@ -32,16 +30,15 @@ const WILD_MATERIALS_RAW: ForagedRaw[] = [
 ];
 
 export function useWildMaterials(): ForagedItem[] {
-  const { language } = useLanguage();
   return useMemo(
     () =>
       WILD_MATERIALS_RAW.map((r) => ({
-    name: language === 'en' ? r.nameEn : r.nameNl,
-    spot: language === 'en' ? r.spotEn : r.spotNl,
+    name: r.nameEn,
+    spot: r.spotEn,
     sellPrice: r.sellPrice,
     energy: r.energy,
     emoji: r.emoji,
       })),
-    [language]
+    []
   );
 }

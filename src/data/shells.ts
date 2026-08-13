@@ -1,7 +1,5 @@
 import { useMemo } from 'react';
 
-import { useLanguage } from '@/hooks/use-language';
-
 export interface ShellItem {
   name: string;
   level: number | null;
@@ -51,17 +49,16 @@ const SHELLS_RAW: ShellRaw[] = [
 ];
 
 export function useShells(): ShellItem[] {
-  const { language } = useLanguage();
   return useMemo(
     () =>
       SHELLS_RAW.map((r) => ({
-    name: language === 'en' ? r.nameEn : r.nameNl,
+    name: r.nameEn,
     level: r.level,
     gold: r.gold,
     tokens: r.tokens,
     time: r.time,
     emoji: r.emoji,
       })),
-    [language]
+    []
   );
 }

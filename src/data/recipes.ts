@@ -1,8 +1,6 @@
 import type { ColorKey } from '@/constants/heartopia-colors';
 import { useMemo } from 'react';
 
-import { useLanguage } from '@/hooks/use-language';
-
 export interface RecipeItem {
   name: string;
   level: number;
@@ -78,19 +76,18 @@ const RECIPES_RAW: RecipeRaw[] = [
 ];
 
 export function useRecipes(): RecipeItem[] {
-  const { language } = useLanguage();
   return useMemo(
     () =>
       RECIPES_RAW.map((r) => ({
-    name: language === 'en' ? r.nameEn : r.nameNl,
-    rarity: language === 'en' ? r.rarityEn : r.rarityNl,
-    tool: language === 'en' ? r.toolEn : r.toolNl,
-    ingredients: language === 'en' ? r.ingredientsEn : r.ingredientsNl,
+    name: r.nameEn,
+    rarity: r.rarityEn,
+    tool: r.toolEn,
+    ingredients: r.ingredientsEn,
     level: r.level,
     rarityColorKey: r.rarityColorKey,
     xp: r.xp,
     emoji: r.emoji,
       })),
-    [language]
+    []
   );
 }

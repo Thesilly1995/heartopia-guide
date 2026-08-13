@@ -38,8 +38,8 @@ export function useSnowSculptures(): SculptureItem[] {
   return useMemo(
     () =>
       SNOW_SCULPTURES_RAW.map((r) => ({
-    name: language === 'en' ? r.nameEn : r.nameNl,
-    rarity: language === 'en' ? r.rarityEn : r.rarityNl,
+    name: r.nameEn,
+    rarity: r.rarityEn,
     method: language === 'en' ? r.methodEn : r.methodNl,
     level: r.level,
     rarityColorKey: r.rarityColorKey,

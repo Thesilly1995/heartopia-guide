@@ -34,8 +34,8 @@ export function useEventFish(): EventSightingItem[] {
   return useMemo(
     () =>
       EVENT_FISH_RAW.map((r) => ({
-    name: language === 'en' ? r.nameEn : r.nameNl,
-    spot: language === 'en' ? r.spotEn : r.spotNl,
+    name: r.nameEn,
+    spot: r.spotEn,
     note: language === 'en' ? r.noteEn : r.noteNl,
     emoji: r.emoji,
       })),

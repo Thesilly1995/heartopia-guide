@@ -42,7 +42,7 @@ export function useCats(): CatItem[] {
   return useMemo(
     () =>
       CATS_RAW.map((r) => ({
-    name: language === 'en' ? r.nameEn : r.nameNl,
+    name: r.nameEn,
     ability: language === 'en' ? r.abilityEn : r.abilityNl,
     emoji: r.emoji,
       })),

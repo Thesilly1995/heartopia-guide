@@ -32,7 +32,7 @@ export function useDogs(): DogItem[] {
   return useMemo(
     () =>
       DOGS_RAW.map((r) => ({
-    name: language === 'en' ? r.nameEn : r.nameNl,
+    name: r.nameEn,
     size: language === 'en' ? r.sizeEn : r.sizeNl,
     ability: language === 'en' ? r.abilityEn : r.abilityNl,
     emoji: r.emoji,
