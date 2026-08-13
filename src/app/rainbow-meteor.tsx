@@ -3,7 +3,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { DisclaimerBox } from '@/components/heartopia/disclaimer-box';
 import { PinMap } from '@/components/heartopia/pin-map';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
@@ -21,10 +20,6 @@ const STRINGS = {
     subtitle: 'Boeketten & sterrenscherven per gebeurtenis',
     rainbowTab: '🌈 Rainbow',
     meteorTab: '☄️ Meteorenregen',
-    rainbowDisclaimer:
-      'De Rainbow-gebeurtenis duurt ~6 uur en de boeketten-locaties zijn steeds anders. Zodra hij actief is, kan je Claude vragen de actuele locaties op te zoeken/toe te voegen — die verschijnen dan hieronder.',
-    meteorDisclaimer:
-      'Meteorenregen start willekeurig na 20:00 servertijd en duurt ~6 uur. De ertsplekken zijn steeds anders. Zodra het actief is, kan je Claude vragen de actuele locaties op te zoeken/toe te voegen — die verschijnen dan hieronder.',
     emptyText: 'Niet actief op dit moment. Zodra dit weer gebeurt, komen de actuele locaties hier te staan.',
     resetProgress: 'Voortgang resetten',
   },
@@ -33,10 +28,6 @@ const STRINGS = {
     subtitle: 'Bouquets & star shards per event',
     rainbowTab: '🌈 Rainbow',
     meteorTab: '☄️ Meteor Shower',
-    rainbowDisclaimer:
-      'The Rainbow event lasts ~6 hours and the bouquet locations differ every time. Once it becomes active, you can ask Claude to look up/add the current locations — they will then appear below.',
-    meteorDisclaimer:
-      'Meteor Shower starts randomly after 20:00 server time and lasts ~6 hours. The ore spots differ every time. Once it becomes active, you can ask Claude to look up/add the current locations — they will then appear below.',
     emptyText: 'Not active right now. Once this happens again, the current locations will appear here.',
     resetProgress: 'Reset progress',
   },
@@ -106,8 +97,6 @@ export default function RainbowMeteorScreen() {
         onTabChange={(k) => setTab(k as 'rainbow' | 'meteor')}
       />
       <ScrollView contentContainerStyle={styles.content}>
-        <DisclaimerBox text={tab === 'rainbow' ? s.rainbowDisclaimer : s.meteorDisclaimer} warning />
-
         <PinMap
           source={ISLAND_MAP}
           aspectRatio={825 / 799}

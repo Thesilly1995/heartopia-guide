@@ -7,7 +7,7 @@ import { getBannerAdUnitId } from '@/constants/ads';
 import { BottomTabInset } from '@/constants/theme';
 import { usePremium } from '@/hooks/use-premium';
 
-const TAB_SCREEN_PATHS = new Set(['/', '/explore']);
+const TAB_SCREEN_PATHS = new Set(['/']);
 
 /**
  * Echte AdMob-banner voor iOS/Android (native module — werkt dus alleen in een
@@ -15,7 +15,7 @@ const TAB_SCREEN_PATHS = new Set(['/', '/explore']);
  * web-variant (mock-placeholder, AdMob heeft geen web-implementatie).
  * Verdwijnt zodra de (test-)premium-status aan staat.
  *
- * Op Home/Explore zit onderin ook de native tab-balk (`NativeTabs`, zie
+ * Op Home zit onderin ook de native tab-balk (`NativeTabs`, zie
  * app-tabs.tsx) — die reserveert geen ruimte voor deze los-zwevende banner,
  * dus zonder extra offset zou de banner er overheen tekenen en de tab-balk
  * onbereikbaar maken. `BottomTabInset` (constants/theme.ts) is de bestaande,

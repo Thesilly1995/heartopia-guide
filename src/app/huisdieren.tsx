@@ -106,6 +106,16 @@ export default function HuisdierenScreen() {
 
   const items: (CatItem | DogItem)[] = tab === 'cats' ? CATS : DOGS;
   const petActions = tab === 'cats' ? CAT_ACTIONS : DOG_ACTIONS;
+  const sortedItems = useMemo(
+    () =>
+      [...items].sort((a, b) => {
+        const aBonded = (bonds[a.name] || 0) > 0;
+        const bBonded = (bonds[b.name] || 0) > 0;
+        if (aBonded === bBonded) return 0;
+        return aBonded ? -1 : 1;
+      }),
+    [items, bonds]
+  );
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -124,7 +134,7 @@ export default function HuisdierenScreen() {
         }}
       />
       <FlatList
-        data={items}
+        data={sortedItems}
         keyExtractor={(item) => item.name}
         contentContainerStyle={styles.listContent}
         ListHeaderComponent={

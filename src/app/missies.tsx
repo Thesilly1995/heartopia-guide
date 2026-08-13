@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useMemo, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ChecklistRow } from '@/components/heartopia/checklist-row';
@@ -9,6 +9,7 @@ import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { useLanguage } from '@/hooks/use-language';
 
 const STORAGE_KEY = 'heartopia:missies:vinkjes';
+const CUSTOM_STORAGE_KEY = 'heartopia:missies:eigen-dailies';
 
 const DAILY = {
   nl: [
@@ -81,20 +82,35 @@ const STRINGS = {
     daily: 'Dagelijks',
     weekly: 'Wekelijks',
     reset: 'Reset',
-    resetDaily: 'Elke dag om 7:00 (servertijd)',
-    resetWeekly: 'Elke zaterdag om 7:00 (servertijd)',
+    resetDaily: 'Elke dag om 06:00 (servertijd)',
+    resetWeekly: 'Elke zaterdag om 06:00 (servertijd)',
     checkShops: 'Winkels checken',
+    dailyTasks: 'Dagelijkse taken',
+    ownDailies: 'Eigen dagelijkse taken',
+    ownDailiesPlaceholder: 'Bijv. Ka Ching-aanbieding kopen...',
+    add: 'Toevoegen',
+    ownDailiesEmpty: 'Nog niks toegevoegd — zet hier je eigen dagelijkse taakjes bij.',
   },
   en: {
     title: 'Missions',
     daily: 'Daily',
     weekly: 'Weekly',
     reset: 'Reset',
-    resetDaily: 'Every day at 7:00 (server time)',
-    resetWeekly: 'Every Saturday at 7:00 (server time)',
+    resetDaily: 'Every day at 06:00 (server time)',
+    resetWeekly: 'Every Saturday at 06:00 (server time)',
     checkShops: 'Check shops',
+    dailyTasks: 'Daily tasks',
+    ownDailies: 'Your own daily tasks',
+    ownDailiesPlaceholder: 'E.g. buy Ka Ching offer...',
+    add: 'Add',
+    ownDailiesEmpty: 'Nothing added yet — put your own daily tasks here.',
   },
 } as const;
+
+interface CustomItem {
+  text: string;
+  done: boolean;
+}
 
 export default function MissiesScreen() {
   const colors = useHeartopiaColors();
@@ -104,6 +120,10 @@ export default function MissiesScreen() {
   const [tab, setTab] = useState<'daily' | 'weekly'>('daily');
   const [checked, setChecked] = useState<Record<string, boolean>>({});
   const [shopsOpen, setShopsOpen] = useState(false);
+  const [dailyOpen, setDailyOpen] = useState(true);
+  const [customOpen, setCustomOpen] = useState(false);
+  const [customItems, setCustomItems] = useState<CustomItem[]>([]);
+  const [customText, setCustomText] = useState('');
 
   useEffect(() => {
     (async () => {
@@ -112,6 +132,12 @@ export default function MissiesScreen() {
         setChecked(raw ? JSON.parse(raw) : {});
       } catch {
         setChecked({});
+      }
+      try {
+        const rawCustom = await AsyncStorage.getItem(CUSTOM_STORAGE_KEY);
+        setCustomItems(rawCustom ? JSON.parse(rawCustom) : []);
+      } catch {
+        setCustomItems([]);
       }
     })();
   }, []);
@@ -126,8 +152,32 @@ export default function MissiesScreen() {
     }
   };
 
+  const saveCustom = async (updated: CustomItem[]) => {
+    setCustomItems(updated);
+    try {
+      await AsyncStorage.setItem(CUSTOM_STORAGE_KEY, JSON.stringify(updated));
+    } catch {
+      // opslaan mislukt
+    }
+  };
+
+  const addCustomItem = () => {
+    if (!customText.trim()) return;
+    saveCustom([...customItems, { text: customText.trim(), done: false }]);
+    setCustomText('');
+  };
+
+  const toggleCustomItem = (i: number) => {
+    saveCustom(customItems.map((item, idx) => (idx === i ? { ...item, done: !item.done } : item)));
+  };
+
+  const removeCustomItem = (i: number) => {
+    saveCustom(customItems.filter((_, idx) => idx !== i));
+  };
+
   const items = tab === 'daily' ? DAILY[language] : WEEKLY[language];
   const resetText = tab === 'daily' ? s.resetDaily : s.resetWeekly;
+  const dailyDoneCount = DAILY[language].filter((item) => checked[item.key]).length;
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -148,32 +198,94 @@ export default function MissiesScreen() {
           <Text style={styles.resetText}>{resetText}</Text>
         </View>
 
-        {items.map((item) => (
-          <ChecklistRow key={item.key} label={item.label} checked={!!checked[item.key]} onPress={() => toggle(item.key)} />
-        ))}
+        {tab === 'daily' ? (
+          <>
+            <View style={styles.collapsibleCard}>
+              <Pressable style={styles.collapsibleHeader} onPress={() => setDailyOpen(!dailyOpen)}>
+                <Text style={styles.collapsibleTitle}>{s.dailyTasks}</Text>
+                <Text style={styles.progressBadge}>
+                  {dailyDoneCount}/{DAILY[language].length}
+                </Text>
+                <Text style={styles.chevron}>{dailyOpen ? '⌄' : '›'}</Text>
+              </Pressable>
+              {dailyOpen && (
+                <View style={styles.collapsibleBody}>
+                  {items.map((item) => (
+                    <ChecklistRow key={item.key} label={item.label} checked={!!checked[item.key]} onPress={() => toggle(item.key)} />
+                  ))}
+                </View>
+              )}
+            </View>
 
-        {tab === 'weekly' && (
-          <View style={styles.shopsCard}>
-            <Pressable style={styles.shopsHeader} onPress={() => setShopsOpen(!shopsOpen)}>
-              <View style={[styles.checkbox, checked.shops_all && styles.checkboxActive]}>
-                {checked.shops_all && <Text style={styles.checkmark}>✓</Text>}
-              </View>
-              <Text style={styles.shopsTitle}>{s.checkShops}</Text>
-              <Text style={styles.chevron}>{shopsOpen ? '⌄' : '›'}</Text>
-            </Pressable>
-            {shopsOpen && (
-              <View style={styles.shopsList}>
-                {SHOPS[language].map((shop) => (
-                  <Pressable key={shop.key} style={styles.shopRow} onPress={() => toggle(shop.key)}>
-                    <View style={[styles.smallCheckbox, checked[shop.key] && styles.checkboxActive]}>
-                      {checked[shop.key] && <Text style={styles.checkmarkSmall}>✓</Text>}
+            <View style={styles.collapsibleCard}>
+              <Pressable style={styles.collapsibleHeader} onPress={() => setCustomOpen(!customOpen)}>
+                <Text style={styles.collapsibleTitle}>{s.ownDailies}</Text>
+                {customItems.length > 0 && (
+                  <Text style={styles.progressBadge}>
+                    {customItems.filter((i) => i.done).length}/{customItems.length}
+                  </Text>
+                )}
+                <Text style={styles.chevron}>{customOpen ? '⌄' : '›'}</Text>
+              </Pressable>
+              {customOpen && (
+                <View style={styles.collapsibleBody}>
+                  <View style={styles.addRow}>
+                    <TextInput
+                      value={customText}
+                      onChangeText={setCustomText}
+                      onSubmitEditing={addCustomItem}
+                      placeholder={s.ownDailiesPlaceholder}
+                      placeholderTextColor={colors.forestSoft}
+                      style={styles.input}
+                    />
+                    <Pressable style={styles.addButton} onPress={addCustomItem}>
+                      <Text style={styles.addButtonText}>{s.add}</Text>
+                    </Pressable>
+                  </View>
+                  {customItems.length === 0 && <Text style={styles.emptyText}>{s.ownDailiesEmpty}</Text>}
+                  {customItems.map((item, i) => (
+                    <View key={i} style={styles.customRow}>
+                      <Pressable style={[styles.checkbox, item.done && styles.checkboxActive]} onPress={() => toggleCustomItem(i)}>
+                        {item.done && <Text style={styles.checkmark}>✓</Text>}
+                      </Pressable>
+                      <Text style={[styles.customItemText, item.done && styles.customItemTextDone]}>{item.text}</Text>
+                      <Pressable onPress={() => removeCustomItem(i)} hitSlop={8}>
+                        <Text style={styles.removeText}>✕</Text>
+                      </Pressable>
                     </View>
-                    <Text style={[styles.shopLabel, checked[shop.key] && styles.shopLabelChecked]}>{shop.label}</Text>
-                  </Pressable>
-                ))}
-              </View>
-            )}
-          </View>
+                  ))}
+                </View>
+              )}
+            </View>
+          </>
+        ) : (
+          <>
+            {items.map((item) => (
+              <ChecklistRow key={item.key} label={item.label} checked={!!checked[item.key]} onPress={() => toggle(item.key)} />
+            ))}
+
+            <View style={styles.shopsCard}>
+              <Pressable style={styles.shopsHeader} onPress={() => setShopsOpen(!shopsOpen)}>
+                <View style={[styles.checkbox, checked.shops_all && styles.checkboxActive]}>
+                  {checked.shops_all && <Text style={styles.checkmark}>✓</Text>}
+                </View>
+                <Text style={styles.shopsTitle}>{s.checkShops}</Text>
+                <Text style={styles.chevron}>{shopsOpen ? '⌄' : '›'}</Text>
+              </Pressable>
+              {shopsOpen && (
+                <View style={styles.shopsList}>
+                  {SHOPS[language].map((shop) => (
+                    <Pressable key={shop.key} style={styles.shopRow} onPress={() => toggle(shop.key)}>
+                      <View style={[styles.smallCheckbox, checked[shop.key] && styles.checkboxActive]}>
+                        {checked[shop.key] && <Text style={styles.checkmarkSmall}>✓</Text>}
+                      </View>
+                      <Text style={[styles.shopLabel, checked[shop.key] && styles.shopLabelChecked]}>{shop.label}</Text>
+                    </Pressable>
+                  ))}
+                </View>
+              )}
+            </View>
+          </>
         )}
       </ScrollView>
     </SafeAreaView>
@@ -187,6 +299,11 @@ function makeStyles(c: ThemeColors) {
     resetRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 12, borderRadius: 12, backgroundColor: c.disclaimerBg, borderWidth: 1, borderColor: c.disclaimerBorder },
     resetLabel: { fontSize: 12, fontWeight: '700', color: c.forest },
     resetText: { fontSize: 12, color: c.forestSoft },
+    collapsibleCard: { backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.line, overflow: 'hidden' },
+    collapsibleHeader: { flexDirection: 'row', alignItems: 'center', gap: 10, padding: 14 },
+    collapsibleTitle: { flex: 1, fontSize: 14, fontWeight: '700', color: c.forest },
+    progressBadge: { fontSize: 11, fontWeight: '700', color: c.forestSoft },
+    collapsibleBody: { paddingHorizontal: 14, paddingBottom: 14, gap: 8 },
     shopsCard: { backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.line, overflow: 'hidden' },
     shopsHeader: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14 },
     checkbox: { width: 24, height: 24, borderRadius: 6, backgroundColor: c.surfaceSoft, borderWidth: 1, borderColor: c.line, alignItems: 'center', justifyContent: 'center' },
@@ -200,5 +317,14 @@ function makeStyles(c: ThemeColors) {
     checkmarkSmall: { fontSize: 11, color: '#FFFFFF', fontWeight: '700' },
     shopLabel: { flex: 1, fontSize: 12, color: c.forest },
     shopLabelChecked: { color: c.forestSoft, textDecorationLine: 'line-through' },
+    addRow: { flexDirection: 'row', gap: 8, marginBottom: 4 },
+    input: { flex: 1, borderWidth: 1, borderColor: c.line, borderRadius: 12, paddingHorizontal: 12, paddingVertical: 8, fontSize: 13, color: c.forest, backgroundColor: c.surfaceSoft },
+    addButton: { paddingHorizontal: 14, borderRadius: 12, backgroundColor: c.coral, alignItems: 'center', justifyContent: 'center' },
+    addButtonText: { color: '#FFFFFF', fontWeight: '700', fontSize: 12 },
+    emptyText: { fontSize: 12, color: c.forestSoft },
+    customRow: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: c.surfaceSoft, borderRadius: 10, padding: 8 },
+    customItemText: { flex: 1, fontSize: 13, color: c.forest },
+    customItemTextDone: { color: c.forestSoft, textDecorationLine: 'line-through' },
+    removeText: { fontSize: 13, color: c.forestSoft },
   });
 }
