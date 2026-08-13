@@ -81,6 +81,21 @@ op: de anon key is publiek (zit in de app), dus iedereen die dat weet kan in the
 rechtstreeks (buiten de app om) naar deze tabel schrijven — voor een klein
 fan-gids-project is dat een acceptabel risico, maar het is geen spamfilter/moderatie.
 
+### 3b.1 Kolom `idea_en` toevoegen (automatische Engelse vertaling)
+
+Feedback wordt bij het versturen automatisch naar het Engels vertaald (via een gratis
+vertaal-endpoint, geen API-key nodig) en in een aparte kolom opgeslagen, zodat iedereen
+de lijst kan lezen ongeacht in welke taal iemand 'm heeft getypt. Als de tabel hierboven
+al bestond vóór deze wijziging, voer je dit eenmalig uit in de SQL Editor:
+
+```sql
+alter table feedback add column idea_en text;
+```
+
+Nieuwe kolom is nullable — bestaande rijen blijven gewoon werken (de app valt terug op
+de originele `idea`-tekst als `idea_en` leeg is, bijvoorbeeld bij oude feedback of als
+de vertaling een keer mislukt).
+
 ## 4. App koppelen
 
 Project Settings → API, en kopieer:

@@ -7,6 +7,7 @@ import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { isSupabaseConfigured, supabase } from '@/constants/supabase';
 import { useLanguage } from '@/hooks/use-language';
+import { translateToEnglish } from '@/lib/translate';
 
 const STRINGS = {
   nl: {
@@ -64,7 +65,7 @@ export default function FeedbackScreen() {
   const loadEntries = async () => {
     const { data, error: fetchError } = await supabase
       .from('feedback')
-      .select('id, name, idea, created_at')
+      .select('id, name, idea, idea_en, created_at')
       .order('created_at', { ascending: false })
       .limit(50);
     if (fetchError) {
@@ -76,7 +77,7 @@ export default function FeedbackScreen() {
       (data ?? []).map((row) => ({
         id: row.id,
         name: row.name?.trim() || s.anonymous,
-        idea: row.idea,
+        idea: row.idea_en || row.idea,
         date: String(row.created_at).slice(0, 10),
       }))
     );
@@ -91,7 +92,11 @@ export default function FeedbackScreen() {
     if (!idea.trim()) return;
     setStatus('saving');
     setError(null);
-    const { error: insertError } = await supabase.from('feedback').insert({ name: name.trim() || null, idea: idea.trim() });
+    const ideaTrimmed = idea.trim();
+    const ideaEn = await translateToEnglish(ideaTrimmed);
+    const { error: insertError } = await supabase
+      .from('feedback')
+      .insert({ name: name.trim() || null, idea: ideaTrimmed, idea_en: ideaEn });
     if (insertError) {
       setStatus(null);
       setError(s.error);
