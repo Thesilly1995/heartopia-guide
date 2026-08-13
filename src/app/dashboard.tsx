@@ -71,10 +71,14 @@ function LockedDashboard({
       <Text style={styles.lockedIcon}>🔒</Text>
       <Text style={styles.lockedTitle}>{s.lockedTitle}</Text>
       <Text style={styles.lockedText}>{s.lockedText}</Text>
-      <Pressable style={styles.upgradeButton} onPress={onUpgrade}>
-        <Text style={styles.upgradeButtonText}>{s.upgradeButton}</Text>
-      </Pressable>
-      <Text style={styles.testNote}>{s.testNote}</Text>
+      {__DEV__ && (
+        <>
+          <Pressable style={styles.upgradeButton} onPress={onUpgrade}>
+            <Text style={styles.upgradeButtonText}>{s.upgradeButton}</Text>
+          </Pressable>
+          <Text style={styles.testNote}>{s.testNote}</Text>
+        </>
+      )}
     </View>
   );
 }

@@ -91,10 +91,14 @@ function Locked({ s, styles, onUpgrade }: { s: Strings; styles: ReturnType<typeo
       <Text style={styles.centerIcon}>🔒</Text>
       <Text style={styles.centerTitle}>{s.lockedTitle}</Text>
       <Text style={styles.centerText}>{s.lockedText}</Text>
-      <Pressable style={styles.primaryButton} onPress={onUpgrade}>
-        <Text style={styles.primaryButtonText}>{s.upgradeButton}</Text>
-      </Pressable>
-      <Text style={styles.testNote}>{s.testNote}</Text>
+      {__DEV__ && (
+        <>
+          <Pressable style={styles.primaryButton} onPress={onUpgrade}>
+            <Text style={styles.primaryButtonText}>{s.upgradeButton}</Text>
+          </Pressable>
+          <Text style={styles.testNote}>{s.testNote}</Text>
+        </>
+      )}
     </View>
   );
 }

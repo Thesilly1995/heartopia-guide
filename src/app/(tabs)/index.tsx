@@ -213,7 +213,7 @@ export default function HomeScreen() {
             <View key={section.label.nl} style={styles.section}>
               <View style={styles.sectionHeaderRow}>
                 <Text style={styles.sectionLabel}>{section.label[language]}</Text>
-                {isPremiumSection && (
+                {isPremiumSection && __DEV__ && (
                   <Pressable style={styles.premiumTestPill} onPress={togglePremium} hitSlop={6}>
                     <Text style={styles.premiumTestPillText}>{premium ? s.premiumTestOn : s.premiumTestOff}</Text>
                   </Pressable>

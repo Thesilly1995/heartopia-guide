@@ -20,11 +20,17 @@ const PremiumContext = createContext<PremiumContextValue>({
  * lokaal en persistent (AsyncStorage), geen server/account bij betrokken —
  * bedoeld om te testen hoe de app aanvoelt met/zonder premium, niet als
  * echte toegangscontrole.
+ *
+ * Alleen actief in `__DEV__` (lokaal `expo start`). In gebouwde
+ * preview/production-builds (dus ook wat testers gebruiken) blijft premium
+ * altijd uit, zodat Premium tijdens het testen echt afgesloten is — geen
+ * verrassing straks als er wél een betaalmuur staat.
  */
 export function PremiumProvider({ children }: { children: ReactNode }) {
   const [premium, setPremiumState] = useState(false);
 
   useEffect(() => {
+    if (!__DEV__) return;
     (async () => {
       try {
         const stored = await AsyncStorage.getItem(STORAGE_KEY);
@@ -36,6 +42,7 @@ export function PremiumProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const setPremium = (next: boolean) => {
+    if (!__DEV__) return;
     setPremiumState(next);
     AsyncStorage.setItem(STORAGE_KEY, next ? 'true' : 'false').catch(() => {});
   };
