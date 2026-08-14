@@ -13,8 +13,8 @@ import { useLanguage } from '@/hooks/use-language';
 const STORAGE_KEY = 'heartopia:wildedieren:vriendschap';
 
 const STRINGS = {
-  nl: { title: 'Wilde Dieren', subtitle: 'Voertroggen, favoriet eten & vriendschap', feedingSpot: 'Voertrog', favoriteWeather: 'Favoriet weer', favoriteFood: 'Favoriete eten', friendshipLevel: 'Vriendschapsniveau' },
-  en: { title: 'Wild Animals', subtitle: 'Feeding troughs, favorite food & friendship', feedingSpot: 'Feeding trough', favoriteWeather: 'Favorite weather', favoriteFood: 'Favorite food', friendshipLevel: 'Friendship level' },
+  nl: { title: 'Wilde Dieren', subtitle: 'Voertroggen, favoriet eten & vriendschap', feedingSpot: 'Voertrog', favoriteWeather: 'Favoriet weer', favoriteFood: 'Favoriete eten', friendshipLevel: 'Vriendschapsniveau', eventHeading: 'Event dieren' },
+  en: { title: 'Wild Animals', subtitle: 'Feeding troughs, favorite food & friendship', feedingSpot: 'Feeding trough', favoriteWeather: 'Favorite weather', favoriteFood: 'Favorite food', friendshipLevel: 'Friendship level', eventHeading: 'Event Animals' },
 } as const;
 
 export default function WildeDierenScreen() {
@@ -59,11 +59,14 @@ export default function WildeDierenScreen() {
         data={wildAnimals}
         keyExtractor={(item) => item.name}
         contentContainerStyle={styles.listContent}
-        renderItem={({ item: animal }) => {
+        renderItem={({ item: animal, index }) => {
           const isOpen = openName === animal.name;
           const maxBond = WILD_ANIMAL_MAX_BOND[animal.name] ?? 10;
+          const showEventHeading = animal.isEvent && (index === 0 || !wildAnimals[index - 1].isEvent);
           return (
-            <View style={styles.card}>
+            <>
+              {showEventHeading && <Text style={styles.eventHeading}>{s.eventHeading}</Text>}
+              <View style={styles.card}>
               <Pressable style={styles.cardHeader} onPress={() => setOpenName(isOpen ? null : animal.name)}>
                 <View style={styles.emojiBadge}>
                   <Text style={styles.emoji}>{animal.emoji}</Text>
@@ -106,7 +109,8 @@ export default function WildeDierenScreen() {
                   </View>
                 </View>
               )}
-            </View>
+              </View>
+            </>
           );
         }}
       />
@@ -118,6 +122,7 @@ function makeStyles(c: ThemeColors) {
   return StyleSheet.create({
     safeArea: { flex: 1, backgroundColor: c.bg },
     listContent: { padding: 16, gap: 10 },
+    eventHeading: { fontSize: 13, fontWeight: '800', color: c.forest, marginTop: 6, marginBottom: -2 },
     card: { backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.line, overflow: 'hidden', marginBottom: 10 },
     cardHeader: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14 },
     emojiBadge: { width: 44, height: 44, borderRadius: 22, backgroundColor: c.iconBg, alignItems: 'center', justifyContent: 'center' },
