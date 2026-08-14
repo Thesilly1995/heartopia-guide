@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { PremiumLockedView } from '@/components/heartopia/premium-locked';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { COLORS, ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { useCatalogProgress } from '@/data/catalog-progress';
@@ -16,12 +17,9 @@ const STRINGS = {
     totalLabel: 'Totale voortgang',
     countLabel: (m: number, t: number) => `${m} / ${t} mastery behaald`,
     starsLabel: (n: number, max: number) => `⭐ ${n} / ${max} sterren`,
-    lockedTitle: 'Alleen voor Premium-leden',
     lockedText:
       'Het voortgangsdashboard laat in één oogopslag zien hoeveel mastery je hebt behaald in elke catalogus (Vissen, Koken, Tuinieren, Insecten, Vogels, Beeldhouwen, Ocean Cleanup).',
-    upgradeButton: 'Word Premium-lid (test) 👑',
-    testNote: 'Er is nog geen echte betaalflow — dit is een lokale test-schakelaar. Je vindt hem ook op het homescreen, onder "Premium".',
-    activeBadge: '👑 Premium actief (test)',
+    activeBadge: '👑 Premium actief',
     disablePremium: 'Test-premium uitzetten',
   },
   en: {
@@ -30,12 +28,9 @@ const STRINGS = {
     totalLabel: 'Total progress',
     countLabel: (m: number, t: number) => `${m} / ${t} mastered`,
     starsLabel: (n: number, max: number) => `⭐ ${n} / ${max} stars`,
-    lockedTitle: 'Premium members only',
     lockedText:
       'The progress dashboard shows at a glance how much mastery you have achieved in every catalog (Fishing, Cooking, Gardening, Insects, Birds, Sculpting, Ocean Cleanup).',
-    upgradeButton: 'Become a Premium member (test) 👑',
-    testNote: 'There is no real payment flow yet — this is a local test toggle. You can also find it on the homescreen, under "Premium".',
-    activeBadge: '👑 Premium active (test)',
+    activeBadge: '👑 Premium active',
     disablePremium: 'Turn off test premium',
   },
 } as const;
@@ -52,34 +47,12 @@ export default function DashboardScreen() {
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <ScreenHeader gradient={[COLORS.coral, COLORS.yellow]} icon="📊" title={s.title} subtitle={s.subtitle} />
-      {premium ? <UnlockedDashboard s={s} styles={styles} onDisablePremium={() => setPremium(false)} /> : <LockedDashboard s={s} styles={styles} onUpgrade={() => setPremium(true)} />}
-    </SafeAreaView>
-  );
-}
-
-function LockedDashboard({
-  s,
-  styles,
-  onUpgrade,
-}: {
-  s: DashboardStrings;
-  styles: ReturnType<typeof makeStyles>;
-  onUpgrade: () => void;
-}) {
-  return (
-    <View style={styles.lockedContent}>
-      <Text style={styles.lockedIcon}>🔒</Text>
-      <Text style={styles.lockedTitle}>{s.lockedTitle}</Text>
-      <Text style={styles.lockedText}>{s.lockedText}</Text>
-      {__DEV__ && (
-        <>
-          <Pressable style={styles.upgradeButton} onPress={onUpgrade}>
-            <Text style={styles.upgradeButtonText}>{s.upgradeButton}</Text>
-          </Pressable>
-          <Text style={styles.testNote}>{s.testNote}</Text>
-        </>
+      {premium ? (
+        <UnlockedDashboard s={s} styles={styles} onDisablePremium={() => setPremium(false)} />
+      ) : (
+        <PremiumLockedView text={s.lockedText} />
       )}
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -109,9 +82,11 @@ function UnlockedDashboard({
     <ScrollView contentContainerStyle={styles.content}>
       <View style={styles.activeBadgeRow}>
         <Text style={styles.activeBadge}>{s.activeBadge}</Text>
-        <Pressable onPress={onDisablePremium} hitSlop={6}>
-          <Text style={styles.disablePremiumLink}>{s.disablePremium}</Text>
-        </Pressable>
+        {__DEV__ && (
+          <Pressable onPress={onDisablePremium} hitSlop={6}>
+            <Text style={styles.disablePremiumLink}>{s.disablePremium}</Text>
+          </Pressable>
+        )}
       </View>
 
       <View style={styles.totalCard}>

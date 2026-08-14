@@ -8,6 +8,7 @@ import 'react-native-url-polyfill/auto';
 import { AnimatedSplashOverlay } from '@/components/animated-icon';
 import { AdBanner } from '@/components/heartopia/ad-banner';
 import { initializeAdsIfNeeded } from '@/constants/ads';
+import { initializePurchasesIfNeeded } from '@/constants/purchases';
 import { AdBannerHeight } from '@/constants/theme';
 import { AuthProvider } from '@/hooks/use-auth';
 import { LanguageProvider } from '@/hooks/use-language';
@@ -18,6 +19,7 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   useEffect(() => {
     initializeAdsIfNeeded();
+    initializePurchasesIfNeeded();
   }, []);
   return (
     <LanguageProvider>

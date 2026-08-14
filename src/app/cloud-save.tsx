@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { PremiumLockedView } from '@/components/heartopia/premium-locked';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { COLORS, ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { pullCloudSave, pushCloudSave } from '@/data/cloud-sync';
@@ -13,10 +14,7 @@ const STRINGS = {
   nl: {
     title: 'Cloud Save',
     subtitle: 'Voortgang bewaren & gebruiken op een ander toestel',
-    lockedTitle: 'Alleen voor Premium-leden',
     lockedText: 'Cloud save bewaart je voortgang (mastery, sterren, missies, to-do, feedback) online, zodat je die op een ander toestel kan terugzetten.',
-    upgradeButton: 'Word Premium-lid (test) 👑',
-    testNote: 'Er is nog geen echte betaalflow — dit is een lokale test-schakelaar.',
     notConfiguredTitle: 'Cloud save wordt nog opgezet',
     notConfiguredText: 'De backend (Supabase) is nog niet gekoppeld aan de app — dit scherm werkt zodra dat klaar is.',
     emailPlaceholder: 'E-mailadres',
@@ -41,10 +39,7 @@ const STRINGS = {
   en: {
     title: 'Cloud Save',
     subtitle: 'Save your progress & use it on another device',
-    lockedTitle: 'Premium members only',
     lockedText: 'Cloud save stores your progress (mastery, stars, missions, to-do, feedback) online, so you can restore it on another device.',
-    upgradeButton: 'Become a Premium member (test) 👑',
-    testNote: 'There is no real payment flow yet — this is a local test toggle.',
     notConfiguredTitle: 'Cloud save is still being set up',
     notConfiguredText: 'The backend (Supabase) is not yet connected to the app — this screen will work once that is ready.',
     emailPlaceholder: 'Email address',
@@ -74,32 +69,14 @@ export default function CloudSaveScreen() {
   const colors = useHeartopiaColors();
   const styles = useMemo(() => makeStyles(colors), [colors]);
   const { language } = useLanguage();
-  const { premium, setPremium } = usePremium();
+  const { premium } = usePremium();
   const s = STRINGS[language];
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <ScreenHeader gradient={[COLORS.coral, COLORS.yellow]} icon="☁️" title={s.title} subtitle={s.subtitle} />
-      {premium ? <UnlockedContent s={s} styles={styles} /> : <Locked s={s} styles={styles} onUpgrade={() => setPremium(true)} />}
+      {premium ? <UnlockedContent s={s} styles={styles} /> : <PremiumLockedView text={s.lockedText} />}
     </SafeAreaView>
-  );
-}
-
-function Locked({ s, styles, onUpgrade }: { s: Strings; styles: ReturnType<typeof makeStyles>; onUpgrade: () => void }) {
-  return (
-    <View style={styles.centerContent}>
-      <Text style={styles.centerIcon}>🔒</Text>
-      <Text style={styles.centerTitle}>{s.lockedTitle}</Text>
-      <Text style={styles.centerText}>{s.lockedText}</Text>
-      {__DEV__ && (
-        <>
-          <Pressable style={styles.primaryButton} onPress={onUpgrade}>
-            <Text style={styles.primaryButtonText}>{s.upgradeButton}</Text>
-          </Pressable>
-          <Text style={styles.testNote}>{s.testNote}</Text>
-        </>
-      )}
-    </View>
   );
 }
 
