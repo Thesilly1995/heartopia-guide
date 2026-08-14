@@ -5,16 +5,39 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { InfoCard } from '@/components/heartopia/info-card';
 import { LevelStepper } from '@/components/heartopia/level-stepper';
+import { PinMap } from '@/components/heartopia/pin-map';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
+import { useWildAnimalLocations } from '@/data/wild-animal-locations';
 import { WILD_ANIMAL_MAX_BOND, useWildAnimals } from '@/data/wild-animals';
 import { useLanguage } from '@/hooks/use-language';
 
 const STORAGE_KEY = 'heartopia:wildedieren:vriendschap';
+const ISLAND_MAP = require('@/assets/images/maps/island-map.jpg');
 
 const STRINGS = {
-  nl: { title: 'Wilde Dieren', subtitle: 'Voertroggen, favoriet eten & vriendschap', feedingSpot: 'Voertrog', favoriteWeather: 'Favoriet weer', favoriteFood: 'Favoriete eten', friendshipLevel: 'Vriendschapsniveau', eventHeading: 'Event dieren' },
-  en: { title: 'Wild Animals', subtitle: 'Feeding troughs, favorite food & friendship', feedingSpot: 'Feeding trough', favoriteWeather: 'Favorite weather', favoriteFood: 'Favorite food', friendshipLevel: 'Friendship level', eventHeading: 'Event Animals' },
+  nl: {
+    title: 'Wilde Dieren',
+    subtitle: 'Voertroggen, favoriet eten & vriendschap',
+    feedingSpot: 'Voertrog',
+    favoriteWeather: 'Favoriet weer',
+    favoriteFood: 'Favoriete eten',
+    friendshipLevel: 'Vriendschapsniveau',
+    eventHeading: 'Event dieren',
+    map: '🗺️ Kaart',
+    list: '📋 Lijst',
+  },
+  en: {
+    title: 'Wild Animals',
+    subtitle: 'Feeding troughs, favorite food & friendship',
+    feedingSpot: 'Feeding trough',
+    favoriteWeather: 'Favorite weather',
+    favoriteFood: 'Favorite food',
+    friendshipLevel: 'Friendship level',
+    eventHeading: 'Event Animals',
+    map: '🗺️ Map',
+    list: '📋 List',
+  },
 } as const;
 
 export default function WildeDierenScreen() {
@@ -23,8 +46,10 @@ export default function WildeDierenScreen() {
   const { language } = useLanguage();
   const s = STRINGS[language];
   const wildAnimals = useWildAnimals();
+  const locations = useWildAnimalLocations();
   const [openName, setOpenName] = useState<string | null>(null);
   const [bonds, setBonds] = useState<Record<string, number>>({});
+  const [view, setView] = useState<'map' | 'list'>('list');
 
   useEffect(() => {
     (async () => {
@@ -47,73 +72,96 @@ export default function WildeDierenScreen() {
     }
   };
 
+  const mapPins = locations.map((loc) => ({ num: loc.num, x: loc.x, y: loc.y, icon: loc.emoji }));
+  const mapChecked = Object.fromEntries(locations.map((loc) => [loc.num, (bonds[loc.name] || 0) > 0]));
+  const openFromMap = (num: number) => {
+    const loc = locations.find((l) => l.num === num);
+    if (!loc) return;
+    setOpenName(loc.name);
+    setView('list');
+  };
+
+  const viewToggle = (
+    <View style={styles.viewToggle}>
+      {(['map', 'list'] as const).map((v) => (
+        <Pressable key={v} style={[styles.viewChip, view === v && styles.viewChipActive]} onPress={() => setView(v)}>
+          <Text style={[styles.viewChipText, view === v && styles.viewChipTextActive]}>{v === 'map' ? s.map : s.list}</Text>
+        </Pressable>
+      ))}
+    </View>
+  );
+
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
-      <ScreenHeader
-        gradient={['#8FBF6E', '#C9E6A8']}
-        icon="🦊"
-        title={s.title}
-        subtitle={s.subtitle}
-      />
-      <FlatList
-        data={wildAnimals}
-        keyExtractor={(item) => item.name}
-        contentContainerStyle={styles.listContent}
-        renderItem={({ item: animal, index }) => {
-          const isOpen = openName === animal.name;
-          const maxBond = WILD_ANIMAL_MAX_BOND[animal.name] ?? 10;
-          const showEventHeading = animal.isEvent && (index === 0 || !wildAnimals[index - 1].isEvent);
-          return (
-            <>
-              {showEventHeading && <Text style={styles.eventHeading}>{s.eventHeading}</Text>}
-              <View style={styles.card}>
-              <Pressable style={styles.cardHeader} onPress={() => setOpenName(isOpen ? null : animal.name)}>
-                <View style={styles.emojiBadge}>
-                  <Text style={styles.emoji}>{animal.emoji}</Text>
-                </View>
-                <View style={styles.cardText}>
-                  <Text style={styles.cardTitle} numberOfLines={1}>
-                    {animal.name}
-                  </Text>
-                  {bonds[animal.name] > 0 && (
-                    <Text style={styles.bondText}>
-                      Lv.{bonds[animal.name]}/{maxBond}
-                    </Text>
-                  )}
-                </View>
-                <Text style={styles.chevron}>{isOpen ? '⌄' : '›'}</Text>
-              </Pressable>
+      <ScreenHeader gradient={['#8FBF6E', '#C9E6A8']} icon="🦊" title={s.title} subtitle={s.subtitle} />
 
-              {isOpen && (
-                <View style={styles.cardBody}>
-                  <View style={styles.detailGrid}>
-                    <InfoCard label={s.feedingSpot} value={animal.spot} full />
-                    <InfoCard label={s.favoriteWeather} value={animal.weather} full />
-                    <View style={[styles.foodsBox]}>
-                      <Text style={styles.detailLabel}>{s.favoriteFood}</Text>
-                      <View style={styles.foodsRow}>
-                        {animal.foods.map((f) => (
-                          <Text key={f} style={styles.foodPill}>
-                            {f}
-                          </Text>
-                        ))}
+      {view === 'map' ? (
+        <View style={styles.listContent}>
+          {viewToggle}
+          <PinMap source={ISLAND_MAP} aspectRatio={825 / 799} pins={mapPins} checked={mapChecked} onToggle={openFromMap} pinColor={colors.coral} />
+        </View>
+      ) : (
+        <FlatList
+          data={wildAnimals}
+          keyExtractor={(item) => item.name}
+          contentContainerStyle={styles.listContent}
+          ListHeaderComponent={viewToggle}
+          renderItem={({ item: animal, index }) => {
+            const isOpen = openName === animal.name;
+            const maxBond = WILD_ANIMAL_MAX_BOND[animal.name] ?? 10;
+            const showEventHeading = animal.isEvent && (index === 0 || !wildAnimals[index - 1].isEvent);
+            return (
+              <>
+                {showEventHeading && <Text style={styles.eventHeading}>{s.eventHeading}</Text>}
+                <View style={styles.card}>
+                  <Pressable style={styles.cardHeader} onPress={() => setOpenName(isOpen ? null : animal.name)}>
+                    <View style={styles.emojiBadge}>
+                      <Text style={styles.emoji}>{animal.emoji}</Text>
+                    </View>
+                    <View style={styles.cardText}>
+                      <Text style={styles.cardTitle} numberOfLines={1}>
+                        {animal.name}
+                      </Text>
+                      {bonds[animal.name] > 0 && (
+                        <Text style={styles.bondText}>
+                          Lv.{bonds[animal.name]}/{maxBond}
+                        </Text>
+                      )}
+                    </View>
+                    <Text style={styles.chevron}>{isOpen ? '⌄' : '›'}</Text>
+                  </Pressable>
+
+                  {isOpen && (
+                    <View style={styles.cardBody}>
+                      <View style={styles.detailGrid}>
+                        <InfoCard label={s.feedingSpot} value={animal.spot} full />
+                        <InfoCard label={s.favoriteWeather} value={animal.weather} full />
+                        <View style={[styles.foodsBox]}>
+                          <Text style={styles.detailLabel}>{s.favoriteFood}</Text>
+                          <View style={styles.foodsRow}>
+                            {animal.foods.map((f) => (
+                              <Text key={f} style={styles.foodPill}>
+                                {f}
+                              </Text>
+                            ))}
+                          </View>
+                        </View>
+                      </View>
+
+                      {animal.note && <Text style={styles.note}>⚠️ {animal.note}</Text>}
+
+                      <View style={styles.bondBox}>
+                        <Text style={styles.bondBoxLabel}>{s.friendshipLevel}</Text>
+                        <LevelStepper value={bonds[animal.name] || 0} max={maxBond} onSet={(n) => setBond(animal.name, n)} />
                       </View>
                     </View>
-                  </View>
-
-                  {animal.note && <Text style={styles.note}>⚠️ {animal.note}</Text>}
-
-                  <View style={styles.bondBox}>
-                    <Text style={styles.bondBoxLabel}>{s.friendshipLevel}</Text>
-                    <LevelStepper value={bonds[animal.name] || 0} max={maxBond} onSet={(n) => setBond(animal.name, n)} />
-                  </View>
+                  )}
                 </View>
-              )}
-              </View>
-            </>
-          );
-        }}
-      />
+              </>
+            );
+          }}
+        />
+      )}
     </SafeAreaView>
   );
 }
@@ -122,6 +170,11 @@ function makeStyles(c: ThemeColors) {
   return StyleSheet.create({
     safeArea: { flex: 1, backgroundColor: c.bg },
     listContent: { padding: 16, gap: 10 },
+    viewToggle: { flexDirection: 'row', gap: 8, marginBottom: 10 },
+    viewChip: { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 999, backgroundColor: c.chipBg },
+    viewChipActive: { backgroundColor: c.coral },
+    viewChipText: { fontSize: 12, fontWeight: '700', color: c.skyDark },
+    viewChipTextActive: { color: '#FFFFFF' },
     eventHeading: { fontSize: 13, fontWeight: '800', color: c.forest, marginTop: 6, marginBottom: -2 },
     card: { backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.line, overflow: 'hidden', marginBottom: 10 },
     cardHeader: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14 },

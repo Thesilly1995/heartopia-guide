@@ -10,6 +10,8 @@ export interface MapPin {
   num: number;
   x: number;
   y: number;
+  /** Optioneel: toon dit emoji-icoon i.p.v. het nummer (bv. diersoort-icoontjes). */
+  icon?: string;
 }
 
 const STRINGS = {
@@ -51,9 +53,12 @@ export function PinMap({
             onPress={() => onToggle(pin.num)}
             style={[
               styles.pin,
+              pin.icon && !isChecked && styles.pinIconBg,
               { left: `${pin.x}%`, top: `${pin.y}%`, backgroundColor: isChecked ? colors.yellow : pinColor },
             ]}>
-            <Text style={styles.pinText}>{isChecked ? '✓' : pin.num}</Text>
+            <Text style={[styles.pinText, pin.icon && !isChecked && styles.pinIconText]}>
+              {isChecked ? '✓' : (pin.icon ?? pin.num)}
+            </Text>
           </Pressable>
         );
       })}
@@ -111,6 +116,8 @@ function makeStyles(c: ThemeColors) {
       transform: [{ translateX: -12 }, { translateY: -12 }],
     },
     pinText: { fontSize: 10, fontWeight: '700', color: '#FFFFFF' },
+    pinIconBg: { backgroundColor: '#FFFFFF' },
+    pinIconText: { fontSize: 14 },
     emptyOverlay: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: c.card + 'CC', alignItems: 'center', justifyContent: 'center', padding: 20 },
     emptyText: { fontSize: 13, fontWeight: '700', color: c.forest, textAlign: 'center' },
     hintBadge: { position: 'absolute', right: 8, bottom: 8, backgroundColor: '#000000AA', borderRadius: 999, paddingHorizontal: 8, paddingVertical: 4 },
