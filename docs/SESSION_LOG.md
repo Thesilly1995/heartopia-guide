@@ -2,6 +2,46 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-14 (deel 32) — Kaart-zoom, item-namen altijd Engels, RevenueCat-opzet, wilde-dierenkaart
+
+**Kaart-zoom**: `PinMap` (bubbels/rainbow/meteor) opent nu volledig-scherm met pinch-zoom bij tikken op de kaart, met sluitknop. Pins blijven aanklikbaar.
+
+**Zeven kleine fixes in één ronde**: Pinguïn kreeg een "tijdelijk event-dier, niet meer voerbaar"-note (net als Dolfijn/Maltezer). Reset-tijd in Missies van 7:00 naar 06:00 (servertijd) gecorrigeerd. Explore-tabblad (onaangeraakte Expo-boilerplate) volledig verwijderd. Advertentiebanner-overlap opgelost door elk niet-tab-scherm bottom-padding te geven in `_layout.tsx` (root-oorzaak: geen enkel scherm reserveerde ruimte voor de los-zwevende banner). Rainbow/meteorenregen verloor de overbodige duur-disclaimer. Missies → Dagelijks is nu een inklapbare kaart, met daaronder een nieuwe "Eigen dagelijkse taken"-sectie (zelf taken toevoegen/afvinken/verwijderen). Dog & Cat Moments sorteert dieren met vriendschapsvoortgang automatisch naar boven.
+
+**Item-/soortnamen altijd Engels, ook in NL-modus**: op verzoek van een tester — de game zelf is niet naar het Nederlands gelokaliseerd, dus eigen NL-vertalingen van vis/insecten/vogel/etc.-namen waren lastig terug te vinden in het spel. Naam, rarity, tool, ingrediënten, favoriete eten en (korte) plek-namen tonen nu altijd de Engelse waarde, ongeacht app-taal — beschrijvende tekst (weer, tijd, groeitijd, notities, verzorgmethodes) blijft gewoon vertaald. Geraakt: alle 20 databestanden met NL/EN-velden.
+
+**Feedback automatisch naar Engels vertaald**: nieuwe feedback wordt bij versturen vertaald (gratis Google-endpoint, geen API-key) en als `idea_en` opgeslagen in Supabase; scherm toont `idea_en` met terugval op origineel. Vereiste een eenmalige kolomtoevoeging in Supabase (`alter table feedback add column idea_en text`), door gebruiker uitgevoerd.
+
+**Premium écht afgesloten voor testers**: de test-schakelaar (voorheen overal zichtbaar als "Word Premium-lid (test)") werkt nu alleen nog in `__DEV__` — in gebouwde builds is premium altijd uit en de testknoppen zijn verborgen, zodat testers geen valse verwachting krijgen over wat straks gratis blijft.
+
+**RevenueCat/Premium (€4,99 eenmalig) — grotendeels opgezet, niet af**:
+- Google Cloud-project + serviceaccount aangemaakt, Play Console-rechten toegekend (financiële data, orders beheren, app-info lezen) — RevenueCat's credential-check gaf groen licht op alle 3.
+- Google Payments-verkopersaccount aangemaakt (vereist om iets te kunnen verkopen).
+- `react-native-purchases` toegevoegd aan de code (voegt BILLING-recht toe aan de APK — dit was nodig omdat Play Console geen in-app product laat aanmaken zonder een build met dat recht).
+- Nieuwe gedeelde `<PremiumLockedView>` met echte koop-/herstelknop, gebruikt op Dashboard en Cloud Save.
+- **Nog open, zie "Nog open" hieronder** — vereist een build vóórdat het product in Play Console aangemaakt kan worden, dan entitlement/offering in RevenueCat, dan de API-key invullen. Stappen staan in `docs/revenuecat-setup.md`.
+
+**Wilde dieren — volgorde, event-kopje, kaartweergave**: eigen volgorde (Capybara, Fret, Konijntje, Vos, Alpaca, Zeeotter, Panda, Sikahert) met een apart "Event dieren"-kopje eronder (Dolfijn eerst, dan Pinguïn, Maltezer). Nieuwe Kaart/Lijst-toggle: `PinMap` ondersteunt nu een optioneel emoji-icoon per pin i.p.v. een nummer; coördinaten voor 8 dieren gemeten tegen de echte `island-map.jpg` met de coördinaten-tool. Tikken op een pin opent dat dier in de lijst. Bewust geen vinkje-overlay op de kaart (puur locatie-info, geen voortgang). Dolfijn (Whalefall Canyon) en dieren met onbekende locatie (Pinguïn, Maltezer) staan niet op deze kaart.
+
+**Marketing**: r/Heartopedia-subreddit aangemaakt, welkomstpost + community-omschrijving geschreven (Engels, met Google Group-testlink). Gedeeld in 4 Facebook-groepen en 2 Discord-servers. "Appear in Reddit feeds"/"Appear in recommendations" staan aan; Community Topics kon niet gevonden worden (waarschijnlijk alleen bij aanmaken instelbaar, niet achteraf) — geaccepteerd, niet verder achterna gejaagd.
+
+**Build-perikelen**: gebruiker bouwde een keer met een verouderde lokale checkout (15 commits achter, geblokkeerd door lokale `npm install`-restjes in `package.json`/`package-lock.json`) — build bevatte daardoor niets van de sessie. Gevonden via de "Git commit"-metadata op de EAS-build-pagina. Opgelost met `git checkout -- package.json package-lock.json` + `git pull`. Les: bij "de update doet niks" altijd eerst de build-commit-hash checken op expo.dev vóórdat je in de app zelf gaat zoeken naar een bug.
+
+**Advertentiebanner "verdwenen"**: gebruiker meldde dat de banner (die eerder overlapte) na de laatste build volledig weg was. Code opnieuw nagekeken, geen regressie gevonden — vermoedelijk een AdMob-side "no-fill"-periode omdat de advertentie-eenheid nog maar net is aangemaakt (kan 24-48u duren om op gang te komen). Gebruiker gaat dit zelf in de gaten houden via het AdMob-dashboard (aanvragen vs. weergaven).
+
+### Nog open (oppakken volgende sessie)
+
+- **RevenueCat afmaken**: gebruiker moet eerst een nieuwe build draaien + uploaden (bevat nu de BILLING-permissie), dán pas kan het in-app product `heartopedia_premium` (€4,99) aangemaakt worden in Play Console. Daarna entitlement `premium` + offering koppelen in RevenueCat, de public API-key ophalen en aan Claude geven om in `src/constants/purchases.ts` te zetten, en nóg een build. Volledige stappen in `docs/revenuecat-setup.md`.
+- **Pushmeldingen-backend voor de app zelf** — staat al sinds deel 30 genoteerd als "niet vergeten vóór productie", nog steeds niet gebouwd. Nog niet besproken wélke meldingen precies (nieuwe bubbel-week? nieuwe codes?) — eerst afstemmen met gebruiker.
+- **Richting productietoegang**: gebruiker zit nog in Gesloten test - Alpha, heeft minimaal 12 aangemelde testers 14 dagen nodig voordat "productietoegang" aangevraagd kan worden in Play Console. Nu actief aan het werven via Google Group/Reddit/Discord/Facebook.
+- Advertentiebanner-status checken (zie hierboven — waarschijnlijk vanzelf opgelost na 24-48u, niet bevestigd).
+- Bewust nog niet besloten/uitgesteld: Tips & tricks-tabblad in Premium (post-lancering), in-app "beoordeel deze app"-prompt (`expo-store-review`), iOS-kant (geen Apple Developer-account).
+- Rainbow/meteorenregen-locaties: wachten op screenshots van gebruiker zodra dat event weer actief is.
+
+### Repo-status
+
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-08-11 (deel 31) — Nieuwe ideeën voor na de lancering, AdMob-ID's ingevuld
 
 **AdMob**: gebruiker maakte de banner-advertentie-eenheid aan. Echte App-ID (`ca-app-pub-4511788652457861~6547696624`) en banner-ad-unit-ID (`ca-app-pub-4511788652457861/5234614952`) ingevuld in `app.json` en `src/constants/ads.ts` (Android; iOS blijft test-ID). **Vereist een nieuwe EAS-build** om zichtbaar te worden — nog niet gedraaid, gebruiker wacht bewust op de uitslag van de lopende Play Console-review voordat de volgende build gestart wordt (kan dan meteen ook het nieuwe app-icoon meenemen).
