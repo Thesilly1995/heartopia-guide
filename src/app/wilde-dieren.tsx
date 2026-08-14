@@ -73,7 +73,6 @@ export default function WildeDierenScreen() {
   };
 
   const mapPins = locations.map((loc) => ({ num: loc.num, x: loc.x, y: loc.y, icon: loc.emoji }));
-  const mapChecked = Object.fromEntries(locations.map((loc) => [loc.num, (bonds[loc.name] || 0) > 0]));
   const openFromMap = (num: number) => {
     const loc = locations.find((l) => l.num === num);
     if (!loc) return;
@@ -98,7 +97,7 @@ export default function WildeDierenScreen() {
       {view === 'map' ? (
         <View style={styles.listContent}>
           {viewToggle}
-          <PinMap source={ISLAND_MAP} aspectRatio={825 / 799} pins={mapPins} checked={mapChecked} onToggle={openFromMap} pinColor={colors.coral} />
+          <PinMap source={ISLAND_MAP} aspectRatio={825 / 799} pins={mapPins} checked={{}} onToggle={openFromMap} pinColor={colors.coral} />
         </View>
       ) : (
         <FlatList
