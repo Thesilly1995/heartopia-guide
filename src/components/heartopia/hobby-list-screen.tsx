@@ -37,7 +37,7 @@ export interface HobbySubTab {
 }
 
 const LEVEL_FILTERS = ['Alle', 1, 3, 5, 7, 9] as const;
-const PROGRESS_FILTERS = ['all', 'undiscovered', 'notFiveStar', 'byStars', 'noMastery'] as const;
+const PROGRESS_FILTERS = ['all', 'undiscovered', 'notFiveStar', 1, 2, 3, 4, 5, 'noMastery'] as const;
 type ProgressFilter = (typeof PROGRESS_FILTERS)[number];
 
 const WEATHER_WORDS = {
@@ -65,7 +65,6 @@ const STRINGS = {
     masteryAchieved: 'Mastery behaald',
     progressUndiscovered: '🔍 Nog te ontdekken',
     progressNotFiveStar: '⭐ Nog geen 5★',
-    progressByStars: '📋 Mijn sterren (1-5)',
     progressNoMastery: '🏆 Nog geen mastery',
   },
   en: {
@@ -87,7 +86,6 @@ const STRINGS = {
     masteryAchieved: 'Mastery achieved',
     progressUndiscovered: '🔍 Not discovered yet',
     progressNotFiveStar: '⭐ Not 5★ yet',
-    progressByStars: '📋 My stars (1-5)',
     progressNoMastery: '🏆 No mastery yet',
   },
 } as const;
@@ -184,10 +182,8 @@ export function HobbyListScreen({
         const value = stars[item.name] ?? 0;
         return value > 0 && value < 5;
       });
-    } else if (progressFilter === 'byStars') {
-      filtered = filtered
-        .filter((item) => (stars[item.name] ?? 0) > 0)
-        .sort((a, b) => (stars[a.name] ?? 0) - (stars[b.name] ?? 0));
+    } else if (typeof progressFilter === 'number') {
+      filtered = filtered.filter((item) => (stars[item.name] ?? 0) === progressFilter);
     } else if (progressFilter === 'noMastery') {
       filtered = filtered.filter((item) => !mastery[item.name]);
     }
@@ -264,16 +260,19 @@ export function HobbyListScreen({
         <View style={styles.chipRow}>
           {PROGRESS_FILTERS.map((pf) => {
             const active = progressFilter === pf;
-            const PROGRESS_LABELS: Record<ProgressFilter, string> = {
-              all: s.all,
-              undiscovered: s.progressUndiscovered,
-              notFiveStar: s.progressNotFiveStar,
-              byStars: s.progressByStars,
-              noMastery: s.progressNoMastery,
-            };
+            const label =
+              typeof pf === 'number'
+                ? `${pf}★`
+                : pf === 'all'
+                  ? s.all
+                  : pf === 'undiscovered'
+                    ? s.progressUndiscovered
+                    : pf === 'notFiveStar'
+                      ? s.progressNotFiveStar
+                      : s.progressNoMastery;
             return (
               <Pressable key={pf} onPress={() => setProgressFilter(pf)} style={[styles.chip, active && styles.chipActive]}>
-                <Text style={[styles.chipText, active && styles.chipTextActive]}>{PROGRESS_LABELS[pf]}</Text>
+                <Text style={[styles.chipText, active && styles.chipTextActive]}>{label}</Text>
               </Pressable>
             );
           })}
@@ -440,7 +439,7 @@ function makeStyles(c: ThemeColors) {
       color: c.forest,
     },
     chipRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 8 },
-    chip: { paddingHorizontal: 10, paddingVertical: 5, borderRadius: 999, backgroundColor: 'rgba(255,255,255,0.25)' },
+    chip: { paddingHorizontal: 10, paddingVertical: 5, borderRadius: 999, backgroundColor: 'rgba(255,255,255,0.25)', flexShrink: 0 },
     chipActive: { backgroundColor: '#FFFFFF' },
     chipText: { fontSize: 11, fontWeight: '700', color: '#FFFFFF' },
     chipTextActive: { color: c.forest },
