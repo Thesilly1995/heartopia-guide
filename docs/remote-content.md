@@ -1,13 +1,14 @@
-# Remote content (rainbow/meteor-locaties, dagelijkse plots, event-override, weer)
+# Remote content (rainbow/meteor-locaties, dagelijkse plots, event-override, weer, gift codes)
 
 ## Waarom
 
 Rainbow-boeketten, meteorenregen-ertsplekken, de dagelijkse Zwervende
-Eik-plot, de dagelijkse Fluoriet-plot, het huidige event, en het
-spelweer (wisselt elke 6 uur) wisselen regelmatig. Die data zit niet
-vast in de app — hij wordt bij het opstarten opgehaald van één
-JSON-bestand op een URL die jij kiest. Zo kan die content bijgewerkt
-worden zonder nieuwe appversie/Play Store-review.
+Eik-plot, de dagelijkse Fluoriet-plot, het huidige event, het
+spelweer (wisselt elke 6 uur), en de actieve gift codes wisselen
+regelmatig. Die data zit niet vast in de app — hij wordt bij het
+opstarten opgehaald van één JSON-bestand op een URL die jij kiest. Zo
+kan die content bijgewerkt worden zonder nieuwe appversie/Play
+Store-review.
 
 Zolang er geen URL is ingesteld (of het ophalen mislukt, bv. geen
 internet), valt de app terug op de vast-gebakken standaardwaarden —
@@ -88,6 +89,9 @@ dat specifieke onderdeel.
     { "date": "2026-08-08", "kinds": ["warm_sun"] },
     { "date": "2026-08-09", "kinds": ["normal"] },
     { "date": "2026-08-12", "kinds": ["heatwave", "meteor"] }
+  ],
+  "codes": [
+    { "code": "aughatogift", "rewardNl": "50x Maanlicht Kristal, 5x Kleurrijk Fontein Vuurwerk (Roze), 3x Regenboog Fokpoeder", "rewardEn": "50x Moonlight Crystal, 5x Colorful Fountain Firework (Pink), 3x Rainbow Breeding Powder", "expiresNl": "31 aug 2026", "expiresEn": "Aug 31, 2026" }
   ]
 }
 ```
@@ -152,6 +156,14 @@ dat specifieke onderdeel.
   t/m zondag) op het homescreen, niet alleen de uitschieters. Dagen
   vóór vandaag worden automatisch niet meer getoond; je hoeft ze dus
   niet te verwijderen zodra ze voorbij zijn.
+- **`codes`**: de lijst met actieve redemption-codes op het
+  Codes-scherm. Elke entry heeft een `code`, een beloning
+  (`rewardNl`/`rewardEn`) en een vervaldatum (`expiresNl`/`expiresEn`,
+  vrije tekst — bv. `"31 aug 2026"` of `"Onbekend, recent
+  toegevoegd"` als de vervaldatum nog niet bekend is). Vervangt de
+  hele lijst zodra dit veld aanwezig is — verlopen codes dus gewoon
+  weglaten i.p.v. los markeren. Ontbreekt dit veld, dan valt de app
+  terug op de gebundelde (per definitie verouderde) standaardlijst.
 
 ## Waar dit in de code zit
 
@@ -161,8 +173,8 @@ dat specifieke onderdeel.
   hierboven.
 - `src/data/rainbow-spots.ts`, `src/data/meteor-spots.ts`,
   `src/data/daily-plots.ts`, `src/data/current-weather.ts`,
-  `src/data/week-forecast.ts` — combineren de remote data met een
-  bundel-fallback en de huidige taal.
+  `src/data/week-forecast.ts`, `src/data/codes.ts` — combineren de
+  remote data met een bundel-fallback en de huidige taal.
 - `src/data/event-meta.ts` — naam/data van het huidige event, gedeeld
   tussen het homescreen-kaartje en `src/app/events.tsx`.
 - `src/app/events.tsx` — combineert `payload.event` met de gebundelde

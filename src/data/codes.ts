@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 
 import { useLanguage } from '@/hooks/use-language';
+import { useRemoteContent } from '@/lib/remote-content';
 
 export interface CodeItem {
   code: string;
@@ -16,6 +17,8 @@ interface CodeRaw {
   code: string;
 }
 
+// Bundel-fallback voor als er nog geen (of geen bereikbare) remote content is —
+// per definitie verouderd, wordt overschreven zodra `payload.codes` beschikbaar is.
 const CODES_RAW: CodeRaw[] = [
   { rewardNl: "5x Kleurrijke Skyrocket Blauw, 5x Kleurrijke Sparkler Roze", rewardEn: "5x Colorful Skyrocket Blue, 5x Colorful Sparkler Pink", expiresNl: "Onbekend, recent toegevoegd", expiresEn: "Unknown, recently added", code: "2026summerlights" },
   { rewardNl: "3x Wensterren, 1x Zwervende Eik Hout, 3x Koffiebonen", rewardEn: "3x Wishing Stars, 1x Roaming Oak Timber, 3x Coffee Beans", expiresNl: "Onbekend, recent toegevoegd", expiresEn: "Unknown, recently added", code: "p3m7r5q9k2" },
@@ -26,13 +29,14 @@ const CODES_RAW: CodeRaw[] = [
 
 export function useCodes(): CodeItem[] {
   const { language } = useLanguage();
-  return useMemo(
-    () =>
-      CODES_RAW.map((r) => ({
-    reward: language === 'en' ? r.rewardEn : r.rewardNl,
-    expires: language === 'en' ? r.expiresEn : r.expiresNl,
-    code: r.code,
-      })),
-    [language]
-  );
+  const { payload } = useRemoteContent();
+
+  return useMemo(() => {
+    const source = payload?.codes && payload.codes.length > 0 ? payload.codes : CODES_RAW;
+    return source.map((r) => ({
+      reward: language === 'en' ? r.rewardEn : r.rewardNl,
+      expires: language === 'en' ? r.expiresEn : r.expiresNl,
+      code: r.code,
+    }));
+  }, [payload, language]);
 }
