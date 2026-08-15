@@ -12,7 +12,7 @@ import { useLanguage } from '@/hooks/use-language';
 
 const STARS_KEY = 'heartopia:schelpen:sterren';
 const MASTERY_KEY = 'heartopia:schelpen:sterren:mastery';
-const SHELL_FILTERS = ['all', 'undiscovered', 'notFiveStar', 'byStars'] as const;
+const SHELL_FILTERS = ['all', 'undiscovered', 'notFiveStar', 'byStars', 'noMastery'] as const;
 type ShellFilter = (typeof SHELL_FILTERS)[number];
 
 const POLLUTANTS = {
@@ -39,6 +39,7 @@ const STRINGS = {
     filterUndiscovered: '🔍 Nog te ontdekken',
     filterNotFiveStar: '⭐ Nog geen 5★',
     filterByStars: '📋 Mijn sterren (1-5)',
+    filterNoMastery: '🏆 Nog geen mastery',
     goldLabel: 'Goud (verkocht aan Albert Jr.)',
     tokensLabel: 'Tokens (verkocht aan Azure)',
     timeWindow: 'Tijdvenster',
@@ -70,6 +71,7 @@ const STRINGS = {
     filterUndiscovered: '🔍 Not discovered yet',
     filterNotFiveStar: '⭐ Not 5★ yet',
     filterByStars: '📋 My stars (1-5)',
+    filterNoMastery: '🏆 No mastery yet',
     goldLabel: 'Gold (sold to Albert Jr.)',
     tokensLabel: 'Tokens (sold to Azure)',
     timeWindow: 'Time window',
@@ -157,8 +159,11 @@ export default function OceanCleanupScreen() {
         .filter((shell) => (shellStars[shell.name] ?? 0) > 0)
         .sort((a, b) => (shellStars[a.name] ?? 0) - (shellStars[b.name] ?? 0));
     }
+    if (shellFilter === 'noMastery') {
+      return SHELLS.filter((shell) => !shellMastery[shell.name]);
+    }
     return SHELLS;
-  }, [SHELLS, shellStars, shellFilter]);
+  }, [SHELLS, shellStars, shellMastery, shellFilter]);
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -172,17 +177,16 @@ export default function OceanCleanupScreen() {
           <View style={styles.chipRow}>
             {SHELL_FILTERS.map((sf) => {
               const active = shellFilter === sf;
-              const label =
-                sf === 'all'
-                  ? s.filterAll
-                  : sf === 'undiscovered'
-                    ? s.filterUndiscovered
-                    : sf === 'notFiveStar'
-                      ? s.filterNotFiveStar
-                      : s.filterByStars;
+              const SHELL_FILTER_LABELS: Record<ShellFilter, string> = {
+                all: s.filterAll,
+                undiscovered: s.filterUndiscovered,
+                notFiveStar: s.filterNotFiveStar,
+                byStars: s.filterByStars,
+                noMastery: s.filterNoMastery,
+              };
               return (
                 <Pressable key={sf} onPress={() => setShellFilter(sf)} style={[styles.chip, active && styles.chipActive]}>
-                  <Text style={[styles.chipText, active && styles.chipTextActive]}>{label}</Text>
+                  <Text style={[styles.chipText, active && styles.chipTextActive]}>{SHELL_FILTER_LABELS[sf]}</Text>
                 </Pressable>
               );
             })}

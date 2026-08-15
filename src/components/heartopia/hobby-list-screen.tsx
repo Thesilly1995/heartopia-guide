@@ -37,7 +37,7 @@ export interface HobbySubTab {
 }
 
 const LEVEL_FILTERS = ['Alle', 1, 3, 5, 7, 9] as const;
-const PROGRESS_FILTERS = ['all', 'undiscovered', 'notFiveStar', 'byStars'] as const;
+const PROGRESS_FILTERS = ['all', 'undiscovered', 'notFiveStar', 'byStars', 'noMastery'] as const;
 type ProgressFilter = (typeof PROGRESS_FILTERS)[number];
 
 const WEATHER_WORDS = {
@@ -66,6 +66,7 @@ const STRINGS = {
     progressUndiscovered: '🔍 Nog te ontdekken',
     progressNotFiveStar: '⭐ Nog geen 5★',
     progressByStars: '📋 Mijn sterren (1-5)',
+    progressNoMastery: '🏆 Nog geen mastery',
   },
   en: {
     back: '‹ Back',
@@ -87,6 +88,7 @@ const STRINGS = {
     progressUndiscovered: '🔍 Not discovered yet',
     progressNotFiveStar: '⭐ Not 5★ yet',
     progressByStars: '📋 My stars (1-5)',
+    progressNoMastery: '🏆 No mastery yet',
   },
 } as const;
 
@@ -186,6 +188,8 @@ export function HobbyListScreen({
       filtered = filtered
         .filter((item) => (stars[item.name] ?? 0) > 0)
         .sort((a, b) => (stars[a.name] ?? 0) - (stars[b.name] ?? 0));
+    } else if (progressFilter === 'noMastery') {
+      filtered = filtered.filter((item) => !mastery[item.name]);
     }
 
     if (weatherFilter === 'Alle') return filtered;
@@ -195,7 +199,7 @@ export function HobbyListScreen({
       const bMatch = b.weather?.includes(weatherFilter) ? 1 : 0;
       return bMatch - aMatch;
     });
-  }, [activeItems, query, maxLevel, weatherFilter, progressFilter, stars]);
+  }, [activeItems, query, maxLevel, weatherFilter, progressFilter, stars, mastery]);
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -260,17 +264,16 @@ export function HobbyListScreen({
         <View style={styles.chipRow}>
           {PROGRESS_FILTERS.map((pf) => {
             const active = progressFilter === pf;
-            const label =
-              pf === 'all'
-                ? s.all
-                : pf === 'undiscovered'
-                  ? s.progressUndiscovered
-                  : pf === 'notFiveStar'
-                    ? s.progressNotFiveStar
-                    : s.progressByStars;
+            const PROGRESS_LABELS: Record<ProgressFilter, string> = {
+              all: s.all,
+              undiscovered: s.progressUndiscovered,
+              notFiveStar: s.progressNotFiveStar,
+              byStars: s.progressByStars,
+              noMastery: s.progressNoMastery,
+            };
             return (
               <Pressable key={pf} onPress={() => setProgressFilter(pf)} style={[styles.chip, active && styles.chipActive]}>
-                <Text style={[styles.chipText, active && styles.chipTextActive]}>{label}</Text>
+                <Text style={[styles.chipText, active && styles.chipTextActive]}>{PROGRESS_LABELS[pf]}</Text>
               </Pressable>
             );
           })}
