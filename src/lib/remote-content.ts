@@ -79,6 +79,14 @@ export interface RemoteWeather {
   validUntil: string;
 }
 
+export interface RemoteCode {
+  code: string;
+  rewardNl: string;
+  rewardEn: string;
+  expiresNl: string;
+  expiresEn: string;
+}
+
 export type WeekForecastKind = 'normal' | 'rain' | 'rainbow' | 'warm_sun' | 'meteor' | 'heatwave';
 
 export interface RemoteWeekForecastDay {
@@ -99,6 +107,8 @@ export interface RemoteContentPayload {
   dailyPlotsCalendar?: RemoteDailyPlotDay[];
   event?: RemoteEventOverride;
   weather?: RemoteWeather;
+  /** Actieve redemption-codes — ontbreekt dit veld, dan valt de app terug op de gebundelde (per definitie verouderde) standaardlijst. */
+  codes?: RemoteCode[];
   /**
    * De weekvoorspelling uit het in-game telefoontje: één entry per dag,
    * inclusief dagen zonder bijzonderheden (`kind: "normal"`) — zo kan de app
