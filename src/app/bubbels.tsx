@@ -17,7 +17,7 @@ const STRINGS = {
     title: 'Wekelijkse Bubbels',
     subtitle: 'Roze bubbels vol beloningen',
     disclaimer:
-      'Er zijn elke week 19 roze bubbels (15 op het hoofdeiland, 4 onderwater in Whalefall Canyon) — de exacte plekken en beloningen wisselen elke zaterdag om 6:00. De kaart hieronder toont de plekken van deze week.',
+      'Er zijn elke week 19 roze bubbels (15 op het hoofdeiland, 4 onderwater in Whalefall Canyon) — de exacte plekken en beloningen wisselen elke zaterdag. De kaart hieronder toont de plekken van deze week.',
     resetAll: 'Alles resetten',
     source: 'Bron: community-kaart (Illuminight)',
     map: '🗺️ Kaart',
@@ -28,7 +28,7 @@ const STRINGS = {
     title: 'Weekly Bubbles',
     subtitle: 'Pink bubbles full of rewards',
     disclaimer:
-      'There are 19 pink bubbles every week (15 on the main island, 4 underwater in Whalefall Canyon) — the exact spots and rewards change every Saturday at 6:00. The map below shows this week\'s spots.',
+      'There are 19 pink bubbles every week (15 on the main island, 4 underwater in Whalefall Canyon) — the exact spots and rewards change every Saturday. The map below shows this week\'s spots.',
     resetAll: 'Reset all',
     source: 'Source: community map (Illuminight)',
     map: '🗺️ Map',
