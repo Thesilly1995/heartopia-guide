@@ -12,6 +12,8 @@ import { useLanguage } from '@/hooks/use-language';
 
 const STARS_KEY = 'heartopia:schelpen:sterren';
 const MASTERY_KEY = 'heartopia:schelpen:sterren:mastery';
+const SHELL_FILTERS = ['all', 'undiscovered', 'notFiveStar', 'byStars', 'noMastery'] as const;
+type ShellFilter = (typeof SHELL_FILTERS)[number];
 
 const POLLUTANTS = {
   nl: [
@@ -33,6 +35,11 @@ const STRINGS = {
     permanentDisclaimer: 'Permanente hobby (Oceanbound 2.7-update). Blijft ook na afloop van het Call of Whales-event.',
     shellCatalog: '🐚 Schelpencatalogus',
     shellCatalogDesc: '26 van de 30 bekende schelpen (bron: eigen screenshots)',
+    filterAll: 'Alle',
+    filterUndiscovered: '🔍 Nog te ontdekken',
+    filterNotFiveStar: '⭐ Nog geen 5★',
+    filterByStars: '📋 Mijn sterren (1-5)',
+    filterNoMastery: '🏆 Nog geen mastery',
     goldLabel: 'Goud (verkocht aan Albert Jr.)',
     tokensLabel: 'Tokens (verkocht aan Azure)',
     timeWindow: 'Tijdvenster',
@@ -60,6 +67,11 @@ const STRINGS = {
     permanentDisclaimer: 'Permanent hobby (Oceanbound 2.7 update). Stays even after the Call of Whales event ends.',
     shellCatalog: '🐚 Shell Catalog',
     shellCatalogDesc: '26 of the 30 known shells (source: own screenshots)',
+    filterAll: 'All',
+    filterUndiscovered: '🔍 Not discovered yet',
+    filterNotFiveStar: '⭐ Not 5★ yet',
+    filterByStars: '📋 My stars (1-5)',
+    filterNoMastery: '🏆 No mastery yet',
     goldLabel: 'Gold (sold to Albert Jr.)',
     tokensLabel: 'Tokens (sold to Azure)',
     timeWindow: 'Time window',
@@ -92,6 +104,7 @@ export default function OceanCleanupScreen() {
   const [openShell, setOpenShell] = useState<string | null>(null);
   const [shellStars, setShellStars] = useState<Record<string, number>>({});
   const [shellMastery, setShellMastery] = useState<Record<string, boolean>>({});
+  const [shellFilter, setShellFilter] = useState<ShellFilter>('all');
 
   useEffect(() => {
     (async () => {
@@ -131,6 +144,27 @@ export default function OceanCleanupScreen() {
     }
   };
 
+  const filteredShells = useMemo(() => {
+    if (shellFilter === 'undiscovered') {
+      return SHELLS.filter((shell) => (shellStars[shell.name] ?? 0) === 0);
+    }
+    if (shellFilter === 'notFiveStar') {
+      return SHELLS.filter((shell) => {
+        const value = shellStars[shell.name] ?? 0;
+        return value > 0 && value < 5;
+      });
+    }
+    if (shellFilter === 'byStars') {
+      return [...SHELLS]
+        .filter((shell) => (shellStars[shell.name] ?? 0) > 0)
+        .sort((a, b) => (shellStars[a.name] ?? 0) - (shellStars[b.name] ?? 0));
+    }
+    if (shellFilter === 'noMastery') {
+      return SHELLS.filter((shell) => !shellMastery[shell.name]);
+    }
+    return SHELLS;
+  }, [SHELLS, shellStars, shellMastery, shellFilter]);
+
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <ScreenHeader gradient={['#4FA8CC', '#6EC6E8']} icon="🌊" title={s.title} subtitle={s.subtitle} />
@@ -140,8 +174,25 @@ export default function OceanCleanupScreen() {
         <View style={styles.card}>
           <Text style={styles.cardTitle}>{s.shellCatalog}</Text>
           <Text style={styles.cardDesc}>{s.shellCatalogDesc}</Text>
+          <View style={styles.chipRow}>
+            {SHELL_FILTERS.map((sf) => {
+              const active = shellFilter === sf;
+              const SHELL_FILTER_LABELS: Record<ShellFilter, string> = {
+                all: s.filterAll,
+                undiscovered: s.filterUndiscovered,
+                notFiveStar: s.filterNotFiveStar,
+                byStars: s.filterByStars,
+                noMastery: s.filterNoMastery,
+              };
+              return (
+                <Pressable key={sf} onPress={() => setShellFilter(sf)} style={[styles.chip, active && styles.chipActive]}>
+                  <Text style={[styles.chipText, active && styles.chipTextActive]}>{SHELL_FILTER_LABELS[sf]}</Text>
+                </Pressable>
+              );
+            })}
+          </View>
           <View style={{ gap: 8, marginTop: 8 }}>
-            {SHELLS.map((shell) => {
+            {filteredShells.map((shell) => {
               const isOpen = openShell === shell.name;
               return (
                 <View key={shell.name} style={styles.shellRow}>
@@ -250,6 +301,11 @@ function makeStyles(c: ThemeColors) {
     cardTitle: { fontSize: 16, fontWeight: '700', color: c.forest, marginBottom: 4 },
     cardDesc: { fontSize: 12, color: c.forestSoft, marginBottom: 4 },
     cardText: { fontSize: 12, color: c.forestSoft, lineHeight: 18 },
+    chipRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 8 },
+    chip: { paddingHorizontal: 10, paddingVertical: 5, borderRadius: 999, backgroundColor: c.surfaceSoft, borderWidth: 1, borderColor: c.line },
+    chipActive: { backgroundColor: c.forest, borderColor: c.forest },
+    chipText: { fontSize: 11, fontWeight: '700', color: c.forestSoft },
+    chipTextActive: { color: '#FFFFFF' },
     shellRow: { backgroundColor: c.surfaceSoft, borderRadius: 10, overflow: 'hidden' },
     shellHeader: { flexDirection: 'row', alignItems: 'center', gap: 8, padding: 8 },
     shellEmoji: { fontSize: 18 },

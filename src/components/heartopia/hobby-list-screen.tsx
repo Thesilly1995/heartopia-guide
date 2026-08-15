@@ -37,6 +37,8 @@ export interface HobbySubTab {
 }
 
 const LEVEL_FILTERS = ['Alle', 1, 3, 5, 7, 9] as const;
+const PROGRESS_FILTERS = ['all', 'undiscovered', 'notFiveStar', 'byStars', 'noMastery'] as const;
+type ProgressFilter = (typeof PROGRESS_FILTERS)[number];
 
 const WEATHER_WORDS = {
   nl: ['Zonnig', 'Regen', 'Regenboog'],
@@ -61,6 +63,10 @@ const STRINGS = {
     sellPrice: 'Verkoopprijs',
     bestResult: 'Hoogste resultaat',
     masteryAchieved: 'Mastery behaald',
+    progressUndiscovered: '🔍 Nog te ontdekken',
+    progressNotFiveStar: '⭐ Nog geen 5★',
+    progressByStars: '📋 Mijn sterren (1-5)',
+    progressNoMastery: '🏆 Nog geen mastery',
   },
   en: {
     back: '‹ Back',
@@ -79,6 +85,10 @@ const STRINGS = {
     sellPrice: 'Sell price',
     bestResult: 'Best result',
     masteryAchieved: 'Mastery achieved',
+    progressUndiscovered: '🔍 Not discovered yet',
+    progressNotFiveStar: '⭐ Not 5★ yet',
+    progressByStars: '📋 My stars (1-5)',
+    progressNoMastery: '🏆 No mastery yet',
   },
 } as const;
 
@@ -107,6 +117,7 @@ export function HobbyListScreen({
   const [query, setQuery] = useState('');
   const [maxLevel, setMaxLevel] = useState<number>(99);
   const [weatherFilter, setWeatherFilter] = useState<string>('Alle');
+  const [progressFilter, setProgressFilter] = useState<ProgressFilter>('all');
   const [activeSub, setActiveSub] = useState<string>(subTabs?.[0]?.key ?? '');
   const [stars, setStars] = useState<Record<string, number>>({});
   const [mastery, setMastery] = useState<Record<string, boolean>>({});
@@ -162,9 +173,24 @@ export function HobbyListScreen({
   };
 
   const visibleItems = useMemo(() => {
-    const filtered = activeItems
+    let filtered = activeItems
       .filter((item) => item.name.toLowerCase().includes(query.toLowerCase()))
       .filter((item) => maxLevel === 99 || item.level >= maxLevel);
+
+    if (progressFilter === 'undiscovered') {
+      filtered = filtered.filter((item) => (stars[item.name] ?? 0) === 0);
+    } else if (progressFilter === 'notFiveStar') {
+      filtered = filtered.filter((item) => {
+        const value = stars[item.name] ?? 0;
+        return value > 0 && value < 5;
+      });
+    } else if (progressFilter === 'byStars') {
+      filtered = filtered
+        .filter((item) => (stars[item.name] ?? 0) > 0)
+        .sort((a, b) => (stars[a.name] ?? 0) - (stars[b.name] ?? 0));
+    } else if (progressFilter === 'noMastery') {
+      filtered = filtered.filter((item) => !mastery[item.name]);
+    }
 
     if (weatherFilter === 'Alle') return filtered;
 
@@ -173,8 +199,7 @@ export function HobbyListScreen({
       const bMatch = b.weather?.includes(weatherFilter) ? 1 : 0;
       return bMatch - aMatch;
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeItems, query, maxLevel, weatherFilter]);
+  }, [activeItems, query, maxLevel, weatherFilter, progressFilter, stars, mastery]);
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -231,6 +256,24 @@ export function HobbyListScreen({
                 <Text style={[styles.chipText, active && styles.chipTextActive]}>
                   {isAll ? s.all : `Lv.${lvl}+`}
                 </Text>
+              </Pressable>
+            );
+          })}
+        </View>
+
+        <View style={styles.chipRow}>
+          {PROGRESS_FILTERS.map((pf) => {
+            const active = progressFilter === pf;
+            const PROGRESS_LABELS: Record<ProgressFilter, string> = {
+              all: s.all,
+              undiscovered: s.progressUndiscovered,
+              notFiveStar: s.progressNotFiveStar,
+              byStars: s.progressByStars,
+              noMastery: s.progressNoMastery,
+            };
+            return (
+              <Pressable key={pf} onPress={() => setProgressFilter(pf)} style={[styles.chip, active && styles.chipActive]}>
+                <Text style={[styles.chipText, active && styles.chipTextActive]}>{PROGRESS_LABELS[pf]}</Text>
               </Pressable>
             );
           })}
