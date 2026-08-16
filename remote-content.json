@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-15T00:00:00Z",
+  "updatedAt": "2026-08-16T00:00:00Z",
   "dailyPlotsCalendar": [
     { "date": "2026-08-09", "oakPlotNl": "Plot 6", "oakPlotEn": "Plot 6", "fluoritePlotNl": "Plot 11", "fluoritePlotEn": "Plot 11" },
     { "date": "2026-08-10", "oakPlotNl": "Plot 2", "oakPlotEn": "Plot 2", "fluoritePlotNl": "Plot 7", "fluoritePlotEn": "Plot 7" },
@@ -66,7 +66,14 @@
     { "date": "2026-08-13", "kinds": ["meteor"] },
     { "date": "2026-08-14", "kinds": ["heatwave"] },
     { "date": "2026-08-15", "kinds": ["heatwave"] },
-    { "date": "2026-08-16", "kinds": ["warm_sun"] }
+    { "date": "2026-08-16", "kinds": ["warm_sun"] },
+    { "date": "2026-08-17", "kinds": ["rainbow"] },
+    { "date": "2026-08-18", "kinds": ["rain"] },
+    { "date": "2026-08-19", "kinds": ["rain", "meteor"] },
+    { "date": "2026-08-20", "kinds": ["heatwave"] },
+    { "date": "2026-08-21", "kinds": ["rain"] },
+    { "date": "2026-08-22", "kinds": ["normal"] },
+    { "date": "2026-08-23", "kinds": ["normal"] }
   ],
   "codes": [
     { "code": "2026summerlights", "rewardNl": "5x Kleurrijke Skyrocket Blauw, 5x Kleurrijke Sparkler Roze", "rewardEn": "5x Colorful Skyrocket Blue, 5x Colorful Sparkler Pink", "expiresNl": "Onbekend, recent toegevoegd", "expiresEn": "Unknown, recently added" },
