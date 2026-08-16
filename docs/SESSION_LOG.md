@@ -2,6 +2,36 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-16 (deel 33) — Bubbelweek 15-21 aug, catalogus-filters, codes naar remote content, OTA-plan voor morgen
+
+**Bubbels-kaart (deel 27-tool gebruikt)**: gebruiker mat de nieuwe week (15-21 aug 2026) zelf tegen de échte app-kaarten met `docs/coordinate-picker-tool.html` (opnieuw als Artifact gepubliceerd, oude sessie-link niet meer bruikbaar vanuit een nieuwe sessie). 15 hoofdeiland- + 4 Whalefall Canyon-coördinaten verwerkt in `remote-content.json` → `bubbleWeek`, met richting-gebaseerde omschrijvingen (geen aannames over naamgegeven gebieden zoals "Onsen Berg" — die kennis had ik niet voor deze specifieke plekken). Bubbels-disclaimer-tekst op verzoek aangepast: "wisselen elke zaterdag om 6:00" → alleen "elke zaterdag" (update-moment hangt af van wanneer gebruiker het aanlevert, niet strikt aan de in-game reset-tijd gekoppeld).
+
+**Belangrijke correctie over builds**: eerst per ongeluk gezegd dat een pure tekst-wijziging "geen build nodig" had — dat klopte niet. Gecheckt: dit project heeft **geen** `expo-updates`/OTA (geen dependency, geen `updates`-blok in `app.json`). Dus élke wijziging buiten `remote-content.json` (alle `.tsx`/`.ts`-code) zit vast in de JS-bundle en vereist een nieuwe EAS-build + herinstallatie om zichtbaar te worden. Alleen `remote-content.json` wordt live opgehaald (`src/lib/remote-content.ts`, raw GitHub-URL naar `main`) en heeft dus nooit een build nodig.
+
+**Nieuwe catalogus-filters** (`src/components/heartopia/hobby-list-screen.tsx`, gedeeld door Vissen/Vogels/Insecten/Koken/Beeldhouwen/Tuinieren, + los in de schelpencatalogus van `src/app/ocean-cleanup.tsx`): filter-chips voor "nog te ontdekken" (0 sterren), "nog geen 5★" (1-4 sterren), losse **1★/2★/3★/4★/5★**-knoppen (exact op dat aantal sterren, na feedback — eerst één "Mijn sterren (1-5)"-knop met oplopend sorteren, bleek niet wat gebruiker bedoelde), en "nog geen mastery". Bewust **niet** toegepast op Huisdieren (honden/katten) — die gebruiken vriendschapsniveaus, geen ster-systeem. Onderweg een echte layout-bug gevonden en gefixt: op een echt toestel werd "🏆 Nog geen mastery" afgekapt tot "🏆 Nog geen" (chip kon krimpen i.p.v. als geheel wrappen in de flex-rij) — opgelost met `flexShrink: 0` op de chip-stijl. Getest via `expo start --web` + een los Playwright-scriptje tegen de globaal geïnstalleerde `playwright`-package (`/opt/node22/lib/node_modules/playwright`, `chromium-cli` bleek niet beschikbaar in deze sandbox) — voortaan de aanpak als er geen project-eigen run-skill is voor dit soort visuele verificatie.
+
+**Gift codes verhuisd naar remote content**: nieuwe code `aughatogift` (uit officiële Heartopia-tweet, Discord #redeem-codes) was aanleiding voor een bredere fix — gebruiker vroeg terecht of dit soort kleine content-toevoegingen niet zonder build kon. `src/data/codes.ts` haalt nu `payload.codes` op uit `remote-content.json` (nieuw `RemoteCode`-type in `src/lib/remote-content.ts`), met de bestaande lijst als bundel-fallback — zelfde patroon as bubbels/rainbow/meteor. Na de eerstvolgende build: nieuwe/verlopen codes verwerken kan voortaan puur via `remote-content.json`, geen build meer nodig. `docs/remote-content.md` bijgewerkt met het nieuwe schema-veld.
+
+**Weekweer 17-23 aug 2026** ingevuld in `weekForecast`: ma regenboog, di regen, wo regen+meteor, do hittegolf, vr regen, za+zo normaal.
+
+**EAS-build-perikelen**: gratis EAS-plan bleek voor deze maand op (reset 1 sep) — gebruiker is geüpgraded naar **Starter ($19/mnd, ±$45 build-credit → ±45 builds/maand op medium worker, hoge prioriteit i.p.v. lange gratis-wachtrij)**. Bij de eerstvolgende build verscheen de standaard "Expo Go"-waarschuwing (geen `expo-dev-client` in het project) — bevestigd dat dit puur informatief is en de production-build niet blokkeert.
+
+**OTA (EAS Update) — besproken, nog niet gebouwd**: gebruiker wil hier **morgen** mee starten (`expo-updates` toevoegen, `runtimeVersion`-policy + `updates.url` in `app.json`, kanaal in `eas.json`, één laatste volledige build, daarna `eas update` voor JS-only wijzigingen). Expliciete afspraak: **ik geef voortaan bij elke wijziging aan of het via OTA (`eas update`) of een volledige build moet** — vuistregel: nieuwe/gewijzigde native dependency of `app.json`-wijziging → build; alles in `src/**`/`remote-content.json` → OTA. **Extra aandachtspunt voor mezelf, elke sessie herhalen zolang OTA relevant is**: runtimeVersion moet omhoog bij een build met nieuwe/gewijzigde native code (RevenueCat, AdMob, straks `expo-updates` zelf) — vergeet ik dat te noemen, kan een OTA-update naar een incompatibele installatie gepusht worden en crashen. Bij twijfel over build-vs-OTA of runtimeVersion-impact: expliciet benoemen, niet aannemen.
+
+**Marketing-routine**: dagelijkse Reddit-post-Routine ingesteld (18:00, self-bind op deze sessie) die rouleert door bubbel-updates/tips/community-vragen/codes en checkt op nieuwe content in `remote-content.json`/`codes.ts`. Discord-introductietekst (NL+EN) geschreven voor de tester-werving, met placeholder-velden voor de Google Group- en opt-in-link (zelf niet ingevuld — geen URL's verzinnen). Bevestigd: bij een Gesloten-testtrack via Google Group moet een nieuwe tester éérst lid worden van de Group, dán pas de opt-in-link gebruiken, pas dan werkt de Play Store-downloadlink.
+
+### Nog open (oppakken volgende sessie)
+
+- **OTA-opzet afmaken** (zie hierboven) — dit is de hoofdtaak voor morgen.
+- Gebruiker moet zelf de nieuwe build (met bubbelweek/catalogus-filters/codes-migratie erin) afronden en uploaden naar Play Console.
+- Rainbow/meteor-kaartlocaties: wachten op screenshots van gebruiker (event moet actief zijn).
+- Discord-post: gebruiker moet zelf de Google Group-link en opt-in-link invullen vóór het posten.
+- Overige oude punten (pushmeldingen-backend, RevenueCat afmaken, productietoegang) staan nog steeds open, zie deel 32 — niet dit deel geraakt.
+
+### Repo-status
+
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide` (branch `claude/bubbles-kaart-tool-6t1xij`, telkens vers vanaf `main` herbouwd en direct gemerged na elke PR).
+
 ## 2026-08-14 (deel 32) — Kaart-zoom, item-namen altijd Engels, RevenueCat-opzet, wilde-dierenkaart
 
 **Kaart-zoom**: `PinMap` (bubbels/rainbow/meteor) opent nu volledig-scherm met pinch-zoom bij tikken op de kaart, met sluitknop. Pins blijven aanklikbaar.
