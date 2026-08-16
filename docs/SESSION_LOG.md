@@ -20,6 +20,8 @@ Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wa
 
 **Marketing-routine**: dagelijkse Reddit-post-Routine ingesteld (18:00, self-bind op deze sessie) die rouleert door bubbel-updates/tips/community-vragen/codes en checkt op nieuwe content in `remote-content.json`/`codes.ts`. Discord-introductietekst (NL+EN) geschreven voor de tester-werving, met placeholder-velden voor de Google Group- en opt-in-link (zelf niet ingevuld — geen URL's verzinnen). Bevestigd: bij een Gesloten-testtrack via Google Group moet een nieuwe tester éérst lid worden van de Group, dán pas de opt-in-link gebruiken, pas dan werkt de Play Store-downloadlink.
 
+**Zwervende Eik/Fluoriet-plot: resettijd bevestigd**. Gebruiker bevestigde dat deze plot, net als de missies, om **06:00 servertijd** verspringt (moment waarop de nieuwe in-game-dag begint) — stond nog nergens vastgelegd. `dailyPlotsCalendar` in `remote-content.json` was al voor de hele maand augustus (t/m 31 aug) vooraf ingevuld uit een in-game-kalenderafbeelding in een eerdere sessie; 17 augustus (Plot 3 / Plot 7) klopte al en hoefde niet aangepast. Bewust geen tekstregel in de UI toegevoegd — het homescreen-kaartje is eerder expliciet naar "icoon + waarde, geen apart label" herstijld (zie deel-geschiedenis), dus dit blijft puur een vastgelegd feit voor toekomstige sessies, geen zichtbare wijziging.
+
 ### Nog open (oppakken volgende sessie)
 
 - **OTA-opzet afmaken** (zie hierboven) — dit is de hoofdtaak voor morgen.
