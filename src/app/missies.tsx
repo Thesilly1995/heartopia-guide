@@ -7,6 +7,7 @@ import { ChecklistRow } from '@/components/heartopia/checklist-row';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { useLanguage } from '@/hooks/use-language';
+import { currentDailyResetKey, currentWeeklyResetKey } from '@/lib/reset-schedule';
 
 const STORAGE_KEY = 'heartopia:missies:vinkjes';
 const CUSTOM_STORAGE_KEY = 'heartopia:missies:eigen-dailies';
@@ -80,33 +81,6 @@ const SHOPS = {
 
 const DAILY_KEYS: string[] = DAILY.nl.map((item) => item.key);
 const WEEKLY_KEYS: string[] = [...WEEKLY.nl.map((item) => item.key), ...SHOPS.nl.map((item) => item.key), 'shops_all'];
-
-function dateKey(d: Date): string {
-  const yyyy = d.getFullYear();
-  const mm = String(d.getMonth() + 1).padStart(2, '0');
-  const dd = String(d.getDate()).padStart(2, '0');
-  return `${yyyy}-${mm}-${dd}`;
-}
-
-/** Speeldag-grens ligt op 06:00 (servertijd) — vóór dat tijdstip hoort een moment nog bij de vorige speeldag. */
-function currentDailyResetKey(): string {
-  const now = new Date();
-  const boundary = new Date(now);
-  boundary.setHours(6, 0, 0, 0);
-  if (now < boundary) boundary.setDate(boundary.getDate() - 1);
-  return dateKey(boundary);
-}
-
-/** Speelweek-grens ligt op zaterdag 06:00 (servertijd) — zelfde moment als de Roze Bubbels-wissel. */
-function currentWeeklyResetKey(): string {
-  const now = new Date();
-  const boundary = new Date(now);
-  boundary.setHours(6, 0, 0, 0);
-  if (now < boundary) boundary.setDate(boundary.getDate() - 1);
-  const daysSinceSaturday = (boundary.getDay() - 6 + 7) % 7;
-  boundary.setDate(boundary.getDate() - daysSinceSaturday);
-  return dateKey(boundary);
-}
 
 const STRINGS = {
   nl: {
