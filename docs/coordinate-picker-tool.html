@@ -526,9 +526,36 @@
     copyBtn.disabled = false;
   }
 
-  copyBtn.addEventListener('click', async () => {
-    await navigator.clipboard.writeText(jsonOut.value);
+  const copiedFlashDefaultText = copiedFlash.textContent;
+
+  function showFlash(text, duration) {
+    copiedFlash.textContent = text;
     copiedFlash.classList.add('show');
-    setTimeout(() => copiedFlash.classList.remove('show'), 2200);
+    setTimeout(() => {
+      copiedFlash.classList.remove('show');
+      copiedFlash.textContent = copiedFlashDefaultText;
+    }, duration);
+  }
+
+  copyBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(jsonOut.value);
+      showFlash(copiedFlashDefaultText, 2200);
+    } catch (err) {
+      // Clipboard-API vaak geblokkeerd in een sandboxed iframe (bv. gepubliceerde Artifact-pagina's) —
+      // val terug op tekst selecteren zodat de gebruiker het zelf met Ctrl/Cmd+C kan kopiëren.
+      jsonOut.focus();
+      jsonOut.select();
+      let fallbackWorked = false;
+      try {
+        fallbackWorked = document.execCommand('copy');
+      } catch (execErr) {
+        fallbackWorked = false;
+      }
+      showFlash(
+        fallbackWorked ? copiedFlashDefaultText : '⚠️ Automatisch kopiëren lukte niet — tekst is geselecteerd, druk Ctrl+C (of Cmd+C) om zelf te kopiëren',
+        fallbackWorked ? 2200 : 4000
+      );
+    }
   });
 </script>

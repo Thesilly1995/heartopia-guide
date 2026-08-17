@@ -31,7 +31,10 @@
     "labelEn": "Sunny",
     "validUntil": "2026-08-06T18:00:00Z"
   },
-  "rainbowSpots": [],
+  "rainbowSpots": [
+    { "num": 1, "x": 10.8, "y": 64.1, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied", "descriptionEn": "Main island, west area" },
+    { "num": 2, "x": 12.9, "y": 70, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied, bij locatie 1", "descriptionEn": "Main island, west area, near spot 1" }
+  ],
   "meteorSpots": [],
   "bubbleWeek": {
     "weekLabelNl": "Deze week (15-21 aug 2026)",

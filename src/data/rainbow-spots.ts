@@ -8,6 +8,8 @@ export interface EventSpot {
   x: number;
   y: number;
   description: string;
+  /** true = onderwater op de Whalefall Canyon-kaart, false = hoofdeiland-kaart. */
+  underwater: boolean;
 }
 
 // Bundel-fallback: leeg totdat REMOTE_CONTENT_URL data levert, of totdat een
@@ -25,6 +27,7 @@ export function useRainbowSpots(): EventSpot[] {
         x: spot.x,
         y: spot.y,
         description: language === 'en' ? spot.descriptionEn : spot.descriptionNl,
+        underwater: spot.underwater,
       }));
     }
     return RAINBOW_SPOTS_FALLBACK;

@@ -98,7 +98,8 @@ export interface RemoteWeekForecastDay {
 
 export interface RemoteContentPayload {
   updatedAt: string;
-  rainbowSpots?: RemoteMapSpot[];
+  /** Rainbow-boeketten op de hoofdeiland- en Whalefall Canyon-kaart, onderscheiden via `underwater`. */
+  rainbowSpots?: RemoteBubbleSpot[];
   meteorSpots?: RemoteMapSpot[];
   /** Wekelijkse roze-bubbels-locaties (verspringen elke zaterdag 6:00) — ontbreekt dit veld, dan valt de app terug op de gebundelde (verouderde) standaardlijst. */
   bubbleWeek?: RemoteBubbleWeek;
