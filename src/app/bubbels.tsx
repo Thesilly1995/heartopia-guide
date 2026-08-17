@@ -9,8 +9,10 @@ import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { useBubbleLocations, useBubbleWeekLabel } from '@/data/bubble-locations';
 import { useLanguage } from '@/hooks/use-language';
+import { currentWeeklyResetKey } from '@/lib/reset-schedule';
 
 const STORAGE_KEY = 'heartopia:bubbels:vinkjes';
+const RESET_WEEK_KEY = 'heartopia:bubbels:laatste-reset-week';
 
 const STRINGS = {
   nl: {
@@ -52,12 +54,26 @@ export default function BubbelsScreen() {
 
   useEffect(() => {
     (async () => {
+      let loaded: Record<number, boolean> = {};
       try {
         const raw = await AsyncStorage.getItem(STORAGE_KEY);
-        setChecked(raw ? JSON.parse(raw) : {});
+        loaded = raw ? JSON.parse(raw) : {};
       } catch {
-        setChecked({});
+        loaded = {};
       }
+
+      try {
+        const weekKey = currentWeeklyResetKey();
+        if ((await AsyncStorage.getItem(RESET_WEEK_KEY)) !== weekKey) {
+          loaded = {};
+          await AsyncStorage.setItem(RESET_WEEK_KEY, weekKey);
+          await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify({}));
+        }
+      } catch {
+        // reset-check mislukt (opslag niet bereikbaar) — bestaande vinkjes blijven gewoon staan
+      }
+
+      setChecked(loaded);
     })();
   }, []);
 
@@ -75,6 +91,7 @@ export default function BubbelsScreen() {
     setChecked({});
     try {
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify({}));
+      await AsyncStorage.setItem(RESET_WEEK_KEY, currentWeeklyResetKey());
     } catch {
       // opslaan mislukt
     }
