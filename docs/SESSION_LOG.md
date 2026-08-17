@@ -2,6 +2,23 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-17 (deel 36) — Verkoopprijs-per-ster afgerond via community Google Sheets-tracker
+
+**Vervolg op deel 35**: gebruiker wees op `heartodex.com` als extra bron — bleek domeinbreed 403-geblokkeerd voor WebFetch (elke pagina geprobeerd, ook losse soortpagina's). Vervolgens wees gebruiker een **gepubliceerde Google Sheet** aan ("Heartopia Price List with Guides" door AthenaMM e.a.) — de `htmlview`-link zelf is JS-only en levert alleen de titel, maar de **gviz CSV-export werkt wel**: `https://docs.google.com/spreadsheets/d/{ID}/gviz/tq?tqx=out:csv&gid={GID}` (waar `export?format=csv/html` juist 401 gaf — onthouden voor een volgende keer met dit soort bronnen). Het `gid`-nummer per tabblad is niet programmatisch te achterhalen (Google Sheets-tabnavigatie is JS-only) — gebruiker moest zelf per tabblad de URL uit de browser kopiëren.
+
+Hiermee alsnog afgerond, met het `sellPriceByStar`-veld uit deel 35:
+- **Insecten**: 64/64, **Vogels**: 46/46, **Recepten**: 43/45, **Tuinieren (Gewassen)**: 13/13, **Beeldhouwen (Zand)**: 14/14, **Bloemen**: 13/14.
+- **Sneeuwsculpturen**: geen match — de tracker heeft compleet andere (personage-thema) ontwerpen dan onze bestaande 4, bewust op `null` gelaten i.p.v. gokken.
+- **Bonus**: dezelfde tracker had ook een Ocean Cleanup-schelpen-tabblad — 12 eerder onbekende schelpen (`gold: null`) aangevuld met goud/tokens/tijdvenster. Bronvermelding in de UI aangepast van "eigen screenshots" naar "eigen screenshots + community-tracker".
+- Opgeruimd: het oude platte `sellPrice: string`-veld bij Beeldhouwen (bv. "140 🪙") is verwijderd — overbodig en op punten net iets anders dan de nieuwe precieze data.
+
+**Les over naam-matching bij dit soort bulk-imports**: bij twijfelgevallen (bv. "Cheese Shrimp Stuffed Crab" vs bron "Cheese Crayfish Stuffed Crab Claws", ander ingrediënt) bewust op `null` gelaten i.p.v. giswerk — zelfde voorzichtige aanpak als bij Vissen (Blue Ero Crayfish, Seabream). Voor het herkennen van AM/PM-tijdnotatie-eigenaardigheden in dit soort community-bronnen (bv. "6:00PM-12:00PM" dat eigenlijk middernacht betekent, geen 12:00 's middags): cross-refereren tegen al bekende, al-juist-vertaalde tijden in de bestaande data om de bron-conventie te ontcijferen, niet blind omrekenen.
+
+### Nog open (oppakken volgende sessie)
+
+- **Sneeuwsculpturen-verkoopprijzen**: nog steeds onbekend, geen bron gevonden. Alleen oppakken als gebruiker zelf data aanlevert.
+- Verder zelfde open punten als deel 35 (OTA-build, meteorenregen-kaartlocaties, oude losse punten uit deel 32/33).
+
 ## 2026-08-17 (deel 35) — OTA-opzet, Rainbow niet-permanent-correctie, verkoopprijs-per-ster (alleen Vissen)
 
 **OTA (EAS Update) opgezet**: `expo-updates` toegevoegd, `runtimeVersion.policy: "fingerprint"` (herberekent automatisch bij native wijzigingen — lost het eerder besproken "vergeet niet de runtimeVersion op te hogen"-risico grotendeels op), `updates.url` naar het bestaande EAS-project, `channel` per build-profiel in `eas.json`. Geen JS-wijzigingen nodig (checkt standaard bij opstarten). **Nog 1x een volledige build nodig** om deze runtime in de geïnstalleerde app te krijgen — kon ik niet zelf draaien (geen EAS-login in de sandbox), gebruiker moet dit zelf doen. Daarna: `eas update --channel production --message "..."` voor toekomstige JS-only wijzigingen, ook door gebruiker zelf te draaien (ik geef steeds het precieze commando).
