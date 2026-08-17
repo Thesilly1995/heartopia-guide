@@ -26,8 +26,7 @@ export interface HobbyItem {
   growTime?: string;
   seedPrice?: number;
   method?: string;
-  sellPrice?: string;
-  /** Verkoopprijs op 1★ t/m 5★ (goud), null als nog niet bevestigd. Heeft voorrang op `sellPrice` als beide gezet zijn. */
+  /** Verkoopprijs op 1★ t/m 5★ (goud), null als nog niet bevestigd. */
   sellPriceByStar?: (number | null)[] | null;
 }
 
@@ -62,7 +61,6 @@ const STRINGS = {
     growTime: 'Groeitijd',
     seedPrice: 'Zaadprijs',
     method: 'Hoe krijg je dit',
-    sellPrice: 'Verkoopprijs',
     sellPriceByStar: 'Verkoopprijs per ster',
     sellPriceUnknown: 'Nog niet bevestigd',
     bestResult: 'Hoogste resultaat',
@@ -85,7 +83,6 @@ const STRINGS = {
     growTime: 'Grow time',
     seedPrice: 'Seed price',
     method: 'How to get this',
-    sellPrice: 'Sell price',
     sellPriceByStar: 'Sell price by star',
     sellPriceUnknown: 'Not confirmed yet',
     bestResult: 'Best result',
@@ -394,10 +391,6 @@ export function HobbyListScreen({
                       <View style={[styles.detailBox, styles.detailBoxFull]}>
                         <Text style={styles.detailLabel}>{s.method}</Text>
                         <Text style={styles.detailValue}>{item.method}</Text>
-                      </View>
-                      <View style={[styles.detailBox, styles.detailBoxFull]}>
-                        <Text style={styles.detailLabel}>{s.sellPrice}</Text>
-                        <Text style={styles.detailValue}>{item.sellPrice}</Text>
                       </View>
                     </View>
                   )}
