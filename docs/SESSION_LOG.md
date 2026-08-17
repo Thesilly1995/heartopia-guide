@@ -2,6 +2,22 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-17 (deel 38) — Nieuwe catalogus: Puzzels & Boeken (Other Collections)
+
+**Nieuwe wens**: gebruiker wilde een catalogus voor de "Puzzel en boeken"-verzameling. Online bronnen gaven wel een community-lijst van ~80 puzzelnamen (gamingonphone.com, zonder rarity/prijs) maar niets bruikbaars voor boeken — bewust niet gegokt, gebruiker heeft in plaats daarvan zelf screenshots gestuurd van de in-game "Other Collections"-tab (onderdeel van het Collection Book). Bleek uiteindelijk **110 puzzels + 40 boeken** te bevatten (dus meer dan de externe schatting) — alleen naam + afbeelding zichtbaar in die tab, geen prijs/rarity/verkrijgmethode, en dat is expliciet akkoord bevonden door gebruiker ("naam + afbeelding is voldoende").
+
+**Nieuw gebouwd** (afwijkt bewust van het bestaande `HobbyListScreen`-patroon, want geen level/rarity/sterren-mechaniek van toepassing — puzzels/boeken zijn gewoon wel-of-niet-verzameld):
+- `src/data/collections.ts`: `usePuzzles()`/`useBooks()`, platte naam-lijst (altijd Engels, spel is niet gelokaliseerd) + vast emoji per categorie (🧩/📖). Eén boektitel ("Fascinating Psychological") leek afgekapt in de screenshot door kaartbreedte — zo overgenomen met een code-comment erbij, niet zelf aangevuld.
+- `src/components/heartopia/collection-list-screen.tsx`: nieuw gedeeld component, geïnspireerd op `badges.tsx` (simpele "verzameld"-toggle met vinkje-overlay, AsyncStorage) maar met `ScreenHeader`'s ingebouwde tabs (Puzzels/Boeken) + een zoekbalk, net als `HobbyListScreen`. Bewust **niet** toegevoegd aan `catalog-progress.ts`/het premium-dashboard — zelfde reden waarom Badges daar ook niet in zit (geen sterren-mechaniek om te tellen).
+- `src/app/puzzels-boeken.tsx`: nieuw scherm, gekoppeld in `(tabs)/index.tsx` onder de "Spel"-sectie (naast Badges/Codes).
+
+Getest via `expo start --web` + een los Playwright-scriptje (`/opt/node22/lib/node_modules/playwright`, chromium-executable zat op `/opt/pw-browsers/chromium-1194/chrome-linux/chrome` — pad iets anders dan verwacht, voortaan even `find /opt/pw-browsers` checken i.p.v. `/opt/pw-browsers/chromium/...` aannemen). Beide tabs, zoeken en de verzameld-toggle werkten correct, geen console-errors.
+
+### Nog open (oppakken volgende sessie)
+
+- Als de gebruiker ooit meer info per puzzel/boek wil (prijs, hoe verkrijg je het, rarity) — nu bewust weggelaten, alleen naam+afbeelding zoals besproken.
+- De afgekapte boektitel "Fascinating Psychological" — volledige titel navragen als het opvalt in-game.
+
 ## 2026-08-17 (deel 37) — OTA-build afgerond, eas update gepusht (na 1 mislukte poging door verouderde checkout)
 
 **OTA-build**: gebruiker heeft de laatste volledige build (met `expo-updates` erin) succesvol gedraaid. Advies gegeven: gewoon uploaden naar Play Console, ook al zit waarschijnlijk niet al het werk van ná de OTA-PR (#19) erin — dat hoeft niet via een nieuwe build, want deze build heeft de OTA-runtime al. In plaats daarvan: `eas update --channel production --message "..."` gebruiken om de rest (alle verkoopprijs-per-ster-werk, de Rainbow-leegmaak-fix) alsnog te pushen.
