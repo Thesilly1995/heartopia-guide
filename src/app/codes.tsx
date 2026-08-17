@@ -4,27 +4,25 @@ import { useEffect, useMemo, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { DisclaimerBox } from '@/components/heartopia/disclaimer-box';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { useCodes } from '@/data/codes';
 import { useLanguage } from '@/hooks/use-language';
+import { useRemoteContent } from '@/lib/remote-content';
 
 const STORAGE_KEY = 'heartopia:codes:ingevuld';
 
 const STRINGS = {
   nl: {
     title: 'Actieve Codes',
-    subtitle: 'Laatst gecontroleerd: 12 augustus 2026',
-    disclaimer: 'Codes wijzigen regelmatig. Deze lijst is zo actueel als ons laatste onderzoek — vraag me gerust om ze opnieuw op te zoeken als je twijfelt.',
+    lastChecked: (date: string) => `Laatst gecontroleerd: ${date}`,
     copied: 'Gekopieerd!',
     copy: 'Kopiëren',
     expires: 'Verloopt',
   },
   en: {
     title: 'Active Codes',
-    subtitle: 'Last checked: Aug 12, 2026',
-    disclaimer: "Codes change regularly. This list is as current as our last research — feel free to ask me to look them up again if you're unsure.",
+    lastChecked: (date: string) => `Last checked: ${date}`,
     copied: 'Copied!',
     copy: 'Copy',
     expires: 'Expires',
@@ -37,8 +35,17 @@ export default function CodesScreen() {
   const { language } = useLanguage();
   const s = STRINGS[language];
   const CODES = useCodes();
+  const { payload } = useRemoteContent();
   const [redeemed, setRedeemed] = useState<Record<string, boolean>>({});
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
+
+  const lastCheckedDate = useMemo(() => {
+    if (!payload?.updatedAt) return null;
+    const locale = language === 'en' ? 'en-US' : 'nl-NL';
+    const options: Intl.DateTimeFormatOptions =
+      language === 'en' ? { month: 'short', day: 'numeric', year: 'numeric' } : { day: 'numeric', month: 'long', year: 'numeric' };
+    return new Intl.DateTimeFormat(locale, options).format(new Date(payload.updatedAt));
+  }, [payload, language]);
 
   useEffect(() => {
     (async () => {
@@ -69,16 +76,16 @@ export default function CodesScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
-      <ScreenHeader gradient={['#FF8FA3', '#FFB3C1']} icon="🎁" title={s.title} subtitle={s.subtitle} />
+      <ScreenHeader
+        gradient={['#FF8FA3', '#FFB3C1']}
+        icon="🎁"
+        title={s.title}
+        subtitle={lastCheckedDate ? s.lastChecked(lastCheckedDate) : undefined}
+      />
       <FlatList
         data={CODES}
         keyExtractor={(item) => item.code}
         contentContainerStyle={styles.listContent}
-        ListHeaderComponent={
-          <View style={{ marginBottom: 10 }}>
-            <DisclaimerBox text={s.disclaimer} />
-          </View>
-        }
         renderItem={({ item: c }) => {
           const isRedeemed = redeemed[c.code];
           const isCopied = copiedCode === c.code;
