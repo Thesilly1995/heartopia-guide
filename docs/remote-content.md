@@ -45,7 +45,8 @@ dat specifieke onderdeel.
 {
   "updatedAt": "2026-08-10T12:00:00Z",
   "rainbowSpots": [
-    { "num": 1, "x": 58, "y": 28, "descriptionNl": "Onsen Berg, oostkant", "descriptionEn": "Onsen Mountain, east side" }
+    { "num": 1, "x": 58, "y": 28, "underwater": false, "descriptionNl": "Onsen Berg, oostkant", "descriptionEn": "Onsen Mountain, east side" },
+    { "num": 3, "x": 66, "y": 71, "underwater": true, "descriptionNl": "Whalefall Canyon, onderaan het cluster", "descriptionEn": "Whalefall Canyon, bottom of the cluster" }
   ],
   "meteorSpots": [
     { "num": 1, "x": 34, "y": 19, "descriptionNl": "Noordwestelijk woestijngebied", "descriptionEn": "Northwest desert area" }
@@ -102,7 +103,12 @@ dat specifieke onderdeel.
   eilandkaart. `x`/`y` zijn percentages (0-100) t.o.v. de kaartafbeelding
   (`assets/images/maps/island-map.jpg`), zelfde systeem als de
   bestaande Bubbels-kaart. Laat de array leeg (`[]`) of weg als de
-  gebeurtenis niet actief is.
+  gebeurtenis niet actief is. `rainbowSpots` ondersteunt ook
+  `underwater: true` voor de 4 vaste boeketplekken in Whalefall Canyon
+  (`whalefall-map.jpg`) — die blijven permanent staan, los van of het
+  Rainbow-event actief is (van de 4 kan een speler er maar 1
+  daadwerkelijk pakken, verschilt per speler). `meteorSpots` heeft
+  geen `underwater`-ondersteuning.
 - **`bubbleWeek`**: de 19 roze-bubbels-locaties van deze week (15 op de
   hoofdeiland-kaart `island-map.jpg`, 4 onderwater op de Whalefall
   Canyon-kaart `whalefall-map.jpg`, onderscheiden via `underwater`).

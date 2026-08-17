@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { DisclaimerBox } from '@/components/heartopia/disclaimer-box';
 import { PinMap } from '@/components/heartopia/pin-map';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
@@ -13,6 +14,7 @@ import { useLanguage } from '@/hooks/use-language';
 const STORAGE_KEY = 'heartopia:rainbow-meteor:vinkjes';
 
 const ISLAND_MAP = require('@/assets/images/maps/island-map.jpg');
+const WHALEFALL_MAP = require('@/assets/images/maps/whalefall-map.jpg');
 
 const STRINGS = {
   nl: {
@@ -22,6 +24,9 @@ const STRINGS = {
     meteorTab: '☄️ Meteorenregen',
     emptyText: 'Niet actief op dit moment. Zodra dit weer gebeurt, komen de actuele locaties hier te staan.',
     resetProgress: 'Voortgang resetten',
+    whalefallLabel: '🌊 Whalefall Canyon',
+    whalefallDisclaimer:
+      'In Whalefall Canyon staan 4 boeketplekken, maar je kunt er maar 1 van de 4 pakken — welke dat is, verschilt per speler. Dit is permanent (blijft ook als het Rainbow-event niet actief is).',
   },
   en: {
     title: 'Rainbow & Meteor Shower',
@@ -30,6 +35,9 @@ const STRINGS = {
     meteorTab: '☄️ Meteor Shower',
     emptyText: 'Not active right now. Once this happens again, the current locations will appear here.',
     resetProgress: 'Reset progress',
+    whalefallLabel: '🌊 Whalefall Canyon',
+    whalefallDisclaimer:
+      "Whalefall Canyon has 4 bouquet spots, but you can only grab 1 of the 4 — which one differs per player. This is permanent (stays even when the Rainbow event isn't active).",
   },
 } as const;
 
@@ -82,6 +90,11 @@ export default function RainbowMeteorScreen() {
       .map(([k, v]) => [Number(k.slice(1)), v])
   );
 
+  const islandSpots = spots.filter((spot) => !('underwater' in spot) || !spot.underwater);
+  const whalefallSpots = tab === 'rainbow' ? rainbowSpots.filter((spot) => spot.underwater) : [];
+  const pinColor = tab === 'rainbow' ? '#B78CD8' : colors.skyDark;
+  const withIcon = (list: typeof spots) => (tab === 'rainbow' ? list.map((spot) => ({ ...spot, icon: '🌈' })) : list);
+
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <ScreenHeader
@@ -100,12 +113,27 @@ export default function RainbowMeteorScreen() {
         <PinMap
           source={ISLAND_MAP}
           aspectRatio={825 / 799}
-          pins={spots}
+          pins={withIcon(islandSpots)}
           checked={prefixedChecked}
           onToggle={toggle}
-          pinColor={tab === 'rainbow' ? '#B78CD8' : colors.skyDark}
-          emptyText={s.emptyText}
+          pinColor={pinColor}
+          emptyText={tab === 'rainbow' && whalefallSpots.length > 0 ? undefined : s.emptyText}
         />
+
+        {tab === 'rainbow' && whalefallSpots.length > 0 && (
+          <>
+            <Text style={styles.mapLabel}>{s.whalefallLabel}</Text>
+            <DisclaimerBox text={s.whalefallDisclaimer} />
+            <PinMap
+              source={WHALEFALL_MAP}
+              aspectRatio={1197 / 880}
+              pins={withIcon(whalefallSpots)}
+              checked={prefixedChecked}
+              onToggle={toggle}
+              pinColor={pinColor}
+            />
+          </>
+        )}
 
         {spots.length > 0 && (
           <Pressable style={styles.resetButton} onPress={resetAll}>
@@ -115,12 +143,16 @@ export default function RainbowMeteorScreen() {
 
         {spots.map((spot) => {
           const isChecked = prefixedChecked[spot.num];
+          const underwater = 'underwater' in spot && spot.underwater;
           return (
             <Pressable key={spot.num} style={styles.row} onPress={() => toggle(spot.num)}>
               <View style={[styles.numBadge, isChecked && styles.numBadgeActive]}>
                 <Text style={[styles.numText, isChecked && styles.numTextActive]}>{isChecked ? '✓' : spot.num}</Text>
               </View>
-              <Text style={[styles.desc, isChecked && styles.descChecked]}>{spot.description}</Text>
+              <Text style={[styles.desc, isChecked && styles.descChecked]}>
+                {underwater ? '🌊 ' : ''}
+                {spot.description}
+              </Text>
             </Pressable>
           );
         })}
@@ -135,6 +167,7 @@ function makeStyles(c: ThemeColors) {
     content: { padding: 16, gap: 12 },
     resetButton: { alignSelf: 'flex-end', paddingHorizontal: 10, paddingVertical: 5, borderRadius: 999, backgroundColor: c.chipBg },
     resetButtonText: { fontSize: 10, fontWeight: '700', color: c.skyDark },
+    mapLabel: { fontSize: 13, fontWeight: '700', color: c.forest, marginTop: 4 },
     row: { flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.line, padding: 12 },
     numBadge: { width: 28, height: 28, borderRadius: 14, backgroundColor: c.iconBg, alignItems: 'center', justifyContent: 'center' },
     numBadgeActive: { backgroundColor: c.yellow },
