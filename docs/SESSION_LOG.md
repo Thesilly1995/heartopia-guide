@@ -2,6 +2,37 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-17 (deel 34) — Missies/Bubbels-autoreset-bug, Rainbow Whalefall+Doris, EAS-abonnement heroverwegen
+
+**Missies/Bubbels: echte reset-bug gevonden en gefixt**. Tester meldde dat dailies niet reset om 06:00. Root cause: de "Reset: elke dag om 06:00"-tekst was puur decoratief — er was **geen enkele reset-logica**, en Missies had zelfs geen handmatige resetknop (Bubbels wel). Gefixt: bij het openen van Missies wordt nu gecheckt of de speeldag- (06:00) of speelweek-grens (zaterdag 06:00) verstreken is sinds de laatste keer, en dan worden alleen de bijbehorende vinkjes geleegd (dagelijks + eigen taken, of wekelijks + winkels). Handmatige "Alles resetten"-knop toegevoegd per tab. Gebruiker vroeg vervolgens terecht te bevestigen of Bubbels' wekelijkse reset ook automatisch ging — bleek dezelfde bug: alleen een handmatige knop. Ook daar automatische reset toegevoegd. De reset-berekening stond dubbel gedefinieerd — verplaatst naar gedeeld `src/lib/reset-schedule.ts` (`currentDailyResetKey`/`currentWeeklyResetKey`), door beide schermen gebruikt. **Les: als een UI-tekst een automatisch gedrag claimt ("reset om X"), controleer of dat gedrag ook echt gecodeerd is — niet aannemen.**
+
+**Codes-scherm opgeschoond**: 2 verlopen codes (`2026summerlights`, `p3m7r5q9k2`, verlopen 31 juli) verwijderd uit `remote-content.json` én de bundel-fallback. "Laatst gecontroleerd"-tekst was hardcoded ("12 augustus 2026") — nu dynamisch, leest `remote-content.json`'s `updatedAt` via `Intl.DateTimeFormat`. "Codes wijzigen regelmatig"-disclaimerbox verwijderd op verzoek. Twee nieuwe codes onderweg verwerkt (`aughatogift`, `a7m4q9r3k6n2`) — beide **al live** gezet omdat codes sinds gisteren uit remote content komen, geen build nodig.
+
+**Rainbow-kaart uitgebreid** (coordinate-picker-tool opnieuw gebruikt, artifact-URL blijft hetzelfde bij een redeploy binnen dezelfde sessie):
+- 2 hoofdeiland-locaties verwerkt.
+- **Whalefall Canyon toegevoegd** aan de Rainbow-tab (net als bij Bubbels: tweede kaart, `underwater`-veld — nieuw `RemoteRainbowSpot`-type i.p.v. de generieke `RemoteMapSpot`, want Doris hoort niet bij `meteorSpots`/`bubbleWeek`). 4 boeketplekken: van de 4 kan een speler er maar 1 daadwerkelijk pakken (verschilt per speler), disclaimer toegevoegd. Dit is **permanent**, niet gebonden aan of het Rainbow-event actief is.
+- **Doris (NPC)** toegevoegd: nieuw `isDoris`-veld, eigen icoon (👧 — geen exacte "roze haar"-emoji beschikbaar in de standaardset, haarkleur-modifiers zijn beperkt tot rood/krullend/wit/kaal). Ze staat alleen bij Whalefall Canyon (gebruiker checkte dit na en bevestigde: niet op het hoofdeiland, dus geen verdere actie nodig daar).
+- **Reminder-tekstje toegevoegd**: het boeket bij de eigen brievenbus staat er ook altijd, maar niet als pin (huisplek verschilt per speler) — puur als tekst.
+- 🌈 als pin-icoon i.p.v. kale nummers op de Rainbow-tab (Meteorenregen-tab ongewijzigd, geen icoon).
+- Getest via `expo start --web` + Playwright met `page.route()`-mock van `remote-content.json` (nodig omdat de sandbox de echte raw-GitHub-URL niet kan bereiken) — nu de vaste aanpak voor het testen van remote-content-afhankelijke schermen.
+
+**coordinate-picker-tool.html-bugfix**: de JSON-kopieerknop deed niets — `navigator.clipboard.writeText()` gooide een onafgehandelde rejection in de gesandboxde Artifact-iframe (geen `clipboard-write`-permissie). Gebruiker had het handmatig gekopieerd als workaround. Fix: `try`/`catch` met fallback naar tekst selecteren + `execCommand('copy')`, en bij falen daarvan een duidelijke "druk zelf Ctrl+C"-melding. Bevestigd getest met Clipboard-API geforceerd geblokkeerd.
+
+**Urgente build**: gebruiker startte een productie-build met nog maar 20 min tot het Rainbow-event begon, omdat de Whalefall/Doris-coördinaten al in `remote-content.json` stonden maar de **oude, nog-niet-herbouwde app** ze verkeerd zou tonen (op de hoofdeiland-kaart, op de verkeerde plek — want de code om onderwater-plekken te filteren/apart te tonen zat pas in de wijzigingen van vandaag). Belangrijke nuance om te onthouden: bij `remote-content.json`-wijzigingen die een **nieuw veld** gebruiken (zoals `underwater`/`isDoris` hier), is het niet genoeg dat de data "live" is — de al-geïnstalleerde app moet ook de code hebben om dat nieuwe veld te snappen, anders toont hij het fout i.p.v. helemaal niet.
+
+**EAS-abonnement — heroverwegen na OTA**: gebruiker vroeg of ze na de OTA-opzet (minder builds nodig) kan terugschakelen naar het gratis EAS-plan. Advies gegeven: **nog niet meteen** — builds worden niet 0 (native dependency-upgrades, `app.json`-wijzigingen, en Play Store's periodieke Android-target-API-eisen blijven builds vereisen), en juist vandaag liet zien wat de Starter-prioriteit waard is bij tijdsdruk (geen 90+ min gratis-wachtrij). Voorstel: een maand aankijken hoe vaak er na OTA nog een échte build nodig is, dan pas beslissen. Downgraden kan altijd, geen vaste looptijd.
+
+### Nog open (oppakken volgende sessie)
+
+- **OTA-opzet** — nog steeds de hoofdtaak, was voor "vandaag" gepland maar de tijd ging op aan de reset-bug + Rainbow-uitbreiding + de urgente build. `expo-updates` toevoegen, `runtimeVersion`-policy + `updates.url` in `app.json`, kanaal in `eas.json`, één laatste volledige build.
+- EAS-abonnement: na ~1 maand OTA-gebruik heroverwegen of Starter nog nodig is (zie hierboven) — niet nu al downgraden.
+- Meteorenregen-kaartlocaties: nog steeds niet aangeleverd (rainbow wel, meteor nog niet).
+- Overige oude punten (pushmeldingen-backend, RevenueCat afmaken, productietoegang, Discord-links invullen) staan nog open, zie deel 32/33.
+
+### Repo-status
+
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide` (branch `claude/bubbles-kaart-tool-6t1xij`, telkens vers vanaf `main` herbouwd en direct gemerged na elke PR — gebruiker gaf expliciet doorlopende merge-toestemming, dus niet meer per PR gevraagd).
+
 ## 2026-08-16 (deel 33) — Bubbelweek 15-21 aug, catalogus-filters, codes naar remote content, OTA-plan voor morgen
 
 **Bubbels-kaart (deel 27-tool gebruikt)**: gebruiker mat de nieuwe week (15-21 aug 2026) zelf tegen de échte app-kaarten met `docs/coordinate-picker-tool.html` (opnieuw als Artifact gepubliceerd, oude sessie-link niet meer bruikbaar vanuit een nieuwe sessie). 15 hoofdeiland- + 4 Whalefall Canyon-coördinaten verwerkt in `remote-content.json` → `bubbleWeek`, met richting-gebaseerde omschrijvingen (geen aannames over naamgegeven gebieden zoals "Onsen Berg" — die kennis had ik niet voor deze specifieke plekken). Bubbels-disclaimer-tekst op verzoek aangepast: "wisselen elke zaterdag om 6:00" → alleen "elke zaterdag" (update-moment hangt af van wanneer gebruiker het aanlevert, niet strikt aan de in-game reset-tijd gekoppeld).
