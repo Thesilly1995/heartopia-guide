@@ -33,7 +33,12 @@
   },
   "rainbowSpots": [
     { "num": 1, "x": 10.8, "y": 64.1, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied", "descriptionEn": "Main island, west area" },
-    { "num": 2, "x": 12.9, "y": 70, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied, bij locatie 1", "descriptionEn": "Main island, west area, near spot 1" }
+    { "num": 2, "x": 12.9, "y": 70, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied, bij locatie 1", "descriptionEn": "Main island, west area, near spot 1" },
+    { "num": 3, "x": 20.2, "y": 48.1, "underwater": true, "descriptionNl": "Whalefall Canyon, westelijk gebied", "descriptionEn": "Whalefall Canyon, west area" },
+    { "num": 4, "x": 46.5, "y": 47.8, "underwater": true, "descriptionNl": "Whalefall Canyon, centraal gebied", "descriptionEn": "Whalefall Canyon, central area" },
+    { "num": 5, "x": 69, "y": 46, "underwater": true, "descriptionNl": "Whalefall Canyon, oostelijk gebied", "descriptionEn": "Whalefall Canyon, east area" },
+    { "num": 6, "x": 62.7, "y": 76.6, "underwater": true, "descriptionNl": "Whalefall Canyon, zuidelijk gebied", "descriptionEn": "Whalefall Canyon, south area" },
+    { "num": 7, "x": 34.5, "y": 44.6, "underwater": true, "isDoris": true, "descriptionNl": "Doris (NPC) — shop hier tijdens Rainbow-momenten", "descriptionEn": "Doris (NPC) — shop here during Rainbow moments" }
   ],
   "meteorSpots": [],
   "bubbleWeek": {

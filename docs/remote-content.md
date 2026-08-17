@@ -46,7 +46,8 @@ dat specifieke onderdeel.
   "updatedAt": "2026-08-10T12:00:00Z",
   "rainbowSpots": [
     { "num": 1, "x": 58, "y": 28, "underwater": false, "descriptionNl": "Onsen Berg, oostkant", "descriptionEn": "Onsen Mountain, east side" },
-    { "num": 3, "x": 66, "y": 71, "underwater": true, "descriptionNl": "Whalefall Canyon, onderaan het cluster", "descriptionEn": "Whalefall Canyon, bottom of the cluster" }
+    { "num": 3, "x": 66, "y": 71, "underwater": true, "descriptionNl": "Whalefall Canyon, onderaan het cluster", "descriptionEn": "Whalefall Canyon, bottom of the cluster" },
+    { "num": 7, "x": 34.5, "y": 44.6, "underwater": true, "isDoris": true, "descriptionNl": "Doris (NPC) — shop hier tijdens Rainbow-momenten", "descriptionEn": "Doris (NPC) — shop here during Rainbow moments" }
   ],
   "meteorSpots": [
     { "num": 1, "x": 34, "y": 19, "descriptionNl": "Noordwestelijk woestijngebied", "descriptionEn": "Northwest desert area" }
@@ -108,7 +109,10 @@ dat specifieke onderdeel.
   (`whalefall-map.jpg`) — die blijven permanent staan, los van of het
   Rainbow-event actief is (van de 4 kan een speler er maar 1
   daadwerkelijk pakken, verschilt per speler). `meteorSpots` heeft
-  geen `underwater`-ondersteuning.
+  geen `underwater`-ondersteuning. Een `rainbowSpots`-entry met
+  `"isDoris": true` markeert Doris' vaste NPC-plek (permanent, ze staat
+  er altijd — bij haar kun je shoppen tijdens Rainbow-momenten) en
+  krijgt in de app een ander icoon dan de boeketplekken.
 - **`bubbleWeek`**: de 19 roze-bubbels-locaties van deze week (15 op de
   hoofdeiland-kaart `island-map.jpg`, 4 onderwater op de Whalefall
   Canyon-kaart `whalefall-map.jpg`, onderscheiden via `underwater`).

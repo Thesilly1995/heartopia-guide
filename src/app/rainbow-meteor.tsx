@@ -27,6 +27,8 @@ const STRINGS = {
     whalefallLabel: '🌊 Whalefall Canyon',
     whalefallDisclaimer:
       'In Whalefall Canyon staan 4 boeketplekken, maar je kunt er maar 1 van de 4 pakken — welke dat is, verschilt per speler. Dit is permanent (blijft ook als het Rainbow-event niet actief is).',
+    dorisNote:
+      '👧 Doris is een NPC die altijd op haar vaste plek(ken) staat — bij haar kun je shoppen tijdens Rainbow-momenten.',
   },
   en: {
     title: 'Rainbow & Meteor Shower',
@@ -38,6 +40,7 @@ const STRINGS = {
     whalefallLabel: '🌊 Whalefall Canyon',
     whalefallDisclaimer:
       "Whalefall Canyon has 4 bouquet spots, but you can only grab 1 of the 4 — which one differs per player. This is permanent (stays even when the Rainbow event isn't active).",
+    dorisNote: "👧 Doris is an NPC who's always at her fixed spot(s) — you can shop with her during Rainbow moments.",
   },
 } as const;
 
@@ -93,7 +96,8 @@ export default function RainbowMeteorScreen() {
   const islandSpots = spots.filter((spot) => !('underwater' in spot) || !spot.underwater);
   const whalefallSpots = tab === 'rainbow' ? rainbowSpots.filter((spot) => spot.underwater) : [];
   const pinColor = tab === 'rainbow' ? '#B78CD8' : colors.skyDark;
-  const withIcon = (list: typeof spots) => (tab === 'rainbow' ? list.map((spot) => ({ ...spot, icon: '🌈' })) : list);
+  const withIcon = (list: typeof spots) =>
+    tab === 'rainbow' ? list.map((spot) => ({ ...spot, icon: 'isDoris' in spot && spot.isDoris ? '👧' : '🌈' })) : list;
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -110,6 +114,8 @@ export default function RainbowMeteorScreen() {
         onTabChange={(k) => setTab(k as 'rainbow' | 'meteor')}
       />
       <ScrollView contentContainerStyle={styles.content}>
+        {tab === 'rainbow' && rainbowSpots.some((spot) => spot.isDoris) && <DisclaimerBox text={s.dorisNote} />}
+
         <PinMap
           source={ISLAND_MAP}
           aspectRatio={825 / 799}

@@ -25,6 +25,11 @@ export interface RemoteBubbleWeek {
   spots: RemoteBubbleSpot[];
 }
 
+export interface RemoteRainbowSpot extends RemoteBubbleSpot {
+  /** true = dit is Doris' vaste plek (NPC, permanent, laat een ander icoon zien dan de boeketplekken). */
+  isDoris?: boolean;
+}
+
 export interface RemoteDailyPlots {
   oakPlotNl: string;
   oakPlotEn: string;
@@ -99,7 +104,7 @@ export interface RemoteWeekForecastDay {
 export interface RemoteContentPayload {
   updatedAt: string;
   /** Rainbow-boeketten op de hoofdeiland- en Whalefall Canyon-kaart, onderscheiden via `underwater`. */
-  rainbowSpots?: RemoteBubbleSpot[];
+  rainbowSpots?: RemoteRainbowSpot[];
   meteorSpots?: RemoteMapSpot[];
   /** Wekelijkse roze-bubbels-locaties (verspringen elke zaterdag 6:00) — ontbreekt dit veld, dan valt de app terug op de gebundelde (verouderde) standaardlijst. */
   bubbleWeek?: RemoteBubbleWeek;

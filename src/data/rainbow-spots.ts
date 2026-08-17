@@ -10,6 +10,8 @@ export interface EventSpot {
   description: string;
   /** true = onderwater op de Whalefall Canyon-kaart, false = hoofdeiland-kaart. */
   underwater: boolean;
+  /** true = dit is Doris' vaste plek (NPC, permanent), krijgt een ander icoon dan de boeketplekken. */
+  isDoris: boolean;
 }
 
 // Bundel-fallback: leeg totdat REMOTE_CONTENT_URL data levert, of totdat een
@@ -28,6 +30,7 @@ export function useRainbowSpots(): EventSpot[] {
         y: spot.y,
         description: language === 'en' ? spot.descriptionEn : spot.descriptionNl,
         underwater: spot.underwater,
+        isDoris: spot.isDoris ?? false,
       }));
     }
     return RAINBOW_SPOTS_FALLBACK;
