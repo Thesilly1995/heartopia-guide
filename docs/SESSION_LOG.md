@@ -2,6 +2,25 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-17 (deel 35) — OTA-opzet, Rainbow niet-permanent-correctie, verkoopprijs-per-ster (alleen Vissen)
+
+**OTA (EAS Update) opgezet**: `expo-updates` toegevoegd, `runtimeVersion.policy: "fingerprint"` (herberekent automatisch bij native wijzigingen — lost het eerder besproken "vergeet niet de runtimeVersion op te hogen"-risico grotendeels op), `updates.url` naar het bestaande EAS-project, `channel` per build-profiel in `eas.json`. Geen JS-wijzigingen nodig (checkt standaard bij opstarten). **Nog 1x een volledige build nodig** om deze runtime in de geïnstalleerde app te krijgen — kon ik niet zelf draaien (geen EAS-login in de sandbox), gebruiker moet dit zelf doen. Daarna: `eas update --channel production --message "..."` voor toekomstige JS-only wijzigingen, ook door gebruiker zelf te draaien (ik geef steeds het precieze commando).
+
+**Rainbow-event correctie**: gebruiker corrigeerde eerdere aanname dat de Whalefall Canyon-boeketten/Doris "permanent" zijn — kloppen niet, horen bij hetzelfde 12:00-18:00 (die dag) Rainbow-venster als de rest. Disclaimer-/Doris-tekst en documentatie gecorrigeerd. Ook een goede les gebleken over remote-content-tijdgebonden-data: `rainbowSpots` moet na afloop van een Rainbow-moment weer geleegd worden (via een self-bind `send_later`-Routine ingepland en correct afgevuurd om 18:00 — tijd tussentijds nog gecorrigeerd van 06:00 naar 18:00 toen gebruiker het eigenlijke tijdvenster preciseerde).
+
+**Verkoopprijs per ster (1★-5★) — nieuwe wens, deels ingevuld**: gebruiker wil dit voor alle catalogi (Vissen, Insecten, Vogels, Recepten, Beeldhouwen, Tuinieren — 293 items totaal). Nieuw `sellPriceByStar`-veld ((number|null)[] | null) op `HobbyItem`, getoond als detailregel zoals de bestaande schelpen-prijzen in Ocean Cleanup. **Vissen volledig gedaan**: 83/85 soorten gematcht tegen `heartopia.life/database/fish-prices` (goede, betrouwbare bron met exacte namen), 2 bewust op `null` (Blue Ero Crayfish, Seabream — geen zekere match). **Insecten: geen betrouwbare bron gevonden** — `heartopia.life/database/insects/` heeft geen prijzen, `heartopia.gg/bugs` en `heartopia.live/en/bugs/` zijn JS-only/403-geblokkeerd, en één bron (`heartopiaguide.com`) gaf prijzen met namen die niet overeenkwamen met de insecten in de app (vermoedelijk verkeerde/verzonnen data) — genegeerd. Gebruiker koos expliciet: **niet verder zoeken, onzekere categorieën overslaan** i.p.v. te blijven proberen of zelf data aan te leveren. Insecten/Vogels/Recepten/Beeldhouwen/Tuinieren daarom bewust **niet** aangepast (geen leeg/overal-"nog niet bevestigd"-veld toegevoegd — dat oogt als een kapotte functie).
+
+### Nog open (oppakken volgende sessie)
+
+- **Verkoopprijs per ster voor Insecten/Vogels/Recepten/Beeldhouwen/Tuinieren** — nog te doen zodra er een betrouwbare bron gevonden wordt, of de gebruiker de data zelf aanlevert (screenshots, zoals eerder bij kaarten/codes). Niet zomaar hervatten met nieuwe scrape-pogingen zonder dat te vragen — gebruiker koos expliciet voor "niet verder zoeken" deze keer.
+- **OTA**: gebruiker moet nog de laatste volledige build draaien + uploaden. Daarna eerste `eas update` samen testen.
+- Meteorenregen-kaartlocaties nog steeds niet aangeleverd.
+- Overige oude punten (pushmeldingen-backend, RevenueCat afmaken, productietoegang, Discord-links) staan nog open.
+
+### Repo-status
+
+Gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide` (branch `claude/bubbles-kaart-tool-6t1xij`, telkens vers vanaf `main` herbouwd en direct gemerged na elke PR — doorlopende merge-toestemming van gebruiker).
+
 ## 2026-08-17 (deel 34) — Missies/Bubbels-autoreset-bug, Rainbow Whalefall+Doris, EAS-abonnement heroverwegen
 
 **Missies/Bubbels: echte reset-bug gevonden en gefixt**. Tester meldde dat dailies niet reset om 06:00. Root cause: de "Reset: elke dag om 06:00"-tekst was puur decoratief — er was **geen enkele reset-logica**, en Missies had zelfs geen handmatige resetknop (Bubbels wel). Gefixt: bij het openen van Missies wordt nu gecheckt of de speeldag- (06:00) of speelweek-grens (zaterdag 06:00) verstreken is sinds de laatste keer, en dan worden alleen de bijbehorende vinkjes geleegd (dagelijks + eigen taken, of wekelijks + winkels). Handmatige "Alles resetten"-knop toegevoegd per tab. Gebruiker vroeg vervolgens terecht te bevestigen of Bubbels' wekelijkse reset ook automatisch ging — bleek dezelfde bug: alleen een handmatige knop. Ook daar automatische reset toegevoegd. De reset-berekening stond dubbel gedefinieerd — verplaatst naar gedeeld `src/lib/reset-schedule.ts` (`currentDailyResetKey`/`currentWeeklyResetKey`), door beide schermen gebruikt. **Les: als een UI-tekst een automatisch gedrag claimt ("reset om X"), controleer of dat gedrag ook echt gecodeerd is — niet aannemen.**
