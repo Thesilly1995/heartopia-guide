@@ -42,6 +42,7 @@ const SECTIONS: {
     label: { nl: 'Spel', en: 'Game' },
     items: [
       { href: '/badges', icon: '🏅', title: { nl: 'Badges', en: 'Badges' }, desc: { nl: 'Prestaties & profieltitels', en: 'Achievements & profile titles' } },
+      { href: '/puzzels-boeken', icon: '🧩', title: { nl: 'Puzzels & Boeken', en: 'Puzzles & Books' }, desc: { nl: 'Other Collections: puzzels & boeken', en: 'Other Collections: puzzles & books' } },
       { href: '/codes', icon: '🎁', title: { nl: 'Codes', en: 'Codes' }, desc: { nl: 'Actieve & verlopen codes', en: 'Active & expired codes' } },
     ],
   },
