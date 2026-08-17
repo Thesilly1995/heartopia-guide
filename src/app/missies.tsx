@@ -10,6 +10,8 @@ import { useLanguage } from '@/hooks/use-language';
 
 const STORAGE_KEY = 'heartopia:missies:vinkjes';
 const CUSTOM_STORAGE_KEY = 'heartopia:missies:eigen-dailies';
+const DAILY_RESET_DAY_KEY = 'heartopia:missies:laatste-reset-dag';
+const WEEKLY_RESET_WEEK_KEY = 'heartopia:missies:laatste-reset-week';
 
 const DAILY = {
   nl: [
@@ -76,6 +78,36 @@ const SHOPS = {
   ],
 } as const;
 
+const DAILY_KEYS: string[] = DAILY.nl.map((item) => item.key);
+const WEEKLY_KEYS: string[] = [...WEEKLY.nl.map((item) => item.key), ...SHOPS.nl.map((item) => item.key), 'shops_all'];
+
+function dateKey(d: Date): string {
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+}
+
+/** Speeldag-grens ligt op 06:00 (servertijd) — vóór dat tijdstip hoort een moment nog bij de vorige speeldag. */
+function currentDailyResetKey(): string {
+  const now = new Date();
+  const boundary = new Date(now);
+  boundary.setHours(6, 0, 0, 0);
+  if (now < boundary) boundary.setDate(boundary.getDate() - 1);
+  return dateKey(boundary);
+}
+
+/** Speelweek-grens ligt op zaterdag 06:00 (servertijd) — zelfde moment als de Roze Bubbels-wissel. */
+function currentWeeklyResetKey(): string {
+  const now = new Date();
+  const boundary = new Date(now);
+  boundary.setHours(6, 0, 0, 0);
+  if (now < boundary) boundary.setDate(boundary.getDate() - 1);
+  const daysSinceSaturday = (boundary.getDay() - 6 + 7) % 7;
+  boundary.setDate(boundary.getDate() - daysSinceSaturday);
+  return dateKey(boundary);
+}
+
 const STRINGS = {
   nl: {
     title: 'Missies',
@@ -84,6 +116,7 @@ const STRINGS = {
     reset: 'Reset',
     resetDaily: 'Elke dag om 06:00 (servertijd)',
     resetWeekly: 'Elke zaterdag om 06:00 (servertijd)',
+    resetAll: 'Alles resetten',
     checkShops: 'Winkels checken',
     dailyTasks: 'Dagelijkse taken',
     ownDailies: 'Eigen dagelijkse taken',
@@ -98,6 +131,7 @@ const STRINGS = {
     reset: 'Reset',
     resetDaily: 'Every day at 06:00 (server time)',
     resetWeekly: 'Every Saturday at 06:00 (server time)',
+    resetAll: 'Reset all',
     checkShops: 'Check shops',
     dailyTasks: 'Daily tasks',
     ownDailies: 'Your own daily tasks',
@@ -127,18 +161,51 @@ export default function MissiesScreen() {
 
   useEffect(() => {
     (async () => {
+      let loadedChecked: Record<string, boolean> = {};
       try {
         const raw = await AsyncStorage.getItem(STORAGE_KEY);
-        setChecked(raw ? JSON.parse(raw) : {});
+        loadedChecked = raw ? JSON.parse(raw) : {};
       } catch {
-        setChecked({});
+        loadedChecked = {};
       }
+
+      let loadedCustom: CustomItem[] = [];
       try {
         const rawCustom = await AsyncStorage.getItem(CUSTOM_STORAGE_KEY);
-        setCustomItems(rawCustom ? JSON.parse(rawCustom) : []);
+        loadedCustom = rawCustom ? JSON.parse(rawCustom) : [];
       } catch {
-        setCustomItems([]);
+        loadedCustom = [];
       }
+
+      let checkedChanged = false;
+      let customChanged = false;
+
+      try {
+        const todayKey = currentDailyResetKey();
+        if ((await AsyncStorage.getItem(DAILY_RESET_DAY_KEY)) !== todayKey) {
+          loadedChecked = Object.fromEntries(Object.entries(loadedChecked).filter(([key]) => !DAILY_KEYS.includes(key)));
+          checkedChanged = true;
+          if (loadedCustom.some((item) => item.done)) {
+            loadedCustom = loadedCustom.map((item) => ({ ...item, done: false }));
+            customChanged = true;
+          }
+          await AsyncStorage.setItem(DAILY_RESET_DAY_KEY, todayKey);
+        }
+
+        const weekKey = currentWeeklyResetKey();
+        if ((await AsyncStorage.getItem(WEEKLY_RESET_WEEK_KEY)) !== weekKey) {
+          loadedChecked = Object.fromEntries(Object.entries(loadedChecked).filter(([key]) => !WEEKLY_KEYS.includes(key)));
+          checkedChanged = true;
+          await AsyncStorage.setItem(WEEKLY_RESET_WEEK_KEY, weekKey);
+        }
+      } catch {
+        // reset-check mislukt (opslag niet bereikbaar) — bestaande vinkjes blijven gewoon staan
+      }
+
+      setChecked(loadedChecked);
+      setCustomItems(loadedCustom);
+      if (checkedChanged) AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(loadedChecked)).catch(() => {});
+      if (customChanged) AsyncStorage.setItem(CUSTOM_STORAGE_KEY, JSON.stringify(loadedCustom)).catch(() => {});
     })();
   }, []);
 
@@ -149,6 +216,25 @@ export default function MissiesScreen() {
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
     } catch {
       // opslaan mislukt
+    }
+  };
+
+  const resetCurrentTab = async () => {
+    const keysToClear = tab === 'daily' ? DAILY_KEYS : WEEKLY_KEYS;
+    const updated = Object.fromEntries(Object.entries(checked).filter(([key]) => !keysToClear.includes(key)));
+    setChecked(updated);
+    try {
+      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+      if (tab === 'daily') {
+        await AsyncStorage.setItem(DAILY_RESET_DAY_KEY, currentDailyResetKey());
+      } else {
+        await AsyncStorage.setItem(WEEKLY_RESET_WEEK_KEY, currentWeeklyResetKey());
+      }
+    } catch {
+      // opslaan mislukt
+    }
+    if (tab === 'daily' && customItems.some((item) => item.done)) {
+      saveCustom(customItems.map((item) => ({ ...item, done: false })));
     }
   };
 
@@ -194,8 +280,13 @@ export default function MissiesScreen() {
       />
       <ScrollView contentContainerStyle={styles.listContent}>
         <View style={styles.resetRow}>
-          <Text style={styles.resetLabel}>{s.reset}</Text>
-          <Text style={styles.resetText}>{resetText}</Text>
+          <View>
+            <Text style={styles.resetLabel}>{s.reset}</Text>
+            <Text style={styles.resetText}>{resetText}</Text>
+          </View>
+          <Pressable style={styles.resetButton} onPress={resetCurrentTab}>
+            <Text style={styles.resetButtonText}>{s.resetAll}</Text>
+          </Pressable>
         </View>
 
         {tab === 'daily' ? (
@@ -299,6 +390,8 @@ function makeStyles(c: ThemeColors) {
     resetRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 12, borderRadius: 12, backgroundColor: c.disclaimerBg, borderWidth: 1, borderColor: c.disclaimerBorder },
     resetLabel: { fontSize: 12, fontWeight: '700', color: c.forest },
     resetText: { fontSize: 12, color: c.forestSoft },
+    resetButton: { paddingHorizontal: 10, paddingVertical: 5, borderRadius: 999, backgroundColor: c.chipBg },
+    resetButtonText: { fontSize: 10, fontWeight: '700', color: c.skyDark },
     collapsibleCard: { backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.line, overflow: 'hidden' },
     collapsibleHeader: { flexDirection: 'row', alignItems: 'center', gap: 10, padding: 14 },
     collapsibleTitle: { flex: 1, fontSize: 14, fontWeight: '700', color: c.forest },
