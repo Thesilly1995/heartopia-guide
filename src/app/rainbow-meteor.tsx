@@ -29,6 +29,7 @@ const STRINGS = {
       'In Whalefall Canyon staan 4 boeketplekken, maar je kunt er maar 1 van de 4 pakken — welke dat is, verschilt per speler. Dit is permanent (blijft ook als het Rainbow-event niet actief is).',
     dorisNote:
       '👧 Doris is een NPC die altijd op haar vaste plek(ken) staat — bij haar kun je shoppen tijdens Rainbow-momenten.',
+    mailboxNote: '📮 Vergeet ook niet het boeket bij je eigen brievenbus — die staat er altijd, maar niet op de kaart (want dat is jouw eigen huisplek).',
   },
   en: {
     title: 'Rainbow & Meteor Shower',
@@ -41,6 +42,7 @@ const STRINGS = {
     whalefallDisclaimer:
       "Whalefall Canyon has 4 bouquet spots, but you can only grab 1 of the 4 — which one differs per player. This is permanent (stays even when the Rainbow event isn't active).",
     dorisNote: "👧 Doris is an NPC who's always at her fixed spot(s) — you can shop with her during Rainbow moments.",
+    mailboxNote: "📮 Don't forget the bouquet above your own mailbox either — it's always there, but not on the map (since that's your own house spot).",
   },
 } as const;
 
@@ -114,6 +116,7 @@ export default function RainbowMeteorScreen() {
         onTabChange={(k) => setTab(k as 'rainbow' | 'meteor')}
       />
       <ScrollView contentContainerStyle={styles.content}>
+        {tab === 'rainbow' && <DisclaimerBox text={s.mailboxNote} />}
         {tab === 'rainbow' && rainbowSpots.some((spot) => spot.isDoris) && <DisclaimerBox text={s.dorisNote} />}
 
         <PinMap
