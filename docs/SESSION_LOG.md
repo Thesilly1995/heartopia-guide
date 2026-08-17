@@ -2,6 +2,12 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-17 (deel 37) — OTA-build afgerond, sessie afgesloten
+
+**OTA-build**: gebruiker heeft de laatste volledige build (met `expo-updates` erin) succesvol gedraaid. Advies gegeven: gewoon uploaden naar Play Console, ook al zit waarschijnlijk niet al het werk van ná de OTA-PR (#19) erin — dat hoeft niet via een nieuwe build, want deze build heeft de OTA-runtime al. In plaats daarvan: `eas update --channel production --message "..."` gebruiken om de rest (alle verkoopprijs-per-ster-werk, de Rainbow-leegmaak-fix) alsnog te pushen. Gebruiker moet dat commando zelf draaien (geen EAS-login in deze sandbox) — nog niet bevestigd of dit al gebeurd is, dus **volgende sessie eerst checken of de `eas update` daadwerkelijk gedraaid is** voordat er nieuwe OTA-updates gepusht worden (anders mist die eerste push).
+
+**Vanaf hier**: bij een nieuwe/volgende sessie altijd eerst dit sessielog lezen (staat ook in `AGENTS.md`) voor volledige context — deze sessie was erg lang (bubbelweek t/m verkoopprijzen), zie deel 33 t/m 37 hierboven voor het volledige verloop.
+
 ## 2026-08-17 (deel 36) — Verkoopprijs-per-ster afgerond via community Google Sheets-tracker
 
 **Vervolg op deel 35**: gebruiker wees op `heartodex.com` als extra bron — bleek domeinbreed 403-geblokkeerd voor WebFetch (elke pagina geprobeerd, ook losse soortpagina's). Vervolgens wees gebruiker een **gepubliceerde Google Sheet** aan ("Heartopia Price List with Guides" door AthenaMM e.a.) — de `htmlview`-link zelf is JS-only en levert alleen de titel, maar de **gviz CSV-export werkt wel**: `https://docs.google.com/spreadsheets/d/{ID}/gviz/tq?tqx=out:csv&gid={GID}` (waar `export?format=csv/html` juist 401 gaf — onthouden voor een volgende keer met dit soort bronnen). Het `gid`-nummer per tabblad is niet programmatisch te achterhalen (Google Sheets-tabnavigatie is JS-only) — gebruiker moest zelf per tabblad de URL uit de browser kopiëren.
