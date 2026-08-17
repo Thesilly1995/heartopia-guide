@@ -26,7 +26,7 @@ export interface RemoteBubbleWeek {
 }
 
 export interface RemoteRainbowSpot extends RemoteBubbleSpot {
-  /** true = dit is Doris' vaste plek (NPC, permanent, laat een ander icoon zien dan de boeketplekken). */
+  /** true = dit is Doris' plek (NPC, aanwezig tijdens Rainbow-momenten net als de boeketten), laat een ander icoon zien dan de boeketplekken. */
   isDoris?: boolean;
 }
 

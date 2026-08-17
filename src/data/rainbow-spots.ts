@@ -10,7 +10,7 @@ export interface EventSpot {
   description: string;
   /** true = onderwater op de Whalefall Canyon-kaart, false = hoofdeiland-kaart. */
   underwater: boolean;
-  /** true = dit is Doris' vaste plek (NPC, permanent), krijgt een ander icoon dan de boeketplekken. */
+  /** true = dit is Doris' plek (NPC, aanwezig tijdens Rainbow-momenten), krijgt een ander icoon dan de boeketplekken. */
   isDoris: boolean;
 }
 
