@@ -104,15 +104,17 @@ dat specifieke onderdeel.
   eilandkaart. `x`/`y` zijn percentages (0-100) t.o.v. de kaartafbeelding
   (`assets/images/maps/island-map.jpg`), zelfde systeem als de
   bestaande Bubbels-kaart. Laat de array leeg (`[]`) of weg als de
-  gebeurtenis niet actief is. `rainbowSpots` ondersteunt ook
-  `underwater: true` voor de 4 vaste boeketplekken in Whalefall Canyon
-  (`whalefall-map.jpg`) — die blijven permanent staan, los van of het
-  Rainbow-event actief is (van de 4 kan een speler er maar 1
-  daadwerkelijk pakken, verschilt per speler). `meteorSpots` heeft
-  geen `underwater`-ondersteuning. Een `rainbowSpots`-entry met
-  `"isDoris": true` markeert Doris' vaste NPC-plek (permanent, ze staat
-  er altijd — bij haar kun je shoppen tijdens Rainbow-momenten) en
-  krijgt in de app een ander icoon dan de boeketplekken.
+  gebeurtenis niet actief is — dus ook `rainbowSpots` weer legen zodra
+  een Rainbow-moment voorbij is (loopt 12:00-06:00), anders blijven de
+  Whalefall Canyon-boeketten en Doris onterecht zichtbaar. `rainbowSpots`
+  ondersteunt ook `underwater: true` voor de 4 boeketplekken in
+  Whalefall Canyon (`whalefall-map.jpg`, van de 4 kan een speler er
+  maar 1 daadwerkelijk pakken, verschilt per speler) — die horen bij
+  hetzelfde 12:00-06:00-venster als de rest, niet permanent. `meteorSpots`
+  heeft geen `underwater`-ondersteuning. Een `rainbowSpots`-entry met
+  `"isDoris": true` markeert Doris' plek (NPC, aanwezig tijdens
+  Rainbow-momenten net als de boeketten — bij haar kun je dan shoppen)
+  en krijgt in de app een ander icoon dan de boeketplekken.
 - **`bubbleWeek`**: de 19 roze-bubbels-locaties van deze week (15 op de
   hoofdeiland-kaart `island-map.jpg`, 4 onderwater op de Whalefall
   Canyon-kaart `whalefall-map.jpg`, onderscheiden via `underwater`).
