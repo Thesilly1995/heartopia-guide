@@ -27,6 +27,8 @@ export interface HobbyItem {
   seedPrice?: number;
   method?: string;
   sellPrice?: string;
+  /** Verkoopprijs op 1★ t/m 5★ (goud), null als nog niet bevestigd. Heeft voorrang op `sellPrice` als beide gezet zijn. */
+  sellPriceByStar?: (number | null)[] | null;
 }
 
 export interface HobbySubTab {
@@ -61,6 +63,8 @@ const STRINGS = {
     seedPrice: 'Zaadprijs',
     method: 'Hoe krijg je dit',
     sellPrice: 'Verkoopprijs',
+    sellPriceByStar: 'Verkoopprijs per ster',
+    sellPriceUnknown: 'Nog niet bevestigd',
     bestResult: 'Hoogste resultaat',
     masteryAchieved: 'Mastery behaald',
     progressUndiscovered: '🔍 Nog te ontdekken',
@@ -82,6 +86,8 @@ const STRINGS = {
     seedPrice: 'Seed price',
     method: 'How to get this',
     sellPrice: 'Sell price',
+    sellPriceByStar: 'Sell price by star',
+    sellPriceUnknown: 'Not confirmed yet',
     bestResult: 'Best result',
     masteryAchieved: 'Mastery achieved',
     progressUndiscovered: '🔍 Not discovered yet',
@@ -392,6 +398,19 @@ export function HobbyListScreen({
                       <View style={[styles.detailBox, styles.detailBoxFull]}>
                         <Text style={styles.detailLabel}>{s.sellPrice}</Text>
                         <Text style={styles.detailValue}>{item.sellPrice}</Text>
+                      </View>
+                    </View>
+                  )}
+
+                  {item.sellPriceByStar !== undefined && (
+                    <View style={styles.detailGrid}>
+                      <View style={[styles.detailBox, styles.detailBoxFull]}>
+                        <Text style={styles.detailLabel}>{s.sellPriceByStar}</Text>
+                        <Text style={styles.detailValue}>
+                          {item.sellPriceByStar
+                            ? item.sellPriceByStar.map((v, i) => `${i + 1}★ ${v != null ? `${v}🪙` : '—'}`).join('   ')
+                            : s.sellPriceUnknown}
+                        </Text>
                       </View>
                     </View>
                   )}
