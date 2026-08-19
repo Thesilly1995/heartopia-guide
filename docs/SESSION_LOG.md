@@ -14,6 +14,8 @@ Getest via `expo start --web` + Playwright met `page.route()`-mock van `remote-c
 
 **Puur JSON+JS-wijziging, geen build nodig** — normale OTA-flow (`git pull` + `eas update`) volstaat.
 
+**Update dezelfde dag**: gebruiker leverde ook de tijdsblokken voor donderdag (20 aug: hittegolf, 06:00-18:00 = twee blokken `06-12`+`12-18`) en vrijdag (21 aug: regen, `12-18`) aan. Bewust alleen bij de "speciale" soorten (hittegolf/regen/regenboog/meteor) tijd toevoegen — bij normaal/warme-zon-dagen hoeft dat niet, aldus gebruiker. Zelfde patroon herhalen bij toekomstige dagen: alleen tijd vragen/invullen voor die vier soorten.
+
 ## 2026-08-17 (deel 38) — Nieuwe catalogus: Puzzels & Boeken (Other Collections)
 
 **Nieuwe wens**: gebruiker wilde een catalogus voor de "Puzzel en boeken"-verzameling. Online bronnen gaven wel een community-lijst van ~80 puzzelnamen (gamingonphone.com, zonder rarity/prijs) maar niets bruikbaars voor boeken — bewust niet gegokt, gebruiker heeft in plaats daarvan zelf screenshots gestuurd van de in-game "Other Collections"-tab (onderdeel van het Collection Book). Bleek uiteindelijk **110 puzzels + 40 boeken** te bevatten (dus meer dan de externe schatting) — alleen naam + afbeelding zichtbaar in die tab, geen prijs/rarity/verkrijgmethode, en dat is expliciet akkoord bevonden door gebruiker ("naam + afbeelding is voldoende").
