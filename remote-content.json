@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-19T12:00:00Z",
+  "updatedAt": "2026-08-19T18:00:00Z",
   "dailyPlotsCalendar": [
     { "date": "2026-08-09", "oakPlotNl": "Plot 6", "oakPlotEn": "Plot 6", "fluoritePlotNl": "Plot 11", "fluoritePlotEn": "Plot 11" },
     { "date": "2026-08-10", "oakPlotNl": "Plot 2", "oakPlotEn": "Plot 2", "fluoritePlotNl": "Plot 7", "fluoritePlotEn": "Plot 7" },
@@ -32,7 +32,18 @@
     "validUntil": "2026-08-06T18:00:00Z"
   },
   "rainbowSpots": [],
-  "meteorSpots": [],
+  "meteorSpots": [
+    { "num": 1, "x": 14, "y": 40.2, "underwater": false, "descriptionNl": "Locatie 1", "descriptionEn": "Location 1" },
+    { "num": 2, "x": 19.3, "y": 40.6, "underwater": false, "descriptionNl": "Locatie 2", "descriptionEn": "Location 2" },
+    { "num": 3, "x": 13.2, "y": 45.3, "underwater": false, "descriptionNl": "Locatie 3", "descriptionEn": "Location 3" },
+    { "num": 4, "x": 14, "y": 51, "underwater": false, "descriptionNl": "Locatie 4", "descriptionEn": "Location 4" },
+    { "num": 5, "x": 12.2, "y": 63.3, "underwater": false, "isDoris": true, "descriptionNl": "Doris (NPC) — shop hier tijdens meteorenregen", "descriptionEn": "Doris (NPC) — shop here during meteor showers" },
+    { "num": 6, "x": 13.7, "y": 67.4, "underwater": false, "descriptionNl": "Locatie 6", "descriptionEn": "Location 6" },
+    { "num": 7, "x": 6.9, "y": 71.1, "underwater": false, "descriptionNl": "Locatie 7", "descriptionEn": "Location 7" },
+    { "num": 8, "x": 13.4, "y": 73.6, "underwater": false, "descriptionNl": "Locatie 8", "descriptionEn": "Location 8" },
+    { "num": 9, "x": 9.6, "y": 80.3, "underwater": false, "descriptionNl": "Locatie 9", "descriptionEn": "Location 9" },
+    { "num": 10, "x": 25.1, "y": 85.1, "underwater": false, "descriptionNl": "Locatie 10", "descriptionEn": "Location 10" }
+  ],
   "bubbleWeek": {
     "weekLabelNl": "Deze week (15-21 aug 2026)",
     "weekLabelEn": "This week (Aug 15-21, 2026)",
