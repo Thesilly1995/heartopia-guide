@@ -32,6 +32,7 @@ const STRINGS = {
     dorisNoteLand:
       '👧 Doris staat tijdens meteorenregen aan land (zie de pin hieronder) — bij haar kun je dan shoppen. Het exacte tijdsblok zie je op het homescherm bij "Weer deze week".',
     mailboxNote: '📮 Vergeet ook niet het boeket bij je eigen brievenbus — die staat er altijd, maar niet op de kaart (want dat is jouw eigen huisplek).',
+    meteorLingerNote: '⛏️ De ertsstukken blijven nog tot 24u na de meteorenregen hakbaar — deze kaart blijft dus nog even bruikbaar nadat de meteorenregen zelf voorbij is.',
   },
   en: {
     title: 'Rainbow & Meteor Shower',
@@ -48,6 +49,7 @@ const STRINGS = {
     dorisNoteLand:
       "👧 During meteor showers Doris is on land (see the pin below) — you can shop with her then. Check the homescreen's \"Weather this week\" for the exact time block.",
     mailboxNote: "📮 Don't forget the bouquet above your own mailbox either — it's always there, but not on the map (since that's your own house spot).",
+    meteorLingerNote: '⛏️ Ore pieces stay mineable for up to 24h after the meteor shower — this map stays useful for a while even after the shower itself has ended.',
   },
 } as const;
 
@@ -123,6 +125,7 @@ export default function RainbowMeteorScreen() {
       />
       <ScrollView contentContainerStyle={styles.content}>
         {tab === 'rainbow' && <DisclaimerBox text={s.mailboxNote} />}
+        {tab === 'meteor' && spots.length > 0 && <DisclaimerBox text={s.meteorLingerNote} />}
         {spots.some((spot) => spot.isDoris) && (
           <DisclaimerBox text={tab === 'rainbow' ? s.dorisNoteWhalefall : s.dorisNoteLand} />
         )}

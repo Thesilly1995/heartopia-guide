@@ -2,6 +2,15 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-19 (deel 42) — Meteorenregen: ertsstukken blijven 24u hakbaar + auto-leegmaak ingepland
+
+**Nieuwe disclaimer op de meteorenregen-tab** (`src/app/rainbow-meteor.tsx`, `meteorLingerNote`): ertsstukken blijven tot 24u na de meteorenregen hakbaar, dus de kaart blijft nog even bruikbaar na afloop van het event zelf. Getoond zodra er meteor-locaties zijn (`tab === 'meteor' && spots.length > 0`).
+
+**Auto-leegmaak ingepland**: gisteravonds meteorenregen liep 18:00-00:00 (19 aug, zie deel 39/40) — de 24u-hakbaarheid loopt dus tot 20 aug 18:00 Nederlandse tijd (16:00 UTC). Een self-bind `send_later`-Routine (`trig_01NdUdpzRCVJ58yZjMxPhoKy`) ingepland op dat tijdstip om `meteorSpots` in `remote-content.json` weer leeg te maken — zelfde patroon als eerder bij `rainbowSpots` (deel 35). Bij het afvuren: JSON leegmaken, committen/pushen/PR/mergen, sessielog bijwerken, en de gebruiker de eas update-kopieercode geven (nieuwe staande afspraak, zie hieronder).
+
+**Nieuwe staande afspraak**: gebruiker wil dat ik voortaan **altijd automatisch** de `git pull` + `eas update`-kopieercode geef zodra er een terminal-actie nodig is na een merge — niet meer pas na een expliciete vraag.
+
+Getest via `expo start --web` + Playwright: disclaimer-tekst toont correct boven de kaart. `npx tsc --noEmit` schoon. Puur JS-wijziging, geen build nodig.
 ## 2026-08-19 (deel 41) — 2 nieuwe missies-taakjes
 
 **Missies → Dagelijks**: "Zwervende Eik hakken" en "Fluoriet hakken" toegevoegd als losse taken (`d15`/`d16` in `src/app/missies.tsx`), naast de bestaande dagelijkse-plots-info op het homescreen.
