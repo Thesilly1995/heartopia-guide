@@ -27,8 +27,10 @@ const STRINGS = {
     whalefallLabel: '🌊 Whalefall Canyon',
     whalefallDisclaimer:
       'In Whalefall Canyon staan tijdens een Rainbow-moment 4 boeketplekken, maar je kunt er maar 1 van de 4 pakken — welke dat is, verschilt per speler.',
-    dorisNote:
+    dorisNoteWhalefall:
       '👧 Doris staat bij Whalefall Canyon tijdens regen, regenboog én meteorenregen — bij haar kun je dan shoppen. Het exacte tijdsblok zie je op het homescherm bij "Weer deze week".',
+    dorisNoteLand:
+      '👧 Doris staat tijdens meteorenregen aan land (zie de pin hieronder) — bij haar kun je dan shoppen. Het exacte tijdsblok zie je op het homescherm bij "Weer deze week".',
     mailboxNote: '📮 Vergeet ook niet het boeket bij je eigen brievenbus — die staat er altijd, maar niet op de kaart (want dat is jouw eigen huisplek).',
   },
   en: {
@@ -41,8 +43,10 @@ const STRINGS = {
     whalefallLabel: '🌊 Whalefall Canyon',
     whalefallDisclaimer:
       "During a Rainbow moment, Whalefall Canyon has 4 bouquet spots, but you can only grab 1 of the 4 — which one differs per player.",
-    dorisNote:
+    dorisNoteWhalefall:
       "👧 Doris is at Whalefall Canyon during rain, rainbow AND meteor showers — you can shop with her then. Check the homescreen's \"Weather this week\" for the exact time block.",
+    dorisNoteLand:
+      "👧 During meteor showers Doris is on land (see the pin below) — you can shop with her then. Check the homescreen's \"Weather this week\" for the exact time block.",
     mailboxNote: "📮 Don't forget the bouquet above your own mailbox either — it's always there, but not on the map (since that's your own house spot).",
   },
 } as const;
@@ -96,8 +100,9 @@ export default function RainbowMeteorScreen() {
       .map(([k, v]) => [Number(k.slice(1)), v])
   );
 
-  const islandSpots = spots.filter((spot) => !spot.underwater);
-  const whalefallSpots = spots.filter((spot) => spot.underwater);
+  // Whalefall Canyon (onderwater) komt alleen voor bij Rainbow — meteorenregen is altijd aan land.
+  const islandSpots = tab === 'rainbow' ? spots.filter((spot) => !spot.underwater) : spots;
+  const whalefallSpots = tab === 'rainbow' ? spots.filter((spot) => spot.underwater) : [];
   const pinColor = tab === 'rainbow' ? '#B78CD8' : colors.skyDark;
   const defaultIcon = tab === 'rainbow' ? '🌈' : '☄️';
   const withIcon = (list: typeof spots) => list.map((spot) => ({ ...spot, icon: spot.isDoris ? '👧' : defaultIcon }));
@@ -118,7 +123,9 @@ export default function RainbowMeteorScreen() {
       />
       <ScrollView contentContainerStyle={styles.content}>
         {tab === 'rainbow' && <DisclaimerBox text={s.mailboxNote} />}
-        {spots.some((spot) => spot.isDoris) && <DisclaimerBox text={s.dorisNote} />}
+        {spots.some((spot) => spot.isDoris) && (
+          <DisclaimerBox text={tab === 'rainbow' ? s.dorisNoteWhalefall : s.dorisNoteLand} />
+        )}
 
         <PinMap
           source={ISLAND_MAP}

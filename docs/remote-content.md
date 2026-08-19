@@ -51,7 +51,7 @@ dat specifieke onderdeel.
   ],
   "meteorSpots": [
     { "num": 1, "x": 34, "y": 19, "underwater": false, "descriptionNl": "Noordwestelijk woestijngebied", "descriptionEn": "Northwest desert area" },
-    { "num": 5, "x": 12.2, "y": 63.3, "underwater": true, "isDoris": true, "descriptionNl": "Doris (NPC) — shop hier tijdens meteorenregen", "descriptionEn": "Doris (NPC) — shop here during meteor showers" }
+    { "num": 5, "x": 12.2, "y": 63.3, "underwater": false, "isDoris": true, "descriptionNl": "Doris (NPC) — shop hier tijdens meteorenregen", "descriptionEn": "Doris (NPC) — shop here during meteor showers" }
   ],
   "bubbleWeek": {
     "weekLabelNl": "Deze week (8-14 aug 2026)",
@@ -108,17 +108,23 @@ dat specifieke onderdeel.
   bestaande Bubbels-kaart. Laat de array leeg (`[]`) of weg als de
   gebeurtenis niet actief is — dus ook weer legen zodra het moment
   voorbij is, anders blijven de Whalefall Canyon-plekken en Doris
-  onterecht zichtbaar. Beide velden ondersteunen `underwater: true`
-  voor plekken in Whalefall Canyon (`whalefall-map.jpg`) — bij
-  `rainbowSpots` zijn dat de 4 boeketplekken (van de 4 kan een speler
-  er maar 1 daadwerkelijk pakken, verschilt per speler), bij
-  `meteorSpots` gewone ertsplekken die daar ook kunnen voorkomen.
+  onterecht zichtbaar.
+  `rainbowSpots` ondersteunt `underwater: true` voor de 4 boeketplekken
+  in Whalefall Canyon (`whalefall-map.jpg`, van de 4 kan een speler er
+  maar 1 daadwerkelijk pakken, verschilt per speler) — die krijgen in
+  de app een eigen onderwater-subkaart. **`meteorSpots` moet altijd
+  `underwater: false` blijven** — meteorenregen komt alleen aan land
+  voor, de app toont bij deze tab bewust nooit de Whalefall-subkaart,
+  ook niet als hier per ongeluk `underwater: true` in zou staan (dat
+  veld wordt voor `meteorSpots` genegeerd).
   Een entry met `"isDoris": true` (bij beide velden mogelijk) markeert
-  Doris' plek (NPC bij Whalefall Canyon — ze is aanwezig tijdens regen,
-  regenboog én meteorenregen, bij haar kun je dan shoppen) en krijgt in
-  de app een ander icoon dan de gewone locatiepinnen. Het exacte
-  tijdsblok waarin dit gebeurt hoort in `weekForecast` (zie hieronder),
-  niet hier.
+  Doris' plek (NPC — ze is aanwezig tijdens regen, regenboog én
+  meteorenregen, bij haar kun je dan shoppen) en krijgt in de app een
+  ander icoon dan de gewone locatiepinnen. Bij `rainbowSpots` staat ze
+  in Whalefall Canyon (`underwater: true`); bij `meteorSpots` staat ze
+  gewoon als losse pin tussen de andere ertsplekken op de hoofdeilandkaart.
+  Het exacte tijdsblok waarin dit gebeurt hoort in `weekForecast` (zie
+  hieronder), niet hier.
 - **`bubbleWeek`**: de 19 roze-bubbels-locaties van deze week (15 op de
   hoofdeiland-kaart `island-map.jpg`, 4 onderwater op de Whalefall
   Canyon-kaart `whalefall-map.jpg`, onderscheiden via `underwater`).
