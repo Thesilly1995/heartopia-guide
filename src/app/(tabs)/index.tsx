@@ -145,8 +145,8 @@ export default function HomeScreen() {
                 {!forecastExpanded && (
                   <View style={styles.forecastPreview}>
                     <View style={styles.forecastIconRow}>
-                      {weekForecast[0].emoji.map((icon, i) => (
-                        <Text key={i} style={styles.forecastIcon}>{icon}</Text>
+                      {weekForecast[0].slots.map((slot, i) => (
+                        <Text key={i} style={styles.forecastIcon}>{slot.emoji}</Text>
                       ))}
                     </View>
                     <Text style={styles.forecastDay}>{weekForecast[0].weekdayLabel}</Text>
@@ -159,8 +159,11 @@ export default function HomeScreen() {
               weekForecast.map((entry) => (
                 <View key={entry.date} style={styles.forecastRow}>
                   <View style={styles.forecastIconRow}>
-                    {entry.emoji.map((icon, i) => (
-                      <Text key={i} style={styles.forecastIcon}>{icon}</Text>
+                    {entry.slots.map((slot, i) => (
+                      <View key={i} style={styles.forecastSlot}>
+                        <Text style={styles.forecastIcon}>{slot.emoji}</Text>
+                        {slot.blockLabel && <Text style={styles.forecastBlockLabel}>{slot.blockLabel}</Text>}
+                      </View>
                     ))}
                   </View>
                   <Text style={styles.forecastDay}>{entry.dayLabel}</Text>
@@ -309,8 +312,10 @@ function makeStyles(c: ThemeColors) {
     forecastPreview: { flexDirection: 'row', alignItems: 'center', gap: 6 },
     forecastTitle: { color: c.forestSoft, fontSize: 11, fontWeight: '700', textTransform: 'uppercase' },
     forecastRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-    forecastIconRow: { flexDirection: 'row', alignItems: 'center', gap: 4 },
+    forecastIconRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 6 },
+    forecastSlot: { alignItems: 'center', gap: 1 },
     forecastIcon: { fontSize: 16 },
+    forecastBlockLabel: { fontSize: 9, fontWeight: '700', color: c.forestSoft },
     forecastDay: { color: c.forest, fontSize: 13, fontWeight: '700' },
     plotsCard: {
       flexDirection: 'row',

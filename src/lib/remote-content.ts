@@ -94,11 +94,25 @@ export interface RemoteCode {
 
 export type WeekForecastKind = 'normal' | 'rain' | 'rainbow' | 'warm_sun' | 'meteor' | 'heatwave';
 
+/** De vier vaste 6-uursblokken (servertijd) waarin het spelweer wisselt. */
+export type WeekForecastBlock = '00-06' | '06-12' | '12-18' | '18-00';
+
+export interface RemoteWeekForecastSlot {
+  kind: WeekForecastKind;
+  /** Het 6-uursblok waarin dit optreedt — weglaten als het tijdstip nog niet bekend is (dan toont de app alleen het icoon/de tekst, zonder tijd). */
+  block?: WeekForecastBlock;
+}
+
 export interface RemoteWeekForecastDay {
   /** Kalenderdatum "YYYY-MM-DD" (lokale speldatum), niet een terugkerende weekdag. */
   date: string;
-  /** Meestal 1 element, maar een dag kan meerdere bijzonderheden tegelijk hebben (bv. hittegolf + meteorenregen). */
-  kinds: WeekForecastKind[];
+  /**
+   * Meestal 1 element, maar een dag kan meerdere bijzonderheden tegelijk
+   * hebben (bv. hittegolf overdag + meteorenregen 's nachts). Elk element is
+   * óf een kale kind-string (geen tijd bekend, oude schrijfwijze) óf een
+   * object met een `block` erbij zodra het tijdstip bekend is.
+   */
+  kinds: (WeekForecastKind | RemoteWeekForecastSlot)[];
 }
 
 export interface RemoteContentPayload {

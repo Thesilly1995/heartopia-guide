@@ -1,16 +1,21 @@
 import { useMemo } from 'react';
 
 import { useLanguage } from '@/hooks/use-language';
-import { useRemoteContent, WeekForecastKind } from '@/lib/remote-content';
+import { RemoteWeekForecastSlot, useRemoteContent, WeekForecastBlock, WeekForecastKind } from '@/lib/remote-content';
+
+export interface WeekForecastSlot {
+  kind: WeekForecastKind;
+  emoji: string;
+  label: string;
+  /** bv. "00:00–06:00", null als het tijdstip nog niet bekend is. */
+  blockLabel: string | null;
+}
 
 export interface WeekForecastEntry {
   date: string;
-  kinds: WeekForecastKind[];
+  slots: WeekForecastSlot[];
+  /** Alle bijzonderheden van de dag als tekst achter elkaar, met tijd erbij zodra bekend. */
   label: string;
-  /** Eén emoji per kind, apart te renderen in eigen <Text>-elementen — samen in
-   *  één tekst-string zetten liet op sommige Android-toestellen de tweede emoji
-   *  onzichtbaar worden (glyph-shaping-eigenaardigheid bij aaneengesloten emoji). */
-  emoji: string[];
   /** "Vandaag" voor de dag van vandaag, anders de weekdagnaam. */
   dayLabel: string;
   /** Altijd de weekdagnaam, ook voor vandaag (bv. "Dinsdag") — voor plekken waar "Vandaag" niet duidelijk genoeg is. */
@@ -45,6 +50,13 @@ const LABELS = {
   },
 } as const;
 
+const BLOCK_LABELS: Record<WeekForecastBlock, string> = {
+  '00-06': '00:00–06:00',
+  '06-12': '06:00–12:00',
+  '12-18': '12:00–18:00',
+  '18-00': '18:00–00:00',
+};
+
 const WEEKDAYS = {
   nl: ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'],
   en: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
@@ -64,7 +76,10 @@ function todayDateStr(): string {
  * De weekvoorspelling (in-game weekvoorspelling-telefoontje): één rij per
  * resterende dag van vandaag tot en met zondag, inclusief dagen zonder
  * bijzonderheden — zo zie je in één oogopslag de hele week, niet alleen de
- * uitschieters. Dagen vóór vandaag worden niet getoond.
+ * uitschieters. Dagen vóór vandaag worden niet getoond. Elke bijzonderheid
+ * kan een tijdsblok (servertijd, een van de vier vaste 6-uursblokken)
+ * hebben zodra dat bekend is, zodat spelers niet zelf het spel hoeven te
+ * openen om te zien wanneer precies iets begint.
  */
 export function useWeekForecast(): WeekForecastEntry[] {
   const { language } = useLanguage();
@@ -79,12 +94,22 @@ export function useWeekForecast(): WeekForecastEntry[] {
       .map((entry) => {
         const isToday = entry.date === today;
         const weekday = WEEKDAYS[language][new Date(`${entry.date}T00:00:00`).getDay()];
-        const kinds = entry.kinds.length > 0 ? entry.kinds : (['normal'] as WeekForecastKind[]);
+        const rawKinds: (WeekForecastKind | RemoteWeekForecastSlot)[] =
+          entry.kinds.length > 0 ? entry.kinds : [{ kind: 'normal' }];
+        const slots: WeekForecastSlot[] = rawKinds.map((raw) => {
+          const kind = typeof raw === 'string' ? raw : raw.kind;
+          const block = typeof raw === 'string' ? undefined : raw.block;
+          return {
+            kind,
+            emoji: EMOJI[kind],
+            label: LABELS[language][kind],
+            blockLabel: block ? BLOCK_LABELS[block] : null,
+          };
+        });
         return {
           date: entry.date,
-          kinds,
-          label: kinds.map((k) => LABELS[language][k]).join(' + '),
-          emoji: kinds.map((k) => EMOJI[k]),
+          slots,
+          label: slots.map((slot) => (slot.blockLabel ? `${slot.label} (${slot.blockLabel})` : slot.label)).join(' + '),
           dayLabel: isToday ? TODAY_LABEL[language] : weekday,
           weekdayLabel: weekday,
         };

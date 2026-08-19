@@ -90,7 +90,8 @@ dat specifieke onderdeel.
     { "date": "2026-08-07", "kinds": ["rain"] },
     { "date": "2026-08-08", "kinds": ["warm_sun"] },
     { "date": "2026-08-09", "kinds": ["normal"] },
-    { "date": "2026-08-12", "kinds": ["heatwave", "meteor"] }
+    { "date": "2026-08-12", "kinds": ["heatwave", "meteor"] },
+    { "date": "2026-08-19", "kinds": [{ "kind": "rain", "block": "00-06" }, { "kind": "meteor", "block": "18-00" }] }
   ],
   "codes": [
     { "code": "aughatogift", "rewardNl": "50x Maanlicht Kristal, 5x Kleurrijk Fontein Vuurwerk (Roze), 3x Regenboog Fokpoeder", "rewardEn": "50x Moonlight Crystal, 5x Colorful Fountain Firework (Pink), 3x Rainbow Breeding Powder", "expiresNl": "31 aug 2026", "expiresEn": "Aug 31, 2026" }
@@ -156,18 +157,32 @@ dat specifieke onderdeel.
   weekvoorspelling-telefoontje — één entry per kalenderdag (`date` als
   `"YYYY-MM-DD"`, de lokale speldatum, geen terugkerende weekdag).
   `kinds` is een **array** (meestal 1 element, maar een dag kan
-  meerdere bijzonderheden tegelijk hebben, bv. hittegolf + meteorenregen
-  op dezelfde dag — dan gewoon beide in de array zetten, de app toont
-  dan beide iconen/teksten achter elkaar). Geldige waarden: `"normal"`
-  (niks bijzonders), `"rain"`, `"rainbow"`, `"warm_sun"` (warme zon),
-  `"meteor"` of `"heatwave"` (hittegolf). In tegenstelling tot
-  `weather` hoef je hier geen `labelNl`/`labelEn` bij te zetten — de
-  app kent per waarde een vaste NL/EN-tekst en icoon.
+  meerdere bijzonderheden tegelijk hebben, bv. regen 's nachts +
+  meteorenregen 's avonds — dan gewoon beide in de array zetten, de
+  app toont dan beide iconen/teksten achter elkaar). Geldige waarden
+  voor `kind`: `"normal"` (niks bijzonders), `"rain"`, `"rainbow"`,
+  `"warm_sun"` (warme zon), `"meteor"` of `"heatwave"` (hittegolf). In
+  tegenstelling tot `weather` hoef je hier geen `labelNl`/`labelEn` bij
+  te zetten — de app kent per waarde een vaste NL/EN-tekst en icoon.
   **Neem bewust ook de dagen zonder bijzonderheden op** (`kinds:
   ["normal"]`) — de app toont dit als een echte weekweergave (vandaag
   t/m zondag) op het homescreen, niet alleen de uitschieters. Dagen
   vóór vandaag worden automatisch niet meer getoond; je hoeft ze dus
   niet te verwijderen zodra ze voorbij zijn.
+  Elk element van `kinds` mag óf een kale string zijn (bv. `"rain"`,
+  geen tijdstip bekend) óf een object `{ "kind": "rain", "block":
+  "00-06" }` zodra je weet in welk 6-uursblok het optreedt — geldige
+  waarden voor `block`: `"00-06"`, `"06-12"`, `"12-18"`, `"18-00"`
+  (servertijd, dezelfde vier vaste blokken als het spelweer). Zo hoeft
+  een speler niet zelf het spel te openen om te zien wanneer precies
+  iets begint — de app toont het tijdsblok direct bij het icoon. Laat
+  `block` gerust weg als je het (nog) niet weet, bv.:
+  ```json
+  { "date": "2026-08-19", "kinds": [
+    { "kind": "rain", "block": "00-06" },
+    { "kind": "meteor", "block": "18-00" }
+  ] }
+  ```
 - **`codes`**: de lijst met actieve redemption-codes op het
   Codes-scherm. Elke entry heeft een `code`, een beloning
   (`rewardNl`/`rewardEn`) en een vervaldatum (`expiresNl`/`expiresEn`,
