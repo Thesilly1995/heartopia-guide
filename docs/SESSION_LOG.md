@@ -2,6 +2,18 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-19 (deel 39) — Weekweer: tijdsblokken per bijzonderheid
+
+**Nieuwe wens**: gebruiker wees erop dat het spel vier vaste 6-uursblokken kent (06-12, 12-18, 18-00, 00-06) en wilde dat de weekweer-kaart op het homescherm ook laat zien *wanneer* een bijzonderheid precies begint/eindigt (bv. 19 aug: regen 00:00-06:00, meteorenregen 18:00-00:00) — zodat spelers dat niet per se in het spel zelf hoeven te checken.
+
+**Schema uitgebreid, met terugwaartse compatibiliteit**: `weekForecast[].kinds` accepteerde tot nu toe alleen kale strings (`"rain"`). Elk element mag nu ook een object zijn: `{ "kind": "rain", "block": "00-06" }` — `block` is optioneel, dus dagen waarvan het tijdstip nog niet bekend is blijven gewoon kale strings tonen (geen tijd erbij, huidig gedrag). Aangepast: `src/lib/remote-content.ts` (nieuw `WeekForecastBlock`-type + `RemoteWeekForecastSlot`), `src/data/week-forecast.ts` (nieuwe `slots`-structuur i.p.v. losse `kinds`/`emoji`-arrays, met `blockLabel` zoals "00:00–06:00"), `src/app/(tabs)/index.tsx` (toont het tijdsblok als klein tekstje onder elk icoon in de uitgeklapte weekweer-rij). `docs/remote-content.md` bijgewerkt met het nieuwe schema + voorbeeld.
+
+**Data ingevuld**: `remote-content.json` → 19 augustus nu met `block: "00-06"` (regen) en `block: "18-00"` (meteorenregen), zoals gebruiker aangaf. De overige dagen (10-23 aug) hebben nog geen tijdsblok — dat kan later aangevuld worden zodra bekend, geen actie vereist om ze te laten werken.
+
+Getest via `expo start --web` + Playwright met `page.route()`-mock van `remote-content.json` (vaste aanpak in deze sandbox, zie eerdere delen) — "Vandaag" toont nu correct 🌧️ 00:00–06:00 en ☄️ 18:00–00:00 onder elkaar, andere dagen tonen gewoon het icoon zonder tijd. Geen console-errors, `npx tsc --noEmit` schoon.
+
+**Puur JSON+JS-wijziging, geen build nodig** — normale OTA-flow (`git pull` + `eas update`) volstaat.
+
 ## 2026-08-17 (deel 38) — Nieuwe catalogus: Puzzels & Boeken (Other Collections)
 
 **Nieuwe wens**: gebruiker wilde een catalogus voor de "Puzzel en boeken"-verzameling. Online bronnen gaven wel een community-lijst van ~80 puzzelnamen (gamingonphone.com, zonder rarity/prijs) maar niets bruikbaars voor boeken — bewust niet gegokt, gebruiker heeft in plaats daarvan zelf screenshots gestuurd van de in-game "Other Collections"-tab (onderdeel van het Collection Book). Bleek uiteindelijk **110 puzzels + 40 boeken** te bevatten (dus meer dan de externe schatting) — alleen naam + afbeelding zichtbaar in die tab, geen prijs/rarity/verkrijgmethode, en dat is expliciet akkoord bevonden door gebruiker ("naam + afbeelding is voldoende").
