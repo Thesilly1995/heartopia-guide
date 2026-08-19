@@ -27,6 +27,8 @@ const DAILY = {
     { key: 'd12', label: "Ka Ching's winkel bekijken" },
     { key: 'd13', label: 'Azure bekijken (indien actief event)' },
     { key: 'd14', label: 'Laboratorium checken' },
+    { key: 'd15', label: 'Zwervende Eik hakken' },
+    { key: 'd16', label: 'Fluoriet hakken' },
   ],
   en: [
     { key: 'd0', label: 'Daily check-in' },
@@ -40,6 +42,8 @@ const DAILY = {
     { key: 'd12', label: "Check Ka Ching's shop" },
     { key: 'd13', label: 'Check Azure (if an event is active)' },
     { key: 'd14', label: 'Check the Laboratory' },
+    { key: 'd15', label: 'Chop the Wandering Oak' },
+    { key: 'd16', label: 'Mine the Fluorite' },
   ],
 } as const;
 
@@ -48,11 +52,13 @@ const WEEKLY = {
     { key: 'w1', label: 'Wekelijkse taken afronden (D.G. Level 13+)' },
     { key: 'w2', label: 'Roze Bubbels verzamelen' },
     { key: 'w3', label: 'Event-weekdoelen (indien actief)' },
+    { key: 'w4', label: 'Codes checken' },
   ],
   en: [
     { key: 'w1', label: 'Complete weekly tasks (D.G. Level 13+)' },
     { key: 'w2', label: 'Collect Pink Bubbles' },
     { key: 'w3', label: 'Event weekly goals (if active)' },
+    { key: 'w4', label: 'Check codes' },
   ],
 } as const;
 

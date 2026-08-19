@@ -2,6 +2,13 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-19 (deel 41) — 2 nieuwe missies-taakjes
+
+**Missies → Dagelijks**: "Zwervende Eik hakken" en "Fluoriet hakken" toegevoegd als losse taken (`d15`/`d16` in `src/app/missies.tsx`), naast de bestaande dagelijkse-plots-info op het homescreen.
+**Missies → Wekelijks**: "Codes checken" toegevoegd (`w4`).
+
+Puur een uitbreiding van de bestaande `DAILY`/`WEEKLY`-lijsten — reset-logica (`DAILY_KEYS`/`WEEKLY_KEYS`) leest deze automatisch mee, geen aparte wiring nodig. Getest via `expo start --web` + Playwright: beide taken tonen correct in de juiste tab, tellers kloppen (0/13 dagelijks). Geen console-errors, `npx tsc --noEmit` schoon. Puur JS-wijziging, geen build nodig.
+
 ## 2026-08-19 (deel 40) — Meteorenregen-kaartlocaties + Doris blijkt breder aanwezig dan gedacht
 
 **Meteorenregen-kaartlocaties eindelijk aangeleverd** (stond al sinds deel 32/33 open): gebruiker gebruikte de coordinate-picker-tool (opnieuw als Artifact gepubliceerd, favicon 🗺️), 10 punten. Punt 5 bleek Doris te zijn — **correctie van gebruiker**: Doris is **niet** Rainbow-exclusief zoals eerder aangenomen (deel 34), ze is ook aanwezig tijdens regen en meteorenregen. **Tweede correctie, vlak daarna**: ik nam eerst verkeerd aan dat deze 10 punten dus op de Whalefall Canyon-kaart stonden (omdat Doris er eerder alleen dáár stond) — gebruiker corrigeerde dit meteen: **meteorenregen komt alleen aan land voor**, Whalefall Canyon hoort uitsluitend bij de Rainbow- en Bubbels-tab. Doris staat tijdens meteorenregen dus gewoon als losse pin op de hoofdeilandkaart, niet in Whalefall.
