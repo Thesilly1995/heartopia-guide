@@ -25,8 +25,8 @@ export interface RemoteBubbleWeek {
   spots: RemoteBubbleSpot[];
 }
 
-export interface RemoteRainbowSpot extends RemoteBubbleSpot {
-  /** true = dit is Doris' plek (NPC, aanwezig tijdens Rainbow-momenten net als de boeketten), laat een ander icoon zien dan de boeketplekken. */
+export interface RemoteEventSpot extends RemoteBubbleSpot {
+  /** true = dit is Doris' plek (NPC bij Whalefall Canyon, aanwezig tijdens regen/regenboog/meteorenregen), laat een ander icoon zien dan de gewone locatiepinnen. */
   isDoris?: boolean;
 }
 
@@ -118,8 +118,9 @@ export interface RemoteWeekForecastDay {
 export interface RemoteContentPayload {
   updatedAt: string;
   /** Rainbow-boeketten op de hoofdeiland- en Whalefall Canyon-kaart, onderscheiden via `underwater`. */
-  rainbowSpots?: RemoteRainbowSpot[];
-  meteorSpots?: RemoteMapSpot[];
+  rainbowSpots?: RemoteEventSpot[];
+  /** Meteorenregen-ertsplekken — kan net als `rainbowSpots` op de hoofdeiland- én Whalefall Canyon-kaart staan (`underwater`), en Doris (`isDoris`) kan hier ook bij staan. */
+  meteorSpots?: RemoteEventSpot[];
   /** Wekelijkse roze-bubbels-locaties (verspringen elke zaterdag 6:00) — ontbreekt dit veld, dan valt de app terug op de gebundelde (verouderde) standaardlijst. */
   bubbleWeek?: RemoteBubbleWeek;
   dailyPlots?: RemoteDailyPlots;

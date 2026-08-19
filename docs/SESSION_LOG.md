@@ -2,6 +2,22 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-19 (deel 40) — Meteorenregen-kaartlocaties + Doris blijkt niet Rainbow-exclusief
+
+**Meteorenregen-kaartlocaties eindelijk aangeleverd** (stond al sinds deel 32/33 open): gebruiker gebruikte de coordinate-picker-tool (opnieuw als Artifact gepubliceerd, favicon 🗺️) op de Whalefall Canyon-kaart, 10 punten. **Belangrijke correctie van gebruiker**: punt 5 is Doris — en Doris blijkt **niet** Rainbow-exclusief te zijn zoals eerder aangenomen (deel 34), maar aanwezig bij Whalefall Canyon tijdens **regen, regenboog én meteorenregen**. Dit was niet eerder bekend/gedocumenteerd.
+
+**Schema + code aangepast om dit te ondersteunen** (`meteorSpots` had tot nu toe geen `underwater`/`isDoris`-ondersteuning, alleen `rainbowSpots`):
+- `src/lib/remote-content.ts`: `RemoteRainbowSpot` hernoemd naar `RemoteEventSpot` (generieker, want nu door zowel `rainbowSpots` als `meteorSpots` gebruikt) — beide velden ondersteunen nu `underwater` + optioneel `isDoris`.
+- `src/data/meteor-spots.ts`: herschreven naar hetzelfde patroon als `rainbow-spots.ts` (underwater/isDoris in de hook-output).
+- `src/app/rainbow-meteor.tsx`: de Whalefall Canyon-subkaart + Doris-icoon/disclaimer werkten hiervoor alleen op de Rainbow-tab (hardcoded `tab === 'rainbow'`-checks) — losgetrokken zodat dit voor beide tabs werkt op basis van de data zelf (`spot.underwater`/`spot.isDoris`), niet op basis van welke tab actief is. Meteor-pins krijgen een ☄️-icoon (i.p.v. 🌈 bij Rainbow), Doris blijft 👧 bij beide. De Rainbow-specifieke "4 boeketten, maar je pakt er maar 1"-disclaimer blijft wél Rainbow-only (geldt niet voor meteor-ertsplekken). Doris-tekst niet meer met een hard tijdvenster (klopte toch niet meer, nu drie gebeurtenissen) — verwijst i.p.v. daarvan naar de weekweer-tijdsblokken op het homescreen (zie deel 39).
+- `docs/remote-content.md` bijgewerkt met het nieuwe schema.
+
+**Data ingevuld**: `remote-content.json` → `meteorSpots` met 10 Whalefall Canyon-locaties (`underwater: true`), nummer 5 = Doris (`isDoris: true`). Beschrijvingen zijn nog generiek ("Locatie N"/"Location N") — gebruiker had zelf geen omschrijvingen ingevuld in de tool, kan later aangevuld worden.
+
+Getest via `expo start --web` + Playwright met gemockte `remote-content.json`: meteorenregen-tab toont nu ook de Whalefall Canyon-kaart met 10 pins, Doris' pin visueel anders (oranje 👧 i.p.v. blauw ☄️). Geen console-errors, `npx tsc --noEmit` schoon.
+
+**Puur JSON+JS-wijziging, geen build nodig.**
+
 ## 2026-08-19 (deel 39) — Weekweer: tijdsblokken per bijzonderheid
 
 **Nieuwe wens**: gebruiker wees erop dat het spel vier vaste 6-uursblokken kent (06-12, 12-18, 18-00, 00-06) en wilde dat de weekweer-kaart op het homescherm ook laat zien *wanneer* een bijzonderheid precies begint/eindigt (bv. 19 aug: regen 00:00-06:00, meteorenregen 18:00-00:00) — zodat spelers dat niet per se in het spel zelf hoeven te checken.
