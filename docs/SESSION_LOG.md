@@ -2,6 +2,9 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-20 (deel 45) — Bugfix: homescreen-teller miste Zwervende Eik/Fluoriet
+
+Gebruiker meldde dat het missies-kaartje op het homescherm nog "0/11" toonde i.p.v. "0/13" na deel 41 (Zwervende Eik/Fluoriet-taken toegevoegd). Oorzaak: `src/data/missions-progress.ts` heeft een **eigen gedupliceerde kopie** van de `DAILY_KEYS`-lijst (los van de echte lijst in `src/app/missies.tsx`, puur voor de homescreen-teller) — die was niet meegewerkt bij deel 41. `d15`/`d16` toegevoegd aan die lijst. **Les: bij toekomstige missies-wijzigingen ook `missions-progress.ts` checken** — twee plekken met dezelfde sleutels, geen gedeelde bron. Getest via `expo start --web` + Playwright: teller toont nu correct 0/13. `npx tsc --noEmit` schoon. Puur JS-wijziging, geen build nodig.
 ## 2026-08-20 (deel 44) — Meteorenregen automatisch leeggemaakt (24u na start)
 
 De ingeplande `send_later`-reminder uit deel 42 vuurde af om 18:00 NL-tijd: `meteorSpots` in `remote-content.json` teruggezet naar `[]` (24u na de start van het 19-augustus-meteorenregen-blok), `updatedAt` bijgewerkt. Zelfde automatische patroon als eerder bij `rainbowSpots`. Puur data-wijziging, geen build nodig.
