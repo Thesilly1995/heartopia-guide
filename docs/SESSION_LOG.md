@@ -2,6 +2,9 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-20 (deel 44) — Meteorenregen automatisch leeggemaakt (24u na start)
+
+De ingeplande `send_later`-reminder uit deel 42 vuurde af om 18:00 NL-tijd: `meteorSpots` in `remote-content.json` teruggezet naar `[]` (24u na de start van het 19-augustus-meteorenregen-blok), `updatedAt` bijgewerkt. Zelfde automatische patroon als eerder bij `rainbowSpots`. Puur data-wijziging, geen build nodig.
 ## 2026-08-20 (deel 43) — Nieuwe badge: Heart Set on the Sky (met eigen icoon)
 
 Gebruiker stuurde een screenshot van een nieuw behaalde badge (Hot Air Balloon-event). Toegevoegd aan `src/data/badges.ts`: "Hart Gezet op de Lucht"/"Heart Set on the Sky", `hidden: false` (staat gewoon bij de normale badges, niet bij Verborgen Prestaties). Eerst met `iconKey: null` + 🎈-emoji-fallback gedaan (geen los icoon-bestand, alleen een badge-screenshot in de chat i.p.v. een volledig Achievement-overzicht) — gebruiker stuurde daarna alsnog de losse, al uitgesneden badge-afbeelding (ovale vorm, precies zoals de bestaande icoontjes). Gevonden op schijf via `find /root/.claude/uploads` (chat-geüploade bestanden staan niet in de normale werkmap). Met Pillow (`pip install Pillow`, niet standaard aanwezig in deze sandbox) verkleind naar ~110×123px om bij de bestaande bestandsgroottes te passen (23KB → 4,6KB), opgeslagen als `assets/images/badges/heart-set-on-the-sky.jpg`, geregistreerd in `src/constants/badge-icons.ts`, en `iconKey` op de badge-entry gezet.
