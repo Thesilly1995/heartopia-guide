@@ -5,7 +5,7 @@ import { useCallback, useState } from 'react';
 const STORAGE_KEY = 'heartopia:missies:vinkjes';
 
 // Zelfde sleutels als de dagelijkse missielijst in src/app/missies.tsx (DAILY).
-const DAILY_KEYS = ['d0', 'd1', 'd3', 'd4', 'd6', 'd7', 'd10', 'd11', 'd12', 'd13', 'd14'];
+const DAILY_KEYS = ['d0', 'd1', 'd3', 'd4', 'd6', 'd7', 'd10', 'd11', 'd12', 'd13', 'd14', 'd15', 'd16'];
 
 export interface MissionsProgress {
   done: number;
