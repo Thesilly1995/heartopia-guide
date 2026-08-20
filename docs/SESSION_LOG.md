@@ -2,6 +2,13 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-20 (deel 43) — Nieuwe badge: Heart Set on the Sky
+
+Gebruiker stuurde een screenshot van een nieuw behaalde badge (Hot Air Balloon-event). Toegevoegd aan `src/data/badges.ts`: "Hart Gezet op de Lucht"/"Heart Set on the Sky", `hidden: false` (staat gewoon bij de normale badges, niet bij Verborgen Prestaties). Geen los icoon-bestand gecropt zoals bij eerdere badges (dat gebeurde in eerdere sessies vanaf een los aangeleverd volledig Achievement-overzicht-screenshot) — deze keer alleen een losse badge-screenshot beschikbaar in de chat, dus `iconKey: null` met 🎈-emoji als fallback (zelfde patroon als andere badges zonder gecropt icoon). Getest via `expo start --web` + Playwright: badge verschijnt correct boven de "Verborgen Prestaties"-scheiding. Geen console-errors, `npx tsc --noEmit` schoon. Puur JS-wijziging, geen build nodig.
+
+### Nog open (oppakken volgende sessie)
+
+- Als de gebruiker ooit een volledig Achievement-overzicht opnieuw screenshot, kan deze badge (en eventueel andere) alsnog een echt gecropt icoon krijgen i.p.v. de 🎈-emoji-fallback.
 ## 2026-08-19 (deel 42) — Meteorenregen: ertsstukken blijven 24u hakbaar + auto-leegmaak ingepland
 
 **Nieuwe disclaimer op de meteorenregen-tab** (`src/app/rainbow-meteor.tsx`, `meteorLingerNote`): ertsstukken blijven tot 24u na de meteorenregen hakbaar, dus de kaart blijft nog even bruikbaar na afloop van het event zelf. Getoond zodra er meteor-locaties zijn (`tab === 'meteor' && spots.length > 0`).
