@@ -88,6 +88,7 @@ const BADGES_RAW: BadgeRaw[] = [
   { nameNl: "Boekenverzamelaar", nameEn: "Book Collector", emoji: "🔒", hidden: true, iconKey: null },
   { nameNl: "Boekenlezer (Astralis)", nameEn: "Book Reader (Astralis)", emoji: "🔒", hidden: true, iconKey: null },
   { nameNl: "Hart Gezet op de Lucht", nameEn: "Heart Set on the Sky", emoji: "🎈", hidden: true, iconKey: "heart-set-on-the-sky" },
+  { nameNl: "Opruimmeester", nameEn: "Cleanup Master", emoji: "🌊", hidden: true, iconKey: "cleanup-master" },
 ];
 
 export function useBadges(): BadgeItem[] {
