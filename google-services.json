@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "548467451121",
+    "project_id": "heartopedia-cadb3",
+    "storage_bucket": "heartopedia-cadb3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:548467451121:android:db78e7dadac4cbf5f37550",
+        "android_client_info": {
+          "package_name": "com.thesilly1995.heartopiagids"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8DyGCHje0FToFbRGHgC9VnT-PcHsY4O8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
