@@ -7,11 +7,13 @@ import 'react-native-url-polyfill/auto';
 
 import { AnimatedSplashOverlay } from '@/components/animated-icon';
 import { AdBanner } from '@/components/heartopia/ad-banner';
+import { UpdateBanner } from '@/components/heartopia/update-banner';
 import { initializeAdsIfNeeded } from '@/constants/ads';
 import { initializePurchasesIfNeeded } from '@/constants/purchases';
 import { AdBannerHeight } from '@/constants/theme';
 import { AuthProvider } from '@/hooks/use-auth';
 import { LanguageProvider } from '@/hooks/use-language';
+import { NotificationsProvider } from '@/hooks/use-notifications';
 import { usePremium, PremiumProvider } from '@/hooks/use-premium';
 
 SplashScreen.preventAutoHideAsync();
@@ -25,7 +27,9 @@ export default function RootLayout() {
     <LanguageProvider>
       <PremiumProvider>
         <AuthProvider>
-          <AppContent />
+          <NotificationsProvider>
+            <AppContent />
+          </NotificationsProvider>
         </AuthProvider>
       </PremiumProvider>
     </LanguageProvider>
@@ -45,6 +49,7 @@ function AppContent() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <AnimatedSplashOverlay />
+      <UpdateBanner />
       <Stack screenOptions={{ headerShown: false, contentStyle: { paddingBottom: contentPadding } }}>
         <Stack.Screen name="(tabs)" options={{ contentStyle: { paddingBottom: 0 } }} />
         <Stack.Screen name="vissen" />
@@ -67,6 +72,7 @@ function AppContent() {
         <Stack.Screen name="ocean-cleanup" />
         <Stack.Screen name="dashboard" />
         <Stack.Screen name="cloud-save" />
+        <Stack.Screen name="meldingen" />
       </Stack>
       <AdBanner />
     </ThemeProvider>

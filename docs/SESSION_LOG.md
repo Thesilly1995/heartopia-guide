@@ -2,6 +2,33 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-20 (deel 47) — Pushmeldingen gebouwd (code compleet, setup nog te doen)
+
+**Aanleiding**: gebruiker vroeg de openstaande-puntenlijst op (pushmeldingen, RevenueCat, AdMob, productietoegang) — zie die lijst hieronder bij "Openstaande punten (stand 20 aug)". Koos ervoor om pushmeldingen nu op te pakken, met 4 gewenste soorten: Rainbow/meteorenregen-start, nieuwe-update-beschikbaar (mag gratis, voor iedereen), nieuw event, nieuwe code.
+
+**Architectuurkeuzes (met gebruiker afgestemd via vragen)**:
+- **Update-melding** → geen echte pushmelding, maar een **in-app update-banner** (`src/components/heartopia/update-banner.tsx`, via `expo-updates`' `checkForUpdateAsync`/`fetchUpdateAsync`/`reloadAsync`). Betrouwbaarder (geen backend nodig, werkt ook met pushmeldingen uit), en is precies de "pop-up met knop"-ervaring die gevraagd was. Zit in `_layout.tsx`, altijd actief, geen Premium nodig.
+- **De andere 3 (Rainbow/meteor, event, codes)** → gebruiker wilde een melding **op het moment dat het live gaat**, niet met polling-vertraging. Daarom een **GitHub Action** (`.github/workflows/notify-content-changes.yml`) die bij elke push naar `main` die `remote-content.json` raakt een Node-script draait (`scripts/send-content-notifications.mjs`): vergelijkt vorige vs. huidige JSON (via `git show HEAD^:...`), detecteert "leeg → gevuld" (Rainbow/meteor net begonnen), nieuwe event-naam, of nieuwe code(s) in de array, en verstuurt dan meldingen via Expo's push-API naar alle geregistreerde tokens. Werkt dus **ongeacht of ik of gebruiker zelf** het JSON-bestand bijwerkt (ook bij een directe GitHub-webedit, sluit aan bij het "kan het zonder VS Code"-gesprek van eerder).
+
+**Nieuw gebouwd**:
+- `src/lib/push-notifications.ts`: permissie vragen, Expo push-token ophalen (`expo-notifications` + `expo-device`, beide toegevoegd), token opslaan/verwijderen in Supabase (`push_tokens`-tabel, nog aan te maken door gebruiker).
+- `src/hooks/use-notifications.tsx`: per-categorie (`rainbow_meteor`/`event`/`codes`) aan/uit, lokaal + Supabase-gesynchroniseerd, herregistreert het token stil bij app-start als er al een categorie aanstond.
+- `src/app/meldingen.tsx`: nieuw Meldingen-scherm (homescreen-tegel `href` van `null` naar `/meldingen` gezet) — update-banner-uitleg (altijd zichtbaar, gratis) bovenaan, de 3 categorie-toggles daaronder achter `PremiumLockedView` (bestaand slot-component hergebruikt, zelfde patroon als Dashboard/Cloud Save).
+- `docs/push-notifications-setup.md`: nieuw, zelfde stijl als `admob-setup.md`/`revenuecat-setup.md` — wat ik al gedaan heb vs. wat de gebruiker zelf nog moet doen (Firebase-project + FCM V1 service-account-key + `eas credentials`, Supabase-tabel-SQL + RLS-policies, 2 GitHub Actions-secrets, nieuwe build).
+
+**Getest**: `npx tsc --noEmit` schoon. `send-content-notifications.mjs` lokaal gedraaid tegen fixture-JSON's (leeg→gevuld/geen-wijziging/leegmaken-mag-niet-melden) — diff-logica klopt, geen crash bij een (bewust) foute Supabase-key (401 netjes afgevangen). YAML-syntax van de workflow gevalideerd. `expo start --web` + Playwright: Meldingen-scherm toont correct locked/unlocked, toggles werken, geen console-errors; homescherm/update-banner crasht niet (banner rendert simpelweg niks in dev/web, zoals verwacht).
+
+**Nog niet end-to-end testbaar vanuit deze sandbox** — vereist een echt toestel, een Firebase-project, en een nieuwe build. Zie `docs/push-notifications-setup.md` voor de exacte vervolgstappen voor de gebruiker.
+
+**Vereist een nieuwe build** (nieuwe native module `expo-notifications`), puur `eas update` is niet genoeg om dit zichtbaar/werkend te maken.
+
+### Openstaande punten (stand 20 aug, gevraagd door gebruiker — zie ook boven)
+
+- **RevenueCat/Premium**: code compleet, API-key nog leeg. Nog te doen: in-app product in Play Console, entitlement/offering in RevenueCat, key ophalen en aan mij geven, nieuwe build. Stappen in `docs/revenuecat-setup.md`.
+- **AdMob**: Android grotendeels klaar (echte App-ID + banner-ad-unit-ID staan al in de code). iOS bewust uitgesteld (geen Apple Developer-account).
+- **Productietoegang Play Store**: laatst bekende status (deel 32, 14 aug) — Gesloten test - Alpha, 12 testers 14 dagen nodig. Niet bevestigd of dit inmiddels rond is, navragen bij gebruiker.
+- **Pushmeldingen**: zie dit deel — code klaar, setup (Firebase/Supabase/GitHub-secrets/build) nog te doen door gebruiker.
+- Kleiner, bewust nog niet opgepakt: in-app "beoordeel deze app"-prompt, Tips & Tricks-tabblad in Premium (na lancering), iOS in het algemeen.
 ## 2026-08-20 (deel 46) — Correctie: Heart Set on the Sky is verborgen + nieuwe badge Cleanup Master
 
 Gebruiker corrigeerde: "Heart Set on the Sky" (deel 43/44) hoort bij de **verborgen** prestaties, niet bij de normale — `hidden: true` gezet in `src/data/badges.ts`.

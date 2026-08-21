@@ -1,0 +1,32 @@
+name: Notify content changes
+
+# Verstuurt pushmeldingen (Rainbow/meteorenregen gestart, nieuw event, nieuwe
+# code) zodra remote-content.json op main verandert — ongeacht of dat gebeurt
+# via een `git push` of een directe bewerking in de GitHub-webeditor. Zie
+# docs/push-notifications-setup.md voor de vereiste secrets.
+on:
+  push:
+    branches: [main]
+    paths:
+      - remote-content.json
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Vorige versie van remote-content.json ophalen
+        run: git show HEAD^:remote-content.json > /tmp/previous-remote-content.json || echo '{}' > /tmp/previous-remote-content.json
+
+      - name: Meldingen versturen voor gewijzigde content
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: node scripts/send-content-notifications.mjs /tmp/previous-remote-content.json remote-content.json
