@@ -2,7 +2,21 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
-## 2026-08-22 (deel 49) — Pushmeldingen volledig opgezet + eerste build gedraaid, privacyverklaring bijgewerkt
+## 2026-08-22 (deel 50) — Call of Whales event verwijderd, Dolfijn niet meer voerbaar
+
+**Aanleiding**: gebruiker meldde dat het Call of Whales-event vandaag (22 aug) is afgelopen en de Dolfijn niet meer gevoerd kan worden.
+
+**Wijzigingen**:
+- `src/data/event-meta.ts`: `BUNDLED_EVENT` (hardcoded Call of Whales-fallback) vervangen door een `NO_EVENT`-fallback ("Geen actief event" / "We laten het weten zodra het volgende event begint"), gebruikt zolang er geen `remote-content.json`-`event`-override actief is.
+- `src/data/event-fish.ts`, `event-birds.ts`, `event-recipes.ts`: de gebundelde Call of Whales-content (`_RAW`-arrays) geleegd — conform de bestaande disclaimer op het events-scherm ("oude event-content is dan niet meer te behalen").
+- `src/app/events.tsx`: lege-staat-tekst (NL+EN) + `ListEmptyComponent` toegevoegd aan de FlatList, zodat het scherm niet leeg/kapot oogt zolang er geen event loopt (insecten-tab had al een eigen disclaimer, dus geen aparte tekst nodig).
+- `src/data/wild-animals.ts`: Dolfijn-note bijgewerkt naar hetzelfde patroon als Pinguïn/Maltezer ("tijdelijk dier van een afgelopen event, kan momenteel niet meer gevoerd worden, vriendschap blijft bijhoudbaar voor het geval het terugkeert").
+
+Geverifieerd met `tsc --noEmit` (schoon) en Playwright-screenshots op web (homescreen-statuskaart, /events lege-staat, /wilde-dieren Dolfijn-note) — alles rendert zoals bedoeld, geen console-errors.
+
+**Geen build/OTA-JS-only wijziging is dit niet** — dit raakt echte app-code (niet alleen `remote-content.json`), dus na de merge is een `eas update` nodig om live te gaan.
+
+ — Pushmeldingen volledig opgezet + eerste build gedraaid, privacyverklaring bijgewerkt
 
 **Pushmeldingen-setup samen doorlopen** (vervolg op deel 47, code stond al klaar): stap voor stap met gebruiker doorlopen —
 1. Firebase-project `heartopedia-cadb3` aangemaakt, `google-services.json` ontvangen en verwerkt (`app.json` → `android.googleServicesFile`).

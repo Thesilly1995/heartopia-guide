@@ -1,12 +1,12 @@
 import { useLanguage } from '@/hooks/use-language';
 import { useRemoteContent } from '@/lib/remote-content';
 
-const BUNDLED_EVENT = {
-  nameNl: 'Call of Whales',
-  nameEn: 'Call of Whales',
-  datesNl: '11 juli – 22 augustus 2026',
-  datesEn: 'Jul 11 – Aug 22, 2026',
-  emoji: '🐋',
+const NO_EVENT = {
+  nameNl: 'Geen actief event',
+  nameEn: 'No active event',
+  datesNl: 'We laten het weten zodra het volgende event begint',
+  datesEn: "We'll let you know once the next event starts",
+  emoji: '🗓️',
 } as const;
 
 export interface CurrentEventMeta {
@@ -15,7 +15,7 @@ export interface CurrentEventMeta {
   emoji: string;
 }
 
-/** Naam/data van het huidige event — remote override indien aanwezig, anders de gebundelde standaard. */
+/** Naam/data van het huidige event — remote override indien aanwezig, anders "geen actief event". */
 export function useCurrentEventMeta(): CurrentEventMeta {
   const { language } = useLanguage();
   const { payload } = useRemoteContent();
@@ -29,8 +29,8 @@ export function useCurrentEventMeta(): CurrentEventMeta {
     };
   }
   return {
-    name: BUNDLED_EVENT.nameEn,
-    dates: language === 'en' ? BUNDLED_EVENT.datesEn : BUNDLED_EVENT.datesNl,
-    emoji: BUNDLED_EVENT.emoji,
+    name: language === 'en' ? NO_EVENT.nameEn : NO_EVENT.nameNl,
+    dates: language === 'en' ? NO_EVENT.datesEn : NO_EVENT.datesNl,
+    emoji: NO_EVENT.emoji,
   };
 }
