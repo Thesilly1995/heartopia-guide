@@ -2,6 +2,16 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-22 (deel 48) — Bubbelweek 22-28 aug + zaterdag-bubbels-herinnering ingesteld
+
+**Nieuwe sessie**, gestart met een nieuwe self-bind `send_later`-achtige wekelijkse Routine (`trig_01WXoz9oXiM2SEYXzfY8a1wA`, "Bubbels herinnering (zaterdag)"): elke zaterdag 07:00 UTC (09:00 NL-tijd) een berichtje in deze sessie om aan de bubbels te denken.
+
+**Bubbelweek 22-28 aug verwerkt**: gebruiker leverde 15 hoofdeiland- + 4 Whalefall Canyon-coördinaten aan via de coordinate-picker-tool (herkend via de meegestuurde Artifact-URL, favicon/titel "Kaart-coördinaten-tool — Heartopedia"). **Kopieerfout ontdekt in de tool-export**: de 4 "Onder water"-punten hadden alsnog `underwater: false` staan (waarschijnlijk een niet-meegenomen toggle in de tool) — met de hand gecorrigeerd naar `true` vóór het verwerken, anders waren ze op de hoofdeilandkaart i.p.v. Whalefall Canyon beland. Richting-gebaseerde NL/EN-omschrijvingen gegenereerd (zelfde stijl als voorgaande weken, geen aannames over naamgegeven gebieden), met "bij locatie N" voor dicht-bij-elkaar-liggende clusters (via een quick Python-scriptje op afstand tussen punten, drempel ~12 op de 0-100-schaal).
+
+`remote-content.json` → `bubbleWeek` bijgewerkt, `updatedAt` gezet. **Geen build/OTA nodig** — dit bestand wordt live opgehaald via de raw-GitHub-URL (zie deel 33). PR #42 aangemaakt en op gebruikersverzoek direct gemerged naar `main`.
+
+**Nog open**: gebruiker spot-checkt de nieuwe bubbel-locaties nog zelf in-game (nog niet bevestigd).
+
 ## 2026-08-20 (deel 47) — Pushmeldingen gebouwd (code compleet, setup nog te doen)
 
 **Aanleiding**: gebruiker vroeg de openstaande-puntenlijst op (pushmeldingen, RevenueCat, AdMob, productietoegang) — zie die lijst hieronder bij "Openstaande punten (stand 20 aug)". Koos ervoor om pushmeldingen nu op te pakken, met 4 gewenste soorten: Rainbow/meteorenregen-start, nieuwe-update-beschikbaar (mag gratis, voor iedereen), nieuw event, nieuwe code.
