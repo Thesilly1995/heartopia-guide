@@ -2,6 +2,26 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-22 (deel 49) — Pushmeldingen volledig opgezet + eerste build gedraaid, privacyverklaring bijgewerkt
+
+**Pushmeldingen-setup samen doorlopen** (vervolg op deel 47, code stond al klaar): stap voor stap met gebruiker doorlopen —
+1. Firebase-project `heartopedia-cadb3` aangemaakt, `google-services.json` ontvangen en verwerkt (`app.json` → `android.googleServicesFile`).
+2. Service-account-key voor FCM V1 via `eas credentials` geüpload. **Veiligheidsincident onderweg**: gebruiker plakte per ongeluk de volledige inhoud van het geheime private-key-JSON-bestand in de chat (i.p.v. alleen het bestandspad te gebruiken). Behandeld als gecompromitteerd: geadviseerd de sleutel in te trekken via Google Cloud IAM en een nieuwe te genereren — gebruiker deed dit en uploadde de nieuwe sleutel daarna correct (alleen het pad, sleutel zelf nooit meer gedeeld).
+3. Supabase-tabel `push_tokens` aangemaakt (SQL + RLS-policies uit `docs/push-notifications-setup.md`).
+4. GitHub Actions-secrets `SUPABASE_URL`/`SUPABASE_SERVICE_ROLE_KEY` ingesteld.
+5. **Bug gevonden vlak vóór de build**: `expo-notifications` stond niet in `app.json`'s `plugins`-array — nodig voor manifest/permissies, was per ongeluk vergeten in de oorspronkelijke deel-47-PR. Gefixt vóór de build.
+
+**Eerste volledige productie-build gedraaid** (`eas build --profile production --platform android`) — onderweg twee kleine hobbels: (1) `eas build` faalde eerst met "expo config --json exited with non-zero code 1" omdat de nieuwe dependencies (`expo-notifications` e.d.) na een eerdere `git pull` nooit lokaal geïnstalleerd waren — opgelost met `npm install`; (2) gebruikers-pc crashte/herstartte tijdens het bouwen, lokale terminal-geschiedenis ging verloren — bevestigd via `eas build:list --platform android --limit 3` dat de cloud-build gewoon was doorgelopen en **finished** was (commit `91753c3`, exact de laatste stand inclusief de plugin-fix).
+
+**Privacyverklaring bijgewerkt** (`docs/privacy-policy.html`, ook opnieuw gepubliceerd als Artifact op dezelfde bestaande link https://claude.ai/code/artifact/f70c2a59-1ef4-441c-aab0-670257df2744): nieuwe rij toegevoegd (NL+EN) over het anonieme pushtoken dat verzameld wordt zodra een gebruiker een meldingscategorie aanzet, plus Expo/Firebase als nieuwe derde partij in de "wie heeft toegang"-lijst. Gebruiker moet dit zelf nog checken/bijwerken in het **Data Safety-formulier** in Play Console — niet iets wat ik vanuit hier kan aanpassen.
+
+### Nog open (oppakken volgende sessie)
+
+- Bevestigen of de build door Play Console-review komt (app is nu in beoordeling).
+- Na installatie: pushmeldingen end-to-end testen (categorie aanzetten, token verschijnt in Supabase-tabel, GitHub Action test-run bij een `remote-content.json`-wijziging).
+- Gebruiker moet het Data Safety-formulier in Play Console zelf bijwerken voor de nieuwe pushmeldingen-dataverzameling.
+- Overige oude punten (RevenueCat afmaken, productietoegang-status navragen) staan nog open, zie deel 47.
+
 ## 2026-08-22 (deel 48) — Bubbelweek 22-28 aug + zaterdag-bubbels-herinnering ingesteld
 
 **Nieuwe sessie**, gestart met een nieuwe self-bind `send_later`-achtige wekelijkse Routine (`trig_01WXoz9oXiM2SEYXzfY8a1wA`, "Bubbels herinnering (zaterdag)"): elke zaterdag 07:00 UTC (09:00 NL-tijd) een berichtje in deze sessie om aan de bubbels te denken.
