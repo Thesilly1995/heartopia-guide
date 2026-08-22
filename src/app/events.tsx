@@ -27,6 +27,7 @@ const STRINGS = {
     recipes: 'Recepten',
     insects: 'Insecten',
     bestResult: 'Hoogste resultaat',
+    empty: 'Geen actief event op dit moment — zodra een nieuw event begint, komt de content hier te staan.',
   },
   en: {
     title: 'Current Event',
@@ -38,6 +39,7 @@ const STRINGS = {
     recipes: 'Recipes',
     insects: 'Insects',
     bestResult: 'Best result',
+    empty: 'No active event right now — once a new event starts, its content will appear here.',
   },
 } as const;
 
@@ -132,6 +134,7 @@ export default function EventsScreen() {
             {tab === 'insects' && <DisclaimerBox text={s.insectsNote} warning />}
           </View>
         }
+        ListEmptyComponent={tab === 'insects' ? null : <Text style={styles.emptyText}>{s.empty}</Text>}
         renderItem={({ item }) => (
           <View style={styles.card}>
             <View style={styles.topRow}>
@@ -171,6 +174,7 @@ function makeStyles(c: ThemeColors) {
   return StyleSheet.create({
     safeArea: { flex: 1, backgroundColor: c.bg },
     listContent: { padding: 16, gap: 10 },
+    emptyText: { fontSize: 13, color: c.forestSoft, textAlign: 'center', padding: 24, lineHeight: 19 },
     card: { backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.line, padding: 14, marginBottom: 10 },
     topRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
     emojiBadge: { width: 40, height: 40, borderRadius: 20, backgroundColor: c.iconBg, alignItems: 'center', justifyContent: 'center' },
