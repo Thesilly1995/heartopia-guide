@@ -32,7 +32,7 @@ const STRINGS = {
     dorisNoteLand:
       '👧 Doris staat tijdens meteorenregen aan land (zie de pin hieronder) — bij haar kun je dan shoppen. Het exacte tijdsblok zie je op het homescherm bij "Weer deze week".',
     mailboxNote: '📮 Vergeet ook niet het boeket bij je eigen brievenbus — die staat er altijd, maar niet op de kaart (want dat is jouw eigen huisplek).',
-    meteorLingerNote: '⛏️ De ertsstukken blijven nog tot 24u na de meteorenregen hakbaar — deze kaart blijft dus nog even bruikbaar nadat de meteorenregen zelf voorbij is.',
+    meteorLingerNote: '⛏️ De ertsstukken blijven hakbaar tot 24u na de start van de meteorenregen (dus tot dezelfde tijd de volgende dag) — deze kaart blijft dus nog een tijd bruikbaar nadat de meteorenregen zelf is afgelopen.',
   },
   en: {
     title: 'Rainbow & Meteor Shower',
@@ -49,7 +49,7 @@ const STRINGS = {
     dorisNoteLand:
       "👧 During meteor showers Doris is on land (see the pin below) — you can shop with her then. Check the homescreen's \"Weather this week\" for the exact time block.",
     mailboxNote: "📮 Don't forget the bouquet above your own mailbox either — it's always there, but not on the map (since that's your own house spot).",
-    meteorLingerNote: '⛏️ Ore pieces stay mineable for up to 24h after the meteor shower — this map stays useful for a while even after the shower itself has ended.',
+    meteorLingerNote: '⛏️ Ore pieces stay mineable for 24h after the meteor shower starts (so until the same time the next day) — this map stays useful for a while even after the shower itself has ended.',
   },
 } as const;
 
