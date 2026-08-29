@@ -9,6 +9,7 @@ import { StarRow } from '@/components/heartopia/star-row';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { useEventBirds } from '@/data/event-birds';
 import { useEventFish } from '@/data/event-fish';
+import { useEventInsects } from '@/data/event-insects';
 import { useCurrentEventMeta } from '@/data/event-meta';
 import { useEventRecipes } from '@/data/event-recipes';
 import { useLanguage } from '@/hooks/use-language';
@@ -47,8 +48,8 @@ type EventItem = { name: string; emoji: string; spot?: string; note?: string | n
 
 function mapSighting(item: RemoteEventSighting, language: 'nl' | 'en'): EventItem {
   return {
-    name: language === 'en' ? item.nameEn : item.nameNl,
-    spot: language === 'en' ? item.spotEn : item.spotNl,
+    name: item.nameEn,
+    spot: item.spotEn,
     note: language === 'en' ? item.noteEn : item.noteNl,
     emoji: item.emoji,
   };
@@ -56,8 +57,8 @@ function mapSighting(item: RemoteEventSighting, language: 'nl' | 'en'): EventIte
 
 function mapRecipe(item: RemoteEventRecipe, language: 'nl' | 'en'): EventItem {
   return {
-    name: language === 'en' ? item.nameEn : item.nameNl,
-    ingredients: language === 'en' ? item.ingredientsEn : item.ingredientsNl,
+    name: item.nameEn,
+    ingredients: item.ingredientsEn,
     emoji: item.emoji,
   };
 }
@@ -70,6 +71,7 @@ export default function EventsScreen() {
   const bundledEventFish = useEventFish();
   const bundledEventBirds = useEventBirds();
   const bundledEventRecipes = useEventRecipes();
+  const bundledEventInsects = useEventInsects();
   const { payload } = useRemoteContent();
   const remoteEvent = payload?.event;
   const [tab, setTab] = useState('fish');
@@ -78,6 +80,7 @@ export default function EventsScreen() {
   const eventFish = remoteEvent ? remoteEvent.fish.map((item) => mapSighting(item, language)) : bundledEventFish;
   const eventBirds = remoteEvent ? remoteEvent.birds.map((item) => mapSighting(item, language)) : bundledEventBirds;
   const eventRecipes = remoteEvent ? remoteEvent.recipes.map((item) => mapRecipe(item, language)) : bundledEventRecipes;
+  const eventInsects = remoteEvent ? remoteEvent.insects.map((item) => mapSighting(item, language)) : bundledEventInsects;
   const eventMeta = useCurrentEventMeta();
   const subtitle = `${eventMeta.emoji} ${eventMeta.name} · ${eventMeta.dates}`;
 
@@ -85,7 +88,7 @@ export default function EventsScreen() {
     { key: 'fish', label: s.fish, items: eventFish },
     { key: 'birds', label: s.birds, items: eventBirds },
     { key: 'recipes', label: s.recipes, items: eventRecipes },
-    { key: 'insects', label: s.insects, items: [] },
+    { key: 'insects', label: s.insects, items: eventInsects },
   ];
 
   useEffect(() => {
@@ -125,16 +128,16 @@ export default function EventsScreen() {
         onTabChange={setTab}
       />
       <FlatList
-        data={tab === 'insects' ? [] : activeTab.items}
+        data={activeTab.items}
         keyExtractor={(item) => item.name}
         contentContainerStyle={styles.listContent}
         ListHeaderComponent={
           <View style={{ gap: 10, marginBottom: 10 }}>
             <DisclaimerBox text={s.disclaimer} />
-            {tab === 'insects' && <DisclaimerBox text={s.insectsNote} warning />}
+            {tab === 'insects' && eventInsects.length === 0 && <DisclaimerBox text={s.insectsNote} warning />}
           </View>
         }
-        ListEmptyComponent={tab === 'insects' ? null : <Text style={styles.emptyText}>{s.empty}</Text>}
+        ListEmptyComponent={tab === 'insects' && eventInsects.length === 0 ? null : <Text style={styles.emptyText}>{s.empty}</Text>}
         renderItem={({ item }) => (
           <View style={styles.card}>
             <View style={styles.topRow}>

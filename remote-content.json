@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-22T14:33:00Z",
+  "updatedAt": "2026-08-29T07:40:00Z",
   "dailyPlotsCalendar": [
     { "date": "2026-08-09", "oakPlotNl": "Plot 6", "oakPlotEn": "Plot 6", "fluoritePlotNl": "Plot 11", "fluoritePlotEn": "Plot 11" },
     { "date": "2026-08-10", "oakPlotNl": "Plot 2", "oakPlotEn": "Plot 2", "fluoritePlotNl": "Plot 7", "fluoritePlotEn": "Plot 7" },
@@ -30,6 +30,50 @@
     "labelNl": "Zonnig",
     "labelEn": "Sunny",
     "validUntil": "2026-08-06T18:00:00Z"
+  },
+  "event": {
+    "nameNl": "Echo of Ancients",
+    "nameEn": "Echo of Ancients",
+    "datesNl": "Vanaf 29 augustus 2026",
+    "datesEn": "From August 29, 2026",
+    "fish": [
+      {"nameNl": "Lichte Alligatorsnoek", "nameEn": "Light Alligator Gar", "spotNl": "Forest Lake (bij het Kamp, ook bij Misty Shore)", "spotEn": "Forest Lake (near Camp, also at Misty Shore)", "noteNl": null, "noteEn": null, "emoji": "🐟"},
+      {"nameNl": "Gevlekte Alligatorsnoek", "nameEn": "Spotted Alligator Gar", "spotNl": "Forest Lake (bij het Kamp, ook bij Misty Shore)", "spotEn": "Forest Lake (near Camp, also at Misty Shore)", "noteNl": null, "noteEn": null, "emoji": "🐟"},
+      {"nameNl": "Zilveren Alligatorsnoek", "nameEn": "Silver Alligator Gar", "spotNl": "Forest Lake (bij het Kamp, ook bij Misty Shore)", "spotEn": "Forest Lake (near Camp, also at Misty Shore)", "noteNl": null, "noteEn": null, "emoji": "🐟"},
+      {"nameNl": "Zwartgevlekte Alligatorsnoek", "nameEn": "Black-Spotted Alligator Gar", "spotNl": "Forest Lake (bij het Kamp, ook bij Misty Shore)", "spotEn": "Forest Lake (near Camp, also at Misty Shore)", "noteNl": null, "noteEn": null, "emoji": "🐟"},
+      {"nameNl": "Gouden Alligatorsnoek", "nameEn": "Golden Alligator Gar", "spotNl": "Ontgrendelt via het 'Alligator Gar Incident' — locatie nog onbekend", "spotEn": "Unlocks via the 'Alligator Gar Incident' — location not yet known", "noteNl": "Nog niet beschikbaar — komt beschikbaar in week 2 van Echo of Ancients", "noteEn": "Not available yet — becomes available in week 2 of Echo of Ancients", "emoji": "🐟"}
+    ],
+    "birds": [],
+    "recipes": [
+      {"nameNl": "Cactus Fresh Fruit Drink", "nameEn": "Cactus Fresh Fruit Drink", "ingredientsNl": ["Pear Cactus", "Milk", "Apple x2"], "ingredientsEn": ["Pear Cactus", "Milk", "Apple x2"], "emoji": "🍹"},
+      {"nameNl": "Cactus Blueberry Drink", "nameEn": "Cactus Blueberry Drink", "ingredientsNl": ["Pear Cactus", "Milk", "Blueberry x2"], "ingredientsEn": ["Pear Cactus", "Milk", "Blueberry x2"], "emoji": "🍹"},
+      {"nameNl": "Cactus Raspberry Drink", "nameEn": "Cactus Raspberry Drink", "ingredientsNl": ["Pear Cactus", "Milk", "Raspberry x2"], "ingredientsEn": ["Pear Cactus", "Milk", "Raspberry x2"], "emoji": "🍹"},
+      {"nameNl": "Cactus Pineapple Drink", "nameEn": "Cactus Pineapple Drink", "ingredientsNl": ["Pear Cactus", "Milk", "Pineapple x2"], "ingredientsEn": ["Pear Cactus", "Milk", "Pineapple x2"], "emoji": "🍹"},
+      {"nameNl": "Cactus Apple Drink", "nameEn": "Cactus Apple Drink", "ingredientsNl": ["Pear Cactus", "Milk", "Apple x2"], "ingredientsEn": ["Pear Cactus", "Milk", "Apple x2"], "emoji": "🍹"},
+      {"nameNl": "Cactus Orange Drink", "nameEn": "Cactus Orange Drink", "ingredientsNl": ["Pear Cactus", "Milk", "Orange x2"], "ingredientsEn": ["Pear Cactus", "Milk", "Orange x2"], "emoji": "🍹"},
+      {"nameNl": "Cactus Strawberry Drink", "nameEn": "Cactus Strawberry Drink", "ingredientsNl": ["Pear Cactus", "Milk", "Strawberry x2"], "ingredientsEn": ["Pear Cactus", "Milk", "Strawberry x2"], "emoji": "🍹"},
+      {"nameNl": "Cactus Grape Drink", "nameEn": "Cactus Grape Drink", "ingredientsNl": ["Pear Cactus", "Milk", "Grape x2"], "ingredientsEn": ["Pear Cactus", "Milk", "Grape x2"], "emoji": "🍹"},
+      {"nameNl": "Grilled Veggies & Meat", "nameEn": "Grilled Veggies & Meat", "ingredientsNl": ["Charcoal", "Meat x2", "Veggies"], "ingredientsEn": ["Charcoal", "Meat x2", "Veggies"], "emoji": "🍢"},
+      {"nameNl": "Grilled Tomato & Meat", "nameEn": "Grilled Tomato & Meat", "ingredientsNl": ["Charcoal", "Meat x2", "Tomato"], "ingredientsEn": ["Charcoal", "Meat x2", "Tomato"], "emoji": "🍢"},
+      {"nameNl": "Grilled Potato & Meat", "nameEn": "Grilled Potato & Meat", "ingredientsNl": ["Charcoal", "Meat x2", "Potato"], "ingredientsEn": ["Charcoal", "Meat x2", "Potato"], "emoji": "🍢"},
+      {"nameNl": "Grilled Carrot & Meat", "nameEn": "Grilled Carrot & Meat", "ingredientsNl": ["Charcoal", "Meat x2", "Carrot"], "ingredientsEn": ["Charcoal", "Meat x2", "Carrot"], "emoji": "🍢"},
+      {"nameNl": "Grilled Eggplant & Meat", "nameEn": "Grilled Eggplant & Meat", "ingredientsNl": ["Charcoal", "Meat x2", "Eggplant"], "ingredientsEn": ["Charcoal", "Meat x2", "Eggplant"], "emoji": "🍢"},
+      {"nameNl": "Grilled Corn & Meat", "nameEn": "Grilled Corn & Meat", "ingredientsNl": ["Charcoal", "Meat x2", "Corn"], "ingredientsEn": ["Charcoal", "Meat x2", "Corn"], "emoji": "🍢"},
+      {"nameNl": "Original Flavor Set Meal", "nameEn": "Original Flavor Set Meal", "ingredientsNl": ["Fruit Drink x2", "Grilled Meat & Fish"], "ingredientsEn": ["Fruit Drink x2", "Grilled Meat & Fish"], "emoji": "🍽️"},
+      {"nameNl": "Cactus Fresh Seafood Soup", "nameEn": "Cactus Fresh Seafood Soup", "ingredientsNl": ["Pear Cactus", "Thick Sauce x2", "Fish"], "ingredientsEn": ["Pear Cactus", "Thick Sauce x2", "Fish"], "emoji": "🍲"},
+      {"nameNl": "Cactus Light Golden Alligator Gar Soup", "nameEn": "Cactus Light Golden Alligator Gar Soup", "ingredientsNl": ["Pear Cactus", "Thick Sauce x2", "Alligator Gar"], "ingredientsEn": ["Pear Cactus", "Thick Sauce x2", "Alligator Gar"], "emoji": "🍲"},
+      {"nameNl": "Cactus Brown Spotted Alligator Gar Soup", "nameEn": "Cactus Brown Spotted Alligator Gar Soup", "ingredientsNl": ["Pear Cactus", "Thick Sauce x2", "Brown Spotted Gar"], "ingredientsEn": ["Pear Cactus", "Thick Sauce x2", "Brown Spotted Gar"], "emoji": "🍲"},
+      {"nameNl": "Cactus Silver White Alligator Gar Soup", "nameEn": "Cactus Silver White Alligator Gar Soup", "ingredientsNl": ["Pear Cactus", "Thick Sauce x2", "Silver White Gar"], "ingredientsEn": ["Pear Cactus", "Thick Sauce x2", "Silver White Gar"], "emoji": "🍲"},
+      {"nameNl": "Cactus Black Spotted Alligator Gar Soup", "nameEn": "Cactus Black Spotted Alligator Gar Soup", "ingredientsNl": ["Pear Cactus", "Thick Sauce x2", "Black Spotted Gar"], "ingredientsEn": ["Pear Cactus", "Thick Sauce x2", "Black Spotted Gar"], "emoji": "🍲"},
+      {"nameNl": "Cactus Golden Alligator Gar Soup", "nameEn": "Cactus Golden Alligator Gar Soup", "ingredientsNl": ["Nog onbekend — ontgrendelt in week 2"], "ingredientsEn": ["Unknown yet — unlocks in week 2"], "emoji": "🍲"}
+    ],
+    "insects": [
+      {"nameNl": "Paarse Hertenkever", "nameEn": "Purple Stag Beetle", "spotNl": "Blossom Fields, Whale Fish Mountain", "spotEn": "Blossom Fields, Whale Fish Mountain", "noteNl": null, "noteEn": null, "emoji": "🪲"},
+      {"nameNl": "Grijze Hertenkever", "nameEn": "Gray Stag Beetle", "spotNl": "Blossom Fields, Pinwheel Flower Field", "spotEn": "Blossom Fields, Pinwheel Flower Field", "noteNl": null, "noteEn": null, "emoji": "🪲"},
+      {"nameNl": "Roze Hertenkever", "nameEn": "Pink Stag Beetle", "spotNl": "Blossom Fields, Violet Shoal", "spotEn": "Blossom Fields, Violet Shoal", "noteNl": null, "noteEn": null, "emoji": "🪲"},
+      {"nameNl": "Bruin Gevlekte Schildpadkever", "nameEn": "Brown Patterned Tortoise Beetle", "spotNl": "Onsen Berg, Ruïnes", "spotEn": "Hot Spring Mountain, Ruins", "noteNl": null, "noteEn": null, "emoji": "🪲"},
+      {"nameNl": "Regenboogpatroon Schildwants", "nameEn": "Rainbow Patterned Shield Bug", "spotNl": "Ontgrendelt via de 'Rainbow Patterned Shield Bug'-gebeurtenis — locatie nog onbekend", "spotEn": "Unlocks via the 'Rainbow Patterned Shield Bug' incident — location not yet known", "noteNl": "Nog niet beschikbaar — komt beschikbaar in week 2 van Echo of Ancients", "noteEn": "Not available yet — becomes available in week 2 of Echo of Ancients", "emoji": "🪲"}
+    ]
   },
   "rainbowSpots": [],
   "meteorSpots": [],

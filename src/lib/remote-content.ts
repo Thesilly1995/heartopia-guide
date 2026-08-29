@@ -72,6 +72,7 @@ export interface RemoteEventOverride {
   fish: RemoteEventSighting[];
   birds: RemoteEventSighting[];
   recipes: RemoteEventRecipe[];
+  insects: RemoteEventSighting[];
 }
 
 export type WeatherKind = 'sunny' | 'rain' | 'rainbow';
