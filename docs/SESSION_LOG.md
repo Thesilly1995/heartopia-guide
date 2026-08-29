@@ -2,6 +2,26 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-08-29 (deel 51) — Weekvoorspelling, appicoon-fix, nieuw event 'Echo of Ancients' (+ insecten-tab-bug gefixt)
+
+**Weekvoorspelling**: gebruiker gaf 2 weken weer door (was op vakantie). Week 1 (24-30 aug) direct verwerkt in `remote-content.json` → `weekForecast`. Week 2 (31 aug - 6 sep) bewust niet meteen toegevoegd op gebruikersverzoek ("kan je opslaan en volgende week zondag in de app zetten") — vastgelegd in een `send_later`-herinnering voor 30 aug 08:00 UTC met de volledige data erin, zodat een toekomstige sessie het zonder verdere navraag kan verwerken.
+
+**Appicoon-fix**: gebruiker vroeg of het personage op het appicoon (`assets/images/icon.png` + Android-varianten) omhoog kon zodat het boek met "Heartopedia" niet wegvalt onder het ronde/vierkante OS-masker. Contentbounding-box geanalyseerd met PIL/numpy (top-marge 184px, bottom-marge maar 105px van de 1024px), artwork 100px omhoog geschoven, geverifieerd met een gesimuleerde cirkelmaskering (worst-case) — tekst blijft volledig zichtbaar. **Native asset, dus na de merge een nieuwe `eas build` nodig (geen `eas update`)** — gebruiker startte deze, kwam eerst per ongeluk met `--platform all` terecht bij een iOS-bundle-identifier-vraag (er is nog geen Apple Developer-account, bewust uitgesteld) — gecorrigeerd naar `--platform android`. App zit nog in **Gesloten test - Alpha** (12 testers binnen, 14-dagen-periode loopt).
+
+**Nieuw event 'Echo of Ancients'** (start 29 aug): gebruiker leverde 5 screenshots aan van een fan-guide (recepten/vissen/insecten) — eerst navraag gedaan omdat de afbeeldingen zelf "Ancient Summoning" en een "Coco Town"-logo toonden (leek een ander spel); gebruiker bevestigde dat het gewoon Heartopia/Echo of Ancients is. Verwerkt: 5 vissen (Alligator Gar-varianten, incl. nog-niet-ontgrendelde Gouden variant), 21 recepten, 5 insecten (Stag Beetles + Tortoise Beetle, incl. nog-niet-ontgrendelde Rainbow Patterned Shield Bug). Geen vogeldata bekend.
+
+Hierbij kwam een **structurele fix** boven water: de insecten-tab bestond al in `events.tsx` maar toonde altijd hardcoded een lege lijst (`data={tab === 'insects' ? [] : activeTab.items}` in de FlatList, los van de TABS-array) — nooit eerder een probleem omdat er nog nooit insectendata was. `RemoteEventOverride` uitgebreid met een `insects`-veld, nieuwe gebundelde fallback-hook `src/data/event-insects.ts` (zelfde patroon als fish/birds), en de hardcoded FlatList-override verwijderd. Ook de "nog niet ontgrendeld deze season"-melding is nu conditioneel (alleen tonen als er écht geen insectendata is). Bijgevangen: de remote-event-mapping (`mapSighting`/`mapRecipe` in `events.tsx`) vertaalde naam/locatie nog per taal — inconsistent met de eerdere "item-/soortnamen altijd Engels"-regel (deel 45), die destijds alleen in de gebundelde hooks was doorgevoerd. Nu ook hier op Engels gezet.
+
+**Getest**: `tsc --noEmit` schoon. Omdat `remote-content.json` op productie live wordt opgehaald van `raw.githubusercontent.com/main`, kon dit niet met een gewone lokale devserver getest worden — tijdelijk een lokale CORS-enabled Python-server opgezet en `REMOTE_CONTENT_URL` tijdelijk daarnaartoe gewezen (niet gecommit) om de nieuwe event-data via Playwright te kunnen zien. Zo de FlatList-bug ontdekt en gefixt vóór de merge.
+
+**Mergeconflict**: `main` was ondertussen bijgewerkt met de bubbelweek 29aug-4sep (parallelle bubbels-routine-sessie, PR #49) — gemerged, enige conflict was de `updatedAt`-regel (handmatig samengevoegd), verder schone auto-merge.
+
+### Nog open
+- Play Console-review van de appicoon-fix-build afwachten; nieuwe release aanmaken in de Gesloten test - Alpha-track zodra de build klaar is.
+- Week 2 van de weervoorspelling (31 aug - 6 sep) gaat automatisch live via de geplande herinnering op 30 aug.
+- Vissen/vogels/recepten-vervolg voor Echo of Ancients (week 2-content: Golden Alligator Gar + Rainbow Patterned Shield Bug) zodra gebruiker die info heeft.
+- Overige oude punten (RevenueCat afmaken) staan nog open, zie eerdere delen.
+
 ## 2026-08-22 (deel 50) — Call of Whales event verwijderd, Dolfijn niet meer voerbaar
 
 **Aanleiding**: gebruiker meldde dat het Call of Whales-event vandaag (22 aug) is afgelopen en de Dolfijn niet meer gevoerd kan worden.
