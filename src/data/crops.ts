@@ -30,7 +30,7 @@ interface CropRaw {
 }
 
 const CROPS_RAW: CropRaw[] = [
-  { nameNl: "Aardappelen", nameEn: "Potatoes", rarityNl: "Gewoon", rarityEn: "Common", growTimeNl: "60 min", growTimeEn: "60 min", level: 1, rarityColorKey: "forestSoft", seedPrice: 30, emoji: "🥔", sellPriceByStar: [90,120,150,180,210] },
+  { nameNl: "Aardappel", nameEn: "Potato", rarityNl: "Gewoon", rarityEn: "Common", growTimeNl: "60 min", growTimeEn: "60 min", level: 1, rarityColorKey: "forestSoft", seedPrice: 30, emoji: "🥔", sellPriceByStar: [90,120,150,180,210] },
   { nameNl: "Tomaat", nameEn: "Tomato", rarityNl: "Gewoon", rarityEn: "Common", growTimeNl: "15 min", growTimeEn: "15 min", level: 1, rarityColorKey: "forestSoft", seedPrice: 10, emoji: "🍅", sellPriceByStar: [30,40,50,60,90] },
   { nameNl: "Tarwe", nameEn: "Wheat", rarityNl: "Gewoon", rarityEn: "Common", growTimeNl: "4 uur", growTimeEn: "4 hours", level: 2, rarityColorKey: "forestSoft", seedPrice: 95, emoji: "🌾", sellPriceByStar: [285,381,475,570,855] },
   { nameNl: "Sla", nameEn: "Lettuce", rarityNl: "Gewoon", rarityEn: "Common", growTimeNl: "8 uur", growTimeEn: "8 hours", level: 3, rarityColorKey: "forestSoft", seedPrice: 145, emoji: "🥬", sellPriceByStar: [435,582,726,870,1305] },
@@ -41,7 +41,7 @@ const CROPS_RAW: CropRaw[] = [
   { nameNl: "Druif", nameEn: "Grape", rarityNl: "Episch", rarityEn: "Epic", growTimeNl: "10 uur", growTimeEn: "10 hours", level: 7, rarityColorKey: "coralDark", seedPrice: 160, emoji: "🍇", sellPriceByStar: [480,643,801,960,1440] },
   { nameNl: "Aubergine", nameEn: "Eggplant", rarityNl: "Episch", rarityEn: "Epic", growTimeNl: "7 uur", growTimeEn: "7 hours", level: 8, rarityColorKey: "coralDark", seedPrice: 135, emoji: "🍆", sellPriceByStar: [406,544,678,812,1218] },
   { nameNl: "Theeboom", nameEn: "Tea Tree", rarityNl: "Legendarisch", rarityEn: "Legendary", growTimeNl: "45 min", growTimeEn: "45 min", level: 11, rarityColorKey: "yellow", seedPrice: 25, emoji: "🍵", sellPriceByStar: [75,100,125,150,225] },
-  { nameNl: "Cacao", nameEn: "Cacao", rarityNl: "Legendarisch", rarityEn: "Legendary", growTimeNl: "5 uur", growTimeEn: "5 hours", level: 12, rarityColorKey: "yellow", seedPrice: 110, emoji: "🍫", sellPriceByStar: [330,442,551,660,990] },
+  { nameNl: "Cacao", nameEn: "Cocoa", rarityNl: "Legendarisch", rarityEn: "Legendary", growTimeNl: "5 uur", growTimeEn: "5 hours", level: 12, rarityColorKey: "yellow", seedPrice: 110, emoji: "🍫", sellPriceByStar: [330,442,551,660,990] },
   { nameNl: "Avocado", nameEn: "Avocado", rarityNl: "Legendarisch", rarityEn: "Legendary", growTimeNl: "13 uur", growTimeEn: "13 hours", level: 13, rarityColorKey: "yellow", seedPrice: 180, emoji: "🥑", sellPriceByStar: [540,735,916,1098,1647] },
 ];
 
