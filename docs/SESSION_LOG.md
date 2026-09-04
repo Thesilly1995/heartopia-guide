@@ -2,6 +2,36 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-09-03/04 (deel 52) — Catalogus vergeleken en aangevuld met community-guide "Heartopia Price List (AthenaMM)"
+
+**Aanleiding**: gebruiker meldde na terugkomst van vakantie dat namen van vissen/insecten in de app niet klopten. Eerst 2 kleine bugs gefixt (meteorenregen-plekken bleven "Actief" staan zonder vervaldatum — geleegd; level 11-recepten hadden maar 1 generieke "Milkshake"-regel met verkeerde ingrediënten — vervangen door de 13 echte level 11-recepten uit een screenshot-guide).
+
+**Grote naam-/data-vergelijking**: gebruiker leverde 9 `.mht`-exports aan van een Google Sheets-tracker ("Heartopia Price List with Guides by AthenaMM") — 1 tabblad per categorie (recepten, gewassen, materialen, vissen, insecten, vogels, schelpen, zand-/sneeuwsculpturen, bloemen). MHT's geparsed met Python (email/BeautifulSoup) om de tabeldata te extraheren.
+
+**Naamspellingen gecorrigeerd** (elk geverifieerd op exacte level/locatie/prijs-match vóór hernoemen): fish.ts (Puffer Fish→Pufferfish, Blue Ero Crayfish→Blue European Crayfish + Bosmeer-typo), insects.ts (Gold Grasshopper→Gold Grasshoppers, Mother-Of-Pearl→Mother of Pearl), birds.ts (European Robin→Eurasian Robin), crops.ts (Cacao→Cocoa, Potatoes→Potato). Losse "Boslmeer"-typo (moest "Bosmeer" zijn) bleek op nog 6 plekken in fish.ts te staan plus 1x in birds.ts/insects.ts — in één keer gefixt.
+
+**Ontbrekende items toegevoegd** (alles wat in de guide stond maar nog niet in de app, op gebruikersverzoek):
+- fish.ts: 13 vissen (level 11-14)
+- insects.ts: 12 insecten (level 11-14)
+- birds.ts: 31 vogels (level 1-14 — best wat lagere levels ontbraken ook nog helemaal)
+- shells.ts: 4 schelpen (catalogus nu compleet, 30/30)
+- crops.ts: Paddy Rice (Prickly Pear bewust overgeslagen — die staat in de guide als "EVENT LIMITED", geen normaal gewas)
+- snow-sculptures.ts: **volledig vervangen** — de bestaande 4 entries ("Igloo Parts"/"Snowman"/"Snowflake"/"Vanya Bear") waren pure placeholder-data (kwamen nergens in de guide voor, alle prijzen `null`). Vervangen door de 15 echte sneeuwsculpturen met bevestigde prijzen. Eén bron-typo gecorrigeerd (Milu Tata/Beaver Bobo's 1★-prijs "552" klopte niet met de rest van de rij; met de bekende x1.5-formule teruggerekend geeft dat 165, wat exact matcht met een al-bevestigde prijs elders in de app).
+- sand-sculptures.ts: bleek al compleet (14/14, guide gebruikt alleen langere namen met "Sand Sculpture"-suffix, app laat die suffix weg — geen daadwerkelijke gaten).
+- ocean-cleanup.tsx + beeldhouwen.tsx: bijbehorende schermteksten geactualiseerd ("26 van de 30" → "Alle 30", verouderde sneeuw-disclaimer over "maar 4 ontwerpen bekend" verwijderd).
+
+**Belangrijke datalimitatie ontdekt**: de guide's weer- en tijd-kolommen zijn afbeeldingen (Google Sheets-iconen), niet uit te lezen als tekst.
+- `time` kon wél betrouwbaar herleid worden: het exacte-uren-veld van de guide bleek voor alle bestaande, al-overlappende items 1-op-1 te matchen met hoe de app dat naar een tijdsblok vertaalt — die mapping is toegepast op alle nieuwe items.
+- `weather` kon niet herleid worden (geen enkele leesbare kolom correleerde betrouwbaar). Nieuwe items kregen het meest voorkomende weertype van vergelijkbare hoge-level items in dezelfde categorie als inschatting — **dit is de enige onzekere waarde** in alle toevoegingen van deze sessie.
+
+**Nog niet bekeken**: het "Materials"-tabblad van de guide (Item, Price) is een losse prijs-cheatsheet (paddenstoelen, hout, mineralen, plot-upgrade-kosten) — geen catalogus-achtige lijst zoals de andere tabbladen, en niet meegenomen in deze ronde.
+
+**Open vraag aan gebruiker**: de vis "Seabream" (level 10, Zephyrzee, `sellPriceByStar: null`) komt nergens in de guide voor — gebruiker gaat dit zelf navragen/checken.
+
+Getest: `tsc --noEmit` schoon na elke stap, Playwright-steekproeven op alle betrokken schermen (Vissen/Insecten/Vogels/Ocean Cleanup/Tuinieren/Beeldhouwen), geen console-errors of dubbele name-keys.
+
+**Alles is app-code** (geen `remote-content.json`), dus na deze sessie is één `eas update` nodig — geen nieuwe build.
+
 ## 2026-08-29 (deel 51) — Weekvoorspelling, appicoon-fix, nieuw event 'Echo of Ancients' (+ insecten-tab-bug gefixt)
 
 **Weekvoorspelling**: gebruiker gaf 2 weken weer door (was op vakantie). Week 1 (24-30 aug) direct verwerkt in `remote-content.json` → `weekForecast`. Week 2 (31 aug - 6 sep) bewust niet meteen toegevoegd op gebruikersverzoek ("kan je opslaan en volgende week zondag in de app zetten") — vastgelegd in een `send_later`-herinnering voor 30 aug 08:00 UTC met de volledige data erin, zodat een toekomstige sessie het zonder verdere navraag kan verwerken.
