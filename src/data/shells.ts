@@ -46,6 +46,10 @@ const SHELLS_RAW: ShellRaw[] = [
   { nameNl: "Violette Slak", nameEn: "Violet Snail", level: 7, gold: [85,170,255,340,680], tokens: [40,80,120,160,320], time: "00:00-18:00", emoji: "🐚" },
   { nameNl: "Bisschopsmijter", nameEn: "Episcopal Miter", level: 8, gold: [120,240,360,480,960], tokens: [60,120,180,240,480], time: "18:00-00:00", emoji: "🐚" },
   { nameNl: "Koninklijke Papierbel", nameEn: "Royal Paper Bubble", level: null, gold: null, tokens: null, time: null, emoji: "🐚" },
+  { nameNl: "Stierenmondschelp", nameEn: "Bullmouth Shell", level: 9, gold: [165,330,495,660,1320], tokens: [80,160,240,320,400], time: "18:00-00:00", emoji: "🐚" },
+  { nameNl: "Aardbei-tolschelp", nameEn: "Strawberry Top Shell", level: 9, gold: [120,240,360,480,960], tokens: [60,120,180,240,480], time: "18:00-00:00", emoji: "🐚" },
+  { nameNl: "Gouden Kauri", nameEn: "Golden Cowrie", level: 10, gold: [165,330,495,660,1320], tokens: [80,160,240,320,400], time: "18:00-00:00", emoji: "🐚" },
+  { nameNl: "Koninginneschelp", nameEn: "Queen Conch", level: 10, gold: [165,330,495,660,1320], tokens: [80,160,240,320,400], time: "00:00-18:00", emoji: "🐚" },
 ];
 
 export function useShells(): ShellItem[] {
