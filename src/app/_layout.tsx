@@ -15,6 +15,7 @@ import { AuthProvider } from '@/hooks/use-auth';
 import { LanguageProvider } from '@/hooks/use-language';
 import { NotificationsProvider } from '@/hooks/use-notifications';
 import { usePremium, PremiumProvider } from '@/hooks/use-premium';
+import { maybeRequestReview } from '@/lib/store-review';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -22,6 +23,7 @@ export default function RootLayout() {
   useEffect(() => {
     initializeAdsIfNeeded();
     initializePurchasesIfNeeded();
+    maybeRequestReview();
   }, []);
   return (
     <LanguageProvider>
@@ -73,6 +75,7 @@ function AppContent() {
         <Stack.Screen name="dashboard" />
         <Stack.Screen name="cloud-save" />
         <Stack.Screen name="meldingen" />
+        <Stack.Screen name="tips" />
       </Stack>
       <AdBanner />
     </ThemeProvider>
