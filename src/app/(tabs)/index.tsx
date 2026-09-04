@@ -52,6 +52,7 @@ const SECTIONS: {
       { href: '/dashboard', icon: '📊', title: { nl: 'Voortgangsdashboard', en: 'Progress Dashboard' }, desc: { nl: 'Overzicht van je voortgang in alle catalogussen', en: 'Overview of your progress across all catalogs' } },
       { href: '/meldingen', icon: '🔔', title: { nl: 'Meldingen', en: 'Notifications' }, desc: { nl: 'Herinneringen bij nieuwe events & bijzonder weer', en: 'Reminders for new events & special weather' } },
       { href: '/cloud-save', icon: '☁️', title: { nl: 'Cloud Save', en: 'Cloud Save' }, desc: { nl: 'Voortgang bewaren & gebruiken op een ander toestel', en: 'Save your progress & use it on another device' } },
+      { href: '/tips', icon: '💡', title: { nl: 'Tips & Tricks', en: 'Tips & Tricks' }, desc: { nl: 'Handige weetjes over het spel en events', en: 'Handy things to know about the game and events' } },
     ],
   },
   {
