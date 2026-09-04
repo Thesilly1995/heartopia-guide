@@ -32,6 +32,7 @@ interface CropRaw {
 const CROPS_RAW: CropRaw[] = [
   { nameNl: "Aardappel", nameEn: "Potato", rarityNl: "Gewoon", rarityEn: "Common", growTimeNl: "60 min", growTimeEn: "60 min", level: 1, rarityColorKey: "forestSoft", seedPrice: 30, emoji: "🥔", sellPriceByStar: [90,120,150,180,210] },
   { nameNl: "Tomaat", nameEn: "Tomato", rarityNl: "Gewoon", rarityEn: "Common", growTimeNl: "15 min", growTimeEn: "15 min", level: 1, rarityColorKey: "forestSoft", seedPrice: 10, emoji: "🍅", sellPriceByStar: [30,40,50,60,90] },
+  { nameNl: "Rijst", nameEn: "Paddy Rice", rarityNl: "Gewoon", rarityEn: "Common", growTimeNl: "20 min", growTimeEn: "20 min", level: 1, rarityColorKey: "forestSoft", seedPrice: 12, emoji: "🌾", sellPriceByStar: [37,49,61,74,111] },
   { nameNl: "Tarwe", nameEn: "Wheat", rarityNl: "Gewoon", rarityEn: "Common", growTimeNl: "4 uur", growTimeEn: "4 hours", level: 2, rarityColorKey: "forestSoft", seedPrice: 95, emoji: "🌾", sellPriceByStar: [285,381,475,570,855] },
   { nameNl: "Sla", nameEn: "Lettuce", rarityNl: "Gewoon", rarityEn: "Common", growTimeNl: "8 uur", growTimeEn: "8 hours", level: 3, rarityColorKey: "forestSoft", seedPrice: 145, emoji: "🥬", sellPriceByStar: [435,582,726,870,1305] },
   { nameNl: "Ananas", nameEn: "Pineapple", rarityNl: "Zeldzaam", rarityEn: "Rare", growTimeNl: "30 min", growTimeEn: "30 min", level: 4, rarityColorKey: "skyDark", seedPrice: 15, emoji: "🍍", sellPriceByStar: [52,69,86,104,118] },

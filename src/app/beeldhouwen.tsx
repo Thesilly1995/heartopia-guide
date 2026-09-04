@@ -10,8 +10,8 @@ const SAND_DISCLAIMER = {
 };
 
 const SNOW_DISCLAIMER = {
-  nl: 'Sneeuwsculpturen waren onderdeel van de Winter Frost Season (event). De hobby kan nog steeds gedaan worden, maar er zijn maar 4 bevestigde ontwerpen bekend en geen vaste verkoopprijzen — sterrating bepaalt de waarde. Ook hier: materialen zijn gratis, alleen level omhoog kost Wensterren via Hobby Upgrade Tickets.',
-  en: 'Snow sculptures were part of the Winter Frost Season (event). The hobby can still be done, but only 4 confirmed designs are known and there are no fixed sell prices — star rating determines the value. Materials are free here too, only leveling up costs Wishing Stars via Hobby Upgrade Tickets.',
+  nl: 'Sneeuwsculpturen waren onderdeel van de Winter Frost Season (event). De hobby kan nog steeds gedaan worden. Ook hier: materialen zijn gratis, alleen level omhoog kost Wensterren via Hobby Upgrade Tickets.',
+  en: 'Snow sculptures were part of the Winter Frost Season (event). The hobby can still be done. Materials are free here too, only leveling up costs Wishing Stars via Hobby Upgrade Tickets.',
 };
 
 export default function BeeldhouwenScreen() {
