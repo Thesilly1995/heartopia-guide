@@ -54,6 +54,8 @@ export interface RemoteEventSighting {
   noteNl: string | null;
   noteEn: string | null;
   emoji: string;
+  gold?: (number | null)[] | null;
+  tokens?: (number | null)[] | null;
 }
 
 export interface RemoteEventRecipe {
@@ -62,6 +64,8 @@ export interface RemoteEventRecipe {
   ingredientsNl: string[];
   ingredientsEn: string[];
   emoji: string;
+  gold?: (number | null)[] | null;
+  tokens?: (number | null)[] | null;
 }
 
 export interface RemoteEventOverride {

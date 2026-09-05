@@ -29,6 +29,8 @@ const STRINGS = {
     insects: 'Insecten',
     bestResult: 'Hoogste resultaat',
     empty: 'Geen actief event op dit moment — zodra een nieuw event begint, komt de content hier te staan.',
+    goldLabel: 'Goud (verkocht aan Albert Jr.)',
+    tokensLabel: 'Tokens (verkocht aan Azure)',
   },
   en: {
     title: 'Current Event',
@@ -41,10 +43,20 @@ const STRINGS = {
     insects: 'Insects',
     bestResult: 'Best result',
     empty: 'No active event right now — once a new event starts, its content will appear here.',
+    goldLabel: 'Gold (sold to Albert Jr.)',
+    tokensLabel: 'Tokens (sold to Azure)',
   },
 } as const;
 
-type EventItem = { name: string; emoji: string; spot?: string; note?: string | null; ingredients?: string[] };
+type EventItem = {
+  name: string;
+  emoji: string;
+  spot?: string;
+  note?: string | null;
+  ingredients?: string[];
+  gold?: (number | null)[] | null;
+  tokens?: (number | null)[] | null;
+};
 
 function mapSighting(item: RemoteEventSighting, language: 'nl' | 'en'): EventItem {
   return {
@@ -52,6 +64,8 @@ function mapSighting(item: RemoteEventSighting, language: 'nl' | 'en'): EventIte
     spot: item.spotEn,
     note: language === 'en' ? item.noteEn : item.noteNl,
     emoji: item.emoji,
+    gold: item.gold,
+    tokens: item.tokens,
   };
 }
 
@@ -60,6 +74,8 @@ function mapRecipe(item: RemoteEventRecipe, language: 'nl' | 'en'): EventItem {
     name: item.nameEn,
     ingredients: item.ingredientsEn,
     emoji: item.emoji,
+    gold: item.gold,
+    tokens: item.tokens,
   };
 }
 
@@ -162,6 +178,18 @@ export default function EventsScreen() {
               </View>
             )}
             {item.note && <Text style={styles.note}>⚠️ {item.note}</Text>}
+            {item.gold && (
+              <View style={styles.priceBox}>
+                <Text style={styles.priceLabel}>{s.goldLabel}</Text>
+                <Text style={styles.priceValue}>{item.gold.map((v, i) => `${i + 1}★ ${v != null ? `${v}🪙` : '—'}`).join('   ')}</Text>
+              </View>
+            )}
+            {item.tokens && (
+              <View style={styles.priceBox}>
+                <Text style={styles.priceLabel}>{s.tokensLabel}</Text>
+                <Text style={styles.priceValue}>{item.tokens.map((v, i) => `${i + 1}★ ${v != null ? `${v}🎫` : '—'}`).join('   ')}</Text>
+              </View>
+            )}
             <View style={styles.starBox}>
               <Text style={styles.starBoxLabel}>{s.bestResult}</Text>
               <StarRow value={stars[item.name] || 0} onSet={(n) => setItemStar(item.name, n)} />
@@ -189,6 +217,9 @@ function makeStyles(c: ThemeColors) {
     ingredientRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 8 },
     ingredientPill: { fontSize: 11, color: c.forestSoft, backgroundColor: c.disclaimerBg, borderWidth: 1, borderColor: c.disclaimerBorder, paddingHorizontal: 8, paddingVertical: 3, borderRadius: 999 },
     note: { fontSize: 11, fontWeight: '700', color: c.coralDark, marginTop: 8 },
+    priceBox: { marginTop: 8, padding: 8, borderRadius: 8, backgroundColor: c.disclaimerBg, borderWidth: 1, borderColor: c.disclaimerBorder, gap: 2 },
+    priceLabel: { fontSize: 11, fontWeight: '700', color: c.forest },
+    priceValue: { fontSize: 12, color: c.forestSoft },
     starBox: { marginTop: 10, padding: 8, borderRadius: 8, backgroundColor: c.disclaimerBg, borderWidth: 1, borderColor: c.disclaimerBorder, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
     starBoxLabel: { fontSize: 12, fontWeight: '700', color: c.forest },
   });
