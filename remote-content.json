@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-04T18:00:00Z",
+  "updatedAt": "2026-09-05T04:00:00Z",
   "dailyPlotsCalendar": [
     { "date": "2026-08-09", "oakPlotNl": "Plot 6", "oakPlotEn": "Plot 6", "fluoritePlotNl": "Plot 11", "fluoritePlotEn": "Plot 11" },
     { "date": "2026-08-10", "oakPlotNl": "Plot 2", "oakPlotEn": "Plot 2", "fluoritePlotNl": "Plot 7", "fluoritePlotEn": "Plot 7" },
@@ -64,16 +64,22 @@
   "event": {
     "nameNl": "Echo of Ancients",
     "nameEn": "Echo of Ancients",
-    "datesNl": "Vanaf 29 augustus 2026",
-    "datesEn": "From August 29, 2026",
+    "datesNl": "29 augustus – 10 oktober 2026",
+    "datesEn": "August 29 – October 10, 2026",
     "fish": [
-      {"nameNl": "Lichte Alligatorsnoek", "nameEn": "Light Alligator Gar", "spotNl": "Forest Lake (bij het Kamp, ook bij Misty Shore)", "spotEn": "Forest Lake (near Camp, also at Misty Shore)", "noteNl": null, "noteEn": null, "emoji": "🐟"},
-      {"nameNl": "Gevlekte Alligatorsnoek", "nameEn": "Spotted Alligator Gar", "spotNl": "Forest Lake (bij het Kamp, ook bij Misty Shore)", "spotEn": "Forest Lake (near Camp, also at Misty Shore)", "noteNl": null, "noteEn": null, "emoji": "🐟"},
-      {"nameNl": "Zilveren Alligatorsnoek", "nameEn": "Silver Alligator Gar", "spotNl": "Forest Lake (bij het Kamp, ook bij Misty Shore)", "spotEn": "Forest Lake (near Camp, also at Misty Shore)", "noteNl": null, "noteEn": null, "emoji": "🐟"},
-      {"nameNl": "Zwartgevlekte Alligatorsnoek", "nameEn": "Black-Spotted Alligator Gar", "spotNl": "Forest Lake (bij het Kamp, ook bij Misty Shore)", "spotEn": "Forest Lake (near Camp, also at Misty Shore)", "noteNl": null, "noteEn": null, "emoji": "🐟"},
-      {"nameNl": "Gouden Alligatorsnoek", "nameEn": "Golden Alligator Gar", "spotNl": "Ontgrendelt via het 'Alligator Gar Incident' — locatie nog onbekend", "spotEn": "Unlocks via the 'Alligator Gar Incident' — location not yet known", "noteNl": "Nog niet beschikbaar — komt beschikbaar in week 2 van Echo of Ancients", "noteEn": "Not available yet — becomes available in week 2 of Echo of Ancients", "emoji": "🐟"}
+      {"nameNl": "Lichtgouden Geep", "nameEn": "Pale Gold Garfish", "spotNl": "Forest Lake (Grote Schaduw)", "spotEn": "Forest Lake (Large Shadow)", "noteNl": null, "noteEn": null, "emoji": "🐟"},
+      {"nameNl": "Bruine Geep", "nameEn": "Brown Garfish", "spotNl": "Forest Lake (Grote Schaduw)", "spotEn": "Forest Lake (Large Shadow)", "noteNl": null, "noteEn": null, "emoji": "🐟"},
+      {"nameNl": "Zilveren Geep", "nameEn": "Silver Garfish", "spotNl": "Forest Lake (Grote Schaduw)", "spotEn": "Forest Lake (Large Shadow)", "noteNl": null, "noteEn": null, "emoji": "🐟"},
+      {"nameNl": "Zwarte Geep", "nameEn": "Black Garfish", "spotNl": "Forest Lake (Grote Schaduw)", "spotEn": "Forest Lake (Large Shadow)", "noteNl": null, "noteEn": null, "emoji": "🐟"},
+      {"nameNl": "Gouden Geep", "nameEn": "Gold Garfish", "spotNl": "Vanya's Garfish Event (Grote Schaduw)", "spotEn": "Vanya's Garfish Event (Large Shadow)", "noteNl": "Vereist speciale fase — ontgrendelt via Vanya's Garfish Event", "noteEn": "Requires a special phase — unlocks via Vanya's Garfish Event", "emoji": "🐟"}
     ],
-    "birds": [],
+    "birds": [
+      {"nameNl": "Oranje Hop", "nameEn": "Orange Hoopoe", "spotNl": "Onsen Berg (Stenen Klif)", "spotEn": "Onsen Mountain (Stone Cliff)", "noteNl": null, "noteEn": null, "emoji": "🐦"},
+      {"nameNl": "Blauwe Hop", "nameEn": "Blue Hoopoe", "spotNl": "Onsen Berg (Onsen)", "spotEn": "Onsen Mountain (Onsen)", "noteNl": null, "noteEn": null, "emoji": "🐦"},
+      {"nameNl": "Groene Hop", "nameEn": "Green Hoopoe", "spotNl": "Onsen Berg (Kratermeer)", "spotEn": "Onsen Mountain (Crater Lake)", "noteNl": null, "noteEn": null, "emoji": "🐦"},
+      {"nameNl": "Rode Hop", "nameEn": "Red Hoopoe", "spotNl": "Onsen Berg (Ruïnes)", "spotEn": "Onsen Mountain (Ruins)", "noteNl": null, "noteEn": null, "emoji": "🐦"},
+      {"nameNl": "Kleurrijke Hop", "nameEn": "Colorful Hoopoe", "spotNl": "Bailey J's Hoopoe Event", "spotEn": "Bailey J's Hoopoe Event", "noteNl": "Vereist speciale fase — ontgrendelt via Bailey J's Hoopoe Event", "noteEn": "Requires a special phase — unlocks via Bailey J's Hoopoe Event", "emoji": "🐦"}
+    ],
     "recipes": [
       {"nameNl": "Cactus Fresh Fruit Drink", "nameEn": "Cactus Fresh Fruit Drink", "ingredientsNl": ["Pear Cactus", "Milk", "Apple x2"], "ingredientsEn": ["Pear Cactus", "Milk", "Apple x2"], "emoji": "🍹"},
       {"nameNl": "Cactus Blueberry Drink", "nameEn": "Cactus Blueberry Drink", "ingredientsNl": ["Pear Cactus", "Milk", "Blueberry x2"], "ingredientsEn": ["Pear Cactus", "Milk", "Blueberry x2"], "emoji": "🍹"},
@@ -98,11 +104,11 @@
       {"nameNl": "Cactus Golden Alligator Gar Soup", "nameEn": "Cactus Golden Alligator Gar Soup", "ingredientsNl": ["Nog onbekend — ontgrendelt in week 2"], "ingredientsEn": ["Unknown yet — unlocks in week 2"], "emoji": "🍲"}
     ],
     "insects": [
-      {"nameNl": "Paarse Hertenkever", "nameEn": "Purple Stag Beetle", "spotNl": "Blossom Fields, Whale Fish Mountain", "spotEn": "Blossom Fields, Whale Fish Mountain", "noteNl": null, "noteEn": null, "emoji": "🪲"},
-      {"nameNl": "Grijze Hertenkever", "nameEn": "Gray Stag Beetle", "spotNl": "Blossom Fields, Pinwheel Flower Field", "spotEn": "Blossom Fields, Pinwheel Flower Field", "noteNl": null, "noteEn": null, "emoji": "🪲"},
-      {"nameNl": "Roze Hertenkever", "nameEn": "Pink Stag Beetle", "spotNl": "Blossom Fields, Violet Shoal", "spotEn": "Blossom Fields, Violet Shoal", "noteNl": null, "noteEn": null, "emoji": "🪲"},
-      {"nameNl": "Bruin Gevlekte Schildpadkever", "nameEn": "Brown Patterned Tortoise Beetle", "spotNl": "Onsen Berg, Ruïnes", "spotEn": "Hot Spring Mountain, Ruins", "noteNl": null, "noteEn": null, "emoji": "🪲"},
-      {"nameNl": "Regenboogpatroon Schildwants", "nameEn": "Rainbow Patterned Shield Bug", "spotNl": "Ontgrendelt via de 'Rainbow Patterned Shield Bug'-gebeurtenis — locatie nog onbekend", "spotEn": "Unlocks via the 'Rainbow Patterned Shield Bug' incident — location not yet known", "noteNl": "Nog niet beschikbaar — komt beschikbaar in week 2 van Echo of Ancients", "noteEn": "Not available yet — becomes available in week 2 of Echo of Ancients", "emoji": "🪲"}
+      {"nameNl": "Paarse Gehoornde Vuurvlieg", "nameEn": "Purple-Horned Firefly", "spotNl": "Bloemenveld (Walvisberg)", "spotEn": "Flower Field (Whale Mountain)", "noteNl": null, "noteEn": null, "emoji": "🪲"},
+      {"nameNl": "Grijze Gehoornde Vuurvlieg", "nameEn": "Grey-Horned Firefly", "spotNl": "Bloemenveld (Windmolenveld)", "spotEn": "Flower Field (Windmill Field)", "noteNl": null, "noteEn": null, "emoji": "🪲"},
+      {"nameNl": "Roze Gehoornde Vuurvlieg", "nameEn": "Pink-Horned Firefly", "spotNl": "Bloemenveld (Amethyststrand)", "spotEn": "Flower Field (Amethyst Beach)", "noteNl": null, "noteEn": null, "emoji": "🪲"},
+      {"nameNl": "Bruine Neushoornkever", "nameEn": "Brown Rhinoceros Beetle", "spotNl": "Onsen Berg (Ruïnes)", "spotEn": "Onsen Mountain (Ruins)", "noteNl": null, "noteEn": null, "emoji": "🪲"},
+      {"nameNl": "Iriserende Neushoornkever", "nameEn": "Iridescent Rhinoceros Beetle", "spotNl": "Naniwa's Iridescent Beetle Event", "spotEn": "Naniwa's Iridescent Beetle Event", "noteNl": "Vereist speciale fase — ontgrendelt via Naniwa's Iridescent Beetle Event", "noteEn": "Requires a special phase — unlocks via Naniwa's Iridescent Beetle Event", "emoji": "🪲"}
     ]
   },
   "rainbowSpots": [],
