@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-05T04:00:00Z",
+  "updatedAt": "2026-09-06T08:15:00Z",
   "dailyPlotsCalendar": [
     { "date": "2026-08-09", "oakPlotNl": "Plot 6", "oakPlotEn": "Plot 6", "fluoritePlotNl": "Plot 11", "fluoritePlotEn": "Plot 11" },
     { "date": "2026-08-10", "oakPlotNl": "Plot 2", "oakPlotEn": "Plot 2", "fluoritePlotNl": "Plot 7", "fluoritePlotEn": "Plot 7" },
@@ -167,7 +167,14 @@
     { "date": "2026-09-03", "kinds": [{ "kind": "rain", "block": "12-18" }, { "kind": "rain", "block": "18-00" }] },
     { "date": "2026-09-04", "kinds": ["normal"] },
     { "date": "2026-09-05", "kinds": ["normal"] },
-    { "date": "2026-09-06", "kinds": ["normal"] }
+    { "date": "2026-09-06", "kinds": ["normal"] },
+    { "date": "2026-09-07", "kinds": ["normal"] },
+    { "date": "2026-09-08", "kinds": [{ "kind": "rain", "block": "06-12" }, { "kind": "rainbow", "block": "12-18" }] },
+    { "date": "2026-09-09", "kinds": ["normal"] },
+    { "date": "2026-09-10", "kinds": ["normal"] },
+    { "date": "2026-09-11", "kinds": [{ "kind": "rain", "block": "12-18" }] },
+    { "date": "2026-09-12", "kinds": [{ "kind": "meteor", "block": "18-00" }] },
+    { "date": "2026-09-13", "kinds": ["normal"] }
   ],
   "codes": [
     { "code": "m9a3q7k2r5n4", "rewardNl": "3x Wensterren, 2x kleurstoffen, 1x Vlekkeloze fluoriet", "rewardEn": "3x Wishing Stars, 2x Dyes, 1x Flawless Fluorite", "expiresNl": "30 sep 2026, 17:59", "expiresEn": "Sep 30, 2026, 17:59" },
