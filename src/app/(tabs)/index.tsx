@@ -145,12 +145,12 @@ export default function HomeScreen() {
               <View style={styles.forecastHeaderRight}>
                 {!forecastExpanded && (
                   <View style={styles.forecastPreview}>
+                    <Text style={styles.forecastDay}>{weekForecast[0].weekdayLabel}</Text>
                     <View style={styles.forecastIconRow}>
                       {weekForecast[0].slots.map((slot, i) => (
                         <Text key={i} style={styles.forecastIcon}>{slot.emoji}</Text>
                       ))}
                     </View>
-                    <Text style={styles.forecastDay}>{weekForecast[0].weekdayLabel}</Text>
                   </View>
                 )}
                 <Text style={[styles.chevron, forecastExpanded && styles.chevronExpanded]}>›</Text>
@@ -159,6 +159,7 @@ export default function HomeScreen() {
             {forecastExpanded &&
               weekForecast.map((entry) => (
                 <View key={entry.date} style={styles.forecastRow}>
+                  <Text style={[styles.forecastDay, styles.forecastDayFixed]}>{entry.dayLabel}</Text>
                   <View style={styles.forecastIconRow}>
                     {entry.slots.map((slot, i) => (
                       <View key={i} style={styles.forecastSlot}>
@@ -167,7 +168,6 @@ export default function HomeScreen() {
                       </View>
                     ))}
                   </View>
-                  <Text style={styles.forecastDay}>{entry.dayLabel}</Text>
                 </View>
               ))}
           </View>
@@ -318,6 +318,7 @@ function makeStyles(c: ThemeColors) {
     forecastIcon: { fontSize: 16 },
     forecastBlockLabel: { fontSize: 9, fontWeight: '700', color: c.forestSoft },
     forecastDay: { color: c.forest, fontSize: 13, fontWeight: '700' },
+    forecastDayFixed: { width: 84 },
     plotsCard: {
       flexDirection: 'row',
       justifyContent: 'space-around',
