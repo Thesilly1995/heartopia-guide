@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-05T04:00:00Z",
+  "updatedAt": "2026-09-06T08:15:00Z",
   "dailyPlotsCalendar": [
     { "date": "2026-08-09", "oakPlotNl": "Plot 6", "oakPlotEn": "Plot 6", "fluoritePlotNl": "Plot 11", "fluoritePlotEn": "Plot 11" },
     { "date": "2026-08-10", "oakPlotNl": "Plot 2", "oakPlotEn": "Plot 2", "fluoritePlotNl": "Plot 7", "fluoritePlotEn": "Plot 7" },
@@ -67,48 +67,48 @@
     "datesNl": "29 augustus – 10 oktober 2026",
     "datesEn": "August 29 – October 10, 2026",
     "fish": [
-      {"nameNl": "Lichtgouden Geep", "nameEn": "Pale Gold Garfish", "spotNl": "Forest Lake (Grote Schaduw)", "spotEn": "Forest Lake (Large Shadow)", "noteNl": null, "noteEn": null, "emoji": "🐟"},
-      {"nameNl": "Bruine Geep", "nameEn": "Brown Garfish", "spotNl": "Forest Lake (Grote Schaduw)", "spotEn": "Forest Lake (Large Shadow)", "noteNl": null, "noteEn": null, "emoji": "🐟"},
-      {"nameNl": "Zilveren Geep", "nameEn": "Silver Garfish", "spotNl": "Forest Lake (Grote Schaduw)", "spotEn": "Forest Lake (Large Shadow)", "noteNl": null, "noteEn": null, "emoji": "🐟"},
-      {"nameNl": "Zwarte Geep", "nameEn": "Black Garfish", "spotNl": "Forest Lake (Grote Schaduw)", "spotEn": "Forest Lake (Large Shadow)", "noteNl": null, "noteEn": null, "emoji": "🐟"},
-      {"nameNl": "Gouden Geep", "nameEn": "Gold Garfish", "spotNl": "Vanya's Garfish Event (Grote Schaduw)", "spotEn": "Vanya's Garfish Event (Large Shadow)", "noteNl": "Vereist speciale fase — ontgrendelt via Vanya's Garfish Event", "noteEn": "Requires a special phase — unlocks via Vanya's Garfish Event", "emoji": "🐟"}
+      {"nameNl": "Lichtgouden Geep", "nameEn": "Pale Gold Garfish", "spotNl": "Forest Lake (Grote Schaduw)", "spotEn": "Forest Lake (Large Shadow)", "noteNl": null, "noteEn": null, "emoji": "🐟", "gold": [215,322,430,860,1720], "tokens": [40,60,80,160,320]},
+      {"nameNl": "Bruine Geep", "nameEn": "Brown Garfish", "spotNl": "Forest Lake (Grote Schaduw)", "spotEn": "Forest Lake (Large Shadow)", "noteNl": null, "noteEn": null, "emoji": "🐟", "gold": [215,322,430,860,1720], "tokens": [40,60,80,160,320]},
+      {"nameNl": "Zilveren Geep", "nameEn": "Silver Garfish", "spotNl": "Forest Lake (Grote Schaduw)", "spotEn": "Forest Lake (Large Shadow)", "noteNl": null, "noteEn": null, "emoji": "🐟", "gold": [215,322,430,860,1720], "tokens": [40,60,80,160,320]},
+      {"nameNl": "Zwarte Geep", "nameEn": "Black Garfish", "spotNl": "Forest Lake (Grote Schaduw)", "spotEn": "Forest Lake (Large Shadow)", "noteNl": null, "noteEn": null, "emoji": "🐟", "gold": [215,322,430,860,1720], "tokens": [40,60,80,160,320]},
+      {"nameNl": "Gouden Geep", "nameEn": "Gold Garfish", "spotNl": "Vanya's Garfish Event (Grote Schaduw)", "spotEn": "Vanya's Garfish Event (Large Shadow)", "noteNl": "Vereist speciale fase — ontgrendelt via Vanya's Garfish Event", "noteEn": "Requires a special phase — unlocks via Vanya's Garfish Event", "emoji": "🐟", "gold": [320,480,640,1280,2560], "tokens": [60,90,120,240,480]}
     ],
     "birds": [
-      {"nameNl": "Oranje Hop", "nameEn": "Orange Hoopoe", "spotNl": "Onsen Berg (Stenen Klif)", "spotEn": "Onsen Mountain (Stone Cliff)", "noteNl": null, "noteEn": null, "emoji": "🐦"},
-      {"nameNl": "Blauwe Hop", "nameEn": "Blue Hoopoe", "spotNl": "Onsen Berg (Onsen)", "spotEn": "Onsen Mountain (Onsen)", "noteNl": null, "noteEn": null, "emoji": "🐦"},
-      {"nameNl": "Groene Hop", "nameEn": "Green Hoopoe", "spotNl": "Onsen Berg (Kratermeer)", "spotEn": "Onsen Mountain (Crater Lake)", "noteNl": null, "noteEn": null, "emoji": "🐦"},
-      {"nameNl": "Rode Hop", "nameEn": "Red Hoopoe", "spotNl": "Onsen Berg (Ruïnes)", "spotEn": "Onsen Mountain (Ruins)", "noteNl": null, "noteEn": null, "emoji": "🐦"},
-      {"nameNl": "Kleurrijke Hop", "nameEn": "Colorful Hoopoe", "spotNl": "Bailey J's Hoopoe Event", "spotEn": "Bailey J's Hoopoe Event", "noteNl": "Vereist speciale fase — ontgrendelt via Bailey J's Hoopoe Event", "noteEn": "Requires a special phase — unlocks via Bailey J's Hoopoe Event", "emoji": "🐦"}
+      {"nameNl": "Oranje Hop", "nameEn": "Orange Hoopoe", "spotNl": "Onsen Berg (Stenen Klif)", "spotEn": "Onsen Mountain (Stone Cliff)", "noteNl": null, "noteEn": null, "emoji": "🐦", "gold": [15,60,120,240,480], "tokens": [5,20,40,80,160]},
+      {"nameNl": "Blauwe Hop", "nameEn": "Blue Hoopoe", "spotNl": "Onsen Berg (Onsen)", "spotEn": "Onsen Mountain (Onsen)", "noteNl": null, "noteEn": null, "emoji": "🐦", "gold": [15,60,120,240,480], "tokens": [5,20,40,80,160]},
+      {"nameNl": "Groene Hop", "nameEn": "Green Hoopoe", "spotNl": "Onsen Berg (Kratermeer)", "spotEn": "Onsen Mountain (Crater Lake)", "noteNl": null, "noteEn": null, "emoji": "🐦", "gold": [15,60,120,240,480], "tokens": [5,20,40,80,160]},
+      {"nameNl": "Rode Hop", "nameEn": "Red Hoopoe", "spotNl": "Onsen Berg (Ruïnes)", "spotEn": "Onsen Mountain (Ruins)", "noteNl": null, "noteEn": null, "emoji": "🐦", "gold": [15,60,120,240,480], "tokens": [5,20,40,80,160]},
+      {"nameNl": "Kleurrijke Hop", "nameEn": "Colorful Hoopoe", "spotNl": "Bailey J's Hoopoe Event", "spotEn": "Bailey J's Hoopoe Event", "noteNl": "Vereist speciale fase — ontgrendelt via Bailey J's Hoopoe Event", "noteEn": "Requires a special phase — unlocks via Bailey J's Hoopoe Event", "emoji": "🐦", "gold": [17,68,136,272,544], "tokens": [5,20,40,80,160]}
     ],
     "recipes": [
-      {"nameNl": "Cactus Fresh Fruit Drink", "nameEn": "Cactus Fresh Fruit Drink", "ingredientsNl": ["Pear Cactus", "Milk", "Apple x2"], "ingredientsEn": ["Pear Cactus", "Milk", "Apple x2"], "emoji": "🍹"},
-      {"nameNl": "Cactus Blueberry Drink", "nameEn": "Cactus Blueberry Drink", "ingredientsNl": ["Pear Cactus", "Milk", "Blueberry x2"], "ingredientsEn": ["Pear Cactus", "Milk", "Blueberry x2"], "emoji": "🍹"},
-      {"nameNl": "Cactus Raspberry Drink", "nameEn": "Cactus Raspberry Drink", "ingredientsNl": ["Pear Cactus", "Milk", "Raspberry x2"], "ingredientsEn": ["Pear Cactus", "Milk", "Raspberry x2"], "emoji": "🍹"},
-      {"nameNl": "Cactus Pineapple Drink", "nameEn": "Cactus Pineapple Drink", "ingredientsNl": ["Pear Cactus", "Milk", "Pineapple x2"], "ingredientsEn": ["Pear Cactus", "Milk", "Pineapple x2"], "emoji": "🍹"},
-      {"nameNl": "Cactus Apple Drink", "nameEn": "Cactus Apple Drink", "ingredientsNl": ["Pear Cactus", "Milk", "Apple x2"], "ingredientsEn": ["Pear Cactus", "Milk", "Apple x2"], "emoji": "🍹"},
-      {"nameNl": "Cactus Orange Drink", "nameEn": "Cactus Orange Drink", "ingredientsNl": ["Pear Cactus", "Milk", "Orange x2"], "ingredientsEn": ["Pear Cactus", "Milk", "Orange x2"], "emoji": "🍹"},
-      {"nameNl": "Cactus Strawberry Drink", "nameEn": "Cactus Strawberry Drink", "ingredientsNl": ["Pear Cactus", "Milk", "Strawberry x2"], "ingredientsEn": ["Pear Cactus", "Milk", "Strawberry x2"], "emoji": "🍹"},
-      {"nameNl": "Cactus Grape Drink", "nameEn": "Cactus Grape Drink", "ingredientsNl": ["Pear Cactus", "Milk", "Grape x2"], "ingredientsEn": ["Pear Cactus", "Milk", "Grape x2"], "emoji": "🍹"},
-      {"nameNl": "Grilled Veggies & Meat", "nameEn": "Grilled Veggies & Meat", "ingredientsNl": ["Charcoal", "Meat x2", "Veggies"], "ingredientsEn": ["Charcoal", "Meat x2", "Veggies"], "emoji": "🍢"},
-      {"nameNl": "Grilled Tomato & Meat", "nameEn": "Grilled Tomato & Meat", "ingredientsNl": ["Charcoal", "Meat x2", "Tomato"], "ingredientsEn": ["Charcoal", "Meat x2", "Tomato"], "emoji": "🍢"},
-      {"nameNl": "Grilled Potato & Meat", "nameEn": "Grilled Potato & Meat", "ingredientsNl": ["Charcoal", "Meat x2", "Potato"], "ingredientsEn": ["Charcoal", "Meat x2", "Potato"], "emoji": "🍢"},
-      {"nameNl": "Grilled Carrot & Meat", "nameEn": "Grilled Carrot & Meat", "ingredientsNl": ["Charcoal", "Meat x2", "Carrot"], "ingredientsEn": ["Charcoal", "Meat x2", "Carrot"], "emoji": "🍢"},
-      {"nameNl": "Grilled Eggplant & Meat", "nameEn": "Grilled Eggplant & Meat", "ingredientsNl": ["Charcoal", "Meat x2", "Eggplant"], "ingredientsEn": ["Charcoal", "Meat x2", "Eggplant"], "emoji": "🍢"},
-      {"nameNl": "Grilled Corn & Meat", "nameEn": "Grilled Corn & Meat", "ingredientsNl": ["Charcoal", "Meat x2", "Corn"], "ingredientsEn": ["Charcoal", "Meat x2", "Corn"], "emoji": "🍢"},
-      {"nameNl": "Original Flavor Set Meal", "nameEn": "Original Flavor Set Meal", "ingredientsNl": ["Fruit Drink x2", "Grilled Meat & Fish"], "ingredientsEn": ["Fruit Drink x2", "Grilled Meat & Fish"], "emoji": "🍽️"},
-      {"nameNl": "Cactus Fresh Seafood Soup", "nameEn": "Cactus Fresh Seafood Soup", "ingredientsNl": ["Pear Cactus", "Thick Sauce x2", "Fish"], "ingredientsEn": ["Pear Cactus", "Thick Sauce x2", "Fish"], "emoji": "🍲"},
-      {"nameNl": "Cactus Light Golden Alligator Gar Soup", "nameEn": "Cactus Light Golden Alligator Gar Soup", "ingredientsNl": ["Pear Cactus", "Thick Sauce x2", "Alligator Gar"], "ingredientsEn": ["Pear Cactus", "Thick Sauce x2", "Alligator Gar"], "emoji": "🍲"},
-      {"nameNl": "Cactus Brown Spotted Alligator Gar Soup", "nameEn": "Cactus Brown Spotted Alligator Gar Soup", "ingredientsNl": ["Pear Cactus", "Thick Sauce x2", "Brown Spotted Gar"], "ingredientsEn": ["Pear Cactus", "Thick Sauce x2", "Brown Spotted Gar"], "emoji": "🍲"},
-      {"nameNl": "Cactus Silver White Alligator Gar Soup", "nameEn": "Cactus Silver White Alligator Gar Soup", "ingredientsNl": ["Pear Cactus", "Thick Sauce x2", "Silver White Gar"], "ingredientsEn": ["Pear Cactus", "Thick Sauce x2", "Silver White Gar"], "emoji": "🍲"},
-      {"nameNl": "Cactus Black Spotted Alligator Gar Soup", "nameEn": "Cactus Black Spotted Alligator Gar Soup", "ingredientsNl": ["Pear Cactus", "Thick Sauce x2", "Black Spotted Gar"], "ingredientsEn": ["Pear Cactus", "Thick Sauce x2", "Black Spotted Gar"], "emoji": "🍲"},
-      {"nameNl": "Cactus Golden Alligator Gar Soup", "nameEn": "Cactus Golden Alligator Gar Soup", "ingredientsNl": ["Nog onbekend — ontgrendelt in week 2"], "ingredientsEn": ["Unknown yet — unlocks in week 2"], "emoji": "🍲"}
+      {"nameNl": "Prickly Pear Fruit Juice", "nameEn": "Prickly Pear Fruit Juice", "ingredientsNl": ["Prickly Pear", "Milk", "Any Fruit x2"], "ingredientsEn": ["Prickly Pear", "Milk", "Any Fruit x2"], "emoji": "🍹", "gold": [220,330,440,880,1760], "tokens": [40,60,80,160,320]},
+      {"nameNl": "Prickly Pear & Apple Juice", "nameEn": "Prickly Pear & Apple Juice", "ingredientsNl": ["Prickly Pear", "Milk", "Apple x2"], "ingredientsEn": ["Prickly Pear", "Milk", "Apple x2"], "emoji": "🍹", "gold": [270,405,540,1080,2160], "tokens": [50,75,100,200,400]},
+      {"nameNl": "Prickly Pear & Mandarin Juice", "nameEn": "Prickly Pear & Mandarin Juice", "ingredientsNl": ["Prickly Pear", "Milk", "Mandarin x2"], "ingredientsEn": ["Prickly Pear", "Milk", "Mandarin x2"], "emoji": "🍹", "gold": [270,405,540,1080,2160], "tokens": [50,75,100,200,400]},
+      {"nameNl": "Prickly Pear & Blueberry Juice", "nameEn": "Prickly Pear & Blueberry Juice", "ingredientsNl": ["Prickly Pear", "Milk", "Blueberry x2"], "ingredientsEn": ["Prickly Pear", "Milk", "Blueberry x2"], "emoji": "🍹", "gold": [220,330,440,880,1760], "tokens": [40,60,80,160,320]},
+      {"nameNl": "Prickly Pear & Raspberry Juice", "nameEn": "Prickly Pear & Raspberry Juice", "ingredientsNl": ["Prickly Pear", "Milk", "Raspberry x2"], "ingredientsEn": ["Prickly Pear", "Milk", "Raspberry x2"], "emoji": "🍹", "gold": [260,390,520,1040,2080], "tokens": [50,75,100,200,400]},
+      {"nameNl": "Prickly Pear & Pineapple Juice", "nameEn": "Prickly Pear & Pineapple Juice", "ingredientsNl": ["Prickly Pear", "Milk", "Pineapple x2"], "ingredientsEn": ["Prickly Pear", "Milk", "Pineapple x2"], "emoji": "🍹", "gold": [260,390,520,1040,2080], "tokens": [50,75,100,200,400]},
+      {"nameNl": "Prickly Pear & Strawberry Juice", "nameEn": "Prickly Pear & Strawberry Juice", "ingredientsNl": ["Prickly Pear", "Milk", "Strawberry x2"], "ingredientsEn": ["Prickly Pear", "Milk", "Strawberry x2"], "emoji": "🍹", "gold": [910,1365,1820,3640,7280], "tokens": [160,240,320,640,1280]},
+      {"nameNl": "Prickly Pear & Grape Juice", "nameEn": "Prickly Pear & Grape Juice", "ingredientsNl": ["Prickly Pear", "Milk", "Grape x2"], "ingredientsEn": ["Prickly Pear", "Milk", "Grape x2"], "emoji": "🍹", "gold": [1120,1680,2240,4480,8960], "tokens": [200,300,400,800,1600]},
+      {"nameNl": "Prickly Pear Fish Soup", "nameEn": "Prickly Pear Fish Soup", "ingredientsNl": ["Prickly Pear", "Date Paste x2", "Fish"], "ingredientsEn": ["Prickly Pear", "Date Paste x2", "Fish"], "emoji": "🍲", "gold": [230,345,460,920,1840], "tokens": [45,67,90,180,360]},
+      {"nameNl": "Prickly Pear & Pale Gold Garfish Soup", "nameEn": "Prickly Pear & Pale Gold Garfish Soup", "ingredientsNl": ["Prickly Pear", "Date Paste x2", "Pale Gold Garfish"], "ingredientsEn": ["Prickly Pear", "Date Paste x2", "Pale Gold Garfish"], "emoji": "🍲", "gold": [400,600,800,1600,3200], "tokens": [70,105,140,280,560]},
+      {"nameNl": "Prickly Pear & Brown Garfish Soup", "nameEn": "Prickly Pear & Brown Garfish Soup", "ingredientsNl": ["Prickly Pear", "Date Paste x2", "Brown Garfish"], "ingredientsEn": ["Prickly Pear", "Date Paste x2", "Brown Garfish"], "emoji": "🍲", "gold": [400,600,800,1600,3200], "tokens": [70,105,140,280,560]},
+      {"nameNl": "Prickly Pear & Silver Garfish Soup", "nameEn": "Prickly Pear & Silver Garfish Soup", "ingredientsNl": ["Prickly Pear", "Date Paste x2", "Silver Garfish"], "ingredientsEn": ["Prickly Pear", "Date Paste x2", "Silver Garfish"], "emoji": "🍲", "gold": [400,600,800,1600,3200], "tokens": [70,105,140,280,560]},
+      {"nameNl": "Prickly Pear & Black Garfish Soup", "nameEn": "Prickly Pear & Black Garfish Soup", "ingredientsNl": ["Prickly Pear", "Date Paste x2", "Black Garfish"], "ingredientsEn": ["Prickly Pear", "Date Paste x2", "Black Garfish"], "emoji": "🍲", "gold": [400,600,800,1600,3200], "tokens": [70,105,140,280,560]},
+      {"nameNl": "Prickly Pear & Gold Garfish Soup", "nameEn": "Prickly Pear & Gold Garfish Soup", "ingredientsNl": ["Prickly Pear", "Date Paste x2", "Gold Garfish"], "ingredientsEn": ["Prickly Pear", "Date Paste x2", "Gold Garfish"], "emoji": "🍲", "gold": [500,750,1000,2000,4000], "tokens": [90,135,180,360,720]},
+      {"nameNl": "Grilled Meat & Vegetables", "nameEn": "Grilled Meat & Vegetables", "ingredientsNl": ["Charcoal", "Meat x2", "Vegetable"], "ingredientsEn": ["Charcoal", "Meat x2", "Vegetable"], "emoji": "🍢", "gold": [580,870,1160,2320,4640], "tokens": [105,157,210,420,840]},
+      {"nameNl": "Grilled Meat & Potatoes", "nameEn": "Grilled Meat & Potatoes", "ingredientsNl": ["Charcoal", "Meat x2", "Potato"], "ingredientsEn": ["Charcoal", "Meat x2", "Potato"], "emoji": "🍢", "gold": [640,960,1280,2560,5120], "tokens": [115,172,230,460,920]},
+      {"nameNl": "Grilled Meat & Corn", "nameEn": "Grilled Meat & Corn", "ingredientsNl": ["Charcoal", "Meat x2", "Corn"], "ingredientsEn": ["Charcoal", "Meat x2", "Corn"], "emoji": "🍢", "gold": [1070,1605,2140,4280,8560], "tokens": [190,285,380,760,1520]},
+      {"nameNl": "Grilled Meat & Tomatoes", "nameEn": "Grilled Meat & Tomatoes", "ingredientsNl": ["Charcoal", "Meat x2", "Tomato"], "ingredientsEn": ["Charcoal", "Meat x2", "Tomato"], "emoji": "🍢", "gold": [580,870,1160,2320,4640], "tokens": [105,157,210,420,840]},
+      {"nameNl": "Grilled Meat & Carrots", "nameEn": "Grilled Meat & Carrots", "ingredientsNl": ["Charcoal", "Meat x2", "Carrot"], "ingredientsEn": ["Charcoal", "Meat x2", "Carrot"], "emoji": "🍢", "gold": [710,1065,1420,2840,5680], "tokens": [125,187,250,500,1000]},
+      {"nameNl": "Grilled Meat & Eggplants", "nameEn": "Grilled Meat & Eggplants", "ingredientsNl": ["Charcoal", "Meat x2", "Eggplant"], "ingredientsEn": ["Charcoal", "Meat x2", "Eggplant"], "emoji": "🍢", "gold": [960,1440,1920,3840,7680], "tokens": [170,255,340,680,1360]},
+      {"nameNl": "Primitive Feast Combo", "nameEn": "Primitive Feast Combo", "ingredientsNl": ["Any Prickly Pear Fruit Juice", "Any Grilled Meat & Vegetables", "Any Prickly Pear Fish Soup"], "ingredientsEn": ["Any Prickly Pear Fruit Juice", "Any Grilled Meat & Vegetables", "Any Prickly Pear Fish Soup"], "emoji": "🍽️", "gold": [1300,1950,2600,5200,10400], "tokens": [240,360,480,960,1920]}
     ],
     "insects": [
-      {"nameNl": "Paarse Gehoornde Vuurvlieg", "nameEn": "Purple-Horned Firefly", "spotNl": "Bloemenveld (Walvisberg)", "spotEn": "Flower Field (Whale Mountain)", "noteNl": null, "noteEn": null, "emoji": "🪲"},
-      {"nameNl": "Grijze Gehoornde Vuurvlieg", "nameEn": "Grey-Horned Firefly", "spotNl": "Bloemenveld (Windmolenveld)", "spotEn": "Flower Field (Windmill Field)", "noteNl": null, "noteEn": null, "emoji": "🪲"},
-      {"nameNl": "Roze Gehoornde Vuurvlieg", "nameEn": "Pink-Horned Firefly", "spotNl": "Bloemenveld (Amethyststrand)", "spotEn": "Flower Field (Amethyst Beach)", "noteNl": null, "noteEn": null, "emoji": "🪲"},
-      {"nameNl": "Bruine Neushoornkever", "nameEn": "Brown Rhinoceros Beetle", "spotNl": "Onsen Berg (Ruïnes)", "spotEn": "Onsen Mountain (Ruins)", "noteNl": null, "noteEn": null, "emoji": "🪲"},
-      {"nameNl": "Iriserende Neushoornkever", "nameEn": "Iridescent Rhinoceros Beetle", "spotNl": "Naniwa's Iridescent Beetle Event", "spotEn": "Naniwa's Iridescent Beetle Event", "noteNl": "Vereist speciale fase — ontgrendelt via Naniwa's Iridescent Beetle Event", "noteEn": "Requires a special phase — unlocks via Naniwa's Iridescent Beetle Event", "emoji": "🪲"}
+      {"nameNl": "Paarse Gehoornde Vuurvlieg", "nameEn": "Purple-Horned Firefly", "spotNl": "Bloemenveld (Walvisberg)", "spotEn": "Flower Field (Whale Mountain)", "noteNl": null, "noteEn": null, "emoji": "🪲", "gold": [110,165,220,440,880], "tokens": [30,45,60,120,240]},
+      {"nameNl": "Grijze Gehoornde Vuurvlieg", "nameEn": "Grey-Horned Firefly", "spotNl": "Bloemenveld (Windmolenveld)", "spotEn": "Flower Field (Windmill Field)", "noteNl": null, "noteEn": null, "emoji": "🪲", "gold": [110,165,220,440,880], "tokens": [30,45,60,120,240]},
+      {"nameNl": "Roze Gehoornde Vuurvlieg", "nameEn": "Pink-Horned Firefly", "spotNl": "Bloemenveld (Amethyststrand)", "spotEn": "Flower Field (Amethyst Beach)", "noteNl": null, "noteEn": null, "emoji": "🪲", "gold": [110,165,220,440,880], "tokens": [30,45,60,120,240]},
+      {"nameNl": "Bruine Neushoornkever", "nameEn": "Brown Rhinoceros Beetle", "spotNl": "Onsen Berg (Ruïnes)", "spotEn": "Onsen Mountain (Ruins)", "noteNl": null, "noteEn": null, "emoji": "🪲", "gold": [110,165,220,440,880], "tokens": [30,45,60,120,240]},
+      {"nameNl": "Iriserende Neushoornkever", "nameEn": "Iridescent Rhinoceros Beetle", "spotNl": "Naniwa's Iridescent Beetle Event", "spotEn": "Naniwa's Iridescent Beetle Event", "noteNl": "Vereist speciale fase — ontgrendelt via Naniwa's Iridescent Beetle Event", "noteEn": "Requires a special phase — unlocks via Naniwa's Iridescent Beetle Event", "emoji": "🪲", "gold": [165,247,330,660,1320], "tokens": [45,67,90,180,360]}
     ]
   },
   "rainbowSpots": [],
@@ -167,7 +167,14 @@
     { "date": "2026-09-03", "kinds": [{ "kind": "rain", "block": "12-18" }, { "kind": "rain", "block": "18-00" }] },
     { "date": "2026-09-04", "kinds": ["normal"] },
     { "date": "2026-09-05", "kinds": ["normal"] },
-    { "date": "2026-09-06", "kinds": ["normal"] }
+    { "date": "2026-09-06", "kinds": ["normal"] },
+    { "date": "2026-09-07", "kinds": ["normal"] },
+    { "date": "2026-09-08", "kinds": [{ "kind": "rain", "block": "06-12" }, { "kind": "rainbow", "block": "12-18" }] },
+    { "date": "2026-09-09", "kinds": ["normal"] },
+    { "date": "2026-09-10", "kinds": ["normal"] },
+    { "date": "2026-09-11", "kinds": [{ "kind": "rain", "block": "12-18" }] },
+    { "date": "2026-09-12", "kinds": [{ "kind": "meteor", "block": "18-00" }] },
+    { "date": "2026-09-13", "kinds": ["normal"] }
   ],
   "codes": [
     { "code": "m9a3q7k2r5n4", "rewardNl": "3x Wensterren, 2x kleurstoffen, 1x Vlekkeloze fluoriet", "rewardEn": "3x Wishing Stars, 2x Dyes, 1x Flawless Fluorite", "expiresNl": "30 sep 2026, 17:59", "expiresEn": "Sep 30, 2026, 17:59" },
