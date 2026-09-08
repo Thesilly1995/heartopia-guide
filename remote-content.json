@@ -111,7 +111,11 @@
       {"nameNl": "Iriserende Neushoornkever", "nameEn": "Iridescent Rhinoceros Beetle", "spotNl": "Naniwa's Iridescent Beetle Event", "spotEn": "Naniwa's Iridescent Beetle Event", "noteNl": "Vereist speciale fase — ontgrendelt via Naniwa's Iridescent Beetle Event", "noteEn": "Requires a special phase — unlocks via Naniwa's Iridescent Beetle Event", "emoji": "🪲", "gold": [165,247,330,660,1320], "tokens": [45,67,90,180,360]}
     ]
   },
-  "rainbowSpots": [],
+  "rainbowSpots": [
+    { "num": 1, "x": 94.6, "y": 38.7, "underwater": false, "descriptionNl": "Oostkust, noordelijk deel", "descriptionEn": "East coast, northern part" },
+    { "num": 2, "x": 77.9, "y": 56.9, "underwater": false, "descriptionNl": "Oosten van het eiland, bij locatie 3 (Doris)", "descriptionEn": "East side of the island, near spot 3 (Doris)" },
+    { "num": 3, "x": 84.9, "y": 52.1, "underwater": false, "descriptionNl": "Oosten van het eiland, bij locatie 2", "descriptionEn": "East side of the island, near spot 2", "isDoris": true }
+  ],
   "meteorSpots": [],
   "bubbleWeek": {
     "weekLabelNl": "Deze week (5-11 sep 2026)",
