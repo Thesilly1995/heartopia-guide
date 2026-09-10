@@ -98,6 +98,27 @@ const TIP_CATEGORIES_RAW: TipCategoryRaw[] = [
         bodyEn: "Don't wait until you're fully done — save your current layout as a blueprint as soon as that feature unlocks, so you can always go back if a new design doesn't work out.",
         emoji: '📐',
       },
+      {
+        titleNl: 'Setbonussen blijven ook na een kleurtje',
+        titleEn: 'Set bonuses survive a repaint',
+        bodyNl: 'Een compleet meubelset geeft bonussen zoals minder energieverbruik, snellere crafting, betere NPC-relaties en hobby-boosts — en de kleur van setmeubels aanpassen breekt die bonus niet, dus personaliseer gerust.',
+        bodyEn: "A complete furniture set gives bonuses like lower energy use, faster crafting, better NPC relationships and hobby boosts — and changing the color of set furniture doesn't break that bonus, so feel free to personalize it.",
+        emoji: '🎁',
+      },
+      {
+        titleNl: 'Bewaar meubels liever dan verkopen',
+        titleEn: 'Store furniture instead of selling it',
+        bodyNl: 'Gebruik je een setstuk even niet in je huidige indeling, bewaar het dan in plaats van te verkopen — zo hou je de kans om later alsnog de hele set (en de bijbehorende bonus) compleet te maken.',
+        bodyEn: "If you're not using a set piece in your current layout, store it instead of selling it — this way you keep the option to complete the full set (and its bonus) later.",
+        emoji: '📦',
+      },
+      {
+        titleNl: 'Zeldzame blueprints zijn schaars',
+        titleEn: 'Rare blueprints are scarce',
+        bodyNl: 'Blueprints uit Prize Bubbles-spawnpunten zijn beperkt beschikbaar en andere spelers kunnen ze ook pakken — wees er snel bij als je een zeldzame ziet liggen, want die is zo weg.',
+        bodyEn: "Blueprints from Prize Bubble spawn points are limited and other players can grab them too — move fast when you spot a rare one, it won't stay there long.",
+        emoji: '💎',
+      },
     ],
   },
   {
