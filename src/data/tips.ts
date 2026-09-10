@@ -106,6 +106,13 @@ const TIP_CATEGORIES_RAW: TipCategoryRaw[] = [
     labelEn: 'Drawing on the easel',
     tips: [
       {
+        titleNl: 'Ontgrendelen en neerzetten',
+        titleEn: 'Unlocking and placing the easel',
+        bodyNl: "De schildersezel ontgrendelt op D.G. Level 14 — koop hem daarna bij Ka Ching's winkel (inclusief een korte uitleg van de tools) en zet hem neer in je huis of ergens in de stad om te beginnen met tekenen.",
+        bodyEn: "The drawing board unlocks at D.G. Level 14 — buy it afterwards from Ka Ching's shop (comes with a short tools tutorial) and place it inside your home or anywhere in town to start drawing.",
+        emoji: '🔓',
+      },
+      {
         titleNl: 'Oefen eerst op een gewoon canvas',
         titleEn: 'Practice on a standard canvas first',
         bodyNl: 'Test je ontwerp en kleuren op een goedkoop, standaard canvas voordat je een duurder kleding- of meubelsjabloon gebruikt — zo verspil je geen materialen aan een mislukte poging.',
@@ -118,6 +125,13 @@ const TIP_CATEGORIES_RAW: TipCategoryRaw[] = [
         bodyNl: 'Kun je niet goed freehand tekenen, gebruik dan een inkleursjabloon als basis in plaats van vanaf een leeg canvas te beginnen — dat geeft meteen een nette, herkenbare vorm.',
         bodyEn: "If freehand drawing isn't your strong point, use a coloring-page template as a base instead of starting from a blank canvas — this immediately gives you a neat, recognizable shape.",
         emoji: '🎨',
+      },
+      {
+        titleNl: 'Gebruik het raster en de spiegelfunctie',
+        titleEn: 'Use the grid and the mirror tool',
+        bodyNl: 'Zet het raster aan voor meer precisie, en gebruik vooral de spiegel-/symmetriefunctie voor symmetrische ontwerpen — je tekent dan maar de helft, de andere kant vult zich automatisch aan.',
+        bodyEn: "Turn on the grid for more precision, and especially use the mirror/symmetry tool for symmetric designs — you only draw one half, the other side fills in automatically.",
+        emoji: '🪞',
       },
       {
         titleNl: 'Stempels voor de basis, penseel voor details',
