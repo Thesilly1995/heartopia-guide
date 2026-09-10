@@ -65,6 +65,76 @@ const TIP_CATEGORIES_RAW: TipCategoryRaw[] = [
       },
     ],
   },
+  {
+    key: 'bouwen',
+    labelNl: 'Bouwen & inrichten',
+    labelEn: 'Building & decorating',
+    tips: [
+      {
+        titleNl: 'Eerst de indeling, dan pas decoratie',
+        titleEn: 'Layout first, decoration second',
+        bodyNl: 'Zet eerst je bed, opslag en werkbanken op hun plek voordat je gaat decoreren — zo voorkom je dat je alles steeds opnieuw moet verschuiven als de indeling toch niet klopt.',
+        bodyEn: "Place your bed, storage and workstations first before decorating — this way you won't have to keep shifting everything around once the layout turns out not to work.",
+        emoji: '🧱',
+      },
+      {
+        titleNl: 'Let op het type oppervlak',
+        titleEn: 'Watch the surface type',
+        bodyNl: 'Meubels moeten op de vloer staan, wandobjecten aan een muur, en kleine spulletjes (lampen, vazen) op ander meubilair — een groene gloed betekent een geldige plek, rood betekent dat je moet schuiven of draaien.',
+        bodyEn: 'Furniture needs a floor, wall items need a wall, and small objects (lamps, vases) need to go on other furniture — a green glow means a valid spot, red means you need to move or rotate it.',
+        emoji: '🟩',
+      },
+      {
+        titleNl: 'Stapelen kan',
+        titleEn: 'You can layer items',
+        bodyNl: 'Sommige items kun je op elkaar stapelen: eerst een vloerkleed, dan een tafel erop, en dan weer spulletjes op de tafel — zo krijg je een gelaagde, minder kale look.',
+        bodyEn: 'Some items can be layered: a rug first, then a table on top, then small objects on the table — this gives a layered look instead of a bare room.',
+        emoji: '📚',
+      },
+      {
+        titleNl: 'Sla je indeling op zodra je blueprints hebt',
+        titleEn: 'Save a blueprint as soon as you unlock it',
+        bodyNl: 'Wacht niet tot je helemaal klaar bent — sla je huidige indeling meteen op als blueprint zodra die functie beschikbaar is, dan kun je altijd terug als een nieuw ontwerp toch niet bevalt.',
+        bodyEn: "Don't wait until you're fully done — save your current layout as a blueprint as soon as that feature unlocks, so you can always go back if a new design doesn't work out.",
+        emoji: '📐',
+      },
+    ],
+  },
+  {
+    key: 'tekenen',
+    labelNl: 'Tekenen op de schildersezel',
+    labelEn: 'Drawing on the easel',
+    tips: [
+      {
+        titleNl: 'Oefen eerst op een gewoon canvas',
+        titleEn: 'Practice on a standard canvas first',
+        bodyNl: 'Test je ontwerp en kleuren op een goedkoop, standaard canvas voordat je een duurder kleding- of meubelsjabloon gebruikt — zo verspil je geen materialen aan een mislukte poging.',
+        bodyEn: "Test your design and colors on a cheap, standard canvas before using a more expensive clothing or furniture template — this way you don't waste materials on a failed attempt.",
+        emoji: '🖼️',
+      },
+      {
+        titleNl: 'Geen tekentalent? Begin met een sjabloon',
+        titleEn: 'Not confident freehand? Start from a template',
+        bodyNl: 'Kun je niet goed freehand tekenen, gebruik dan een inkleursjabloon als basis in plaats van vanaf een leeg canvas te beginnen — dat geeft meteen een nette, herkenbare vorm.',
+        bodyEn: "If freehand drawing isn't your strong point, use a coloring-page template as a base instead of starting from a blank canvas — this immediately gives you a neat, recognizable shape.",
+        emoji: '🎨',
+      },
+      {
+        titleNl: 'Stempels voor de basis, penseel voor details',
+        titleEn: 'Stamps for the base, brush for details',
+        bodyNl: 'Gebruik kant-en-klare stempels/decals voor de basisvorm, en werk daarna met een kleine penseelgrootte de details bij — dat oogt netter dan alles in één keer freehand proberen.',
+        bodyEn: 'Use ready-made stamps/decals for the base shape, then switch to a small brush size to add details on top — this looks neater than trying to freehand everything in one go.',
+        emoji: '🖌️',
+      },
+      {
+        titleNl: 'Zoom in, en gebruik de verf-emmer voor vlakken',
+        titleEn: 'Zoom in, and use the fill bucket for large areas',
+        bodyNl: 'Zoom in voor precies werk bij randen en details, en gebruik de vul-/emmerfunctie om grote vlakken in één keer te kleuren voordat je met een klein penseel de fijne details toevoegt.',
+        bodyEn: 'Zoom in for precise edges and details, and use the fill/bucket tool to color large areas in one go before adding fine details with a small brush.',
+        emoji: '🔍',
+      },
+    ],
+  },
 ];
 
 export function useTips(): TipCategory[] {

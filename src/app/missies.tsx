@@ -29,6 +29,7 @@ const DAILY = {
     { key: 'd14', label: 'Laboratorium checken' },
     { key: 'd15', label: 'Zwervende Eik hakken' },
     { key: 'd16', label: 'Fluoriet hakken' },
+    { key: 'd17', label: 'Kaarten/cadeaus geven aan een NPC (bv. 5 vogelkaarten aan Bailey J)' },
   ],
   en: [
     { key: 'd0', label: 'Daily check-in' },
@@ -44,6 +45,7 @@ const DAILY = {
     { key: 'd14', label: 'Check the Laboratory' },
     { key: 'd15', label: 'Chop the Wandering Oak' },
     { key: 'd16', label: 'Mine the Fluorite' },
+    { key: 'd17', label: 'Give cards/gifts to an NPC (e.g. 5 bird cards to Bailey J)' },
   ],
 } as const;
 
