@@ -46,6 +46,11 @@ const WEATHER_WORDS = {
   en: ['Sunny', 'Rainy', 'Rainbow'],
 } as const;
 
+const TIME_WORDS = {
+  nl: ["'s Nachts", 'Ochtend', 'Overdag', 'Avond'],
+  en: ['Night', 'Dawn', 'Day', 'Dusk'],
+} as const;
+
 const STRINGS = {
   nl: {
     back: '‹ Terug',
@@ -53,6 +58,7 @@ const STRINGS = {
     searchPlaceholder: 'Zoeken op naam...',
     all: 'Alle',
     allWeather: 'Alle weer',
+    allTime: 'Alle tijdstippen',
     spot: 'Plek',
     time: 'Tijdstip',
     weather: 'Weer',
@@ -75,6 +81,7 @@ const STRINGS = {
     searchPlaceholder: 'Search by name...',
     all: 'All',
     allWeather: 'All weather',
+    allTime: 'All times',
     spot: 'Spot',
     time: 'Time',
     weather: 'Weather',
@@ -113,11 +120,13 @@ export function HobbyListScreen({
   const { language } = useLanguage();
   const s = STRINGS[language];
   const WEATHER_FILTERS = ['Alle', ...WEATHER_WORDS[language]] as const;
+  const TIME_FILTERS = ['Alle', ...TIME_WORDS[language]] as const;
 
   const [openName, setOpenName] = useState<string | null>(null);
   const [query, setQuery] = useState('');
   const [maxLevel, setMaxLevel] = useState<number>(99);
   const [weatherFilter, setWeatherFilter] = useState<string>('Alle');
+  const [timeFilter, setTimeFilter] = useState<string>('Alle');
   const [progressFilter, setProgressFilter] = useState<ProgressFilter>('all');
   const [activeSub, setActiveSub] = useState<string>(subTabs?.[0]?.key ?? '');
   const [stars, setStars] = useState<Record<string, number>>({});
@@ -125,11 +134,13 @@ export function HobbyListScreen({
 
   useEffect(() => {
     setWeatherFilter('Alle');
+    setTimeFilter('Alle');
   }, [language]);
 
   const activeTab = subTabs?.find((tab) => tab.key === activeSub);
   const activeItems = subTabs ? (activeTab?.items ?? []) : (items ?? []);
   const hasWeather = activeItems.length > 0 && activeItems[0].weather !== undefined;
+  const hasTime = activeItems.length > 0 && activeItems[0].time !== undefined;
   const activeStorageKey = subTabs ? `${storageKey}:${activeSub}` : storageKey;
 
   const starsStorageKey = `heartopia:${activeStorageKey}:stars`;
@@ -191,14 +202,14 @@ export function HobbyListScreen({
       filtered = filtered.filter((item) => !mastery[item.name]);
     }
 
-    if (weatherFilter === 'Alle') return filtered;
+    if (weatherFilter === 'Alle' && timeFilter === 'Alle') return filtered;
 
     return [...filtered].sort((a, b) => {
-      const aMatch = a.weather?.includes(weatherFilter) ? 1 : 0;
-      const bMatch = b.weather?.includes(weatherFilter) ? 1 : 0;
-      return bMatch - aMatch;
+      const aScore = (a.weather?.includes(weatherFilter) ? 1 : 0) + (a.time?.includes(timeFilter) ? 1 : 0);
+      const bScore = (b.weather?.includes(weatherFilter) ? 1 : 0) + (b.time?.includes(timeFilter) ? 1 : 0);
+      return bScore - aScore;
     });
-  }, [activeItems, query, maxLevel, weatherFilter, progressFilter, stars, mastery]);
+  }, [activeItems, query, maxLevel, weatherFilter, timeFilter, progressFilter, stars, mastery]);
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -295,6 +306,23 @@ export function HobbyListScreen({
             })}
           </View>
         )}
+
+        {hasTime && (
+          <View style={styles.chipRow}>
+            {TIME_FILTERS.map((t) => {
+              const active = timeFilter === t;
+              const label =
+                t === 'Alle'
+                  ? s.allTime
+                  : `${t === TIME_WORDS[language][0] ? '🌙' : t === TIME_WORDS[language][1] ? '🌅' : t === TIME_WORDS[language][2] ? '☀️' : '🌆'} ${t}`;
+              return (
+                <Pressable key={t} onPress={() => setTimeFilter(t)} style={[styles.chip, active && styles.chipActive]}>
+                  <Text style={[styles.chipText, active && styles.chipTextActive]}>{label}</Text>
+                </Pressable>
+              );
+            })}
+          </View>
+        )}
       </LinearGradient>
 
       <FlatList
@@ -313,8 +341,17 @@ export function HobbyListScreen({
           const weatherMatch = hasWeather && weatherFilter !== 'Alle' && !!item.weather?.includes(weatherFilter);
           const weatherEmoji =
             weatherFilter === WEATHER_WORDS[language][0] ? '☀️' : weatherFilter === WEATHER_WORDS[language][1] ? '🌧️' : '🌈';
+          const timeMatch = hasTime && timeFilter !== 'Alle' && !!item.time?.includes(timeFilter);
+          const timeEmoji =
+            timeFilter === TIME_WORDS[language][0]
+              ? '🌙'
+              : timeFilter === TIME_WORDS[language][1]
+                ? '🌅'
+                : timeFilter === TIME_WORDS[language][2]
+                  ? '☀️'
+                  : '🌆';
           return (
-            <View style={[styles.card, weatherMatch && styles.cardHighlighted]}>
+            <View style={[styles.card, (weatherMatch || timeMatch) && styles.cardHighlighted]}>
               <Pressable style={styles.cardHeader} onPress={() => setOpenName(isOpen ? null : item.name)}>
                 <View style={styles.emojiBadge}>
                   <Text style={styles.emoji}>{item.emoji}</Text>
@@ -327,6 +364,7 @@ export function HobbyListScreen({
                     <Text style={styles.levelBadge}>Lv.{item.level}</Text>
                     <RarityPill label={item.rarity} colorKey={item.rarityColorKey} />
                     {weatherMatch && <Text style={styles.weatherBadge}>{weatherEmoji}</Text>}
+                    {timeMatch && <Text style={styles.weatherBadge}>{timeEmoji}</Text>}
                     {stars[item.name] > 0 && <Text style={styles.starsText}>{'★'.repeat(stars[item.name])}</Text>}
                   </View>
                 </View>
