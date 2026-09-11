@@ -202,11 +202,15 @@ export function HobbyListScreen({
       filtered = filtered.filter((item) => !mastery[item.name]);
     }
 
-    if (weatherFilter === 'Alle' && timeFilter === 'Alle') return filtered;
+    if (timeFilter !== 'Alle') {
+      filtered = filtered.filter((item) => !!item.time?.includes(timeFilter));
+    }
+
+    if (weatherFilter === 'Alle') return filtered;
 
     return [...filtered].sort((a, b) => {
-      const aScore = (a.weather?.includes(weatherFilter) ? 1 : 0) + (a.time?.includes(timeFilter) ? 1 : 0);
-      const bScore = (b.weather?.includes(weatherFilter) ? 1 : 0) + (b.time?.includes(timeFilter) ? 1 : 0);
+      const aScore = a.weather?.includes(weatherFilter) ? 1 : 0;
+      const bScore = b.weather?.includes(weatherFilter) ? 1 : 0;
       return bScore - aScore;
     });
   }, [activeItems, query, maxLevel, weatherFilter, timeFilter, progressFilter, stars, mastery]);
