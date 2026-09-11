@@ -22,7 +22,7 @@ const STRINGS = {
     submit: 'Versturen',
     error: 'Versturen mislukt — probeer het later opnieuw.',
     loadError: 'Laden mislukt — probeer het later opnieuw.',
-    recent: 'Eerder toegevoegde ideeën',
+    recent: 'Eerder toegevoegde ideeën — verwerkte feedback halen we van de lijst af, dus staat jouw idee er niet meer bij? Dan is het opgepakt! ✓',
     empty: 'Nog geen feedback — voeg de eerste toe!',
     anonymous: 'Anoniem',
   },
@@ -38,7 +38,7 @@ const STRINGS = {
     submit: 'Submit',
     error: 'Submitting failed — please try again later.',
     loadError: 'Loading failed — please try again later.',
-    recent: 'Previously added ideas',
+    recent: "Previously added ideas — we remove feedback once it's been handled, so if your idea is no longer listed, it's been taken care of! ✓",
     empty: 'No feedback yet — add the first one!',
     anonymous: 'Anonymous',
   },
@@ -161,7 +161,7 @@ export default function FeedbackScreen() {
               </Pressable>
             </View>
 
-            <Text style={styles.recentLabel}>{s.recent}</Text>
+            <DisclaimerBox text={s.recent} />
             {entries.length === 0 && <Text style={styles.emptyText}>{s.empty}</Text>}
           </View>
         }
@@ -191,7 +191,6 @@ function makeStyles(c: ThemeColors) {
     submitButtonDisabled: { backgroundColor: c.line },
     submitText: { color: '#FFFFFF', fontWeight: '700', fontSize: 14 },
     errorText: { fontSize: 12, color: c.coralDark },
-    recentLabel: { fontSize: 12, fontWeight: '700', color: c.forest, paddingHorizontal: 2 },
     emptyText: { fontSize: 12, color: c.forestSoft, paddingHorizontal: 2 },
     entryCard: { backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.line, padding: 12, marginBottom: 10 },
     entryIdea: { fontSize: 14, color: c.forest },
