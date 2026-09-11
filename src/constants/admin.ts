@@ -6,4 +6,4 @@
  * door gewone bezoekers, niet een vervanging voor echte authenticatie.
  * Pas 'm gerust aan naar een eigen code.
  */
-export const ADMIN_CODE = 'heartopia-beheer';
+export const ADMIN_CODE = 'gamerdex-deletefb';
