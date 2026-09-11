@@ -81,7 +81,27 @@ op: de anon key is publiek (zit in de app), dus iedereen die dat weet kan in the
 rechtstreeks (buiten de app om) naar deze tabel schrijven — voor een klein
 fan-gids-project is dat een acceptabel risico, maar het is geen spamfilter/moderatie.
 
-### 3b.1 Kolom `idea_en` toevoegen (automatische Engelse vertaling)
+### 3b.1 Verwijderen van losse feedback-items (beheerderscode in de app)
+
+Het Feedback-scherm heeft een verborgen "Beheerder"-knop onderaan de lijst: na het
+invoeren van de code (`ADMIN_CODE` in `src/constants/admin.ts`) verschijnt bij elk
+item een prullenbak-icoon om dat ene idee te verwijderen zodra het verwerkt is —
+de rest van de lijst blijft gewoon staan. Hiervoor is een extra policy nodig, want
+zonder een delete-policy weigert Supabase elk verwijderverzoek:
+
+```sql
+create policy "Anyone can delete feedback"
+  on feedback for delete
+  using (true);
+```
+
+Let op: net als bij de insert/select-policies hierboven is dit geen
+per-gebruiker-beveiliging — de beheerderscode is alleen een drempel in de
+app-interface zelf (zie het commentaar in `src/constants/admin.ts`), geen
+echte authenticatie op databaseniveau. Voor een klein fan-gids-project is dat
+een acceptabel risico, net als bij de bestaande insert/select-policies.
+
+### 3b.2 Kolom `idea_en` toevoegen (automatische Engelse vertaling)
 
 Feedback wordt bij het versturen automatisch naar het Engels vertaald (via een gratis
 vertaal-endpoint, geen API-key nodig) en in een aparte kolom opgeslagen, zodat iedereen

@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { DisclaimerBox } from '@/components/heartopia/disclaimer-box';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
+import { ADMIN_CODE } from '@/constants/admin';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { isSupabaseConfigured, supabase } from '@/constants/supabase';
 import { useLanguage } from '@/hooks/use-language';
@@ -25,6 +26,16 @@ const STRINGS = {
     recent: 'Eerder toegevoegde ideeën — verwerkte feedback halen we van de lijst af, dus staat jouw idee er niet meer bij? Dan is het opgepakt! ✓',
     empty: 'Nog geen feedback — voeg de eerste toe!',
     anonymous: 'Anoniem',
+    adminLink: 'Beheerder',
+    adminLockLink: '🔒 Vergrendelen',
+    adminPrompt: 'Code invoeren om feedback te kunnen verwijderen.',
+    adminCodePlaceholder: 'Beheerderscode',
+    adminUnlock: 'Ontgrendelen',
+    adminWrongCode: 'Onjuiste code.',
+    deleteConfirmText: 'Dit haalt dit idee definitief van de gedeelde lijst af.',
+    deleteConfirm: 'Verwijderen',
+    cancel: 'Annuleren',
+    deleteError: 'Verwijderen mislukt — probeer het opnieuw.',
   },
   en: {
     title: 'Feedback',
@@ -41,6 +52,16 @@ const STRINGS = {
     recent: "Previously added ideas — we remove feedback once it's been handled, so if your idea is no longer listed, it's been taken care of! ✓",
     empty: 'No feedback yet — add the first one!',
     anonymous: 'Anonymous',
+    adminLink: 'Admin',
+    adminLockLink: '🔒 Lock',
+    adminPrompt: 'Enter the code to be able to delete feedback.',
+    adminCodePlaceholder: 'Admin code',
+    adminUnlock: 'Unlock',
+    adminWrongCode: 'Incorrect code.',
+    deleteConfirmText: 'This will permanently remove this idea from the shared list.',
+    deleteConfirm: 'Delete',
+    cancel: 'Cancel',
+    deleteError: 'Delete failed — please try again.',
   },
 } as const;
 
@@ -61,6 +82,12 @@ export default function FeedbackScreen() {
   const [entries, setEntries] = useState<FeedbackEntry[]>([]);
   const [status, setStatus] = useState<'saving' | 'done' | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [showAdminPrompt, setShowAdminPrompt] = useState(false);
+  const [adminCodeInput, setAdminCodeInput] = useState('');
+  const [adminError, setAdminError] = useState(false);
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
 
   const loadEntries = async () => {
     const { data, error: fetchError } = await supabase
@@ -107,6 +134,28 @@ export default function FeedbackScreen() {
     setStatus('done');
     await loadEntries();
     setTimeout(() => setStatus(null), 2000);
+  };
+
+  const unlockAdmin = () => {
+    if (adminCodeInput === ADMIN_CODE) {
+      setIsAdmin(true);
+      setShowAdminPrompt(false);
+      setAdminCodeInput('');
+      setAdminError(false);
+    } else {
+      setAdminError(true);
+    }
+  };
+
+  const deleteEntry = async (id: string) => {
+    setDeleteError(null);
+    const { error: deleteErr } = await supabase.from('feedback').delete().eq('id', id);
+    setConfirmDeleteId(null);
+    if (deleteErr) {
+      setDeleteError(s.deleteError);
+      return;
+    }
+    await loadEntries();
   };
 
   if (!isSupabaseConfigured) {
@@ -167,12 +216,66 @@ export default function FeedbackScreen() {
         }
         renderItem={({ item }) => (
           <View style={styles.entryCard}>
-            <Text style={styles.entryIdea}>{item.idea}</Text>
+            <View style={styles.entryRow}>
+              <Text style={[styles.entryIdea, { flex: 1 }]}>{item.idea}</Text>
+              {isAdmin && (
+                <Pressable onPress={() => setConfirmDeleteId(item.id)} hitSlop={8}>
+                  <Text style={styles.deleteIcon}>🗑️</Text>
+                </Pressable>
+              )}
+            </View>
             <Text style={styles.entryMeta}>
               {item.name} · {item.date}
             </Text>
+            {confirmDeleteId === item.id && (
+              <View style={styles.confirmBox}>
+                <Text style={styles.confirmText}>{s.deleteConfirmText}</Text>
+                <View style={styles.confirmButtonRow}>
+                  <Pressable style={styles.confirmCancelButton} onPress={() => setConfirmDeleteId(null)}>
+                    <Text style={styles.confirmCancelText}>{s.cancel}</Text>
+                  </Pressable>
+                  <Pressable style={styles.confirmDestructiveButton} onPress={() => deleteEntry(item.id)}>
+                    <Text style={styles.confirmDestructiveText}>{s.deleteConfirm}</Text>
+                  </Pressable>
+                </View>
+              </View>
+            )}
           </View>
         )}
+        ListFooterComponent={
+          <View style={styles.adminSection}>
+            {deleteError && <Text style={styles.errorText}>{deleteError}</Text>}
+            {isAdmin ? (
+              <Pressable onPress={() => setIsAdmin(false)} hitSlop={8}>
+                <Text style={styles.adminLink}>{s.adminLockLink}</Text>
+              </Pressable>
+            ) : showAdminPrompt ? (
+              <View style={styles.adminPromptBox}>
+                <Text style={styles.adminPromptText}>{s.adminPrompt}</Text>
+                <TextInput
+                  value={adminCodeInput}
+                  onChangeText={(text) => {
+                    setAdminCodeInput(text);
+                    setAdminError(false);
+                  }}
+                  placeholder={s.adminCodePlaceholder}
+                  placeholderTextColor={colors.forestSoft}
+                  secureTextEntry
+                  style={styles.input}
+                  onSubmitEditing={unlockAdmin}
+                />
+                {adminError && <Text style={styles.errorText}>{s.adminWrongCode}</Text>}
+                <Pressable style={styles.submitButton} onPress={unlockAdmin}>
+                  <Text style={styles.submitText}>{s.adminUnlock}</Text>
+                </Pressable>
+              </View>
+            ) : (
+              <Pressable onPress={() => setShowAdminPrompt(true)} hitSlop={8}>
+                <Text style={styles.adminLink}>{s.adminLink}</Text>
+              </Pressable>
+            )}
+          </View>
+        }
       />
     </SafeAreaView>
   );
@@ -193,7 +296,20 @@ function makeStyles(c: ThemeColors) {
     errorText: { fontSize: 12, color: c.coralDark },
     emptyText: { fontSize: 12, color: c.forestSoft, paddingHorizontal: 2 },
     entryCard: { backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.line, padding: 12, marginBottom: 10 },
+    entryRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 8 },
     entryIdea: { fontSize: 14, color: c.forest },
     entryMeta: { fontSize: 10, color: c.forestSoft, marginTop: 4 },
+    deleteIcon: { fontSize: 16 },
+    confirmBox: { backgroundColor: c.surfaceSoft, borderWidth: 1, borderColor: c.line, borderRadius: 12, padding: 10, gap: 8, marginTop: 8 },
+    confirmText: { fontSize: 12, color: c.forest, lineHeight: 17 },
+    confirmButtonRow: { flexDirection: 'row', gap: 8 },
+    confirmCancelButton: { flex: 1, backgroundColor: c.card, borderWidth: 1, borderColor: c.line, borderRadius: 10, paddingVertical: 9, alignItems: 'center' },
+    confirmCancelText: { color: c.forest, fontWeight: '700', fontSize: 13 },
+    confirmDestructiveButton: { flex: 1, backgroundColor: c.coral, borderRadius: 10, paddingVertical: 9, alignItems: 'center' },
+    confirmDestructiveText: { color: '#FFFFFF', fontWeight: '700', fontSize: 13 },
+    adminSection: { marginTop: 16, alignItems: 'center', gap: 8 },
+    adminLink: { fontSize: 11, color: c.forestSoft, textDecorationLine: 'underline' },
+    adminPromptBox: { width: '100%', backgroundColor: c.card, borderWidth: 1, borderColor: c.line, borderRadius: 12, padding: 12, gap: 8 },
+    adminPromptText: { fontSize: 11, color: c.forestSoft, textAlign: 'center' },
   });
 }
