@@ -7,7 +7,7 @@ import Purchases, { CustomerInfo, LOG_LEVEL } from 'react-native-purchases';
  * Zonder deze key blijft premium/aankopen uitgeschakeld — de app werkt dan
  * gewoon door, alleen zonder echte aankoopfunctionaliteit.
  */
-const REVENUECAT_API_KEY_ANDROID = '';
+const REVENUECAT_API_KEY_ANDROID = 'goog_EUKxUeYsehsTVrungKGTngsqfyw';
 const REVENUECAT_API_KEY_IOS = '';
 
 /** Entitlement-identifier zoals aangemaakt in het RevenueCat-dashboard. */
