@@ -26,6 +26,8 @@ const STRINGS = {
     eventText: 'Melding zodra er een nieuw event van start gaat.',
     codesTitle: '🎁 Nieuwe code',
     codesText: 'Melding zodra er een nieuwe gift code is toegevoegd.',
+    backupTitle: '☁️ Cloud save-herinnering',
+    backupText: 'Wekelijkse melding om je voortgang te back-uppen.',
     permissionNote: 'De eerste keer dat je een categorie aanzet, vraagt je toestel om toestemming voor meldingen.',
   },
   en: {
@@ -41,6 +43,8 @@ const STRINGS = {
     eventText: 'Get notified as soon as a new event starts.',
     codesTitle: '🎁 New code',
     codesText: 'Get notified as soon as a new gift code is added.',
+    backupTitle: '☁️ Cloud save reminder',
+    backupText: 'Weekly reminder to back up your progress.',
     permissionNote: 'The first time you turn on a category, your device will ask for notification permission.',
   },
 } as const;
@@ -67,6 +71,7 @@ export default function MeldingenScreen() {
             <ToggleRow titleKey="rainbowMeteorTitle" textKey="rainbowMeteorText" category="rainbow_meteor" s={s} styles={styles} />
             <ToggleRow titleKey="eventTitle" textKey="eventText" category="event" s={s} styles={styles} />
             <ToggleRow titleKey="codesTitle" textKey="codesText" category="codes" s={s} styles={styles} />
+            <ToggleRow titleKey="backupTitle" textKey="backupText" category="cloud_backup_reminder" s={s} styles={styles} />
           </>
         ) : (
           <PremiumLockedView text={s.lockedText} />
@@ -83,8 +88,8 @@ function ToggleRow({
   s,
   styles,
 }: {
-  titleKey: 'rainbowMeteorTitle' | 'eventTitle' | 'codesTitle';
-  textKey: 'rainbowMeteorText' | 'eventText' | 'codesText';
+  titleKey: 'rainbowMeteorTitle' | 'eventTitle' | 'codesTitle' | 'backupTitle';
+  textKey: 'rainbowMeteorText' | 'eventText' | 'codesText' | 'backupText';
   category: NotificationCategory;
   s: (typeof STRINGS)['nl'] | (typeof STRINGS)['en'];
   styles: ReturnType<typeof makeStyles>;

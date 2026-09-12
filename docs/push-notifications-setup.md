@@ -7,10 +7,11 @@ app-code staat volledig klaar. Er zijn twee delen:
 1. **Update-banner** (🔄 nieuwe versie beschikbaar) — werkt automatisch, voor
    iedereen, geen setup nodig. Gebruikt alleen `expo-updates`, geen externe
    dienst.
-2. **Pushmeldingen** (Rainbow/meteorenregen, nieuw event, nieuwe code) —
-   Premium-only, vereist wél setup: een Firebase-project (voor Android-push),
-   een Supabase-tabel om tokens in te bewaren, en een GitHub Actions-secret
-   zodat de automatische melding-workflow kan versturen.
+2. **Pushmeldingen** (Rainbow/meteorenregen, nieuw event, nieuwe code, en een
+   wekelijkse cloud save-herinnering) — Premium-only, vereist wél setup: een
+   Firebase-project (voor Android-push), een Supabase-tabel om tokens in te
+   bewaren, en GitHub Actions-secrets zodat de automatische
+   melding-workflows kunnen versturen.
 
 ## Wat al gedaan is (code-kant)
 
@@ -19,7 +20,8 @@ app-code staat volledig klaar. Er zijn twee delen:
 - `src/hooks/use-notifications.tsx`: per-categorie aan/uit, lokaal onthouden
   én gesynchroniseerd naar Supabase (tabel `push_tokens`, zie hieronder).
 - `src/app/meldingen.tsx`: het instellingenscherm, met de update-banner-uitleg
-  bovenaan (altijd zichtbaar) en de drie Premium-only toggles daaronder.
+  bovenaan (altijd zichtbaar) en de vier Premium-only toggles daaronder
+  (Rainbow/meteorenregen, nieuw event, nieuwe code, cloud save-herinnering).
 - `src/components/heartopia/update-banner.tsx`: checkt bij het openen van de
   app of er een nieuwe OTA-update is, toont een pop-up met een "Nu
   bijwerken"-knop. Zit al in `_layout.tsx`, verder niks voor nodig.
@@ -30,6 +32,13 @@ app-code staat volledig klaar. Er zijn twee delen:
   gaat (= net begonnen), er een nieuw event verschijnt, of er een nieuwe code
   bijkomt. Werkt dus ook als jij zelf het bestand rechtstreeks op GitHub
   bewerkt, niet alleen via een sessie met mij.
+- `scripts/send-backup-reminder.mjs` +
+  `.github/workflows/send-backup-reminder.yml`: verstuurt wekelijks (zondag
+  18:00 UTC = 20:00 zomertijd / 19:00 wintertijd) een herinnering naar alle
+  toestellen met de categorie `cloud_backup_reminder` aan. Draait op een
+  cron-schema, dus onafhankelijk van wijzigingen aan `remote-content.json`.
+  Heeft ook `workflow_dispatch` aan staan — kan dus ook handmatig getest
+  worden via de Actions-tab op GitHub ("Run workflow").
 
 **Vereist een nieuwe build** (native module, zoals AdMob/RevenueCat eerder) —
 puur `eas update` is niet genoeg.

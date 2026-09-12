@@ -21,9 +21,16 @@ interface NotificationsContextValue {
   disableCategory: (category: NotificationCategory) => Promise<void>;
 }
 
+const DEFAULT_ENABLED: Record<NotificationCategory, boolean> = {
+  rainbow_meteor: false,
+  event: false,
+  codes: false,
+  cloud_backup_reminder: false,
+};
+
 const NotificationsContext = createContext<NotificationsContextValue>({
   token: null,
-  enabled: { rainbow_meteor: false, event: false, codes: false },
+  enabled: DEFAULT_ENABLED,
   loading: false,
   enableCategory: async () => {},
   disableCategory: async () => {},
@@ -37,19 +44,16 @@ async function loadEnabled(): Promise<Record<NotificationCategory, boolean>> {
       rainbow_meteor: parsed.rainbow_meteor ?? false,
       event: parsed.event ?? false,
       codes: parsed.codes ?? false,
+      cloud_backup_reminder: parsed.cloud_backup_reminder ?? false,
     };
   } catch {
-    return { rainbow_meteor: false, event: false, codes: false };
+    return DEFAULT_ENABLED;
   }
 }
 
 export function NotificationsProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(null);
-  const [enabled, setEnabled] = useState<Record<NotificationCategory, boolean>>({
-    rainbow_meteor: false,
-    event: false,
-    codes: false,
-  });
+  const [enabled, setEnabled] = useState<Record<NotificationCategory, boolean>>(DEFAULT_ENABLED);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
