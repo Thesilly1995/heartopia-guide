@@ -12,10 +12,13 @@ import { useCatActions } from '@/data/cat-actions';
 import { CatItem, useCats } from '@/data/cats';
 import { useDogActions } from '@/data/dog-actions';
 import { DogItem, useDogs } from '@/data/dogs';
+import { useCatFoods, useDogFoods } from '@/data/pet-foods';
 import { useLanguage } from '@/hooks/use-language';
 
 const BONDS_KEY = 'heartopia:huisdieren:vriendschap';
 const ACTIONS_KEY = 'heartopia:huisdieren:acties';
+const FED_KEY = 'heartopia:huisdieren:voeding';
+const FAVORITE_FOOD_KEY = 'heartopia:huisdieren:favoriet-eten';
 
 const DOGS_NOTE = {
   nl: 'Er zijn 37 hondenrassen in het spel — hier staan de bevestigde rassen. We vullen de lijst aan zodra er meer data bekend is. Let op: het favoriete eten verschilt per individuele hond, niet per ras.',
@@ -35,6 +38,9 @@ const STRINGS = {
     randomTraits: 'Favoriete eten en persoonlijkheid verschillen per individueel dier — ontdek het zelf!',
     friendshipLevel: 'Vriendschapsniveau',
     trainedActions: 'Getrainde Acties',
+    feedingList: 'Voedingslijst',
+    feedingCount: (fed: number, total: number) => `${fed}/${total} gevoerd`,
+    feedingHint: 'Vink af wat je al gevoerd hebt, en tik op het hartje bij het favoriete eten van dit dier.',
   },
   en: {
     title: 'Dog & Cat Moments',
@@ -48,6 +54,9 @@ const STRINGS = {
     randomTraits: 'Favorite food and personality differ per individual animal — discover it yourself!',
     friendshipLevel: 'Friendship level',
     trainedActions: 'Trained Actions',
+    feedingList: 'Feeding List',
+    feedingCount: (fed: number, total: number) => `${fed}/${total} fed`,
+    feedingHint: "Check off what you've already fed, and tap the heart on this animal's favorite food.",
   },
 } as const;
 
@@ -60,23 +69,34 @@ export default function HuisdierenScreen() {
   const CATS = useCats();
   const DOG_ACTIONS = useDogActions();
   const DOGS = useDogs();
+  const CAT_FOODS = useCatFoods();
+  const DOG_FOODS = useDogFoods();
   const [tab, setTab] = useState<'cats' | 'dogs'>('cats');
   const [openName, setOpenName] = useState<string | null>(null);
+  const [foodOpenName, setFoodOpenName] = useState<string | null>(null);
   const [bonds, setBonds] = useState<Record<string, number>>({});
   const [actions, setActions] = useState<Record<string, number>>({});
+  const [fed, setFed] = useState<Record<string, boolean>>({});
+  const [favoriteFood, setFavoriteFood] = useState<Record<string, string>>({});
 
   useEffect(() => {
     (async () => {
       try {
-        const [bondsRaw, actionsRaw] = await Promise.all([
+        const [bondsRaw, actionsRaw, fedRaw, favoriteFoodRaw] = await Promise.all([
           AsyncStorage.getItem(BONDS_KEY),
           AsyncStorage.getItem(ACTIONS_KEY),
+          AsyncStorage.getItem(FED_KEY),
+          AsyncStorage.getItem(FAVORITE_FOOD_KEY),
         ]);
         setBonds(bondsRaw ? JSON.parse(bondsRaw) : {});
         setActions(actionsRaw ? JSON.parse(actionsRaw) : {});
+        setFed(fedRaw ? JSON.parse(fedRaw) : {});
+        setFavoriteFood(favoriteFoodRaw ? JSON.parse(favoriteFoodRaw) : {});
       } catch {
         setBonds({});
         setActions({});
+        setFed({});
+        setFavoriteFood({});
       }
     })();
   }, []);
@@ -104,8 +124,35 @@ export default function HuisdierenScreen() {
     }
   };
 
+  const toggleFed = async (name: string, foodKey: string) => {
+    const mapKey = `${name}::${foodKey}`;
+    const updated = { ...fed, [mapKey]: !fed[mapKey] };
+    setFed(updated);
+    try {
+      await AsyncStorage.setItem(FED_KEY, JSON.stringify(updated));
+    } catch {
+      // opslaan mislukt
+    }
+  };
+
+  const toggleFavoriteFood = async (name: string, foodKey: string) => {
+    const updated = { ...favoriteFood };
+    if (updated[name] === foodKey) {
+      delete updated[name];
+    } else {
+      updated[name] = foodKey;
+    }
+    setFavoriteFood(updated);
+    try {
+      await AsyncStorage.setItem(FAVORITE_FOOD_KEY, JSON.stringify(updated));
+    } catch {
+      // opslaan mislukt
+    }
+  };
+
   const items: (CatItem | DogItem)[] = tab === 'cats' ? CATS : DOGS;
   const petActions = tab === 'cats' ? CAT_ACTIONS : DOG_ACTIONS;
+  const petFoods = tab === 'cats' ? CAT_FOODS : DOG_FOODS;
   const sortedItems = useMemo(
     () =>
       [...items].sort((a, b) => {
@@ -196,6 +243,45 @@ export default function HuisdierenScreen() {
                       );
                     })}
                   </View>
+
+                  <Pressable
+                    style={styles.foodToggleRow}
+                    onPress={() => setFoodOpenName(foodOpenName === pet.name ? null : pet.name)}>
+                    <Text style={styles.actionsLabel}>{s.feedingList}</Text>
+                    <View style={styles.foodToggleRight}>
+                      <Text style={styles.foodCountText}>
+                        {s.feedingCount(petFoods.filter((food) => fed[`${pet.name}::${food.key}`]).length, petFoods.length)}
+                      </Text>
+                      <Text style={styles.chevron}>{foodOpenName === pet.name ? '⌄' : '›'}</Text>
+                    </View>
+                  </Pressable>
+
+                  {foodOpenName === pet.name && (
+                    <View style={styles.foodSection}>
+                      <Text style={styles.mutedText}>{s.feedingHint}</Text>
+                      <View style={styles.actionsList}>
+                        {petFoods.map((food) => {
+                          const isFed = fed[`${pet.name}::${food.key}`] || false;
+                          const isFavorite = favoriteFood[pet.name] === food.key;
+                          return (
+                            <View key={food.key} style={styles.foodRow}>
+                              <Pressable hitSlop={8} onPress={() => toggleFavoriteFood(pet.name, food.key)}>
+                                <Text style={styles.heartIcon}>{isFavorite ? '❤️' : '🤍'}</Text>
+                              </Pressable>
+                              <Pressable style={styles.foodPressableLabel} onPress={() => toggleFed(pet.name, food.key)}>
+                                <View style={[styles.foodCheckbox, isFed && styles.foodCheckboxActive]}>
+                                  {isFed && <Text style={styles.foodCheckmark}>✓</Text>}
+                                </View>
+                                <Text style={[styles.foodLabel, isFed && styles.foodLabelChecked]} numberOfLines={1}>
+                                  {food.name}
+                                </Text>
+                              </Pressable>
+                            </View>
+                          );
+                        })}
+                      </View>
+                    </View>
+                  )}
                 </View>
               )}
             </View>
@@ -230,5 +316,17 @@ function makeStyles(c: ThemeColors) {
     actionsList: { gap: 6 },
     actionRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 8, borderRadius: 8, backgroundColor: c.surfaceSoft, gap: 8 },
     actionLabel: { flex: 1, fontSize: 12, color: c.forestSoft },
+    foodToggleRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 12 },
+    foodToggleRight: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+    foodCountText: { fontSize: 11, fontWeight: '700', color: c.forestSoft },
+    foodSection: { marginTop: 6, gap: 8 },
+    foodRow: { flexDirection: 'row', alignItems: 'center', gap: 8, padding: 8, borderRadius: 8, backgroundColor: c.surfaceSoft },
+    heartIcon: { fontSize: 15 },
+    foodPressableLabel: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 8 },
+    foodCheckbox: { width: 18, height: 18, borderRadius: 5, backgroundColor: c.card, borderWidth: 1, borderColor: c.line, alignItems: 'center', justifyContent: 'center' },
+    foodCheckboxActive: { backgroundColor: c.yellow, borderColor: c.yellow },
+    foodCheckmark: { fontSize: 10, color: '#FFFFFF', fontWeight: '700' },
+    foodLabel: { flex: 1, fontSize: 12, color: c.forest },
+    foodLabelChecked: { color: c.forestSoft, textDecorationLine: 'line-through' },
   });
 }

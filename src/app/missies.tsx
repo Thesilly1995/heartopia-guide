@@ -30,6 +30,7 @@ const DAILY = {
     { key: 'd15', label: 'Zwervende Eik hakken' },
     { key: 'd16', label: 'Fluoriet hakken' },
     { key: 'd17', label: '5 vogelkaarten voor Bailey J' },
+    { key: 'd18', label: 'Zeldzaam hout verzamelen' },
   ],
   en: [
     { key: 'd0', label: 'Daily check-in' },
@@ -46,6 +47,7 @@ const DAILY = {
     { key: 'd15', label: 'Chop the Wandering Oak' },
     { key: 'd16', label: 'Mine the Fluorite' },
     { key: 'd17', label: '5 bird cards for Bailey J' },
+    { key: 'd18', label: 'Collect rare timber' },
   ],
 } as const;
 
