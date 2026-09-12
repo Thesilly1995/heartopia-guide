@@ -5,10 +5,10 @@ import { Platform } from 'react-native';
 
 import { supabase } from '@/constants/supabase';
 
-/** De vier meldingscategorieën die een gebruiker apart aan/uit kan zetten. */
-export type NotificationCategory = 'rainbow_meteor' | 'event' | 'codes';
+/** De meldingscategorieën die een gebruiker apart aan/uit kan zetten. */
+export type NotificationCategory = 'rainbow_meteor' | 'event' | 'codes' | 'cloud_backup_reminder';
 
-const ALL_CATEGORIES: NotificationCategory[] = ['rainbow_meteor', 'event', 'codes'];
+const ALL_CATEGORIES: NotificationCategory[] = ['rainbow_meteor', 'event', 'codes', 'cloud_backup_reminder'];
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({

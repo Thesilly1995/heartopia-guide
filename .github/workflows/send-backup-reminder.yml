@@ -1,0 +1,29 @@
+name: Send cloud save backup reminder
+
+# Verstuurt wekelijks een pushmelding naar toestellen die de categorie
+# `cloud_backup_reminder` hebben aanstaan, als herinnering om de gids-
+# voortgang naar de cloud te back-uppen. Zie docs/push-notifications-setup.md
+# voor de vereiste secrets. Zondag 18:00 UTC (20:00 zomertijd / 19:00
+# wintertijd Nederlandse tijd) — een cron-schema draait altijd op UTC en
+# schuift dus zelf niet mee met de Europese zomer-/wintertijdwissel, maar
+# voor een herinneringsmelding is dat urenverschil niet kritiek.
+on:
+  schedule:
+    - cron: '0 18 * * 0'
+  workflow_dispatch: {}
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Back-up-herinnering versturen
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: node scripts/send-backup-reminder.mjs
