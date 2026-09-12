@@ -118,7 +118,6 @@
     { "num": 3, "x": 14.4, "y": 50.5, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied", "descriptionEn": "Main island, west area" },
     { "num": 4, "x": 6.5, "y": 59, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied", "descriptionEn": "Main island, west area" },
     { "num": 5, "x": 11.2, "y": 60.5, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied", "descriptionEn": "Main island, west area" },
-    { "num": 6, "x": 13, "y": 63.8, "underwater": false, "isDoris": true, "descriptionNl": "Doris (NPC) — shop hier tijdens meteorenregen", "descriptionEn": "Doris (NPC) — shop here during meteor showers" },
     { "num": 7, "x": 13.4, "y": 73.2, "underwater": false, "descriptionNl": "Hoofdeiland, zuidwestelijk gebied", "descriptionEn": "Main island, southwest area" },
     { "num": 8, "x": 17, "y": 75.1, "underwater": false, "descriptionNl": "Hoofdeiland, zuidwestelijk gebied", "descriptionEn": "Main island, southwest area" },
     { "num": 9, "x": 14.6, "y": 82, "underwater": false, "descriptionNl": "Hoofdeiland, zuidwestelijk gebied", "descriptionEn": "Main island, southwest area" },
