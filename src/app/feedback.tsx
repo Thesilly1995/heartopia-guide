@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { DisclaimerBox } from '@/components/heartopia/disclaimer-box';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
@@ -75,6 +75,7 @@ interface FeedbackEntry {
 export default function FeedbackScreen() {
   const colors = useHeartopiaColors();
   const styles = useMemo(() => makeStyles(colors), [colors]);
+  const insets = useSafeAreaInsets();
   const { language } = useLanguage();
   const s = STRINGS[language];
   const [name, setName] = useState('');
@@ -175,7 +176,7 @@ export default function FeedbackScreen() {
       <FlatList
         data={entries}
         keyExtractor={(item) => item.id}
-        contentContainerStyle={styles.listContent}
+        contentContainerStyle={[styles.listContent, { paddingBottom: 16 + insets.bottom }]}
         ListHeaderComponent={
           <View style={{ gap: 10, marginBottom: 10 }}>
             <DisclaimerBox text={s.disclaimer} />
