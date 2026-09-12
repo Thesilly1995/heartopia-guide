@@ -24,3 +24,17 @@ export function currentWeeklyResetKey(): string {
   boundary.setDate(boundary.getDate() - daysSinceSaturday);
   return dateKey(boundary);
 }
+
+/**
+ * Huidige GMT-offset van Nederlandse (Europe/Amsterdam) tijd, bv. "GMT+2" in de zomer
+ * (laatste zondag van maart t/m laatste zondag van oktober) en "GMT+1" in de winter.
+ * Gebruikt Intl i.p.v. handmatige DST-berekening, dus altijd correct — ook in
+ * toekomstige jaren.
+ */
+export function currentAmsterdamGmtOffset(): string {
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'Europe/Amsterdam',
+    timeZoneName: 'shortOffset',
+  }).formatToParts(new Date());
+  return parts.find((p) => p.type === 'timeZoneName')?.value ?? 'GMT+1';
+}

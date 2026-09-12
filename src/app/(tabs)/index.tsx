@@ -13,6 +13,7 @@ import { useRainbowSpots } from '@/data/rainbow-spots';
 import { useWeekForecast } from '@/data/week-forecast';
 import { useLanguage } from '@/hooks/use-language';
 import { usePremium } from '@/hooks/use-premium';
+import { currentAmsterdamGmtOffset } from '@/lib/reset-schedule';
 
 const SECTIONS: {
   label: { nl: string; en: string };
@@ -76,6 +77,7 @@ const STRINGS = {
     premiumRequired: 'Vereist Premium 👑',
     premiumTestOn: 'Test: Premium AAN',
     premiumTestOff: 'Test: Premium UIT',
+    dailyResetNote: (offset: string) => `Daily reset 06:00 ${offset}`,
   },
   en: {
     welcome: 'Welcome to',
@@ -88,6 +90,7 @@ const STRINGS = {
     premiumRequired: 'Requires Premium 👑',
     premiumTestOn: 'Test: Premium ON',
     premiumTestOff: 'Test: Premium OFF',
+    dailyResetNote: (offset: string) => `Daily reset 06:00 ${offset}`,
   },
 } as const;
 
@@ -106,6 +109,7 @@ export default function HomeScreen() {
   const weekForecast = useWeekForecast();
   const missionsProgress = useMissionsProgress();
   const bubblesProgress = useBubblesProgress();
+  const gmtOffset = useMemo(() => currentAmsterdamGmtOffset(), []);
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -211,6 +215,7 @@ export default function HomeScreen() {
             </TouchableOpacity>
           </Link>
         </View>
+        <Text style={styles.dailyResetNote}>{s.dailyResetNote(gmtOffset)}</Text>
 
         {SECTIONS.map((section) => {
           const isPremiumSection = section.label.nl === 'Premium';
@@ -333,6 +338,7 @@ function makeStyles(c: ThemeColors) {
     plotsRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
     plotsRowIcon: { fontSize: 18 },
     plotsRowText: { color: c.forest, fontSize: 13, fontWeight: '700' },
+    dailyResetNote: { color: c.forestSoft, fontSize: 10, marginTop: 4, marginLeft: 4 },
     section: { marginTop: 16, gap: 10 },
     sectionHeaderRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 2 },
     sectionLabel: { color: c.forestSoft, fontSize: 14 },
