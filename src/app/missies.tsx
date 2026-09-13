@@ -57,12 +57,14 @@ const WEEKLY = {
     { key: 'w2', label: 'Roze Bubbels verzamelen' },
     { key: 'w3', label: 'Event-weekdoelen (indien actief)' },
     { key: 'w4', label: 'Codes checken' },
+    { key: 'w5', label: 'Home Evaluation' },
   ],
   en: [
     { key: 'w1', label: 'Complete weekly tasks (D.G. Level 13+)' },
     { key: 'w2', label: 'Collect Pink Bubbles' },
     { key: 'w3', label: 'Event weekly goals (if active)' },
     { key: 'w4', label: 'Check codes' },
+    { key: 'w5', label: 'Home Evaluation' },
   ],
 } as const;
 
