@@ -129,6 +129,33 @@ jobs:
           })();
           '
 
+      - name: Test-insert via de save_push_token RPC
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        run: |
+          node -e '
+          const ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRodHRkYmJueHluYXF5Y2psbHRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxOTkyNDksImV4cCI6MjEwMTc3NTI0OX0.8pHh-8lOXt7J4_SSg5DE6L_Fcrp3ptZCyBlyoCcAYiE";
+          (async () => {
+            const testToken = "debug-test-token-rpc-" + Date.now();
+            const res = await fetch(`${process.env.SUPABASE_URL}/rest/v1/rpc/save_push_token`, {
+              method: "POST",
+              headers: { apikey: ANON_KEY, Authorization: `Bearer ${ANON_KEY}`, "Content-Type": "application/json" },
+              body: JSON.stringify({ p_token: testToken, p_platform: "debug", p_categories: ["codes"] }),
+            });
+            const body = await res.text();
+            console.log(`RPC-insert-status: ${res.status}`);
+            console.log(`RPC-insert-body: ${body}`);
+            if (res.ok) {
+              const del = await fetch(`${process.env.SUPABASE_URL}/rest/v1/rpc/delete_push_token`, {
+                method: "POST",
+                headers: { apikey: ANON_KEY, Authorization: `Bearer ${ANON_KEY}`, "Content-Type": "application/json" },
+                body: JSON.stringify({ p_token: testToken }),
+              });
+              console.log(`RPC-cleanup-status: ${del.status}`);
+            }
+          })();
+          '
+
       - name: Welke databaserol gebruikt de anon-key echt?
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
