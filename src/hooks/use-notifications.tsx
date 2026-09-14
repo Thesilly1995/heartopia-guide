@@ -16,6 +16,8 @@ interface NotificationsContextValue {
   token: string | null;
   enabled: Record<NotificationCategory, boolean>;
   loading: boolean;
+  /** Laatste onverwachte fout bij registreren/opslaan (niet bij een normale weigering). */
+  error: string | null;
   /** Vraagt permissie (indien nodig) en zet de gegeven categorie aan. */
   enableCategory: (category: NotificationCategory) => Promise<void>;
   disableCategory: (category: NotificationCategory) => Promise<void>;
@@ -32,6 +34,7 @@ const NotificationsContext = createContext<NotificationsContextValue>({
   token: null,
   enabled: DEFAULT_ENABLED,
   loading: false,
+  error: null,
   enableCategory: async () => {},
   disableCategory: async () => {},
 });
@@ -55,6 +58,7 @@ export function NotificationsProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(null);
   const [enabled, setEnabled] = useState<Record<NotificationCategory, boolean>>(DEFAULT_ENABLED);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -65,10 +69,12 @@ export function NotificationsProvider({ children }: { children: ReactNode }) {
       // (kan wijzigen na een herinstallatie/nieuw toestel).
       const active = ALL_CATEGORIES.filter((category) => loaded[category]);
       if (active.length > 0) {
-        const activeToken = await registerForPushNotificationsAsync();
-        if (activeToken) {
-          setToken(activeToken);
-          await savePushToken(activeToken, active);
+        const registered = await registerForPushNotificationsAsync();
+        if (registered.error) setError(registered.error);
+        if (registered.token) {
+          setToken(registered.token);
+          const saved = await savePushToken(registered.token, active);
+          if (saved.error) setError(saved.error);
         }
       }
     })();
@@ -80,17 +86,21 @@ export function NotificationsProvider({ children }: { children: ReactNode }) {
     if (active.length === 0) {
       await deletePushToken(nextToken);
     } else {
-      await savePushToken(nextToken, active);
+      const saved = await savePushToken(nextToken, active);
+      if (saved.error) setError(saved.error);
     }
   }, []);
 
   const enableCategory = useCallback(
     async (category: NotificationCategory) => {
       setLoading(true);
+      setError(null);
       try {
         let activeToken = token;
         if (!activeToken) {
-          activeToken = await registerForPushNotificationsAsync();
+          const registered = await registerForPushNotificationsAsync();
+          if (registered.error) setError(registered.error);
+          activeToken = registered.token;
           setToken(activeToken);
         }
         const nextEnabled = { ...enabled, [category]: true };
@@ -120,7 +130,7 @@ export function NotificationsProvider({ children }: { children: ReactNode }) {
   );
 
   return (
-    <NotificationsContext.Provider value={{ token, enabled, loading, enableCategory, disableCategory }}>
+    <NotificationsContext.Provider value={{ token, enabled, loading, error, enableCategory, disableCategory }}>
       {children}
     </NotificationsContext.Provider>
   );

@@ -29,6 +29,7 @@ const STRINGS = {
     backupTitle: '☁️ Cloud save-herinnering',
     backupText: 'Wekelijkse melding om je voortgang te back-uppen.',
     permissionNote: 'De eerste keer dat je een categorie aanzet, vraagt je toestel om toestemming voor meldingen.',
+    errorPrefix: 'Registreren mislukt:',
   },
   en: {
     title: 'Notifications',
@@ -46,6 +47,7 @@ const STRINGS = {
     backupTitle: '☁️ Cloud save reminder',
     backupText: 'Weekly reminder to back up your progress.',
     permissionNote: 'The first time you turn on a category, your device will ask for notification permission.',
+    errorPrefix: 'Registration failed:',
   },
 } as const;
 
@@ -55,6 +57,7 @@ export default function MeldingenScreen() {
   const { language } = useLanguage();
   const s = STRINGS[language];
   const { premium } = usePremium();
+  const { error } = useNotifications();
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -68,6 +71,13 @@ export default function MeldingenScreen() {
         {premium ? (
           <>
             <DisclaimerBox text={s.permissionNote} />
+            {error && (
+              <View style={styles.errorCard}>
+                <Text style={styles.errorText}>
+                  {s.errorPrefix} {error}
+                </Text>
+              </View>
+            )}
             <ToggleRow titleKey="rainbowMeteorTitle" textKey="rainbowMeteorText" category="rainbow_meteor" s={s} styles={styles} />
             <ToggleRow titleKey="eventTitle" textKey="eventText" category="event" s={s} styles={styles} />
             <ToggleRow titleKey="codesTitle" textKey="codesText" category="codes" s={s} styles={styles} />
@@ -126,5 +136,7 @@ function makeStyles(c: ThemeColors) {
     cardText: { fontSize: 12, color: c.forestSoft, lineHeight: 17 },
     toggleRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
     toggleText: { flex: 1, gap: 4 },
+    errorCard: { backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.coralDark, padding: 14 },
+    errorText: { fontSize: 12, color: c.coralDark, lineHeight: 17 },
   });
 }

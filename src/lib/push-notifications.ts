@@ -27,14 +27,20 @@ async function ensureAndroidChannel() {
   });
 }
 
+export interface PushRegistrationResult {
+  token: string | null;
+  /** Alleen gezet bij een onverwachte fout (niet bij een normale weigering/web/simulator). */
+  error: string | null;
+}
+
 /**
  * Vraagt notificatie-toestemming (indien nog niet gevraagd/geweigerd) en haalt
- * een Expo push token op. Geeft `null` terug op web, in een simulator, of als
+ * een Expo push token op. `token` is `null` op web, in een simulator, of als
  * toestemming geweigerd is — de aanroepende code moet daarmee om kunnen gaan.
  */
-export async function registerForPushNotificationsAsync(): Promise<string | null> {
-  if (Platform.OS === 'web') return null;
-  if (!Device.isDevice) return null;
+export async function registerForPushNotificationsAsync(): Promise<PushRegistrationResult> {
+  if (Platform.OS === 'web') return { token: null, error: null };
+  if (!Device.isDevice) return { token: null, error: null };
 
   await ensureAndroidChannel();
 
@@ -44,16 +50,16 @@ export async function registerForPushNotificationsAsync(): Promise<string | null
     const requested = await Notifications.requestPermissionsAsync();
     status = requested.status;
   }
-  if (status !== 'granted') return null;
+  if (status !== 'granted') return { token: null, error: null };
 
   const projectId = Constants.expoConfig?.extra?.eas?.projectId;
-  if (!projectId) return null;
+  if (!projectId) return { token: null, error: 'Geen EAS project-ID gevonden in app-config.' };
 
   try {
     const { data: token } = await Notifications.getExpoPushTokenAsync({ projectId });
-    return token;
-  } catch {
-    return null;
+    return { token, error: null };
+  } catch (err) {
+    return { token: null, error: err instanceof Error ? err.message : String(err) };
   }
 }
 
@@ -63,7 +69,7 @@ export async function registerForPushNotificationsAsync(): Promise<string | null
  * zodat een toestel dat opnieuw registreert gewoon zijn rij bijwerkt i.p.v.
  * een dubbele aan te maken.
  */
-export async function savePushToken(token: string, categories: NotificationCategory[]): Promise<boolean> {
+export async function savePushToken(token: string, categories: NotificationCategory[]): Promise<{ ok: boolean; error: string | null }> {
   const { error } = await supabase.from('push_tokens').upsert(
     {
       token,
@@ -73,7 +79,7 @@ export async function savePushToken(token: string, categories: NotificationCateg
     },
     { onConflict: 'token' }
   );
-  return !error;
+  return { ok: !error, error: error?.message ?? null };
 }
 
 /** Verwijdert het token uit Supabase (bv. als de gebruiker alle categorieën uitzet). */
