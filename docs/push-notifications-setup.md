@@ -83,26 +83,28 @@ create table push_tokens (
 alter table push_tokens enable row level security;
 
 -- Toestellen mogen hun eigen token aanmaken/bijwerken/verwijderen, maar niet
--- de tokens van andere toestellen lezen (geen account-systeem, dus dit is
--- puur schrijf-toegang voor de anon-key vanuit de app).
-create policy "anon kan eigen token schrijven"
+-- de tokens van andere toestellen lezen. Geldt voor zowel `anon` (geen
+-- Cloud Save-account) als `authenticated` (wél ingelogd voor Cloud Save) —
+-- pushmeldingen staan los van het account-systeem, dus dezelfde regels
+-- moeten in beide gevallen gelden.
+create policy "toestel kan eigen token schrijven"
   on push_tokens for insert
-  to anon
+  to anon, authenticated
   with check (true);
 
-create policy "anon kan eigen token bijwerken"
+create policy "toestel kan eigen token bijwerken"
   on push_tokens for update
-  to anon
+  to anon, authenticated
   using (true);
 
-create policy "anon kan eigen token verwijderen"
+create policy "toestel kan eigen token verwijderen"
   on push_tokens for delete
-  to anon
+  to anon, authenticated
   using (true);
 ```
 
-(Geen `select`-policy voor `anon` — lezen gebeurt alleen server-side door de
-GitHub Action, met de service-role-key die RLS omzeilt.)
+(Geen `select`-policy — lezen gebeurt alleen server-side door de GitHub
+Action, met de service-role-key die RLS omzeilt.)
 
 ### 3. GitHub Actions-secrets instellen
 
