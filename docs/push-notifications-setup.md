@@ -106,6 +106,53 @@ create policy "toestel kan eigen token verwijderen"
 (Geen `select`-policy — lezen gebeurt alleen server-side door de GitHub
 Action, met de service-role-key die RLS omzeilt.)
 
+**Bekend probleem (14 sep 2026)**: een directe `upsert`/`delete` op `push_tokens`
+als `anon`/`authenticated` gaf onverklaarbaar `"new row violates row-level
+security policy"`, ondanks correcte policies (uitgebreid gecheckt: policies,
+grants, RLS-status, actieve rol via een `debug_whoami()`-RPC, zelfs een
+`set role anon; insert ...` rechtstreeks in de SQL Editor werkte gewoon —
+het zat dus niet in Postgres zelf, maar ergens in de Supabase API-laag,
+ook niet opgelost door het project te herstarten). **Oplossing**: de app
+schrijft niet meer rechtstreeks in de tabel, maar via twee RPC-functies
+(`security definer`, omzeilt het probleem volledig):
+
+```sql
+create or replace function public.save_push_token(p_token text, p_platform text, p_categories text[])
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  insert into push_tokens (token, platform, categories, updated_at)
+  values (p_token, p_platform, p_categories, now())
+  on conflict (token) do update
+    set platform = excluded.platform,
+        categories = excluded.categories,
+        updated_at = excluded.updated_at;
+end;
+$$;
+
+grant execute on function public.save_push_token(text, text, text[]) to anon, authenticated;
+
+create or replace function public.delete_push_token(p_token text)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  delete from push_tokens where token = p_token;
+end;
+$$;
+
+grant execute on function public.delete_push_token(text) to anon, authenticated;
+```
+
+Zie `src/lib/push-notifications.ts` (`savePushToken`/`deletePushToken`,
+gebruiken `supabase.rpc(...)`). De tabel-policies hierboven blijven
+onschadelijk staan (niet meer gebruikt door de app, maar ook geen kwaad).
+
 ### 3. GitHub Actions-secrets instellen
 
 Repo → **Settings → Secrets and variables → Actions → New repository
