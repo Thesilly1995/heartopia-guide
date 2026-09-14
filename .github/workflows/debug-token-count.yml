@@ -98,6 +98,37 @@ jobs:
           })();
           '
 
+      - name: Test-insert met de nieuwe publishable key
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        run: |
+          node -e '
+          const PUBLISHABLE_KEY = "sb_publishable_UcQ-Ro09BDd5J1bxsTkBeg_Df5ft_Aq";
+          (async () => {
+            const testToken = "debug-test-token-c-" + Date.now();
+            const res = await fetch(`${process.env.SUPABASE_URL}/rest/v1/push_tokens?on_conflict=token`, {
+              method: "POST",
+              headers: {
+                apikey: PUBLISHABLE_KEY,
+                Authorization: `Bearer ${PUBLISHABLE_KEY}`,
+                "Content-Type": "application/json",
+                Prefer: "resolution=merge-duplicates,return=representation",
+              },
+              body: JSON.stringify([{ token: testToken, platform: "debug", categories: ["codes"], updated_at: new Date().toISOString() }]),
+            });
+            const body = await res.text();
+            console.log(`Insert3-status: ${res.status}`);
+            console.log(`Insert3-body: ${body}`);
+            if (res.ok) {
+              const del = await fetch(`${process.env.SUPABASE_URL}/rest/v1/push_tokens?token=eq.${testToken}`, {
+                method: "DELETE",
+                headers: { apikey: PUBLISHABLE_KEY, Authorization: `Bearer ${PUBLISHABLE_KEY}` },
+              });
+              console.log(`Cleanup3 delete-status: ${del.status}`);
+            }
+          })();
+          '
+
       - name: Welke databaserol gebruikt de anon-key echt?
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
