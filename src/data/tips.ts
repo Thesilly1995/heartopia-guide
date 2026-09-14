@@ -98,13 +98,6 @@ const TIP_CATEGORIES_RAW: TipCategoryRaw[] = [
         bodyEn: "Don't wait until you're fully done — save your current layout as a blueprint as soon as that feature unlocks, so you can always go back if a new design doesn't work out.",
         emoji: '📐',
       },
-      {
-        titleNl: 'Zeldzame blueprints zijn schaars',
-        titleEn: 'Rare blueprints are scarce',
-        bodyNl: 'Blueprints uit Prize Bubbles-spawnpunten zijn beperkt beschikbaar en andere spelers kunnen ze ook pakken — wees er snel bij als je een zeldzame ziet liggen, want die is zo weg.',
-        bodyEn: "Blueprints from Prize Bubble spawn points are limited and other players can grab them too — move fast when you spot a rare one, it won't stay there long.",
-        emoji: '💎',
-      },
     ],
   },
   {
