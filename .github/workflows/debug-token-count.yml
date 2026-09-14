@@ -1,0 +1,37 @@
+name: Debug token count
+
+# Tijdelijk diagnose-workflow om te checken of pushmeldings-tokens correct
+# in Supabase belanden. Handmatig te draaien via de Actions-tab. Wordt na
+# gebruik weer verwijderd — geen onderdeel van de reguliere meldingen-flow.
+on:
+  workflow_dispatch: {}
+
+jobs:
+  count:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Tokens per categorie tellen
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          node -e '
+          const categories = ["rainbow_meteor", "event", "codes", "cloud_backup_reminder"];
+          (async () => {
+            const totalRes = await fetch(`${process.env.SUPABASE_URL}/rest/v1/push_tokens?select=token,platform,categories,updated_at`, {
+              headers: { apikey: process.env.SUPABASE_SERVICE_ROLE_KEY, Authorization: `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}` },
+            });
+            const rows = await totalRes.json();
+            console.log(`Totaal aantal geregistreerde tokens: ${rows.length}`);
+            for (const row of rows) {
+              console.log(`- platform=${row.platform} categories=${JSON.stringify(row.categories)} updated_at=${row.updated_at}`);
+            }
+            for (const cat of categories) {
+              const res = await fetch(`${process.env.SUPABASE_URL}/rest/v1/push_tokens?select=token&categories=cs.{${cat}}`, {
+                headers: { apikey: process.env.SUPABASE_SERVICE_ROLE_KEY, Authorization: `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}` },
+              });
+              const catRows = await res.json();
+              console.log(`${cat}: ${catRows.length} toestel(len)`);
+            }
+          })();
+          '
