@@ -67,6 +67,37 @@ jobs:
           })();
           '
 
+      - name: Test-insert exact zoals de app (met on_conflict=token)
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        run: |
+          node -e '
+          const ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRodHRkYmJueHluYXF5Y2psbHRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxOTkyNDksImV4cCI6MjEwMTc3NTI0OX0.8pHh-8lOXt7J4_SSg5DE6L_Fcrp3ptZCyBlyoCcAYiE";
+          (async () => {
+            const testToken = "debug-test-token-b-" + Date.now();
+            const res = await fetch(`${process.env.SUPABASE_URL}/rest/v1/push_tokens?on_conflict=token`, {
+              method: "POST",
+              headers: {
+                apikey: ANON_KEY,
+                Authorization: `Bearer ${ANON_KEY}`,
+                "Content-Type": "application/json",
+                Prefer: "resolution=merge-duplicates,return=representation",
+              },
+              body: JSON.stringify([{ token: testToken, platform: "debug", categories: ["codes"], updated_at: new Date().toISOString() }]),
+            });
+            const body = await res.text();
+            console.log(`Insert2-status: ${res.status}`);
+            console.log(`Insert2-body: ${body}`);
+            if (res.ok) {
+              const del = await fetch(`${process.env.SUPABASE_URL}/rest/v1/push_tokens?token=eq.${testToken}`, {
+                method: "DELETE",
+                headers: { apikey: ANON_KEY, Authorization: `Bearer ${ANON_KEY}` },
+              });
+              console.log(`Cleanup2 delete-status: ${del.status}`);
+            }
+          })();
+          '
+
       - name: Welke databaserol gebruikt de anon-key echt?
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
