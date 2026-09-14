@@ -64,27 +64,25 @@ export async function registerForPushNotificationsAsync(): Promise<PushRegistrat
 }
 
 /**
- * Slaat het push-token + welke categorieën aanstaan op in Supabase (tabel
- * `push_tokens`, zie docs/push-notifications-setup.md). `upsert` op `token`
- * zodat een toestel dat opnieuw registreert gewoon zijn rij bijwerkt i.p.v.
- * een dubbele aan te maken.
+ * Slaat het push-token + welke categorieën aanstaan op in Supabase, via de
+ * `save_push_token` RPC (tabel `push_tokens`, zie
+ * docs/push-notifications-setup.md). Gebruikt een RPC i.p.v. een directe
+ * upsert op de tabel omdat een directe schrijfactie als anon/authenticated
+ * onverklaarbaar op een RLS-fout stuitte ondanks correcte policies — de RPC
+ * (security definer) omzeilt dat.
  */
 export async function savePushToken(token: string, categories: NotificationCategory[]): Promise<{ ok: boolean; error: string | null }> {
-  const { error } = await supabase.from('push_tokens').upsert(
-    {
-      token,
-      platform: Platform.OS,
-      categories,
-      updated_at: new Date().toISOString(),
-    },
-    { onConflict: 'token' }
-  );
+  const { error } = await supabase.rpc('save_push_token', {
+    p_token: token,
+    p_platform: Platform.OS,
+    p_categories: categories,
+  });
   return { ok: !error, error: error?.message ?? null };
 }
 
 /** Verwijdert het token uit Supabase (bv. als de gebruiker alle categorieën uitzet). */
 export async function deletePushToken(token: string): Promise<boolean> {
-  const { error } = await supabase.from('push_tokens').delete().eq('token', token);
+  const { error } = await supabase.rpc('delete_push_token', { p_token: token });
   return !error;
 }
 
