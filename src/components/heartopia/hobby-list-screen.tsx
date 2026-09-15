@@ -60,6 +60,8 @@ const STRINGS = {
     allWeather: 'Alle weer',
     allTime: 'Alle tijdstippen',
     allSpots: 'Alle plekken',
+    showSpots: (n: number) => `📍 Filter op plek (${n})`,
+    hideSpots: '▲ Inklappen',
     spot: 'Plek',
     time: 'Tijdstip',
     weather: 'Weer',
@@ -84,6 +86,8 @@ const STRINGS = {
     allWeather: 'All weather',
     allTime: 'All times',
     allSpots: 'All spots',
+    showSpots: (n: number) => `📍 Filter by spot (${n})`,
+    hideSpots: '▲ Collapse',
     spot: 'Spot',
     time: 'Time',
     weather: 'Weather',
@@ -130,6 +134,7 @@ export function HobbyListScreen({
   const [weatherFilter, setWeatherFilter] = useState<string>('Alle');
   const [timeFilter, setTimeFilter] = useState<string>('Alle');
   const [spotFilter, setSpotFilter] = useState<string>('Alle');
+  const [spotExpanded, setSpotExpanded] = useState(false);
   const [progressFilter, setProgressFilter] = useState<ProgressFilter>('all');
   const [activeSub, setActiveSub] = useState<string>(subTabs?.[0]?.key ?? '');
   const [stars, setStars] = useState<Record<string, number>>({});
@@ -139,6 +144,7 @@ export function HobbyListScreen({
     setWeatherFilter('Alle');
     setTimeFilter('Alle');
     setSpotFilter('Alle');
+    setSpotExpanded(false);
   }, [language]);
 
   const activeTab = subTabs?.find((tab) => tab.key === activeSub);
@@ -342,7 +348,17 @@ export function HobbyListScreen({
           </View>
         )}
 
-        {hasSpot && (
+        {hasSpot && !spotExpanded && (
+          <View style={styles.chipRow}>
+            <Pressable onPress={() => setSpotExpanded(true)} style={[styles.chip, spotFilter !== 'Alle' && styles.chipActive]}>
+              <Text style={[styles.chipText, spotFilter !== 'Alle' && styles.chipTextActive]}>
+                {spotFilter === 'Alle' ? s.showSpots(SPOT_FILTERS.length - 1) : spotFilter}
+              </Text>
+            </Pressable>
+          </View>
+        )}
+
+        {hasSpot && spotExpanded && (
           <View style={styles.chipRow}>
             {SPOT_FILTERS.map((spot) => {
               const active = spotFilter === spot;
@@ -353,6 +369,9 @@ export function HobbyListScreen({
                 </Pressable>
               );
             })}
+            <Pressable onPress={() => setSpotExpanded(false)} style={styles.chip}>
+              <Text style={styles.chipText}>{s.hideSpots}</Text>
+            </Pressable>
           </View>
         )}
       </LinearGradient>
