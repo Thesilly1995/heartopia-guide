@@ -59,6 +59,7 @@ const STRINGS = {
     all: 'Alle',
     allWeather: 'Alle weer',
     allTime: 'Alle tijdstippen',
+    allSpots: 'Alle plekken',
     spot: 'Plek',
     time: 'Tijdstip',
     weather: 'Weer',
@@ -82,6 +83,7 @@ const STRINGS = {
     all: 'All',
     allWeather: 'All weather',
     allTime: 'All times',
+    allSpots: 'All spots',
     spot: 'Spot',
     time: 'Time',
     weather: 'Weather',
@@ -127,6 +129,7 @@ export function HobbyListScreen({
   const [maxLevel, setMaxLevel] = useState<number>(99);
   const [weatherFilter, setWeatherFilter] = useState<string>('Alle');
   const [timeFilter, setTimeFilter] = useState<string>('Alle');
+  const [spotFilter, setSpotFilter] = useState<string>('Alle');
   const [progressFilter, setProgressFilter] = useState<ProgressFilter>('all');
   const [activeSub, setActiveSub] = useState<string>(subTabs?.[0]?.key ?? '');
   const [stars, setStars] = useState<Record<string, number>>({});
@@ -135,12 +138,19 @@ export function HobbyListScreen({
   useEffect(() => {
     setWeatherFilter('Alle');
     setTimeFilter('Alle');
+    setSpotFilter('Alle');
   }, [language]);
 
   const activeTab = subTabs?.find((tab) => tab.key === activeSub);
   const activeItems = subTabs ? (activeTab?.items ?? []) : (items ?? []);
   const hasWeather = activeItems.length > 0 && activeItems[0].weather !== undefined;
   const hasTime = activeItems.length > 0 && activeItems[0].time !== undefined;
+  const hasSpot = activeItems.length > 0 && activeItems[0].spot !== undefined;
+  const SPOT_FILTERS = useMemo(() => {
+    if (!hasSpot) return ['Alle'];
+    const unique = Array.from(new Set(activeItems.map((item) => item.spot).filter((spot): spot is string => !!spot)));
+    return ['Alle', ...unique.sort((a, b) => a.localeCompare(b))];
+  }, [activeItems, hasSpot]);
   const activeStorageKey = subTabs ? `${storageKey}:${activeSub}` : storageKey;
 
   const starsStorageKey = `heartopia:${activeStorageKey}:stars`;
@@ -189,6 +199,10 @@ export function HobbyListScreen({
       .filter((item) => item.name.toLowerCase().includes(query.toLowerCase()))
       .filter((item) => maxLevel === 99 || item.level >= maxLevel);
 
+    if (spotFilter !== 'Alle') {
+      filtered = filtered.filter((item) => item.spot === spotFilter);
+    }
+
     if (progressFilter === 'undiscovered') {
       filtered = filtered.filter((item) => (stars[item.name] ?? 0) === 0);
     } else if (progressFilter === 'notFiveStar') {
@@ -213,7 +227,7 @@ export function HobbyListScreen({
       const bScore = b.weather?.includes(weatherFilter) ? 1 : 0;
       return bScore - aScore;
     });
-  }, [activeItems, query, maxLevel, weatherFilter, timeFilter, progressFilter, stars, mastery]);
+  }, [activeItems, query, maxLevel, weatherFilter, timeFilter, spotFilter, progressFilter, stars, mastery]);
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -321,6 +335,20 @@ export function HobbyListScreen({
                   : `${t === TIME_WORDS[language][0] ? '🌙' : t === TIME_WORDS[language][1] ? '🌅' : t === TIME_WORDS[language][2] ? '☀️' : '🌆'} ${t}`;
               return (
                 <Pressable key={t} onPress={() => setTimeFilter(t)} style={[styles.chip, active && styles.chipActive]}>
+                  <Text style={[styles.chipText, active && styles.chipTextActive]}>{label}</Text>
+                </Pressable>
+              );
+            })}
+          </View>
+        )}
+
+        {hasSpot && (
+          <View style={styles.chipRow}>
+            {SPOT_FILTERS.map((spot) => {
+              const active = spotFilter === spot;
+              const label = spot === 'Alle' ? s.allSpots : spot;
+              return (
+                <Pressable key={spot} onPress={() => setSpotFilter(spot)} style={[styles.chip, active && styles.chipActive]}>
                   <Text style={[styles.chipText, active && styles.chipTextActive]}>{label}</Text>
                 </Pressable>
               );
