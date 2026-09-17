@@ -28,14 +28,14 @@ export function useDailyPlots(): DailyPlots {
     const calendarEntry = payload?.dailyPlotsCalendar?.find((entry) => entry.date === today);
     if (calendarEntry) {
       return {
-        oakPlot: language === 'en' ? calendarEntry.oakPlotEn : calendarEntry.oakPlotNl,
-        fluoritePlot: language === 'en' ? calendarEntry.fluoritePlotEn : calendarEntry.fluoritePlotNl,
+        oakPlot: language === 'en' || language === 'es' || language === 'pt' ? calendarEntry.oakPlotEn : calendarEntry.oakPlotNl,
+        fluoritePlot: language === 'en' || language === 'es' || language === 'pt' ? calendarEntry.fluoritePlotEn : calendarEntry.fluoritePlotNl,
       };
     }
     if (!payload?.dailyPlots) return { oakPlot: null, fluoritePlot: null };
     return {
-      oakPlot: language === 'en' ? payload.dailyPlots.oakPlotEn : payload.dailyPlots.oakPlotNl,
-      fluoritePlot: language === 'en' ? payload.dailyPlots.fluoritePlotEn : payload.dailyPlots.fluoritePlotNl,
+      oakPlot: language === 'en' || language === 'es' || language === 'pt' ? payload.dailyPlots.oakPlotEn : payload.dailyPlots.oakPlotNl,
+      fluoritePlot: language === 'en' || language === 'es' || language === 'pt' ? payload.dailyPlots.fluoritePlotEn : payload.dailyPlots.fluoritePlotNl,
     };
   }, [payload, language, server.offsetHours]);
 }

@@ -33,6 +33,28 @@ const STRINGS = {
     activeBadge: '👑 Premium active',
     disablePremium: 'Turn off test premium',
   },
+  es: {
+    title: 'Panel de progreso',
+    subtitle: 'Progreso de mastery en todos tus catálogos',
+    totalLabel: 'Progreso total',
+    countLabel: (m: number, t: number) => `${m} / ${t} mastery conseguidos`,
+    starsLabel: (n: number, max: number) => `⭐ ${n} / ${max} estrellas`,
+    lockedText:
+      'El panel de progreso muestra de un vistazo cuánto mastery has conseguido en cada catálogo (Pesca, Cocina, Jardinería, Insectos, Aves, Escultura, Ocean Cleanup).',
+    activeBadge: '👑 Premium activo',
+    disablePremium: 'Desactivar premium de prueba',
+  },
+  pt: {
+    title: 'Painel de progresso',
+    subtitle: 'Progresso de mastery em todos os seus catálogos',
+    totalLabel: 'Progresso total',
+    countLabel: (m: number, t: number) => `${m} / ${t} mastery alcançados`,
+    starsLabel: (n: number, max: number) => `⭐ ${n} / ${max} estrelas`,
+    lockedText:
+      'O painel de progresso mostra rapidamente quanto mastery você alcançou em cada catálogo (Pesca, Culinária, Jardinagem, Insetos, Pássaros, Escultura, Ocean Cleanup).',
+    activeBadge: '👑 Premium ativo',
+    disablePremium: 'Desativar premium de teste',
+  },
 } as const;
 
 type DashboardStrings = (typeof STRINGS)[keyof typeof STRINGS];

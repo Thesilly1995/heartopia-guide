@@ -49,6 +49,44 @@ const STRINGS = {
     permissionNote: 'The first time you turn on a category, your device will ask for notification permission.',
     errorPrefix: 'Registration failed:',
   },
+  es: {
+    title: 'Notificaciones',
+    subtitle: 'Elige sobre qué quieres recibir una notificación push',
+    updateTitle: '🔄 Nueva versión disponible',
+    updateText:
+      'Funciona automáticamente y para todos, no requiere ajuste: en cuanto abras la app y haya una nueva actualización, aparecerá una ventana emergente con un botón para actualizar al instante.',
+    lockedText:
+      'Las notificaciones push para Rainbow/Lluvia de meteoros, nuevos eventos y nuevos códigos son una función Premium.',
+    rainbowMeteorTitle: '🌈☄️ Rainbow y Lluvia de meteoros',
+    rainbowMeteorText: 'Notificación en cuanto empiece un momento Rainbow o una lluvia de meteoros.',
+    eventTitle: '🎉 Nuevo evento',
+    eventText: 'Notificación en cuanto comience un nuevo evento.',
+    codesTitle: '🎁 Nuevo código',
+    codesText: 'Notificación en cuanto se añada un nuevo código de regalo.',
+    backupTitle: '☁️ Recordatorio de guardado en la nube',
+    backupText: 'Recordatorio semanal para hacer una copia de seguridad de tu progreso.',
+    permissionNote: 'La primera vez que actives una categoría, tu dispositivo te pedirá permiso para las notificaciones.',
+    errorPrefix: 'Error al registrar:',
+  },
+  pt: {
+    title: 'Notificações',
+    subtitle: 'Escolha sobre o que você quer receber uma notificação push',
+    updateTitle: '🔄 Nova versão disponível',
+    updateText:
+      'Funciona automaticamente para todos, sem precisar configurar: assim que você abrir o app e houver uma atualização nova, aparece um pop-up com um botão para atualizar na hora.',
+    lockedText:
+      'Notificações push para Rainbow/Chuva de Meteoros, novos eventos e novos códigos são um recurso Premium.',
+    rainbowMeteorTitle: '🌈☄️ Rainbow e Chuva de Meteoros',
+    rainbowMeteorText: 'Receba um aviso assim que um momento Rainbow ou uma chuva de meteoros começar.',
+    eventTitle: '🎉 Novo evento',
+    eventText: 'Receba um aviso assim que um novo evento começar.',
+    codesTitle: '🎁 Novo código',
+    codesText: 'Receba um aviso assim que um novo código de presente for adicionado.',
+    backupTitle: '☁️ Lembrete de save na nuvem',
+    backupText: 'Lembrete semanal para fazer backup do seu progresso.',
+    permissionNote: 'Na primeira vez que você ativar uma categoria, seu aparelho vai pedir permissão para notificações.',
+    errorPrefix: 'Falha no registro:',
+  },
 } as const;
 
 export default function MeldingenScreen() {
@@ -101,7 +139,7 @@ function ToggleRow({
   titleKey: 'rainbowMeteorTitle' | 'eventTitle' | 'codesTitle' | 'backupTitle';
   textKey: 'rainbowMeteorText' | 'eventText' | 'codesText' | 'backupText';
   category: NotificationCategory;
-  s: (typeof STRINGS)['nl'] | (typeof STRINGS)['en'];
+  s: (typeof STRINGS)[keyof typeof STRINGS];
   styles: ReturnType<typeof makeStyles>;
 }) {
   const colors = useHeartopiaColors();

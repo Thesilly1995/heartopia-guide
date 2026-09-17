@@ -18,6 +18,20 @@ const STRINGS = {
     disclaimer:
       '110 puzzles and 40 books from the "Other Collections" tab of the Collection Book, based on own screenshots. Tap an item to mark it as collected.',
   },
+  es: {
+    title: 'Puzzles y Libros',
+    puzzlesLabel: 'Puzzles',
+    booksLabel: 'Libros',
+    disclaimer:
+      '110 puzzles y 40 libros de la pestaña "Other Collections" del Collection Book, basados en capturas propias. Toca un elemento para marcarlo como conseguido.',
+  },
+  pt: {
+    title: 'Quebra-cabeças e Livros',
+    puzzlesLabel: 'Quebra-cabeças',
+    booksLabel: 'Livros',
+    disclaimer:
+      '110 quebra-cabeças e 40 livros da aba "Other Collections" do Collection Book, baseados em capturas de tela próprias. Toque em um item para marcá-lo como coletado.',
+  },
 } as const;
 
 export default function PuzzelsBoekenScreen() {

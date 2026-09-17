@@ -1,7 +1,7 @@
 import type { ColorKey } from '@/constants/heartopia-colors';
 import { useMemo } from 'react';
 
-import { useLanguage } from '@/hooks/use-language';
+import { Language, useLanguage } from '@/hooks/use-language';
 
 export interface SculptureItem {
   name: string;
@@ -17,41 +17,53 @@ export interface SculptureItem {
 interface SculptureRaw {
   nameNl: string;
   nameEn: string;
+  nameEs: string;
+  namePt: string;
   level: number;
   rarityNl: string;
   rarityEn: string;
   rarityColorKey: ColorKey;
   methodNl: string;
   methodEn: string;
+  methodEs: string;
+  methodPt: string;
   emoji: string;
   sellPriceByStar: number[] | null;
 }
 
+const SAND_METHOD_EN = "Timing minigame (Sand Sculpture Base)";
+const SAND_METHOD_NL = "Timing-minigame (Zandsculptuur Basis)";
+const SAND_METHOD_ES = "Minijuego de tiempo (Base de Escultura de Arena)";
+const SAND_METHOD_PT = "Minijogo de tempo (Base de Escultura de Areia)";
+
 const SAND_SCULPTURES_RAW: SculptureRaw[] = [
-  { nameNl: "Auto", nameEn: "Car", rarityNl: "Gewoon", rarityEn: "Common", methodNl: "Timing-minigame (Zandsculptuur Basis)", methodEn: "Timing minigame (Sand Sculpture Base)", level: 1, rarityColorKey: "forestSoft", emoji: "🚗", sellPriceByStar: [155,232,310,387,620] },
-  { nameNl: "Kikker", nameEn: "Frog", rarityNl: "Gewoon", rarityEn: "Common", methodNl: "Timing-minigame (Zandsculptuur Basis)", methodEn: "Timing minigame (Sand Sculpture Base)", level: 1, rarityColorKey: "forestSoft", emoji: "🐸", sellPriceByStar: [155,232,310,387,620] },
-  { nameNl: "Heremietkreeft", nameEn: "Hermit Crab", rarityNl: "Gewoon", rarityEn: "Common", methodNl: "Timing-minigame (Zandsculptuur Basis)", methodEn: "Timing minigame (Sand Sculpture Base)", level: 1, rarityColorKey: "forestSoft", emoji: "🦀", sellPriceByStar: [165,247,330,412,660] },
-  { nameNl: "Eend", nameEn: "Duck", rarityNl: "Gewoon", rarityEn: "Common", methodNl: "Timing-minigame (Zandsculptuur Basis)", methodEn: "Timing minigame (Sand Sculpture Base)", level: 1, rarityColorKey: "forestSoft", emoji: "🦆", sellPriceByStar: [155,232,310,387,620] },
-  { nameNl: "Konijntje", nameEn: "Bunny", rarityNl: "Gewoon", rarityEn: "Common", methodNl: "Timing-minigame (Zandsculptuur Basis)", methodEn: "Timing minigame (Sand Sculpture Base)", level: 1, rarityColorKey: "forestSoft", emoji: "🐰", sellPriceByStar: [155,232,310,387,620] },
-  { nameNl: "Vuurtoren", nameEn: "Lighthouse", rarityNl: "Gewoon", rarityEn: "Common", methodNl: "Timing-minigame (Zandsculptuur Basis)", methodEn: "Timing minigame (Sand Sculpture Base)", level: 1, rarityColorKey: "forestSoft", emoji: "🗼", sellPriceByStar: [165,247,330,412,660] },
-  { nameNl: "Schip", nameEn: "Ship", rarityNl: "Zeldzaam", rarityEn: "Rare", methodNl: "Timing-minigame (Zandsculptuur Basis)", methodEn: "Timing minigame (Sand Sculpture Base)", level: 2, rarityColorKey: "skyDark", emoji: "🚢", sellPriceByStar: [190,285,380,475,760] },
-  { nameNl: "Beer", nameEn: "Bear", rarityNl: "Zeldzaam", rarityEn: "Rare", methodNl: "Timing-minigame (Zandsculptuur Basis)", methodEn: "Timing minigame (Sand Sculpture Base)", level: 2, rarityColorKey: "skyDark", emoji: "🐻", sellPriceByStar: [190,285,380,475,760] },
-  { nameNl: "Meeuw", nameEn: "Seagull", rarityNl: "Episch", rarityEn: "Epic", methodNl: "Timing-minigame (Zandsculptuur Basis)", methodEn: "Timing minigame (Sand Sculpture Base)", level: 3, rarityColorKey: "coralDark", emoji: "🐦", sellPriceByStar: [225,337,450,562,900] },
-  { nameNl: "Walvis", nameEn: "Whale", rarityNl: "Episch", rarityEn: "Epic", methodNl: "Timing-minigame (Zandsculptuur Basis)", methodEn: "Timing minigame (Sand Sculpture Base)", level: 3, rarityColorKey: "coralDark", emoji: "🐋", sellPriceByStar: [225,337,450,562,900] },
-  { nameNl: "IJsbeer", nameEn: "Polar Bear", rarityNl: "Legendarisch", rarityEn: "Legendary", methodNl: "Timing-minigame (Zandsculptuur Basis)", methodEn: "Timing minigame (Sand Sculpture Base)", level: 4, rarityColorKey: "yellow", emoji: "🐻‍❄️", sellPriceByStar: [225,337,450,562,900] },
-  { nameNl: "Mozaïek Standbeeld", nameEn: "Mosai Statue", rarityNl: "Legendarisch", rarityEn: "Legendary", methodNl: "Timing-minigame (Zandsculptuur Basis)", methodEn: "Timing minigame (Sand Sculpture Base)", level: 4, rarityColorKey: "yellow", emoji: "🗿", sellPriceByStar: [225,337,450,562,900] },
-  { nameNl: "Cactus", nameEn: "Cactus", rarityNl: "Legendarisch", rarityEn: "Legendary", methodNl: "Timing-minigame (Zandsculptuur Basis)", methodEn: "Timing minigame (Sand Sculpture Base)", level: 5, rarityColorKey: "yellow", emoji: "🌵", sellPriceByStar: [280,420,560,700,1120] },
-  { nameNl: "Gespierde Kat", nameEn: "Muscle Cat", rarityNl: "Legendarisch", rarityEn: "Legendary", methodNl: "Timing-minigame (Zandsculptuur Basis)", methodEn: "Timing minigame (Sand Sculpture Base)", level: 5, rarityColorKey: "yellow", emoji: "🐈", sellPriceByStar: [280,420,560,700,1120] },
+  { nameNl: "Auto", nameEn: "Car", nameEs: "Auto", namePt: "Carro", rarityNl: "Gewoon", rarityEn: "Common", methodNl: SAND_METHOD_NL, methodEn: SAND_METHOD_EN, methodEs: SAND_METHOD_ES, methodPt: SAND_METHOD_PT, level: 1, rarityColorKey: "forestSoft", emoji: "🚗", sellPriceByStar: [155,232,310,387,620] },
+  { nameNl: "Kikker", nameEn: "Frog", nameEs: "Rana", namePt: "Sapo", rarityNl: "Gewoon", rarityEn: "Common", methodNl: SAND_METHOD_NL, methodEn: SAND_METHOD_EN, methodEs: SAND_METHOD_ES, methodPt: SAND_METHOD_PT, level: 1, rarityColorKey: "forestSoft", emoji: "🐸", sellPriceByStar: [155,232,310,387,620] },
+  { nameNl: "Heremietkreeft", nameEn: "Hermit Crab", nameEs: "Cangrejo Ermitaño", namePt: "Caranguejo Eremita", rarityNl: "Gewoon", rarityEn: "Common", methodNl: SAND_METHOD_NL, methodEn: SAND_METHOD_EN, methodEs: SAND_METHOD_ES, methodPt: SAND_METHOD_PT, level: 1, rarityColorKey: "forestSoft", emoji: "🦀", sellPriceByStar: [165,247,330,412,660] },
+  { nameNl: "Eend", nameEn: "Duck", nameEs: "Pato", namePt: "Pato", rarityNl: "Gewoon", rarityEn: "Common", methodNl: SAND_METHOD_NL, methodEn: SAND_METHOD_EN, methodEs: SAND_METHOD_ES, methodPt: SAND_METHOD_PT, level: 1, rarityColorKey: "forestSoft", emoji: "🦆", sellPriceByStar: [155,232,310,387,620] },
+  { nameNl: "Konijntje", nameEn: "Bunny", nameEs: "Conejito", namePt: "Coelhinho", rarityNl: "Gewoon", rarityEn: "Common", methodNl: SAND_METHOD_NL, methodEn: SAND_METHOD_EN, methodEs: SAND_METHOD_ES, methodPt: SAND_METHOD_PT, level: 1, rarityColorKey: "forestSoft", emoji: "🐰", sellPriceByStar: [155,232,310,387,620] },
+  { nameNl: "Vuurtoren", nameEn: "Lighthouse", nameEs: "Faro", namePt: "Farol", rarityNl: "Gewoon", rarityEn: "Common", methodNl: SAND_METHOD_NL, methodEn: SAND_METHOD_EN, methodEs: SAND_METHOD_ES, methodPt: SAND_METHOD_PT, level: 1, rarityColorKey: "forestSoft", emoji: "🗼", sellPriceByStar: [165,247,330,412,660] },
+  { nameNl: "Schip", nameEn: "Ship", nameEs: "Barco", namePt: "Navio", rarityNl: "Zeldzaam", rarityEn: "Rare", methodNl: SAND_METHOD_NL, methodEn: SAND_METHOD_EN, methodEs: SAND_METHOD_ES, methodPt: SAND_METHOD_PT, level: 2, rarityColorKey: "skyDark", emoji: "🚢", sellPriceByStar: [190,285,380,475,760] },
+  { nameNl: "Beer", nameEn: "Bear", nameEs: "Oso", namePt: "Urso", rarityNl: "Zeldzaam", rarityEn: "Rare", methodNl: SAND_METHOD_NL, methodEn: SAND_METHOD_EN, methodEs: SAND_METHOD_ES, methodPt: SAND_METHOD_PT, level: 2, rarityColorKey: "skyDark", emoji: "🐻", sellPriceByStar: [190,285,380,475,760] },
+  { nameNl: "Meeuw", nameEn: "Seagull", nameEs: "Gaviota", namePt: "Gaivota", rarityNl: "Episch", rarityEn: "Epic", methodNl: SAND_METHOD_NL, methodEn: SAND_METHOD_EN, methodEs: SAND_METHOD_ES, methodPt: SAND_METHOD_PT, level: 3, rarityColorKey: "coralDark", emoji: "🐦", sellPriceByStar: [225,337,450,562,900] },
+  { nameNl: "Walvis", nameEn: "Whale", nameEs: "Ballena", namePt: "Baleia", rarityNl: "Episch", rarityEn: "Epic", methodNl: SAND_METHOD_NL, methodEn: SAND_METHOD_EN, methodEs: SAND_METHOD_ES, methodPt: SAND_METHOD_PT, level: 3, rarityColorKey: "coralDark", emoji: "🐋", sellPriceByStar: [225,337,450,562,900] },
+  { nameNl: "IJsbeer", nameEn: "Polar Bear", nameEs: "Oso Polar", namePt: "Urso Polar", rarityNl: "Legendarisch", rarityEn: "Legendary", methodNl: SAND_METHOD_NL, methodEn: SAND_METHOD_EN, methodEs: SAND_METHOD_ES, methodPt: SAND_METHOD_PT, level: 4, rarityColorKey: "yellow", emoji: "🐻‍❄️", sellPriceByStar: [225,337,450,562,900] },
+  { nameNl: "Mozaïek Standbeeld", nameEn: "Mosai Statue", nameEs: "Estatua de Mosaico", namePt: "Estátua de Mosaico", rarityNl: "Legendarisch", rarityEn: "Legendary", methodNl: SAND_METHOD_NL, methodEn: SAND_METHOD_EN, methodEs: SAND_METHOD_ES, methodPt: SAND_METHOD_PT, level: 4, rarityColorKey: "yellow", emoji: "🗿", sellPriceByStar: [225,337,450,562,900] },
+  { nameNl: "Cactus", nameEn: "Cactus", nameEs: "Cactus", namePt: "Cacto", rarityNl: "Legendarisch", rarityEn: "Legendary", methodNl: SAND_METHOD_NL, methodEn: SAND_METHOD_EN, methodEs: SAND_METHOD_ES, methodPt: SAND_METHOD_PT, level: 5, rarityColorKey: "yellow", emoji: "🌵", sellPriceByStar: [280,420,560,700,1120] },
+  { nameNl: "Gespierde Kat", nameEn: "Muscle Cat", nameEs: "Gato Musculoso", namePt: "Gato Musculoso", rarityNl: "Legendarisch", rarityEn: "Legendary", methodNl: SAND_METHOD_NL, methodEn: SAND_METHOD_EN, methodEs: SAND_METHOD_ES, methodPt: SAND_METHOD_PT, level: 5, rarityColorKey: "yellow", emoji: "🐈", sellPriceByStar: [280,420,560,700,1120] },
 ];
+
+const SAND_METHOD_BY_LANG = (r: SculptureRaw, language: Language) =>
+  language === 'es' ? r.methodEs : language === 'pt' ? r.methodPt : language === 'en' ? r.methodEn : r.methodNl;
 
 export function useSandSculptures(): SculptureItem[] {
   const { language } = useLanguage();
   return useMemo(
     () =>
       SAND_SCULPTURES_RAW.map((r) => ({
-    name: r.nameEn,
+    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : r.nameEn,
     rarity: r.rarityEn,
-    method: language === 'en' ? r.methodEn : r.methodNl,
+    method: SAND_METHOD_BY_LANG(r, language),
     level: r.level,
     rarityColorKey: r.rarityColorKey,
     emoji: r.emoji,

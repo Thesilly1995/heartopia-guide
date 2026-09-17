@@ -9,8 +9,12 @@ export interface EventRecipeItem {
 interface EventRecipeRaw {
   nameNl: string;
   nameEn: string;
+  nameEs: string;
+  namePt: string;
   ingredientsNl: string[];
   ingredientsEn: string[];
+  ingredientsEs: string[];
+  ingredientsPt: string[];
   emoji: string;
 }
 

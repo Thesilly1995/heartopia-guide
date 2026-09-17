@@ -43,7 +43,7 @@ export function useCurrentWeather(): CurrentWeather {
     const expired = new Date(weather.validUntil).getTime() < Date.now();
     return {
       kind: weather.kind,
-      label: language === 'en' ? weather.labelEn : weather.labelNl,
+      label: language === 'en' || language === 'es' || language === 'pt' ? weather.labelEn : weather.labelNl,
       emoji: WEATHER_EMOJI[weather.kind] ?? '❔',
       stale: expired,
       validUntilLabel: formatLocalTime(weather.validUntil),

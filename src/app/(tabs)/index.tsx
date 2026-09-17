@@ -11,57 +11,59 @@ import { useMeteorSpots } from '@/data/meteor-spots';
 import { useMissionsProgress } from '@/data/missions-progress';
 import { useRainbowSpots } from '@/data/rainbow-spots';
 import { useWeekForecast } from '@/data/week-forecast';
-import { useLanguage } from '@/hooks/use-language';
+import { LANGUAGES, useLanguage } from '@/hooks/use-language';
 import { usePremium } from '@/hooks/use-premium';
 import { SERVERS, useServer } from '@/hooks/use-server';
 import { formatGmtOffset } from '@/lib/reset-schedule';
 
+type LocalizedText = { nl: string; en: string; es: string; pt: string };
+
 const SECTIONS: {
-  label: { nl: string; en: string };
-  items: { href: string | null; icon: string; title: { nl: string; en: string }; desc: { nl: string; en: string } }[];
+  label: LocalizedText;
+  items: { href: string | null; icon: string; title: LocalizedText; desc: LocalizedText }[];
 }[] = [
   {
-    label: { nl: "Hobby's", en: 'Hobbies' },
+    label: { nl: "Hobby's", en: 'Hobbies', es: 'Aficiones', pt: 'Hobbies' },
     items: [
-      { href: '/vissen', icon: '🎣', title: { nl: 'Vissen', en: 'Fishing' }, desc: { nl: 'Vissoorten, plekken & tijden', en: 'Fish species, spots & times' } },
-      { href: '/koken', icon: '🍳', title: { nl: 'Koken', en: 'Cooking' }, desc: { nl: 'Recepten & ingrediënten', en: 'Recipes & ingredients' } },
-      { href: '/tuinieren', icon: '🌱', title: { nl: 'Tuinieren', en: 'Gardening' }, desc: { nl: 'Zaden, groei & oogst', en: 'Seeds, growth & harvest' } },
-      { href: '/insecten', icon: '🦋', title: { nl: 'Insecten', en: 'Insects' }, desc: { nl: 'Vlinders, kevers & meer', en: 'Butterflies, beetles & more' } },
-      { href: '/vogels', icon: '🐦', title: { nl: 'Vogels', en: 'Birds' }, desc: { nl: 'Vogelsoorten & plekken', en: 'Bird species & spots' } },
-      { href: '/beeldhouwen', icon: '🏖️', title: { nl: 'Beeldhouwen', en: 'Sculpting' }, desc: { nl: 'Zand- en sneeuwsculpturen', en: 'Sand and snow sculptures' } },
-      { href: '/ocean-cleanup', icon: '🌊', title: { nl: 'Ocean Cleanup', en: 'Ocean Cleanup' }, desc: { nl: 'Vervuiling opruimen & schelpen', en: 'Cleaning up pollution & shells' } },
-      { href: '/huisdieren', icon: '🐾', title: { nl: 'Dog & Cat Moments', en: 'Dog & Cat Moments' }, desc: { nl: 'Huisdieren adopteren & verzorgen', en: 'Adopt & care for pets' } },
+      { href: '/vissen', icon: '🎣', title: { nl: 'Vissen', en: 'Fishing', es: 'Pesca', pt: 'Pesca' }, desc: { nl: 'Vissoorten, plekken & tijden', en: 'Fish species, spots & times', es: 'Especies de peces, lugares y horarios', pt: 'Espécies de peixes, locais e horários' } },
+      { href: '/koken', icon: '🍳', title: { nl: 'Koken', en: 'Cooking', es: 'Cocinar', pt: 'Cozinhar' }, desc: { nl: 'Recepten & ingrediënten', en: 'Recipes & ingredients', es: 'Recetas e ingredientes', pt: 'Receitas e ingredientes' } },
+      { href: '/tuinieren', icon: '🌱', title: { nl: 'Tuinieren', en: 'Gardening', es: 'Jardinería', pt: 'Jardinagem' }, desc: { nl: 'Zaden, groei & oogst', en: 'Seeds, growth & harvest', es: 'Semillas, crecimiento y cosecha', pt: 'Sementes, crescimento e colheita' } },
+      { href: '/insecten', icon: '🦋', title: { nl: 'Insecten', en: 'Insects', es: 'Insectos', pt: 'Insetos' }, desc: { nl: 'Vlinders, kevers & meer', en: 'Butterflies, beetles & more', es: 'Mariposas, escarabajos y más', pt: 'Borboletas, besouros e mais' } },
+      { href: '/vogels', icon: '🐦', title: { nl: 'Vogels', en: 'Birds', es: 'Aves', pt: 'Aves' }, desc: { nl: 'Vogelsoorten & plekken', en: 'Bird species & spots', es: 'Especies de aves y lugares', pt: 'Espécies de aves e locais' } },
+      { href: '/beeldhouwen', icon: '🏖️', title: { nl: 'Beeldhouwen', en: 'Sculpting', es: 'Escultura', pt: 'Escultura' }, desc: { nl: 'Zand- en sneeuwsculpturen', en: 'Sand and snow sculptures', es: 'Esculturas de arena y nieve', pt: 'Esculturas de areia e neve' } },
+      { href: '/ocean-cleanup', icon: '🌊', title: { nl: 'Ocean Cleanup', en: 'Ocean Cleanup', es: 'Limpieza del océano', pt: 'Limpeza do oceano' }, desc: { nl: 'Vervuiling opruimen & schelpen', en: 'Cleaning up pollution & shells', es: 'Limpiar la contaminación y conchas', pt: 'Limpar a poluição e conchas' } },
+      { href: '/huisdieren', icon: '🐾', title: { nl: 'Dog & Cat Moments', en: 'Dog & Cat Moments', es: 'Dog & Cat Moments', pt: 'Dog & Cat Moments' }, desc: { nl: 'Huisdieren adopteren & verzorgen', en: 'Adopt & care for pets', es: 'Adopta y cuida mascotas', pt: 'Adote e cuide de animais de estimação' } },
     ],
   },
   {
-    label: { nl: 'Extra', en: 'Extra' },
+    label: { nl: 'Extra', en: 'Extra', es: 'Extra', pt: 'Extra' },
     items: [
-      { href: '/wilde-dieren', icon: '🦊', title: { nl: 'Wilde Dieren', en: 'Wild Animals' }, desc: { nl: 'Voertroggen, eten & vriendschap', en: 'Feeding troughs, food & friendship' } },
-      { href: '/wilde-ingredienten', icon: '🌿', title: { nl: 'Wilde Ingrediënten', en: 'Wild Ingredients' }, desc: { nl: 'Fruit, paddenstoelen & materialen', en: 'Fruit, mushrooms & materials' } },
+      { href: '/wilde-dieren', icon: '🦊', title: { nl: 'Wilde Dieren', en: 'Wild Animals', es: 'Animales Salvajes', pt: 'Animais Selvagens' }, desc: { nl: 'Voertroggen, eten & vriendschap', en: 'Feeding troughs, food & friendship', es: 'Comederos, comida y amistad', pt: 'Comedouros, comida e amizade' } },
+      { href: '/wilde-ingredienten', icon: '🌿', title: { nl: 'Wilde Ingrediënten', en: 'Wild Ingredients', es: 'Ingredientes Silvestres', pt: 'Ingredientes Selvagens' }, desc: { nl: 'Fruit, paddenstoelen & materialen', en: 'Fruit, mushrooms & materials', es: 'Fruta, setas y materiales', pt: 'Frutas, cogumelos e materiais' } },
     ],
   },
   {
-    label: { nl: 'Spel', en: 'Game' },
+    label: { nl: 'Spel', en: 'Game', es: 'Juego', pt: 'Jogo' },
     items: [
-      { href: '/badges', icon: '🏅', title: { nl: 'Badges', en: 'Badges' }, desc: { nl: 'Prestaties & profieltitels', en: 'Achievements & profile titles' } },
-      { href: '/puzzels-boeken', icon: '🧩', title: { nl: 'Puzzels & Boeken', en: 'Puzzles & Books' }, desc: { nl: 'Other Collections: puzzels & boeken', en: 'Other Collections: puzzles & books' } },
-      { href: '/codes', icon: '🎁', title: { nl: 'Codes', en: 'Codes' }, desc: { nl: 'Actieve & verlopen codes', en: 'Active & expired codes' } },
+      { href: '/badges', icon: '🏅', title: { nl: 'Badges', en: 'Badges', es: 'Insignias', pt: 'Emblemas' }, desc: { nl: 'Prestaties & profieltitels', en: 'Achievements & profile titles', es: 'Logros y títulos de perfil', pt: 'Conquistas e títulos de perfil' } },
+      { href: '/puzzels-boeken', icon: '🧩', title: { nl: 'Puzzels & Boeken', en: 'Puzzles & Books', es: 'Puzzles y Libros', pt: 'Quebra-cabeças e Livros' }, desc: { nl: 'Other Collections: puzzels & boeken', en: 'Other Collections: puzzles & books', es: 'Other Collections: puzzles y libros', pt: 'Other Collections: quebra-cabeças e livros' } },
+      { href: '/codes', icon: '🎁', title: { nl: 'Codes', en: 'Codes', es: 'Códigos', pt: 'Códigos' }, desc: { nl: 'Actieve & verlopen codes', en: 'Active & expired codes', es: 'Códigos activos y caducados', pt: 'Códigos ativos e expirados' } },
     ],
   },
   {
-    label: { nl: 'Premium', en: 'Premium' },
+    label: { nl: 'Premium', en: 'Premium', es: 'Premium', pt: 'Premium' },
     items: [
-      { href: '/dashboard', icon: '📊', title: { nl: 'Voortgangsdashboard', en: 'Progress Dashboard' }, desc: { nl: 'Overzicht van je voortgang in alle catalogussen', en: 'Overview of your progress across all catalogs' } },
-      { href: '/meldingen', icon: '🔔', title: { nl: 'Meldingen', en: 'Notifications' }, desc: { nl: 'Herinneringen bij nieuwe events & bijzonder weer', en: 'Reminders for new events & special weather' } },
-      { href: '/cloud-save', icon: '☁️', title: { nl: 'Cloud Save', en: 'Cloud Save' }, desc: { nl: 'Voortgang bewaren & gebruiken op een ander toestel', en: 'Save your progress & use it on another device' } },
-      { href: '/tips', icon: '💡', title: { nl: 'Tips & Tricks', en: 'Tips & Tricks' }, desc: { nl: 'Handige weetjes over het spel en events', en: 'Handy things to know about the game and events' } },
+      { href: '/dashboard', icon: '📊', title: { nl: 'Voortgangsdashboard', en: 'Progress Dashboard', es: 'Panel de Progreso', pt: 'Painel de Progresso' }, desc: { nl: 'Overzicht van je voortgang in alle catalogussen', en: 'Overview of your progress across all catalogs', es: 'Resumen de tu progreso en todos los catálogos', pt: 'Resumo do seu progresso em todos os catálogos' } },
+      { href: '/meldingen', icon: '🔔', title: { nl: 'Meldingen', en: 'Notifications', es: 'Notificaciones', pt: 'Notificações' }, desc: { nl: 'Herinneringen bij nieuwe events & bijzonder weer', en: 'Reminders for new events & special weather', es: 'Recordatorios de nuevos eventos y clima especial', pt: 'Lembretes de novos eventos e clima especial' } },
+      { href: '/cloud-save', icon: '☁️', title: { nl: 'Cloud Save', en: 'Cloud Save', es: 'Guardado en la Nube', pt: 'Salvamento na Nuvem' }, desc: { nl: 'Voortgang bewaren & gebruiken op een ander toestel', en: 'Save your progress & use it on another device', es: 'Guarda tu progreso y úsalo en otro dispositivo', pt: 'Salve seu progresso e use em outro dispositivo' } },
+      { href: '/tips', icon: '💡', title: { nl: 'Tips & Tricks', en: 'Tips & Tricks', es: 'Trucos y Consejos', pt: 'Dicas e Truques' }, desc: { nl: 'Handige weetjes over het spel en events', en: 'Handy things to know about the game and events', es: 'Datos útiles sobre el juego y los eventos', pt: 'Informações úteis sobre o jogo e eventos' } },
     ],
   },
   {
-    label: { nl: 'Overig', en: 'Other' },
+    label: { nl: 'Overig', en: 'Other', es: 'Otros', pt: 'Outros' },
     items: [
-      { href: '/todo', icon: '📝', title: { nl: 'To-do', en: 'To-do' }, desc: { nl: 'Wat wil je nog gaan doen?', en: 'What do you still want to do?' } },
-      { href: '/feedback', icon: '💡', title: { nl: 'Feedback', en: 'Feedback' }, desc: { nl: 'Deel je ideeën voor de gids', en: 'Share your ideas for the guide' } },
+      { href: '/todo', icon: '📝', title: { nl: 'To-do', en: 'To-do', es: 'Tareas', pt: 'Tarefas' }, desc: { nl: 'Wat wil je nog gaan doen?', en: 'What do you still want to do?', es: '¿Qué más quieres hacer?', pt: 'O que você ainda quer fazer?' } },
+      { href: '/feedback', icon: '💡', title: { nl: 'Feedback', en: 'Feedback', es: 'Comentarios', pt: 'Feedback' }, desc: { nl: 'Deel je ideeën voor de gids', en: 'Share your ideas for the guide', es: 'Comparte tus ideas para la guía', pt: 'Compartilhe suas ideias para o guia' } },
     ],
   },
 ];
@@ -81,6 +83,7 @@ const STRINGS = {
     premiumBenefits: 'Krijg voordelen ✨',
     dailyResetNote: (offset: string) => `Daily reset 06:00 ${offset}`,
     serverModalTitle: 'Kies je server',
+    langModalTitle: 'Kies je taal',
   },
   en: {
     welcome: 'Welcome to',
@@ -96,19 +99,53 @@ const STRINGS = {
     premiumBenefits: 'Get benefits ✨',
     dailyResetNote: (offset: string) => `Daily reset 06:00 ${offset}`,
     serverModalTitle: 'Choose your server',
+    langModalTitle: 'Choose your language',
+  },
+  es: {
+    welcome: 'Bienvenido a',
+    title: 'Heartopedia',
+    unknown: 'Desconocido — lo confirmaremos',
+    active: 'Activo ahora',
+    inactive: 'No activo',
+    forecastTitle: 'Clima esta semana',
+    comingSoon: 'Próximamente ✨',
+    premiumRequired: 'Requiere Premium 👑',
+    premiumTestOn: 'Prueba: Premium ACTIVADO',
+    premiumTestOff: 'Prueba: Premium DESACTIVADO',
+    premiumBenefits: 'Obtén beneficios ✨',
+    dailyResetNote: (offset: string) => `Reinicio diario 06:00 ${offset}`,
+    serverModalTitle: 'Elige tu servidor',
+    langModalTitle: 'Elige tu idioma',
+  },
+  pt: {
+    welcome: 'Bem-vindo(a) ao',
+    title: 'Heartopedia',
+    unknown: 'Desconhecido — vamos confirmar',
+    active: 'Ativo agora',
+    inactive: 'Não ativo',
+    forecastTitle: 'Clima esta semana',
+    comingSoon: 'Em breve ✨',
+    premiumRequired: 'Requer Premium 👑',
+    premiumTestOn: 'Teste: Premium ATIVADO',
+    premiumTestOff: 'Teste: Premium DESATIVADO',
+    premiumBenefits: 'Obtenha benefícios ✨',
+    dailyResetNote: (offset: string) => `Reinício diário 06:00 ${offset}`,
+    serverModalTitle: 'Escolha seu servidor',
+    langModalTitle: 'Escolha seu idioma',
   },
 } as const;
 
 export default function HomeScreen() {
   const colors = useHeartopiaColors();
   const styles = useMemo(() => makeStyles(colors), [colors]);
-  const { language, toggleLanguage } = useLanguage();
+  const { language, setLanguage } = useLanguage();
   const { premium, togglePremium } = usePremium();
   const { server, setServer } = useServer();
   const s = STRINGS[language];
   const [forecastExpanded, setForecastExpanded] = useState(false);
   const [comingSoonKey, setComingSoonKey] = useState<string | null>(null);
   const [serverPickerOpen, setServerPickerOpen] = useState(false);
+  const [langPickerOpen, setLangPickerOpen] = useState(false);
   const dailyPlots = useDailyPlots();
   const eventMeta = useCurrentEventMeta();
   const rainbowSpots = useRainbowSpots();
@@ -130,10 +167,8 @@ export default function HomeScreen() {
               <Pressable style={styles.serverSwitch} onPress={() => setServerPickerOpen(true)} hitSlop={8}>
                 <Text style={styles.serverSwitchText}>🌐 {server.label}</Text>
               </Pressable>
-              <Pressable style={styles.langSwitch} onPress={toggleLanguage} hitSlop={8}>
-                <Text style={[styles.langOption, language === 'nl' && styles.langOptionActive]}>NL</Text>
-                <Text style={styles.langDivider}>/</Text>
-                <Text style={[styles.langOption, language === 'en' && styles.langOptionActive]}>EN</Text>
+              <Pressable style={styles.langSwitch} onPress={() => setLangPickerOpen(true)} hitSlop={8}>
+                <Text style={styles.langSwitchText}>🌍 {language.toUpperCase()}</Text>
               </Pressable>
             </View>
           </View>
@@ -311,6 +346,28 @@ export default function HomeScreen() {
           </View>
         </Pressable>
       </Modal>
+
+      <Modal visible={langPickerOpen} transparent animationType="fade" onRequestClose={() => setLangPickerOpen(false)}>
+        <Pressable style={styles.modalBackdrop} onPress={() => setLangPickerOpen(false)}>
+          <View style={styles.modalCard}>
+            <Text style={styles.modalTitle}>{s.langModalTitle}</Text>
+            {LANGUAGES.map((option) => {
+              const active = option.code === language;
+              return (
+                <Pressable
+                  key={option.code}
+                  style={[styles.serverOptionRow, active && styles.serverOptionRowActive]}
+                  onPress={() => {
+                    setLanguage(option.code);
+                    setLangPickerOpen(false);
+                  }}>
+                  <Text style={[styles.serverOptionText, active && styles.serverOptionTextActive]}>{option.label}</Text>
+                </Pressable>
+              );
+            })}
+          </View>
+        </Pressable>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -324,10 +381,8 @@ function makeStyles(c: ThemeColors) {
     headerTopRight: { alignItems: 'flex-end', gap: 6 },
     welcome: { color: c.forestSoft, fontSize: 14 },
     title: { color: c.forest, fontSize: 28, fontWeight: 'bold', marginTop: 4 },
-    langSwitch: { flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: c.card, borderWidth: 1, borderColor: c.line, borderRadius: 999, paddingHorizontal: 10, paddingVertical: 6 },
-    langOption: { fontSize: 12, fontWeight: '700', color: c.forestSoft },
-    langOptionActive: { color: c.coral },
-    langDivider: { fontSize: 12, color: c.line },
+    langSwitch: { backgroundColor: c.card, borderWidth: 1, borderColor: c.line, borderRadius: 999, paddingHorizontal: 10, paddingVertical: 6 },
+    langSwitchText: { fontSize: 11, fontWeight: '700', color: c.forestSoft },
     serverSwitch: { backgroundColor: c.card, borderWidth: 1, borderColor: c.line, borderRadius: 999, paddingHorizontal: 10, paddingVertical: 6 },
     serverSwitchText: { fontSize: 11, fontWeight: '700', color: c.forestSoft },
     modalBackdrop: { flex: 1, backgroundColor: 'rgba(0,0,0,0.4)', alignItems: 'center', justifyContent: 'center', padding: 24 },

@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 
+import { useLanguage } from '@/hooks/use-language';
+
 export interface ForagedItem {
   name: string;
   spot: string;
@@ -11,34 +13,39 @@ export interface ForagedItem {
 interface ForagedRaw {
   nameNl: string;
   nameEn: string;
+  nameEs: string;
+  namePt: string;
   spotNl: string;
   spotEn: string;
+  spotEs: string;
+  spotPt: string;
   sellPrice: string;
   energy: string;
   emoji: string;
 }
 
 const WILD_MATERIALS_RAW: ForagedRaw[] = [
-  { nameNl: "Bamboe", nameEn: "Bamboo", spotNl: "Bamboegebied", spotEn: "Bamboo", sellPrice: "7 🪙", energy: "—", emoji: "🎋" },
-  { nameNl: "Tak", nameEn: "Branch", spotNl: "Struiken", spotEn: "Bushes", sellPrice: "5 🪙", energy: "—", emoji: "🪵" },
-  { nameNl: "Erts", nameEn: "Ore", spotNl: "Thuis", spotEn: "Home", sellPrice: "14 🪙", energy: "—", emoji: "⛏️" },
-  { nameNl: "Steen", nameEn: "Stone", spotNl: "Thuis", spotEn: "Home", sellPrice: "8 🪙", energy: "—", emoji: "🪨" },
-  { nameNl: "Hout", nameEn: "Timber", spotNl: "Boom", spotEn: "Tree", sellPrice: "6 🪙", energy: "—", emoji: "🪵" },
-  { nameNl: "Kwaliteitshout", nameEn: "Quality Timber", spotNl: "Boom", spotEn: "Tree", sellPrice: "12 🪙", energy: "—", emoji: "🪵" },
-  { nameNl: "Zeldzaam Hout", nameEn: "Rare Timber", spotNl: "Reuzenboom in de Buitenwijk", spotEn: "Gigantic Tree in the Suburb", sellPrice: "50 🪙", energy: "—", emoji: "🪵" },
-  { nameNl: "Zwervend Eikenhout", nameEn: "Roaming Oak Timber", spotNl: "Zwervende Eik", spotEn: "Roaming Oak-Oak", sellPrice: "150 🪙", energy: "—", emoji: "🪵" },
+  { nameNl: "Bamboe", nameEn: "Bamboo", nameEs: "Bambú", namePt: "Bambu", spotNl: "Bamboegebied", spotEn: "Bamboo", spotEs: "Bambú", spotPt: "Bambu", sellPrice: "7 🪙", energy: "—", emoji: "🎋" },
+  { nameNl: "Tak", nameEn: "Branch", nameEs: "Rama", namePt: "Galho", spotNl: "Struiken", spotEn: "Bushes", spotEs: "Arbustos", spotPt: "Arbustos", sellPrice: "5 🪙", energy: "—", emoji: "🪵" },
+  { nameNl: "Erts", nameEn: "Ore", nameEs: "Mineral", namePt: "Minério", spotNl: "Thuis", spotEn: "Home", spotEs: "Casa", spotPt: "Casa", sellPrice: "14 🪙", energy: "—", emoji: "⛏️" },
+  { nameNl: "Steen", nameEn: "Stone", nameEs: "Piedra", namePt: "Pedra", spotNl: "Thuis", spotEn: "Home", spotEs: "Casa", spotPt: "Casa", sellPrice: "8 🪙", energy: "—", emoji: "🪨" },
+  { nameNl: "Hout", nameEn: "Timber", nameEs: "Madera", namePt: "Madeira", spotNl: "Boom", spotEn: "Tree", spotEs: "Árbol", spotPt: "Árvore", sellPrice: "6 🪙", energy: "—", emoji: "🪵" },
+  { nameNl: "Kwaliteitshout", nameEn: "Quality Timber", nameEs: "Madera de Calidad", namePt: "Madeira de Qualidade", spotNl: "Boom", spotEn: "Tree", spotEs: "Árbol", spotPt: "Árvore", sellPrice: "12 🪙", energy: "—", emoji: "🪵" },
+  { nameNl: "Zeldzaam Hout", nameEn: "Rare Timber", nameEs: "Madera Rara", namePt: "Madeira Rara", spotNl: "Reuzenboom in de Buitenwijk", spotEn: "Gigantic Tree in the Suburb", spotEs: "Árbol Gigante en el Suburbio", spotPt: "Árvore Gigante no Subúrbio", sellPrice: "50 🪙", energy: "—", emoji: "🪵" },
+  { nameNl: "Zwervend Eikenhout", nameEn: "Roaming Oak Timber", nameEs: "Madera de Roble Errante", namePt: "Madeira de Carvalho Errante", spotNl: "Zwervende Eik", spotEn: "Roaming Oak-Oak", spotEs: "Roble Errante", spotPt: "Carvalho Errante", sellPrice: "150 🪙", energy: "—", emoji: "🪵" },
 ];
 
 export function useWildMaterials(): ForagedItem[] {
+  const { language } = useLanguage();
   return useMemo(
     () =>
       WILD_MATERIALS_RAW.map((r) => ({
-    name: r.nameEn,
-    spot: r.spotEn,
+    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : r.nameEn,
+    spot: language === 'es' ? r.spotEs : language === 'pt' ? r.spotPt : r.spotEn,
     sellPrice: r.sellPrice,
     energy: r.energy,
     emoji: r.emoji,
       })),
-    []
+    [language]
   );
 }

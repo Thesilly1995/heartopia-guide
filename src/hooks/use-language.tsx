@@ -1,20 +1,27 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createContext, type ReactNode, useContext, useEffect, useState } from 'react';
 
-export type Language = 'nl' | 'en';
+export type Language = 'nl' | 'en' | 'es' | 'pt';
+
+export const LANGUAGES: { code: Language; label: string }[] = [
+  { code: 'nl', label: 'NL' },
+  { code: 'en', label: 'EN' },
+  { code: 'es', label: 'ES' },
+  { code: 'pt', label: 'PT' },
+];
+
+const VALID_LANGUAGES: Language[] = LANGUAGES.map((l) => l.code);
 
 const STORAGE_KEY = 'heartopia:language';
 
 interface LanguageContextValue {
   language: Language;
   setLanguage: (language: Language) => void;
-  toggleLanguage: () => void;
 }
 
 const LanguageContext = createContext<LanguageContextValue>({
   language: 'nl',
   setLanguage: () => {},
-  toggleLanguage: () => {},
 });
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
@@ -24,7 +31,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     (async () => {
       try {
         const stored = await AsyncStorage.getItem(STORAGE_KEY);
-        if (stored === 'nl' || stored === 'en') setLanguageState(stored);
+        if (VALID_LANGUAGES.includes(stored as Language)) setLanguageState(stored as Language);
       } catch {
         // opslag niet beschikbaar, blijft op standaardtaal 'nl'
       }
@@ -36,10 +43,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     AsyncStorage.setItem(STORAGE_KEY, next).catch(() => {});
   };
 
-  const toggleLanguage = () => setLanguage(language === 'nl' ? 'en' : 'nl');
-
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, toggleLanguage }}>
+    <LanguageContext.Provider value={{ language, setLanguage }}>
       {children}
     </LanguageContext.Provider>
   );

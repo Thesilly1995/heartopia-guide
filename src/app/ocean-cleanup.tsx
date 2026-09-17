@@ -26,6 +26,16 @@ const POLLUTANTS = {
     { name: 'Hard-Shell Pollution', desc: 'Tougher — takes more effort to clean' },
     { name: 'Hard-Shell Cracked Pollution', desc: 'Tougher — then breaks apart into pieces' },
   ],
+  es: [
+    { name: 'Contaminación Arremolinada', desc: 'El tipo estándar, se retira rápido' },
+    { name: 'Contaminación de Caparazón Duro', desc: 'Más resistente — cuesta más limpiarla' },
+    { name: 'Contaminación de Caparazón Duro Agrietado', desc: 'Más resistente — luego se rompe en trozos' },
+  ],
+  pt: [
+    { name: 'Poluição Redemoinho', desc: 'O tipo padrão, rápido de remover' },
+    { name: 'Poluição de Casca Dura', desc: 'Mais resistente — exige mais esforço para limpar' },
+    { name: 'Poluição de Casca Dura Rachada', desc: 'Mais resistente — depois se quebra em pedaços' },
+  ],
 } as const;
 
 const STRINGS = {
@@ -90,6 +100,68 @@ const STRINGS = {
       'Cleaning up pollution earns Sea Shells, which add up to Collection Points. Use those to buy ocean furniture like the Sea Shell Bead Curtain and the Coral & Shell Display Case. Certain levels also give a chance at the Voice of the Deep gift box (with a real dolphin-sound card, part of a dolphin protection campaign).',
     unconfirmedDisclaimer:
       'Not yet confirmed: the full list of furniture/point costs, whether the cleaning tool can be upgraded, how many hobby levels there are, and any daily limits.',
+  },
+  es: {
+    title: 'Ocean Cleanup',
+    subtitle: 'Limpiando la contaminación en Whalefall Canyon',
+    permanentDisclaimer: 'Hobby permanente (actualización Oceanbound 2.7). Se mantiene incluso después de que termine el evento Call of Whales.',
+    shellCatalog: '🐚 Catálogo de conchas',
+    shellCatalogDesc: 'Las 30 conchas conocidas (fuente: capturas propias + tracker de la comunidad)',
+    filterAll: 'Todas',
+    filterUndiscovered: '🔍 Aún por descubrir',
+    filterNotFiveStar: '⭐ Aún sin 5★',
+    filterNoMastery: '🏆 Aún sin mastery',
+    goldLabel: 'Oro (vendido a Albert Jr.)',
+    tokensLabel: 'Fichas (vendidas a Azure)',
+    timeWindow: 'Franja horaria',
+    allDay: 'Todo el día',
+    notDocumented: 'Aún no documentado',
+    masteryAchieved: 'Mastery conseguido',
+    unlockTitle: 'Cómo desbloquear',
+    unlockText:
+      'D.G. Member Nivel 7 → portal al pie de Whale Mountain → habla con Naga y luego con Rory → abre el menú de Hobbies (icono de concha) → Mejorar → habla con Oliver para empezar.',
+    swimTitle: '🏊 Nadar',
+    swimText:
+      "En Whalefall Canyon puedes nadar libremente en cualquier dirección. Usa Shift (o el botón de dash en móvil) para un sprint submarino ('impulso de sirena'). Actualmente no se puede nadar fuera de esta zona submarina.",
+    toolTitle: 'Herramienta',
+    toolText: 'Limpiador Oceánico Básico — apunta a la contaminación y mantén pulsado el botón de limpiar hasta que desaparezca por completo.',
+    pollutantTypesTitle: 'Tipos de contaminación',
+    rewardsTitle: 'Recompensas',
+    rewardsText:
+      'Limpiar la contaminación da Conchas Marinas, que se acumulan como Puntos de Colección. Con ellos compras muebles oceánicos como la Cortina de Cuentas de Conchas Marinas y la Vitrina de Coral y Conchas. Algunos niveles también dan posibilidad de conseguir la caja de regalo Voice of the Deep (con una tarjeta de sonido real de delfín, parte de una campaña de protección de delfines).',
+    unconfirmedDisclaimer:
+      'Aún sin confirmar: la lista completa de muebles/costes en puntos, si se puede mejorar la herramienta de limpieza, cuántos niveles de hobby hay, y posibles límites diarios.',
+  },
+  pt: {
+    title: 'Ocean Cleanup',
+    subtitle: 'Limpando a poluição em Whalefall Canyon',
+    permanentDisclaimer: 'Hobby permanente (atualização Oceanbound 2.7). Continua disponível mesmo depois que o evento Call of Whales terminar.',
+    shellCatalog: '🐚 Catálogo de conchas',
+    shellCatalogDesc: 'Todas as 30 conchas conhecidas (fonte: capturas de tela próprias + tracker da comunidade)',
+    filterAll: 'Todas',
+    filterUndiscovered: '🔍 Ainda por descobrir',
+    filterNotFiveStar: '⭐ Ainda sem 5★',
+    filterNoMastery: '🏆 Ainda sem mastery',
+    goldLabel: 'Ouro (vendido a Albert Jr.)',
+    tokensLabel: 'Fichas (vendidas a Azure)',
+    timeWindow: 'Janela de horário',
+    allDay: 'O dia todo',
+    notDocumented: 'Ainda não documentado',
+    masteryAchieved: 'Mastery alcançado',
+    unlockTitle: 'Como desbloquear',
+    unlockText:
+      'D.G. Member Nível 7 → portal ao pé de Whale Mountain → fale com Naga e depois com Rory → abra o menu de Hobbies (ícone de concha) → Upgrade → fale com Oliver para começar.',
+    swimTitle: '🏊 Nadar',
+    swimText:
+      "Em Whalefall Canyon você pode nadar livremente em qualquer direção. Use Shift (ou o botão de dash no celular) para um sprint subaquático ('impulso de sereia'). No momento não é possível nadar fora dessa zona subaquática.",
+    toolTitle: 'Ferramenta',
+    toolText: 'Limpador Oceânico Básico — mire na poluição e segure o botão de limpar até ela desaparecer completamente.',
+    pollutantTypesTitle: 'Tipos de poluição',
+    rewardsTitle: 'Recompensas',
+    rewardsText:
+      'Limpar a poluição rende Conchas do Mar, que se somam em Pontos de Coleção. Use-os para comprar móveis oceânicos como a Cortina de Contas de Conchas do Mar e a Vitrine de Coral e Conchas. Alguns níveis também dão chance de ganhar a caixa de presente Voice of the Deep (com um cartão com som real de golfinho, parte de uma campanha de proteção aos golfinhos).',
+    unconfirmedDisclaimer:
+      'Ainda não confirmado: a lista completa de móveis/custos em pontos, se a ferramenta de limpeza pode ser melhorada, quantos níveis de hobby existem, e eventuais limites diários.',
   },
 } as const;
 

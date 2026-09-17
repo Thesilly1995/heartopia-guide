@@ -12,6 +12,8 @@ import { useLanguage } from '@/hooks/use-language';
 const STRINGS = {
   nl: { title: 'Wilde Ingrediënten', subtitle: 'Fruit, paddenstoelen & materialen om te rapen', fruit: 'Fruit', mushrooms: 'Paddenstoelen', materials: 'Materialen', energy: 'Energie' },
   en: { title: 'Wild Ingredients', subtitle: 'Fruit, mushrooms & materials to forage', fruit: 'Fruit', mushrooms: 'Mushrooms', materials: 'Materials', energy: 'Energy' },
+  es: { title: 'Ingredientes Silvestres', subtitle: 'Fruta, hongos y materiales para recolectar', fruit: 'Fruta', mushrooms: 'Hongos', materials: 'Materiales', energy: 'Energía' },
+  pt: { title: 'Ingredientes Selvagens', subtitle: 'Frutas, cogumelos e materiais para coletar', fruit: 'Frutas', mushrooms: 'Cogumelos', materials: 'Materiais', energy: 'Energia' },
 } as const;
 
 export default function WildeIngredientenScreen() {

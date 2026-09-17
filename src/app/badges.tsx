@@ -28,6 +28,20 @@ const STRINGS = {
       "60+ badges, based on a screenshot of your own Achievement overview. Tap the icon to mark a badge as earned, or use the counter to track progress. There are still some fully hidden badges not in this list (name not yet known).",
     hiddenDivider: '🔒 Hidden Achievements',
   },
+  es: {
+    title: 'Insignias',
+    subtitle: 'Logros y títulos de perfil (D.G. Nivel 15+)',
+    disclaimer:
+      '60+ insignias, basadas en una captura de pantalla de tu propio resumen de Logros. Toca el ícono para marcar una insignia como conseguida, o usa el contador para llevar el progreso. Todavía hay algunas insignias completamente ocultas que no están en esta lista (nombre aún desconocido).',
+    hiddenDivider: '🔒 Logros Ocultos',
+  },
+  pt: {
+    title: 'Emblemas',
+    subtitle: 'Conquistas e títulos de perfil (D.G. Nível 15+)',
+    disclaimer:
+      '60+ emblemas, baseados em uma captura de tela do seu próprio resumo de Conquistas. Toque no ícone para marcar um emblema como conquistado, ou use o contador para acompanhar o progresso. Ainda existem alguns emblemas totalmente ocultos que não estão nesta lista (nome ainda desconhecido).',
+    hiddenDivider: '🔒 Conquistas Ocultas',
+  },
 } as const;
 
 export default function BadgesScreen() {

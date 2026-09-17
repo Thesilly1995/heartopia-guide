@@ -50,6 +50,22 @@ const LABELS = {
     meteor: 'Meteor shower',
     heatwave: 'Heatwave',
   },
+  es: {
+    normal: 'Nada especial',
+    rain: 'Lluvia',
+    rainbow: 'Arcoíris',
+    warm_sun: 'Sol cálido',
+    meteor: 'Lluvia de meteoros',
+    heatwave: 'Ola de calor',
+  },
+  pt: {
+    normal: 'Nada de especial',
+    rain: 'Chuva',
+    rainbow: 'Arco-íris',
+    warm_sun: 'Sol quente',
+    meteor: 'Chuva de meteoros',
+    heatwave: 'Onda de calor',
+  },
 } as const;
 
 const BLOCK_LABELS: Record<WeekForecastBlock, string> = {
@@ -62,9 +78,11 @@ const BLOCK_LABELS: Record<WeekForecastBlock, string> = {
 const WEEKDAYS = {
   nl: ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'],
   en: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+  es: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+  pt: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'],
 } as const;
 
-const TODAY_LABEL = { nl: 'Vandaag', en: 'Today' } as const;
+const TODAY_LABEL = { nl: 'Vandaag', en: 'Today', es: 'Hoy', pt: 'Hoje' } as const;
 
 /**
  * De weekvoorspelling (in-game weekvoorspelling-telefoontje): één rij per
