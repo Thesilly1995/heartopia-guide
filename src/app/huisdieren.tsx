@@ -161,6 +161,7 @@ export default function HuisdierenScreen() {
   const [tab, setTab] = useState<'cats' | 'dogs'>('cats');
   const [openName, setOpenName] = useState<string | null>(null);
   const [foodOpenName, setFoodOpenName] = useState<string | null>(null);
+  const [actionsOpenName, setActionsOpenName] = useState<string | null>(null);
   const [foodInput, setFoodInput] = useState('');
   const [bonds, setBonds] = useState<Record<string, number>>({});
   const [actions, setActions] = useState<Record<string, number>>({});
@@ -360,20 +361,31 @@ export default function HuisdierenScreen() {
                     <LevelStepper value={bonds[pet.name] || 0} max={15} onSet={(n) => setBond(pet.name, n)} />
                   </View>
 
-                  <Text style={styles.actionsLabel}>{s.trainedActions}</Text>
-                  <View style={styles.actionsList}>
-                    {petActions.map((action) => {
-                      const mapKey = `${pet.name}::${action.key}`;
-                      return (
-                        <View key={action.key} style={styles.actionRow}>
-                          <Text style={styles.actionLabel} numberOfLines={1}>
-                            {action.label}
-                          </Text>
-                          <StarRow value={actions[mapKey] || 0} onSet={(n) => setAction(pet.name, action.key, n)} />
-                        </View>
-                      );
-                    })}
-                  </View>
+                  <Pressable
+                    style={styles.foodToggleRow}
+                    onPress={() => setActionsOpenName(actionsOpenName === pet.name ? null : pet.name)}>
+                    <Text style={styles.actionsLabel}>{s.trainedActions}</Text>
+                    <View style={styles.foodToggleRight}>
+                      <Text style={styles.foodCountText}>{s.feedingCount(petActions.length)}</Text>
+                      <Text style={styles.chevron}>{actionsOpenName === pet.name ? '⌄' : '›'}</Text>
+                    </View>
+                  </Pressable>
+
+                  {actionsOpenName === pet.name && (
+                    <View style={styles.actionsList}>
+                      {petActions.map((action) => {
+                        const mapKey = `${pet.name}::${action.key}`;
+                        return (
+                          <View key={action.key} style={styles.actionRow}>
+                            <Text style={styles.actionLabel} numberOfLines={1}>
+                              {action.label}
+                            </Text>
+                            <StarRow value={actions[mapKey] || 0} onSet={(n) => setAction(pet.name, action.key, n)} />
+                          </View>
+                        );
+                      })}
+                    </View>
+                  )}
 
                   <Pressable
                     style={styles.foodToggleRow}
