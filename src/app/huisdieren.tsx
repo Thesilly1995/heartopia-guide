@@ -54,8 +54,6 @@ const STRINGS = {
     feedingEmpty: 'Nog niks ingevuld — voeg toe wat je al gevoerd hebt.',
     petNameLabel: 'Naam',
     petNamePlaceholder: 'Naam van je huisdier',
-    triedShow: (n: number) => `🍽️ Bekijk gerechten om te proberen (${n})`,
-    triedHide: '▲ Inklappen',
     triedHint: 'Dit zijn bekende gerechten, gewassen en wilde vruchten uit het spel — favoriete eten verschilt per dier, gebruik dit als aftekenlijst van wat je al geprobeerd hebt.',
     triedRecipes: 'Gerechten',
     triedCrops: 'Gewassen',
@@ -81,8 +79,6 @@ const STRINGS = {
     feedingEmpty: "Nothing added yet — add what you've already fed.",
     petNameLabel: 'Name',
     petNamePlaceholder: "Your pet's name",
-    triedShow: (n: number) => `🍽️ View dishes to try (${n})`,
-    triedHide: '▲ Collapse',
     triedHint: "These are known dishes, crops and wild fruit from the game — favorite food differs per pet, use this as a checklist of what you've already tried.",
     triedRecipes: 'Dishes',
     triedCrops: 'Crops',
@@ -110,7 +106,6 @@ export default function HuisdierenScreen() {
     ],
     [s, RECIPES, CROPS, WILD_FRUIT]
   );
-  const triedTotalCount = RECIPES.length + CROPS.length + WILD_FRUIT.length;
   const [tab, setTab] = useState<'cats' | 'dogs'>('cats');
   const [openName, setOpenName] = useState<string | null>(null);
   const [foodOpenName, setFoodOpenName] = useState<string | null>(null);
@@ -120,7 +115,7 @@ export default function HuisdierenScreen() {
   const [feeding, setFeeding] = useState<Record<string, FeedingEntry[]>>({});
   const [petNames, setPetNames] = useState<Record<string, string>>({});
   const [triedDishes, setTriedDishes] = useState<Record<string, string[]>>({});
-  const [dishesExpanded, setDishesExpanded] = useState(false);
+  const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -250,7 +245,7 @@ export default function HuisdierenScreen() {
           setOpenName(null);
           setFoodOpenName(null);
           setFoodInput('');
-          setDishesExpanded(false);
+          setExpandedCategory(null);
         }}
       />
       <FlatList
@@ -333,7 +328,7 @@ export default function HuisdierenScreen() {
                     onPress={() => {
                       setFoodOpenName(foodOpenName === pet.name ? null : pet.name);
                       setFoodInput('');
-                      setDishesExpanded(false);
+                      setExpandedCategory(null);
                     }}>
                     <Text style={styles.actionsLabel}>{s.feedingList}</Text>
                     <View style={styles.foodToggleRight}>
@@ -380,19 +375,24 @@ export default function HuisdierenScreen() {
                         </View>
                       )}
 
-                      <Pressable style={styles.foodToggleRow} onPress={() => setDishesExpanded(!dishesExpanded)}>
-                        <Text style={styles.triedToggleText}>
-                          {dishesExpanded ? s.triedHide : s.triedShow(triedTotalCount)}
-                        </Text>
-                      </Pressable>
+                      <Text style={[styles.mutedText, styles.triedIntro]}>{s.triedHint}</Text>
 
-                      {dishesExpanded && (
-                        <View style={styles.triedSection}>
-                          <Text style={styles.mutedText}>{s.triedHint}</Text>
-                          {TRIED_ITEMS.map((category) => (
-                            <View key={category.label}>
-                              <Text style={styles.triedCategoryLabel}>{category.label}</Text>
-                              <View style={styles.actionsList}>
+                      {TRIED_ITEMS.map((category) => {
+                        const isCategoryOpen = expandedCategory === category.label;
+                        return (
+                          <View key={category.label}>
+                            <Pressable
+                              style={styles.foodToggleRow}
+                              onPress={() => setExpandedCategory(isCategoryOpen ? null : category.label)}>
+                              <Text style={styles.triedToggleText}>{category.label}</Text>
+                              <View style={styles.foodToggleRight}>
+                                <Text style={styles.foodCountText}>{s.feedingCount(category.items.length)}</Text>
+                                <Text style={styles.chevron}>{isCategoryOpen ? '⌄' : '›'}</Text>
+                              </View>
+                            </Pressable>
+
+                            {isCategoryOpen && (
+                              <View style={styles.triedSection}>
                                 {category.items.map((food) => {
                                   const tried = (triedDishes[pet.name] || []).includes(food.name);
                                   return (
@@ -410,10 +410,10 @@ export default function HuisdierenScreen() {
                                   );
                                 })}
                               </View>
-                            </View>
-                          ))}
-                        </View>
-                      )}
+                            )}
+                          </View>
+                        );
+                      })}
                     </View>
                   )}
                 </View>
@@ -465,9 +465,9 @@ function makeStyles(c: ThemeColors) {
     nameRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 10 },
     nameLabel: { fontSize: 12, fontWeight: '700', color: c.forest },
     nameInput: { flex: 1, borderWidth: 1, borderColor: c.line, borderRadius: 10, paddingHorizontal: 10, paddingVertical: 7, fontSize: 13, color: c.forest, backgroundColor: c.card },
-    triedToggleText: { fontSize: 12, fontWeight: '700', color: c.coralDark },
-    triedSection: { marginTop: 6, gap: 8 },
-    triedCategoryLabel: { fontSize: 11, fontWeight: '700', color: c.forestSoft, marginTop: 8, marginBottom: 4 },
+    triedToggleText: { fontSize: 12, fontWeight: '700', color: c.forest },
+    triedIntro: { marginTop: 10 },
+    triedSection: { marginTop: 6, gap: 8, marginBottom: 4 },
     triedRow: { flexDirection: 'row', alignItems: 'center', gap: 8, padding: 8, borderRadius: 8, backgroundColor: c.surfaceSoft },
     triedLabel: { flex: 1, fontSize: 12, color: c.forest },
     checkbox: { width: 20, height: 20, borderRadius: 6, backgroundColor: c.card, borderWidth: 1, borderColor: c.line, alignItems: 'center', justifyContent: 'center' },
