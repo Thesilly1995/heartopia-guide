@@ -81,7 +81,7 @@ const STRINGS = {
     premiumTestOn: 'Test: Premium AAN',
     premiumTestOff: 'Test: Premium UIT',
     premiumBenefits: 'Krijg voordelen ✨',
-    dailyResetNote: (offset: string) => `Daily reset 06:00 ${offset}`,
+    dailyResetNote: 'Daily reset 06:00',
     serverModalTitle: 'Kies je server',
     langModalTitle: 'Kies je taal',
   },
@@ -97,7 +97,7 @@ const STRINGS = {
     premiumTestOn: 'Test: Premium ON',
     premiumTestOff: 'Test: Premium OFF',
     premiumBenefits: 'Get benefits ✨',
-    dailyResetNote: (offset: string) => `Daily reset 06:00 ${offset}`,
+    dailyResetNote: 'Daily reset 06:00',
     serverModalTitle: 'Choose your server',
     langModalTitle: 'Choose your language',
   },
@@ -113,7 +113,7 @@ const STRINGS = {
     premiumTestOn: 'Prueba: Premium ACTIVADO',
     premiumTestOff: 'Prueba: Premium DESACTIVADO',
     premiumBenefits: 'Obtén beneficios ✨',
-    dailyResetNote: (offset: string) => `Reinicio diario 06:00 ${offset}`,
+    dailyResetNote: 'Reinicio diario 06:00',
     serverModalTitle: 'Elige tu servidor',
     langModalTitle: 'Elige tu idioma',
   },
@@ -129,7 +129,7 @@ const STRINGS = {
     premiumTestOn: 'Teste: Premium ATIVADO',
     premiumTestOff: 'Teste: Premium DESATIVADO',
     premiumBenefits: 'Obtenha benefícios ✨',
-    dailyResetNote: (offset: string) => `Reinício diário 06:00 ${offset}`,
+    dailyResetNote: 'Reinício diário 06:00',
     serverModalTitle: 'Escolha seu servidor',
     langModalTitle: 'Escolha seu idioma',
   },
@@ -153,7 +153,6 @@ export default function HomeScreen() {
   const weekForecast = useWeekForecast();
   const missionsProgress = useMissionsProgress();
   const bubblesProgress = useBubblesProgress();
-  const gmtOffset = useMemo(() => formatGmtOffset(server.offsetHours), [server.offsetHours]);
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -262,7 +261,7 @@ export default function HomeScreen() {
             </TouchableOpacity>
           </Link>
         </View>
-        <Text style={styles.dailyResetNote}>{s.dailyResetNote(gmtOffset)}</Text>
+        <Text style={styles.dailyResetNote}>{s.dailyResetNote}</Text>
 
         {SECTIONS.map((section) => {
           const isPremiumSection = section.label.nl === 'Premium';
