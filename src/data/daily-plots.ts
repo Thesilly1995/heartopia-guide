@@ -1,19 +1,13 @@
 import { useMemo } from 'react';
 
 import { useLanguage } from '@/hooks/use-language';
+import { useServer } from '@/hooks/use-server';
+import { currentDailyResetKey } from '@/lib/reset-schedule';
 import { useRemoteContent } from '@/lib/remote-content';
 
 export interface DailyPlots {
   oakPlot: string | null;
   fluoritePlot: string | null;
-}
-
-function todayDateStr(): string {
-  const d = new Date();
-  const yyyy = d.getFullYear();
-  const mm = String(d.getMonth() + 1).padStart(2, '0');
-  const dd = String(d.getDate()).padStart(2, '0');
-  return `${yyyy}-${mm}-${dd}`;
 }
 
 /**
@@ -26,10 +20,11 @@ function todayDateStr(): string {
  */
 export function useDailyPlots(): DailyPlots {
   const { language } = useLanguage();
+  const { server } = useServer();
   const { payload } = useRemoteContent();
 
   return useMemo(() => {
-    const today = todayDateStr();
+    const today = currentDailyResetKey(server.offsetHours);
     const calendarEntry = payload?.dailyPlotsCalendar?.find((entry) => entry.date === today);
     if (calendarEntry) {
       return {
@@ -42,5 +37,5 @@ export function useDailyPlots(): DailyPlots {
       oakPlot: language === 'en' ? payload.dailyPlots.oakPlotEn : payload.dailyPlots.oakPlotNl,
       fluoritePlot: language === 'en' ? payload.dailyPlots.fluoritePlotEn : payload.dailyPlots.fluoritePlotNl,
     };
-  }, [payload, language]);
+  }, [payload, language, server.offsetHours]);
 }

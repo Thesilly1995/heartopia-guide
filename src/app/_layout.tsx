@@ -15,6 +15,7 @@ import { AuthProvider } from '@/hooks/use-auth';
 import { LanguageProvider } from '@/hooks/use-language';
 import { NotificationsProvider } from '@/hooks/use-notifications';
 import { usePremium, PremiumProvider } from '@/hooks/use-premium';
+import { ServerProvider } from '@/hooks/use-server';
 import { maybeRequestReview } from '@/lib/store-review';
 
 SplashScreen.preventAutoHideAsync();
@@ -27,13 +28,15 @@ export default function RootLayout() {
   }, []);
   return (
     <LanguageProvider>
-      <PremiumProvider>
-        <AuthProvider>
-          <NotificationsProvider>
-            <AppContent />
-          </NotificationsProvider>
-        </AuthProvider>
-      </PremiumProvider>
+      <ServerProvider>
+        <PremiumProvider>
+          <AuthProvider>
+            <NotificationsProvider>
+              <AppContent />
+            </NotificationsProvider>
+          </AuthProvider>
+        </PremiumProvider>
+      </ServerProvider>
     </LanguageProvider>
   );
 }
