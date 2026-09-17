@@ -12,11 +12,14 @@ import { useCatActions } from '@/data/cat-actions';
 import { CatItem, useCats } from '@/data/cats';
 import { useDogActions } from '@/data/dog-actions';
 import { DogItem, useDogs } from '@/data/dogs';
+import { useRecipes } from '@/data/recipes';
 import { useLanguage } from '@/hooks/use-language';
 
 const BONDS_KEY = 'heartopia:huisdieren:vriendschap';
 const ACTIONS_KEY = 'heartopia:huisdieren:acties';
 const FEEDING_KEY = 'heartopia:huisdieren:voeding-items';
+const NAMES_KEY = 'heartopia:huisdieren:namen';
+const TRIED_DISHES_KEY = 'heartopia:huisdieren:geprobeerde-gerechten';
 
 interface FeedingEntry {
   text: string;
@@ -47,6 +50,11 @@ const STRINGS = {
     feedingPlaceholder: 'Bijv. appel, gegrilde champignon...',
     feedingAdd: 'Toevoegen',
     feedingEmpty: 'Nog niks ingevuld — voeg toe wat je al gevoerd hebt.',
+    petNameLabel: 'Naam',
+    petNamePlaceholder: 'Naam van je huisdier',
+    triedShow: (n: number) => `🍽️ Bekijk gerechten om te proberen (${n})`,
+    triedHide: '▲ Inklappen',
+    triedHint: 'Dit zijn bekende gerechten uit het spel — favoriete eten verschilt per dier, gebruik dit als aftekenlijst van wat je al geprobeerd hebt.',
   },
   en: {
     title: 'Dog & Cat Moments',
@@ -66,6 +74,11 @@ const STRINGS = {
     feedingPlaceholder: 'E.g. apple, grilled mushroom...',
     feedingAdd: 'Add',
     feedingEmpty: "Nothing added yet — add what you've already fed.",
+    petNameLabel: 'Name',
+    petNamePlaceholder: "Your pet's name",
+    triedShow: (n: number) => `🍽️ View dishes to try (${n})`,
+    triedHide: '▲ Collapse',
+    triedHint: "These are known dishes from the game — favorite food differs per pet, use this as a checklist of what you've already tried.",
   },
 } as const;
 
@@ -78,6 +91,7 @@ export default function HuisdierenScreen() {
   const CATS = useCats();
   const DOG_ACTIONS = useDogActions();
   const DOGS = useDogs();
+  const RECIPES = useRecipes();
   const [tab, setTab] = useState<'cats' | 'dogs'>('cats');
   const [openName, setOpenName] = useState<string | null>(null);
   const [foodOpenName, setFoodOpenName] = useState<string | null>(null);
@@ -85,22 +99,31 @@ export default function HuisdierenScreen() {
   const [bonds, setBonds] = useState<Record<string, number>>({});
   const [actions, setActions] = useState<Record<string, number>>({});
   const [feeding, setFeeding] = useState<Record<string, FeedingEntry[]>>({});
+  const [petNames, setPetNames] = useState<Record<string, string>>({});
+  const [triedDishes, setTriedDishes] = useState<Record<string, string[]>>({});
+  const [dishesExpanded, setDishesExpanded] = useState(false);
 
   useEffect(() => {
     (async () => {
       try {
-        const [bondsRaw, actionsRaw, feedingRaw] = await Promise.all([
+        const [bondsRaw, actionsRaw, feedingRaw, namesRaw, triedRaw] = await Promise.all([
           AsyncStorage.getItem(BONDS_KEY),
           AsyncStorage.getItem(ACTIONS_KEY),
           AsyncStorage.getItem(FEEDING_KEY),
+          AsyncStorage.getItem(NAMES_KEY),
+          AsyncStorage.getItem(TRIED_DISHES_KEY),
         ]);
         setBonds(bondsRaw ? JSON.parse(bondsRaw) : {});
         setActions(actionsRaw ? JSON.parse(actionsRaw) : {});
         setFeeding(feedingRaw ? JSON.parse(feedingRaw) : {});
+        setPetNames(namesRaw ? JSON.parse(namesRaw) : {});
+        setTriedDishes(triedRaw ? JSON.parse(triedRaw) : {});
       } catch {
         setBonds({});
         setActions({});
         setFeeding({});
+        setPetNames({});
+        setTriedDishes({});
       }
     })();
   }, []);
@@ -155,6 +178,30 @@ export default function HuisdierenScreen() {
     saveFeeding({ ...feeding, [name]: current.filter((_, i) => i !== index) });
   };
 
+  const setPetName = async (name: string, value: string) => {
+    const updated = { ...petNames, [name]: value };
+    setPetNames(updated);
+    try {
+      await AsyncStorage.setItem(NAMES_KEY, JSON.stringify(updated));
+    } catch {
+      // opslaan mislukt
+    }
+  };
+
+  const toggleTriedDish = async (name: string, dish: string) => {
+    const current = triedDishes[name] || [];
+    const updated = {
+      ...triedDishes,
+      [name]: current.includes(dish) ? current.filter((d) => d !== dish) : [...current, dish],
+    };
+    setTriedDishes(updated);
+    try {
+      await AsyncStorage.setItem(TRIED_DISHES_KEY, JSON.stringify(updated));
+    } catch {
+      // opslaan mislukt
+    }
+  };
+
   const items: (CatItem | DogItem)[] = tab === 'cats' ? CATS : DOGS;
   const petActions = tab === 'cats' ? CAT_ACTIONS : DOG_ACTIONS;
   const sortedItems = useMemo(
@@ -184,6 +231,7 @@ export default function HuisdierenScreen() {
           setOpenName(null);
           setFoodOpenName(null);
           setFoodInput('');
+          setDishesExpanded(false);
         }}
       />
       <FlatList
@@ -221,6 +269,17 @@ export default function HuisdierenScreen() {
 
               {isOpen && (
                 <View style={styles.cardBody}>
+                  <View style={styles.nameRow}>
+                    <Text style={styles.nameLabel}>{s.petNameLabel}</Text>
+                    <TextInput
+                      value={petNames[pet.name] || ''}
+                      onChangeText={(text) => setPetName(pet.name, text)}
+                      placeholder={s.petNamePlaceholder}
+                      placeholderTextColor={colors.forestSoft}
+                      style={styles.nameInput}
+                    />
+                  </View>
+
                   {size || pet.ability ? (
                     <View style={styles.detailGrid}>
                       {size && <InfoCard label={s.size} value={size} />}
@@ -255,6 +314,7 @@ export default function HuisdierenScreen() {
                     onPress={() => {
                       setFoodOpenName(foodOpenName === pet.name ? null : pet.name);
                       setFoodInput('');
+                      setDishesExpanded(false);
                     }}>
                     <Text style={styles.actionsLabel}>{s.feedingList}</Text>
                     <View style={styles.foodToggleRight}>
@@ -298,6 +358,36 @@ export default function HuisdierenScreen() {
                               </Pressable>
                             </View>
                           ))}
+                        </View>
+                      )}
+
+                      <Pressable style={styles.foodToggleRow} onPress={() => setDishesExpanded(!dishesExpanded)}>
+                        <Text style={styles.triedToggleText}>
+                          {dishesExpanded ? s.triedHide : s.triedShow(RECIPES.length)}
+                        </Text>
+                      </Pressable>
+
+                      {dishesExpanded && (
+                        <View style={styles.triedSection}>
+                          <Text style={styles.mutedText}>{s.triedHint}</Text>
+                          <View style={styles.actionsList}>
+                            {RECIPES.map((recipe) => {
+                              const tried = (triedDishes[pet.name] || []).includes(recipe.name);
+                              return (
+                                <Pressable
+                                  key={recipe.name}
+                                  style={styles.triedRow}
+                                  onPress={() => toggleTriedDish(pet.name, recipe.name)}>
+                                  <View style={[styles.checkbox, tried && styles.checkboxActive]}>
+                                    {tried && <Text style={styles.checkmark}>✓</Text>}
+                                  </View>
+                                  <Text style={styles.triedLabel} numberOfLines={1}>
+                                    {recipe.emoji} {recipe.name}
+                                  </Text>
+                                </Pressable>
+                              );
+                            })}
+                          </View>
                         </View>
                       )}
                     </View>
@@ -348,5 +438,15 @@ function makeStyles(c: ThemeColors) {
     heartIcon: { fontSize: 15 },
     foodLabel: { flex: 1, fontSize: 12, color: c.forest },
     foodRemoveText: { fontSize: 13, color: c.forestSoft },
+    nameRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 10 },
+    nameLabel: { fontSize: 12, fontWeight: '700', color: c.forest },
+    nameInput: { flex: 1, borderWidth: 1, borderColor: c.line, borderRadius: 10, paddingHorizontal: 10, paddingVertical: 7, fontSize: 13, color: c.forest, backgroundColor: c.card },
+    triedToggleText: { fontSize: 12, fontWeight: '700', color: c.coralDark },
+    triedSection: { marginTop: 6, gap: 8 },
+    triedRow: { flexDirection: 'row', alignItems: 'center', gap: 8, padding: 8, borderRadius: 8, backgroundColor: c.surfaceSoft },
+    triedLabel: { flex: 1, fontSize: 12, color: c.forest },
+    checkbox: { width: 20, height: 20, borderRadius: 6, backgroundColor: c.card, borderWidth: 1, borderColor: c.line, alignItems: 'center', justifyContent: 'center' },
+    checkboxActive: { backgroundColor: c.yellow, borderColor: c.yellow },
+    checkmark: { fontSize: 12, color: '#FFFFFF', fontWeight: '700' },
   });
 }
