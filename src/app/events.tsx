@@ -87,10 +87,11 @@ type EventItem = {
 };
 
 function mapSighting(item: RemoteEventSighting, language: Language): EventItem {
+  const note = language === 'nl' ? item.noteNl : language === 'es' ? item.noteEs ?? item.noteEn : language === 'pt' ? item.notePt ?? item.noteEn : item.noteEn;
   return {
     name: item.nameEn,
     spot: item.spotEn,
-    note: language === 'nl' ? item.noteNl : item.noteEn,
+    note,
     emoji: item.emoji,
     gold: item.gold,
     tokens: item.tokens,
@@ -98,9 +99,10 @@ function mapSighting(item: RemoteEventSighting, language: Language): EventItem {
 }
 
 function mapRecipe(item: RemoteEventRecipe, language: Language): EventItem {
+  const ingredients = language === 'es' ? item.ingredientsEs ?? item.ingredientsEn : language === 'pt' ? item.ingredientsPt ?? item.ingredientsEn : item.ingredientsEn;
   return {
     name: item.nameEn,
-    ingredients: item.ingredientsEn,
+    ingredients,
     emoji: item.emoji,
     gold: item.gold,
     tokens: item.tokens,

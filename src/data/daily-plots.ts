@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { useLanguage } from '@/hooks/use-language';
+import { Language, useLanguage } from '@/hooks/use-language';
 import { useServer } from '@/hooks/use-server';
 import { currentDailyResetKey } from '@/lib/reset-schedule';
 import { useRemoteContent } from '@/lib/remote-content';
@@ -8,6 +8,13 @@ import { useRemoteContent } from '@/lib/remote-content';
 export interface DailyPlots {
   oakPlot: string | null;
   fluoritePlot: string | null;
+}
+
+/** `es`/`pt` zijn optioneel in de JSON — ontbreken ze (nog), dan valt de app terug op Engels. */
+function localizedPlot(nl: string, en: string, es: string | undefined, pt: string | undefined, language: Language): string {
+  if (language === 'es') return es ?? en;
+  if (language === 'pt') return pt ?? en;
+  return language === 'en' ? en : nl;
 }
 
 /**
@@ -28,14 +35,14 @@ export function useDailyPlots(): DailyPlots {
     const calendarEntry = payload?.dailyPlotsCalendar?.find((entry) => entry.date === today);
     if (calendarEntry) {
       return {
-        oakPlot: language === 'en' || language === 'es' || language === 'pt' ? calendarEntry.oakPlotEn : calendarEntry.oakPlotNl,
-        fluoritePlot: language === 'en' || language === 'es' || language === 'pt' ? calendarEntry.fluoritePlotEn : calendarEntry.fluoritePlotNl,
+        oakPlot: localizedPlot(calendarEntry.oakPlotNl, calendarEntry.oakPlotEn, calendarEntry.oakPlotEs, calendarEntry.oakPlotPt, language),
+        fluoritePlot: localizedPlot(calendarEntry.fluoritePlotNl, calendarEntry.fluoritePlotEn, calendarEntry.fluoritePlotEs, calendarEntry.fluoritePlotPt, language),
       };
     }
     if (!payload?.dailyPlots) return { oakPlot: null, fluoritePlot: null };
     return {
-      oakPlot: language === 'en' || language === 'es' || language === 'pt' ? payload.dailyPlots.oakPlotEn : payload.dailyPlots.oakPlotNl,
-      fluoritePlot: language === 'en' || language === 'es' || language === 'pt' ? payload.dailyPlots.fluoritePlotEn : payload.dailyPlots.fluoritePlotNl,
+      oakPlot: localizedPlot(payload.dailyPlots.oakPlotNl, payload.dailyPlots.oakPlotEn, payload.dailyPlots.oakPlotEs, payload.dailyPlots.oakPlotPt, language),
+      fluoritePlot: localizedPlot(payload.dailyPlots.fluoritePlotNl, payload.dailyPlots.fluoritePlotEn, payload.dailyPlots.fluoritePlotEs, payload.dailyPlots.fluoritePlotPt, language),
     };
   }, [payload, language, server.offsetHours]);
 }
