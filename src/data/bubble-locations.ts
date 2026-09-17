@@ -95,5 +95,7 @@ export function useBubbleWeekLabel(): string {
   const { payload } = useRemoteContent();
   const week = payload?.bubbleWeek;
   if (!week) return FALLBACK_WEEK_LABEL[language];
-  return language === 'en' || language === 'es' || language === 'pt' ? week.weekLabelEn : week.weekLabelNl;
+  if (language === 'es') return week.weekLabelEs ?? week.weekLabelEn;
+  if (language === 'pt') return week.weekLabelPt ?? week.weekLabelEn;
+  return language === 'en' ? week.weekLabelEn : week.weekLabelNl;
 }

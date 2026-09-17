@@ -19,8 +19,7 @@ export interface CurrentEventMeta {
 
 /**
  * Naam/data van het huidige event — remote override indien aanwezig, anders "geen actief event".
- * De remote content (remote-content.json) heeft alleen nl/en datums; es/pt vallen daarom terug op
- * het Engels tot de JSON-content ook in die talen wordt aangeleverd.
+ * `datesEs`/`datesPt` zijn optioneel in de JSON — ontbreken ze (nog), dan valt de app terug op Engels.
  */
 export function useCurrentEventMeta(): CurrentEventMeta {
   const { language } = useLanguage();
@@ -28,9 +27,11 @@ export function useCurrentEventMeta(): CurrentEventMeta {
   const remote = payload?.event;
 
   if (remote) {
+    const dates =
+      language === 'es' ? remote.datesEs ?? remote.datesEn : language === 'pt' ? remote.datesPt ?? remote.datesEn : language === 'en' ? remote.datesEn : remote.datesNl;
     return {
       name: remote.nameEn,
-      dates: language === 'en' || language === 'es' || language === 'pt' ? remote.datesEn : remote.datesNl,
+      dates,
       emoji: '🎉',
     };
   }
