@@ -7,6 +7,7 @@ import { ChecklistRow } from '@/components/heartopia/checklist-row';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { useLanguage } from '@/hooks/use-language';
+import { useServer } from '@/hooks/use-server';
 import { currentDailyResetKey, currentWeeklyResetKey } from '@/lib/reset-schedule';
 
 const STORAGE_KEY = 'heartopia:missies:vinkjes';
@@ -136,6 +137,7 @@ export default function MissiesScreen() {
   const colors = useHeartopiaColors();
   const styles = useMemo(() => makeStyles(colors), [colors]);
   const { language } = useLanguage();
+  const { server } = useServer();
   const s = STRINGS[language];
   const [tab, setTab] = useState<'daily' | 'weekly'>('daily');
   const [checked, setChecked] = useState<Record<string, boolean>>({});
@@ -167,7 +169,7 @@ export default function MissiesScreen() {
       let customChanged = false;
 
       try {
-        const todayKey = currentDailyResetKey();
+        const todayKey = currentDailyResetKey(server.offsetHours);
         if ((await AsyncStorage.getItem(DAILY_RESET_DAY_KEY)) !== todayKey) {
           loadedChecked = Object.fromEntries(Object.entries(loadedChecked).filter(([key]) => !DAILY_KEYS.includes(key)));
           checkedChanged = true;
@@ -178,7 +180,7 @@ export default function MissiesScreen() {
           await AsyncStorage.setItem(DAILY_RESET_DAY_KEY, todayKey);
         }
 
-        const weekKey = currentWeeklyResetKey();
+        const weekKey = currentWeeklyResetKey(server.offsetHours);
         if ((await AsyncStorage.getItem(WEEKLY_RESET_WEEK_KEY)) !== weekKey) {
           loadedChecked = Object.fromEntries(Object.entries(loadedChecked).filter(([key]) => !WEEKLY_KEYS.includes(key)));
           checkedChanged = true;
@@ -193,7 +195,7 @@ export default function MissiesScreen() {
       if (checkedChanged) AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(loadedChecked)).catch(() => {});
       if (customChanged) AsyncStorage.setItem(CUSTOM_STORAGE_KEY, JSON.stringify(loadedCustom)).catch(() => {});
     })();
-  }, []);
+  }, [server.offsetHours]);
 
   const toggle = async (key: string) => {
     const updated = { ...checked, [key]: !checked[key] };
@@ -212,9 +214,9 @@ export default function MissiesScreen() {
     try {
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
       if (tab === 'daily') {
-        await AsyncStorage.setItem(DAILY_RESET_DAY_KEY, currentDailyResetKey());
+        await AsyncStorage.setItem(DAILY_RESET_DAY_KEY, currentDailyResetKey(server.offsetHours));
       } else {
-        await AsyncStorage.setItem(WEEKLY_RESET_WEEK_KEY, currentWeeklyResetKey());
+        await AsyncStorage.setItem(WEEKLY_RESET_WEEK_KEY, currentWeeklyResetKey(server.offsetHours));
       }
     } catch {
       // opslaan mislukt

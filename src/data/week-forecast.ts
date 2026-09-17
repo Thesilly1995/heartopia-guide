@@ -1,6 +1,8 @@
 import { useMemo } from 'react';
 
 import { useLanguage } from '@/hooks/use-language';
+import { useServer } from '@/hooks/use-server';
+import { currentDailyResetKey } from '@/lib/reset-schedule';
 import { RemoteWeekForecastSlot, useRemoteContent, WeekForecastBlock, WeekForecastKind } from '@/lib/remote-content';
 
 export interface WeekForecastSlot {
@@ -64,14 +66,6 @@ const WEEKDAYS = {
 
 const TODAY_LABEL = { nl: 'Vandaag', en: 'Today' } as const;
 
-function todayDateStr(): string {
-  const d = new Date();
-  const yyyy = d.getFullYear();
-  const mm = String(d.getMonth() + 1).padStart(2, '0');
-  const dd = String(d.getDate()).padStart(2, '0');
-  return `${yyyy}-${mm}-${dd}`;
-}
-
 /**
  * De weekvoorspelling (in-game weekvoorspelling-telefoontje): één rij per
  * resterende dag van vandaag tot en met zondag, inclusief dagen zonder
@@ -83,11 +77,12 @@ function todayDateStr(): string {
  */
 export function useWeekForecast(): WeekForecastEntry[] {
   const { language } = useLanguage();
+  const { server } = useServer();
   const { payload } = useRemoteContent();
 
   return useMemo(() => {
     const entries = payload?.weekForecast ?? [];
-    const today = todayDateStr();
+    const today = currentDailyResetKey(server.offsetHours);
     return entries
       .filter((entry) => entry.date >= today)
       .sort((a, b) => a.date.localeCompare(b.date))
@@ -114,5 +109,5 @@ export function useWeekForecast(): WeekForecastEntry[] {
           weekdayLabel: weekday,
         };
       });
-  }, [payload, language]);
+  }, [payload, language, server.offsetHours]);
 }

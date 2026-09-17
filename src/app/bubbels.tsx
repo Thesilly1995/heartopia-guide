@@ -9,6 +9,7 @@ import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { useBubbleLocations, useBubbleWeekLabel } from '@/data/bubble-locations';
 import { useLanguage } from '@/hooks/use-language';
+import { useServer } from '@/hooks/use-server';
 import { currentWeeklyResetKey } from '@/lib/reset-schedule';
 
 const STORAGE_KEY = 'heartopia:bubbels:vinkjes';
@@ -46,6 +47,7 @@ export default function BubbelsScreen() {
   const colors = useHeartopiaColors();
   const styles = useMemo(() => makeStyles(colors), [colors]);
   const { language } = useLanguage();
+  const { server } = useServer();
   const s = STRINGS[language];
   const BUBBLE_LOCATIONS = useBubbleLocations();
   const weekLabel = useBubbleWeekLabel();
@@ -63,7 +65,7 @@ export default function BubbelsScreen() {
       }
 
       try {
-        const weekKey = currentWeeklyResetKey();
+        const weekKey = currentWeeklyResetKey(server.offsetHours);
         if ((await AsyncStorage.getItem(RESET_WEEK_KEY)) !== weekKey) {
           loaded = {};
           await AsyncStorage.setItem(RESET_WEEK_KEY, weekKey);
@@ -75,7 +77,7 @@ export default function BubbelsScreen() {
 
       setChecked(loaded);
     })();
-  }, []);
+  }, [server.offsetHours]);
 
   const toggle = async (num: number) => {
     const updated = { ...checked, [num]: !checked[num] };
@@ -91,7 +93,7 @@ export default function BubbelsScreen() {
     setChecked({});
     try {
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify({}));
-      await AsyncStorage.setItem(RESET_WEEK_KEY, currentWeeklyResetKey());
+      await AsyncStorage.setItem(RESET_WEEK_KEY, currentWeeklyResetKey(server.offsetHours));
     } catch {
       // opslaan mislukt
     }

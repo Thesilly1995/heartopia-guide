@@ -1,6 +1,6 @@
 import { Link } from 'expo-router';
 import { useMemo, useState } from 'react';
-import { Platform, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Modal, Platform, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
@@ -13,7 +13,8 @@ import { useRainbowSpots } from '@/data/rainbow-spots';
 import { useWeekForecast } from '@/data/week-forecast';
 import { useLanguage } from '@/hooks/use-language';
 import { usePremium } from '@/hooks/use-premium';
-import { currentAmsterdamGmtOffset } from '@/lib/reset-schedule';
+import { SERVERS, useServer } from '@/hooks/use-server';
+import { formatGmtOffset } from '@/lib/reset-schedule';
 
 const SECTIONS: {
   label: { nl: string; en: string };
@@ -79,6 +80,7 @@ const STRINGS = {
     premiumTestOff: 'Test: Premium UIT',
     premiumBenefits: 'Krijg voordelen ✨',
     dailyResetNote: (offset: string) => `Daily reset 06:00 ${offset}`,
+    serverModalTitle: 'Kies je server',
   },
   en: {
     welcome: 'Welcome to',
@@ -93,6 +95,7 @@ const STRINGS = {
     premiumTestOff: 'Test: Premium OFF',
     premiumBenefits: 'Get benefits ✨',
     dailyResetNote: (offset: string) => `Daily reset 06:00 ${offset}`,
+    serverModalTitle: 'Choose your server',
   },
 } as const;
 
@@ -101,9 +104,11 @@ export default function HomeScreen() {
   const styles = useMemo(() => makeStyles(colors), [colors]);
   const { language, toggleLanguage } = useLanguage();
   const { premium, togglePremium } = usePremium();
+  const { server, setServer } = useServer();
   const s = STRINGS[language];
   const [forecastExpanded, setForecastExpanded] = useState(false);
   const [comingSoonKey, setComingSoonKey] = useState<string | null>(null);
+  const [serverPickerOpen, setServerPickerOpen] = useState(false);
   const dailyPlots = useDailyPlots();
   const eventMeta = useCurrentEventMeta();
   const rainbowSpots = useRainbowSpots();
@@ -111,7 +116,7 @@ export default function HomeScreen() {
   const weekForecast = useWeekForecast();
   const missionsProgress = useMissionsProgress();
   const bubblesProgress = useBubblesProgress();
-  const gmtOffset = useMemo(() => currentAmsterdamGmtOffset(), []);
+  const gmtOffset = useMemo(() => formatGmtOffset(server.offsetHours), [server.offsetHours]);
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -121,11 +126,16 @@ export default function HomeScreen() {
               <Text style={styles.welcome}>{s.welcome}</Text>
               <Text style={styles.title}>{s.title}</Text>
             </View>
-            <Pressable style={styles.langSwitch} onPress={toggleLanguage} hitSlop={8}>
-              <Text style={[styles.langOption, language === 'nl' && styles.langOptionActive]}>NL</Text>
-              <Text style={styles.langDivider}>/</Text>
-              <Text style={[styles.langOption, language === 'en' && styles.langOptionActive]}>EN</Text>
-            </Pressable>
+            <View style={styles.headerTopRight}>
+              <Pressable style={styles.serverSwitch} onPress={() => setServerPickerOpen(true)} hitSlop={8}>
+                <Text style={styles.serverSwitchText}>🌐 {server.label}</Text>
+              </Pressable>
+              <Pressable style={styles.langSwitch} onPress={toggleLanguage} hitSlop={8}>
+                <Text style={[styles.langOption, language === 'nl' && styles.langOptionActive]}>NL</Text>
+                <Text style={styles.langDivider}>/</Text>
+                <Text style={[styles.langOption, language === 'en' && styles.langOptionActive]}>EN</Text>
+              </Pressable>
+            </View>
           </View>
         </View>
 
@@ -276,6 +286,31 @@ export default function HomeScreen() {
           );
         })}
       </ScrollView>
+
+      <Modal visible={serverPickerOpen} transparent animationType="fade" onRequestClose={() => setServerPickerOpen(false)}>
+        <Pressable style={styles.modalBackdrop} onPress={() => setServerPickerOpen(false)}>
+          <View style={styles.modalCard}>
+            <Text style={styles.modalTitle}>{s.serverModalTitle}</Text>
+            {SERVERS.map((option) => {
+              const active = option.id === server.id;
+              return (
+                <Pressable
+                  key={option.id}
+                  style={[styles.serverOptionRow, active && styles.serverOptionRowActive]}
+                  onPress={() => {
+                    setServer(option);
+                    setServerPickerOpen(false);
+                  }}>
+                  <Text style={[styles.serverOptionText, active && styles.serverOptionTextActive]}>{option.label}</Text>
+                  <Text style={[styles.serverOptionOffset, active && styles.serverOptionTextActive]}>
+                    {formatGmtOffset(option.offsetHours)}
+                  </Text>
+                </Pressable>
+              );
+            })}
+          </View>
+        </Pressable>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -286,12 +321,23 @@ function makeStyles(c: ThemeColors) {
     scrollContent: { padding: 20, paddingBottom: 40, gap: 4 },
     header: { paddingVertical: 20, paddingTop: Platform.OS === 'web' ? 56 : 20 },
     headerTopRow: { flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between' },
+    headerTopRight: { alignItems: 'flex-end', gap: 6 },
     welcome: { color: c.forestSoft, fontSize: 14 },
     title: { color: c.forest, fontSize: 28, fontWeight: 'bold', marginTop: 4 },
-    langSwitch: { flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: c.card, borderWidth: 1, borderColor: c.line, borderRadius: 999, paddingHorizontal: 10, paddingVertical: 6, marginTop: 4 },
+    langSwitch: { flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: c.card, borderWidth: 1, borderColor: c.line, borderRadius: 999, paddingHorizontal: 10, paddingVertical: 6 },
     langOption: { fontSize: 12, fontWeight: '700', color: c.forestSoft },
     langOptionActive: { color: c.coral },
     langDivider: { fontSize: 12, color: c.line },
+    serverSwitch: { backgroundColor: c.card, borderWidth: 1, borderColor: c.line, borderRadius: 999, paddingHorizontal: 10, paddingVertical: 6 },
+    serverSwitchText: { fontSize: 11, fontWeight: '700', color: c.forestSoft },
+    modalBackdrop: { flex: 1, backgroundColor: 'rgba(0,0,0,0.4)', alignItems: 'center', justifyContent: 'center', padding: 24 },
+    modalCard: { width: '100%', maxWidth: 320, backgroundColor: c.card, borderRadius: 18, padding: 16, gap: 8 },
+    modalTitle: { fontSize: 15, fontWeight: '700', color: c.forest, marginBottom: 4 },
+    serverOptionRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 12, borderRadius: 12, backgroundColor: c.surfaceSoft, borderWidth: 1, borderColor: c.line },
+    serverOptionRowActive: { backgroundColor: c.coral, borderColor: c.coral },
+    serverOptionText: { fontSize: 14, fontWeight: '600', color: c.forest },
+    serverOptionOffset: { fontSize: 12, color: c.forestSoft },
+    serverOptionTextActive: { color: '#FFFFFF' },
     statusCard: {
       flexDirection: 'row',
       alignItems: 'center',
