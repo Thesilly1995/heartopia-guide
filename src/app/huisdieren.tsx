@@ -10,9 +10,11 @@ import { StarRow } from '@/components/heartopia/star-row';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { useCatActions } from '@/data/cat-actions';
 import { CatItem, useCats } from '@/data/cats';
+import { useCrops } from '@/data/crops';
 import { useDogActions } from '@/data/dog-actions';
 import { DogItem, useDogs } from '@/data/dogs';
 import { useRecipes } from '@/data/recipes';
+import { useWildFruit } from '@/data/wild-fruit';
 import { useLanguage } from '@/hooks/use-language';
 
 const BONDS_KEY = 'heartopia:huisdieren:vriendschap';
@@ -54,7 +56,10 @@ const STRINGS = {
     petNamePlaceholder: 'Naam van je huisdier',
     triedShow: (n: number) => `🍽️ Bekijk gerechten om te proberen (${n})`,
     triedHide: '▲ Inklappen',
-    triedHint: 'Dit zijn bekende gerechten uit het spel — favoriete eten verschilt per dier, gebruik dit als aftekenlijst van wat je al geprobeerd hebt.',
+    triedHint: 'Dit zijn bekende gerechten, gewassen en wilde vruchten uit het spel — favoriete eten verschilt per dier, gebruik dit als aftekenlijst van wat je al geprobeerd hebt.',
+    triedRecipes: 'Gerechten',
+    triedCrops: 'Gewassen',
+    triedWildFruit: 'Wilde vruchten',
   },
   en: {
     title: 'Dog & Cat Moments',
@@ -78,7 +83,10 @@ const STRINGS = {
     petNamePlaceholder: "Your pet's name",
     triedShow: (n: number) => `🍽️ View dishes to try (${n})`,
     triedHide: '▲ Collapse',
-    triedHint: "These are known dishes from the game — favorite food differs per pet, use this as a checklist of what you've already tried.",
+    triedHint: "These are known dishes, crops and wild fruit from the game — favorite food differs per pet, use this as a checklist of what you've already tried.",
+    triedRecipes: 'Dishes',
+    triedCrops: 'Crops',
+    triedWildFruit: 'Wild fruit',
   },
 } as const;
 
@@ -92,6 +100,17 @@ export default function HuisdierenScreen() {
   const DOG_ACTIONS = useDogActions();
   const DOGS = useDogs();
   const RECIPES = useRecipes();
+  const CROPS = useCrops();
+  const WILD_FRUIT = useWildFruit();
+  const TRIED_ITEMS = useMemo(
+    () => [
+      { label: s.triedRecipes, items: RECIPES },
+      { label: s.triedCrops, items: CROPS },
+      { label: s.triedWildFruit, items: WILD_FRUIT },
+    ],
+    [s, RECIPES, CROPS, WILD_FRUIT]
+  );
+  const triedTotalCount = RECIPES.length + CROPS.length + WILD_FRUIT.length;
   const [tab, setTab] = useState<'cats' | 'dogs'>('cats');
   const [openName, setOpenName] = useState<string | null>(null);
   const [foodOpenName, setFoodOpenName] = useState<string | null>(null);
@@ -363,31 +382,36 @@ export default function HuisdierenScreen() {
 
                       <Pressable style={styles.foodToggleRow} onPress={() => setDishesExpanded(!dishesExpanded)}>
                         <Text style={styles.triedToggleText}>
-                          {dishesExpanded ? s.triedHide : s.triedShow(RECIPES.length)}
+                          {dishesExpanded ? s.triedHide : s.triedShow(triedTotalCount)}
                         </Text>
                       </Pressable>
 
                       {dishesExpanded && (
                         <View style={styles.triedSection}>
                           <Text style={styles.mutedText}>{s.triedHint}</Text>
-                          <View style={styles.actionsList}>
-                            {RECIPES.map((recipe) => {
-                              const tried = (triedDishes[pet.name] || []).includes(recipe.name);
-                              return (
-                                <Pressable
-                                  key={recipe.name}
-                                  style={styles.triedRow}
-                                  onPress={() => toggleTriedDish(pet.name, recipe.name)}>
-                                  <View style={[styles.checkbox, tried && styles.checkboxActive]}>
-                                    {tried && <Text style={styles.checkmark}>✓</Text>}
-                                  </View>
-                                  <Text style={styles.triedLabel} numberOfLines={1}>
-                                    {recipe.emoji} {recipe.name}
-                                  </Text>
-                                </Pressable>
-                              );
-                            })}
-                          </View>
+                          {TRIED_ITEMS.map((category) => (
+                            <View key={category.label}>
+                              <Text style={styles.triedCategoryLabel}>{category.label}</Text>
+                              <View style={styles.actionsList}>
+                                {category.items.map((food) => {
+                                  const tried = (triedDishes[pet.name] || []).includes(food.name);
+                                  return (
+                                    <Pressable
+                                      key={food.name}
+                                      style={styles.triedRow}
+                                      onPress={() => toggleTriedDish(pet.name, food.name)}>
+                                      <View style={[styles.checkbox, tried && styles.checkboxActive]}>
+                                        {tried && <Text style={styles.checkmark}>✓</Text>}
+                                      </View>
+                                      <Text style={styles.triedLabel} numberOfLines={1}>
+                                        {food.emoji} {food.name}
+                                      </Text>
+                                    </Pressable>
+                                  );
+                                })}
+                              </View>
+                            </View>
+                          ))}
                         </View>
                       )}
                     </View>
@@ -443,6 +467,7 @@ function makeStyles(c: ThemeColors) {
     nameInput: { flex: 1, borderWidth: 1, borderColor: c.line, borderRadius: 10, paddingHorizontal: 10, paddingVertical: 7, fontSize: 13, color: c.forest, backgroundColor: c.card },
     triedToggleText: { fontSize: 12, fontWeight: '700', color: c.coralDark },
     triedSection: { marginTop: 6, gap: 8 },
+    triedCategoryLabel: { fontSize: 11, fontWeight: '700', color: c.forestSoft, marginTop: 8, marginBottom: 4 },
     triedRow: { flexDirection: 'row', alignItems: 'center', gap: 8, padding: 8, borderRadius: 8, backgroundColor: c.surfaceSoft },
     triedLabel: { flex: 1, fontSize: 12, color: c.forest },
     checkbox: { width: 20, height: 20, borderRadius: 6, backgroundColor: c.card, borderWidth: 1, borderColor: c.line, alignItems: 'center', justifyContent: 'center' },
