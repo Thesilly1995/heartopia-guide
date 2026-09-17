@@ -8,7 +8,7 @@ export default function InsectenScreen() {
   const { language } = useLanguage();
   return (
     <HobbyListScreen
-      title={language === 'en' ? 'Insects' : 'Insecten'}
+      title={{ nl: 'Insecten', en: 'Insects', es: 'Insectos', pt: 'Insetos' }[language]}
       icon="🦋"
       items={insects}
       gradient={[COLORS.forestSoft, COLORS.sky]}

@@ -14,6 +14,14 @@ const STRINGS = {
     label: '📢 Advertisement',
     note: 'Placeholder — Premium members will not see ads',
   },
+  es: {
+    label: '📢 Publicidad',
+    note: 'Marcador de posición — los miembros Premium no verán anuncios',
+  },
+  pt: {
+    label: '📢 Publicidade',
+    note: 'Espaço reservado — membros Premium não verão anúncios',
+  },
 } as const;
 
 /**

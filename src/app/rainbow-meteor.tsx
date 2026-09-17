@@ -51,6 +51,40 @@ const STRINGS = {
     mailboxNote: "📮 Don't forget the bouquet above your own mailbox either — it's always there, but not on the map (since that's your own house spot).",
     meteorLingerNote: '⛏️ Ore pieces stay mineable for 24h after the meteor shower starts (so until the same time the next day) — this map stays useful for a while even after the shower itself has ended.',
   },
+  es: {
+    title: 'Rainbow & Lluvia de Meteoros',
+    subtitle: 'Ramos y fragmentos de estrella por evento',
+    rainbowTab: '🌈 Rainbow',
+    meteorTab: '☄️ Lluvia de Meteoros',
+    emptyText: 'No está activo en este momento. En cuanto esto vuelva a pasar, las ubicaciones actuales aparecerán aquí.',
+    resetProgress: 'Restablecer progreso',
+    whalefallLabel: '🌊 Whalefall Canyon',
+    whalefallDisclaimer:
+      'Durante un momento Rainbow, Whalefall Canyon tiene 4 puntos de ramo, pero solo puedes conseguir 1 de los 4 — cuál depende de cada jugador.',
+    dorisNoteWhalefall:
+      '👧 Doris está en Whalefall Canyon durante la lluvia, el arcoíris Y la lluvia de meteoros — puedes comprarle en esos momentos. Consulta la pantalla de inicio en "El clima esta semana" para ver el horario exacto.',
+    dorisNoteLand:
+      '👧 Durante la lluvia de meteoros, Doris está en tierra (mira el pin abajo) — puedes comprarle en esos momentos. Consulta la pantalla de inicio en "El clima esta semana" para ver el horario exacto.',
+    mailboxNote: '📮 Tampoco olvides el ramo junto a tu propio buzón — siempre está ahí, pero no aparece en el mapa (porque es tu propio punto de casa).',
+    meteorLingerNote: '⛏️ Los trozos de mineral se pueden seguir picando hasta 24h después del inicio de la lluvia de meteoros (es decir, hasta la misma hora al día siguiente) — este mapa sigue siendo útil un buen rato después de que termine la lluvia de meteoros.',
+  },
+  pt: {
+    title: 'Rainbow & Chuva de Meteoros',
+    subtitle: 'Buquês e fragmentos de estrela por evento',
+    rainbowTab: '🌈 Rainbow',
+    meteorTab: '☄️ Chuva de Meteoros',
+    emptyText: 'Não está ativo no momento. Assim que isso acontecer de novo, os locais atuais vão aparecer aqui.',
+    resetProgress: 'Redefinir progresso',
+    whalefallLabel: '🌊 Whalefall Canyon',
+    whalefallDisclaimer:
+      'Durante um momento Rainbow, Whalefall Canyon tem 4 pontos de buquê, mas você só pode pegar 1 dos 4 — qual deles varia de jogador para jogador.',
+    dorisNoteWhalefall:
+      '👧 A Doris fica em Whalefall Canyon durante chuva, arco-íris E chuva de meteoros — você pode comprar com ela nesses momentos. Veja o horário exato na tela inicial em "Clima desta semana".',
+    dorisNoteLand:
+      '👧 Durante a chuva de meteoros, a Doris fica em terra (veja o pin abaixo) — você pode comprar com ela nesse momento. Veja o horário exato na tela inicial em "Clima desta semana".',
+    mailboxNote: '📮 Não esqueça também do buquê perto da sua própria caixa de correio — ele sempre está lá, mas não aparece no mapa (porque é o seu próprio ponto de casa).',
+    meteorLingerNote: '⛏️ Os pedaços de minério continuam mineráveis até 24h depois do início da chuva de meteoros (ou seja, até o mesmo horário no dia seguinte) — este mapa continua útil por um tempo mesmo depois que a chuva de meteoros termina.',
+  },
 } as const;
 
 export default function RainbowMeteorScreen() {

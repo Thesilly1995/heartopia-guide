@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { useLanguage } from '@/hooks/use-language';
+import { Language, useLanguage } from '@/hooks/use-language';
 
 export interface EventSightingItem {
   name: string;
@@ -12,10 +12,16 @@ export interface EventSightingItem {
 interface EventSightingRaw {
   nameNl: string;
   nameEn: string;
+  nameEs: string;
+  namePt: string;
   spotNl: string;
   spotEn: string;
+  spotEs: string;
+  spotPt: string;
   noteNl: string | null;
   noteEn: string | null;
+  noteEs: string | null;
+  notePt: string | null;
   emoji: string;
 }
 
@@ -28,7 +34,7 @@ export function useEventBirds(): EventSightingItem[] {
       EVENT_BIRDS_RAW.map((r) => ({
     name: r.nameEn,
     spot: r.spotEn,
-    note: language === 'en' ? r.noteEn : r.noteNl,
+    note: language === 'es' ? r.noteEs : language === 'pt' ? r.notePt : language === 'en' ? r.noteEn : r.noteNl,
     emoji: r.emoji,
       })),
     [language]

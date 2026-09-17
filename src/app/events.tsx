@@ -12,7 +12,7 @@ import { useEventFish } from '@/data/event-fish';
 import { useEventInsects } from '@/data/event-insects';
 import { useCurrentEventMeta } from '@/data/event-meta';
 import { useEventRecipes } from '@/data/event-recipes';
-import { useLanguage } from '@/hooks/use-language';
+import { Language, useLanguage } from '@/hooks/use-language';
 import { RemoteEventRecipe, RemoteEventSighting, useRemoteContent } from '@/lib/remote-content';
 
 const STORAGE_KEY = 'heartopia:event:sterren';
@@ -46,6 +46,34 @@ const STRINGS = {
     goldLabel: 'Gold (sold to Albert Jr.)',
     tokensLabel: 'Tokens (sold to Azure)',
   },
+  es: {
+    title: 'Evento Actual',
+    disclaimer:
+      'Esta pestaña solo muestra contenido del evento ACTUAL. En cuanto termine este evento, sustituiremos esta lista por los peces, insectos, aves y recetas del nuevo evento — el contenido del evento anterior ya no se podrá conseguir.',
+    insectsNote: 'Todavía no desbloqueado esta temporada — los insectos estarán disponibles en la Semana 3 a través de Naniwa. Lo completaremos en cuanto se sepa.',
+    fish: 'Peces',
+    birds: 'Aves',
+    recipes: 'Recetas',
+    insects: 'Insectos',
+    bestResult: 'Mejor resultado',
+    empty: 'No hay ningún evento activo en este momento — en cuanto empiece un nuevo evento, su contenido aparecerá aquí.',
+    goldLabel: 'Oro (vendido a Albert Jr.)',
+    tokensLabel: 'Fichas (vendidas a Azure)',
+  },
+  pt: {
+    title: 'Evento Atual',
+    disclaimer:
+      'Esta aba mostra apenas conteúdo do evento ATUAL. Assim que este evento terminar, vamos substituir esta lista pelos peixes, insetos, pássaros e receitas do novo evento — o conteúdo do evento antigo não poderá mais ser obtido.',
+    insectsNote: 'Ainda não desbloqueado nesta temporada — os insetos ficam disponíveis na Semana 3 via Naniwa. Vamos completar isso assim que for conhecido.',
+    fish: 'Peixes',
+    birds: 'Pássaros',
+    recipes: 'Receitas',
+    insects: 'Insetos',
+    bestResult: 'Melhor resultado',
+    empty: 'Nenhum evento ativo no momento — assim que um novo evento começar, o conteúdo vai aparecer aqui.',
+    goldLabel: 'Ouro (vendido a Albert Jr.)',
+    tokensLabel: 'Fichas (vendidas a Azure)',
+  },
 } as const;
 
 type EventItem = {
@@ -58,18 +86,18 @@ type EventItem = {
   tokens?: (number | null)[] | null;
 };
 
-function mapSighting(item: RemoteEventSighting, language: 'nl' | 'en'): EventItem {
+function mapSighting(item: RemoteEventSighting, language: Language): EventItem {
   return {
     name: item.nameEn,
     spot: item.spotEn,
-    note: language === 'en' ? item.noteEn : item.noteNl,
+    note: language === 'nl' ? item.noteNl : item.noteEn,
     emoji: item.emoji,
     gold: item.gold,
     tokens: item.tokens,
   };
 }
 
-function mapRecipe(item: RemoteEventRecipe, language: 'nl' | 'en'): EventItem {
+function mapRecipe(item: RemoteEventRecipe, language: Language): EventItem {
   return {
     name: item.nameEn,
     ingredients: item.ingredientsEn,

@@ -24,6 +24,14 @@ const STRINGS = {
     searchPlaceholder: 'Search by name...',
     collected: (n: number, t: number) => `${n} / ${t} collected`,
   },
+  es: {
+    searchPlaceholder: 'Buscar por nombre...',
+    collected: (n: number, t: number) => `${n} / ${t} recolectados`,
+  },
+  pt: {
+    searchPlaceholder: 'Buscar por nome...',
+    collected: (n: number, t: number) => `${n} / ${t} coletados`,
+  },
 } as const;
 
 export function CollectionListScreen({

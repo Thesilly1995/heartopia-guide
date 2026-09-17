@@ -28,7 +28,7 @@ export function useMeteorSpots(): EventSpot[] {
         num: spot.num,
         x: spot.x,
         y: spot.y,
-        description: language === 'en' ? spot.descriptionEn : spot.descriptionNl,
+        description: language === 'en' || language === 'es' || language === 'pt' ? spot.descriptionEn : spot.descriptionNl,
         underwater: spot.underwater,
         isDoris: spot.isDoris ?? false,
       }));

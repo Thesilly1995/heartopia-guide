@@ -17,6 +17,8 @@ export interface MapPin {
 const STRINGS = {
   nl: { hint: '🔍 Tik om te vergroten' },
   en: { hint: '🔍 Tap to enlarge' },
+  es: { hint: '🔍 Toca para ampliar' },
+  pt: { hint: '🔍 Toque para ampliar' },
 } as const;
 
 export function PinMap({

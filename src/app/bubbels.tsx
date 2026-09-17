@@ -38,6 +38,28 @@ const STRINGS = {
     list: '📋 List',
     whalefallLabel: '🌊 16-19 (Whalefall Canyon)',
   },
+  es: {
+    title: 'Burbujas Semanales',
+    subtitle: 'Burbujas rosas llenas de recompensas',
+    disclaimer:
+      'Cada semana hay 19 burbujas rosas (15 en la isla principal, 4 bajo el agua en Whalefall Canyon) — los lugares exactos y las recompensas cambian cada sábado. El mapa de abajo muestra los lugares de esta semana.',
+    resetAll: 'Reiniciar todo',
+    source: 'Fuente: mapa de la comunidad (Illuminight)',
+    map: '🗺️ Mapa',
+    list: '📋 Lista',
+    whalefallLabel: '🌊 16-19 (Whalefall Canyon)',
+  },
+  pt: {
+    title: 'Bolhas Semanais',
+    subtitle: 'Bolhas rosa cheias de recompensas',
+    disclaimer:
+      'Toda semana há 19 bolhas rosa (15 na ilha principal, 4 debaixo da água em Whalefall Canyon) — os locais exatos e as recompensas mudam todo sábado. O mapa abaixo mostra os locais desta semana.',
+    resetAll: 'Redefinir tudo',
+    source: 'Fonte: mapa da comunidade (Illuminight)',
+    map: '🗺️ Mapa',
+    list: '📋 Lista',
+    whalefallLabel: '🌊 16-19 (Whalefall Canyon)',
+  },
 } as const;
 
 const ISLAND_MAP = require('@/assets/images/maps/island-map.jpg');

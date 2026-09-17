@@ -24,6 +24,20 @@ const STRINGS = {
     add: 'Add',
     empty: 'Nothing on your list yet — add something!',
   },
+  es: {
+    title: 'Tareas',
+    subtitle: '¿Qué más quieres hacer en el juego?',
+    placeholder: 'Ej. terminar el nuevo barrio, atrapar todas las mariposas...',
+    add: 'Agregar',
+    empty: 'Aún no hay nada en tu lista — ¡agrega algo!',
+  },
+  pt: {
+    title: 'Tarefas',
+    subtitle: 'O que você ainda quer fazer no jogo?',
+    placeholder: 'Ex. terminar o novo bairro, pegar todas as borboletas...',
+    add: 'Adicionar',
+    empty: 'Ainda não tem nada na sua lista — adicione algo!',
+  },
 } as const;
 
 interface TodoItem {

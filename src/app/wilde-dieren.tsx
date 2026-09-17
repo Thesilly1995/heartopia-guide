@@ -38,6 +38,28 @@ const STRINGS = {
     map: '🗺️ Map',
     list: '📋 List',
   },
+  es: {
+    title: 'Animales Salvajes',
+    subtitle: 'Comederos, comida favorita y amistad',
+    feedingSpot: 'Comedero',
+    favoriteWeather: 'Clima favorito',
+    favoriteFood: 'Comida favorita',
+    friendshipLevel: 'Nivel de amistad',
+    eventHeading: 'Animales de evento',
+    map: '🗺️ Mapa',
+    list: '📋 Lista',
+  },
+  pt: {
+    title: 'Animais Selvagens',
+    subtitle: 'Comedouros, comida favorita e amizade',
+    feedingSpot: 'Comedouro',
+    favoriteWeather: 'Clima favorito',
+    favoriteFood: 'Comida favorita',
+    friendshipLevel: 'Nível de amizade',
+    eventHeading: 'Animais de evento',
+    map: '🗺️ Mapa',
+    list: '📋 Lista',
+  },
 } as const;
 
 export default function WildeDierenScreen() {

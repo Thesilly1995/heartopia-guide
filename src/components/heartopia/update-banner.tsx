@@ -20,6 +20,20 @@ const STRINGS = {
     updating: 'Working...',
     dismiss: 'Later',
   },
+  es: {
+    title: '🔄 Nueva versión disponible',
+    text: 'Hay una actualización con el contenido y las mejoras más recientes.',
+    update: 'Actualizar ahora',
+    updating: 'Cargando...',
+    dismiss: 'Más tarde',
+  },
+  pt: {
+    title: '🔄 Nova versão disponível',
+    text: 'Há uma atualização com o conteúdo e as melhorias mais recentes.',
+    update: 'Atualizar agora',
+    updating: 'Processando...',
+    dismiss: 'Mais tarde',
+  },
 } as const;
 
 /**
