@@ -375,7 +375,7 @@
       </button>
     </div>
     <div class="drop-zone" id="drop-zone">
-      <strong>Klik om te uploaden</strong>, sleep een bestand hierheen, of plak met Ctrl+V<br>
+      <strong>Klik om te plakken vanuit je klembord</strong> (kopieer eerst een screenshot van de kaart), sleep een bestand hierheen, of gebruik Ctrl+V<br>
       (voor het tabblad dat nu actief is)
     </div>
     <input type="file" id="file-input" accept="image/*">
@@ -484,7 +484,28 @@
     reader.readAsDataURL(file);
   }
 
-  dropZone.addEventListener('click', () => fileInput.click());
+  dropZone.addEventListener('click', async () => {
+    // Eerst proberen direct vanuit het klembord te plakken (bv. na een screenshot) —
+    // val terug op de bestandskiezer als dat niet lukt (geen afbeelding op het klembord,
+    // of clipboard-read geblokkeerd, bv. in een gesandboxde Artifact-iframe).
+    if (navigator.clipboard && navigator.clipboard.read) {
+      try {
+        const items = await navigator.clipboard.read();
+        for (const item of items) {
+          const imageType = item.types.find((t) => t.startsWith('image/'));
+          if (imageType) {
+            const blob = await item.getType(imageType);
+            loadImageFile(blob);
+            return;
+          }
+        }
+        canvasHint.textContent = 'Geen afbeelding gevonden op je klembord — kopieer eerst een screenshot, of blader naar een bestand.';
+      } catch (err) {
+        // geen klembord-toegang — gewoon door naar de bestandskiezer
+      }
+    }
+    fileInput.click();
+  });
   fileInput.addEventListener('change', (e) => loadImageFile(e.target.files[0]));
 
   ['dragover', 'dragenter'].forEach((ev) =>
