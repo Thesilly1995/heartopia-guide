@@ -107,6 +107,39 @@
     margin: 0 0 12px;
   }
 
+  .map-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .map-tab {
+    flex: 1;
+    background: var(--surface-soft);
+    color: var(--forest-soft);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 10px 8px;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    position: relative;
+  }
+
+  .map-tab.active {
+    background: var(--coral);
+    color: #fff;
+    border-color: var(--coral);
+  }
+
+  .map-tab .tab-count {
+    display: block;
+    font-size: 10.5px;
+    font-weight: 600;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+
   .drop-zone {
     border: 2px dashed var(--line);
     border-radius: 14px;
@@ -180,18 +213,11 @@
     color: var(--forest);
   }
 
-  .toggle-row {
-    display: flex;
-    align-items: center;
+  .btn-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 8px;
-    font-size: 13.5px;
-    font-weight: 600;
-    color: var(--forest);
-    cursor: pointer;
-    user-select: none;
   }
-
-  .toggle-row input { width: 17px; height: 17px; accent-color: var(--coral); }
 
   button {
     font-family: inherit;
@@ -221,7 +247,7 @@
   .point-row {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     background: var(--surface-soft);
     border-radius: 10px;
     padding: 7px 8px;
@@ -242,11 +268,13 @@
     flex-shrink: 0;
   }
 
+  .point-num.underwater { background: var(--coral-dark); }
+
   .point-coords {
     font-variant-numeric: tabular-nums;
     font-size: 11.5px;
     color: var(--forest-soft);
-    width: 70px;
+    width: 62px;
     flex-shrink: 0;
   }
 
@@ -260,6 +288,22 @@
     background: var(--card);
     color: var(--forest);
   }
+
+  .point-doris {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 7px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .point-doris.active { background: var(--yellow); border-color: var(--yellow); }
 
   .point-remove {
     background: none;
@@ -314,15 +358,25 @@
 
 <div class="banner">
   <h1>🗺️ Kaart-coördinaten-tool</h1>
-  <p>Plak of upload een kaart-screenshot, klik op elke bubbel/pin-locatie, en kopieer meteen geldige JSON voor <code>remote-content.json</code>. Alles blijft in je browser — er wordt niets geüpload naar een server.</p>
+  <p>Plak of upload de hoofdeiland-kaart én de Whalefall Canyon-kaart (elk apart tabblad), klik op elke pin-locatie, en kopieer meteen geldige JSON voor <code>remote-content.json</code>. Alles blijft in je browser — er wordt niets geüpload naar een server.</p>
 </div>
 
 <div class="layout">
   <div class="panel">
     <h2>1. Afbeelding</h2>
+    <div class="map-tabs">
+      <button class="map-tab active" data-map="main" id="tab-main">
+        🏝️ Hoofdeiland
+        <span class="tab-count" id="tab-main-count">0 punten</span>
+      </button>
+      <button class="map-tab" data-map="whalefall" id="tab-whalefall">
+        🐋 Whalefall Canyon
+        <span class="tab-count" id="tab-whalefall-count">0 punten</span>
+      </button>
+    </div>
     <div class="drop-zone" id="drop-zone">
       <strong>Klik om te uploaden</strong>, sleep een bestand hierheen, of plak met Ctrl+V<br>
-      (gebruik de kaart-afbeelding die je van de community-maker kreeg)
+      (voor het tabblad dat nu actief is)
     </div>
     <input type="file" id="file-input" accept="image/*">
     <div class="canvas-wrap" id="canvas-wrap">
@@ -343,16 +397,16 @@
         <input type="text" id="prefix" value="Locatie">
       </div>
     </div>
-    <label class="toggle-row" style="margin-bottom: 18px;">
-      <input type="checkbox" id="underwater-toggle">
-      Onderwater-kaart (Whalefall Canyon)
-    </label>
+    <p class="canvas-hint" style="margin-top: -6px; margin-bottom: 14px;">Nummering loopt door: eerst Hoofdeiland-punten, dan Whalefall Canyon erachteraan. "Onderwater" wordt automatisch gezet op basis van het tabblad.</p>
 
     <h2>3. Punten (<span id="point-count">0</span>)</h2>
     <ul class="points-list" id="points-list">
-      <li class="empty-hint">Klik op de kaart om punten toe te voegen</li>
+      <li class="empty-hint">Klik op een kaart om punten toe te voegen</li>
     </ul>
-    <button class="btn-secondary" id="clear-btn">Alle punten wissen</button>
+    <div class="btn-row-2">
+      <button class="btn-secondary" id="clear-current-btn" style="margin-top: 8px;">Wis huidig tabblad</button>
+      <button class="btn-secondary" id="clear-all-btn" style="margin-top: 8px;">Wis alles</button>
+    </div>
 
     <div class="json-output">
       <h2 style="margin-top: 18px;">4. JSON</h2>
@@ -372,30 +426,57 @@
   const canvasHint = document.getElementById('canvas-hint');
   const startNumInput = document.getElementById('start-num');
   const prefixInput = document.getElementById('prefix');
-  const underwaterToggle = document.getElementById('underwater-toggle');
   const pointsList = document.getElementById('points-list');
   const pointCountEl = document.getElementById('point-count');
-  const clearBtn = document.getElementById('clear-btn');
+  const clearCurrentBtn = document.getElementById('clear-current-btn');
+  const clearAllBtn = document.getElementById('clear-all-btn');
   const jsonOut = document.getElementById('json-out');
   const copyBtn = document.getElementById('copy-btn');
   const copiedFlash = document.getElementById('copied-flash');
+  const tabMain = document.getElementById('tab-main');
+  const tabWhalefall = document.getElementById('tab-whalefall');
+  const tabMainCount = document.getElementById('tab-main-count');
+  const tabWhalefallCount = document.getElementById('tab-whalefall-count');
 
-  let img = null;
-  let points = []; // { x: pct, y: pct, desc: string }
+  // Elke kaart houdt zijn eigen afbeelding en punten bij, zodat wisselen van
+  // tabblad de andere kaart niet leegmaakt.
+  const maps = {
+    main: { img: null, points: [], underwater: false, label: 'Hoofdeiland' },
+    whalefall: { img: null, points: [], underwater: true, label: 'Whalefall Canyon' },
+  };
+  let activeMap = 'main';
+
+  function current() {
+    return maps[activeMap];
+  }
+
+  function startNum() {
+    return parseInt(startNumInput.value, 10) || 1;
+  }
+
+  // Globaal nummer van een punt: hoofdeiland-punten eerst, Whalefall Canyon-punten lopen erna door.
+  function globalNum(mapKey, idxInMap) {
+    if (mapKey === 'main') return startNum() + idxInMap;
+    return startNum() + maps.main.points.length + idxInMap;
+  }
 
   function loadImageFile(file) {
     if (!file || !file.type.startsWith('image/')) return;
+    const targetMap = activeMap;
     const reader = new FileReader();
     reader.onload = (e) => {
       const image = new Image();
       image.onload = () => {
-        img = image;
-        canvas.width = image.naturalWidth;
-        canvas.height = image.naturalHeight;
-        canvasWrap.classList.add('active');
-        canvasHint.textContent = `Afbeelding geladen (${image.naturalWidth}×${image.naturalHeight}px). Klik nauwkeurig op elke pin/hartje.`;
-        points = [];
-        redraw();
+        maps[targetMap].img = image;
+        maps[targetMap].points = [];
+        if (targetMap === activeMap) {
+          canvas.width = image.naturalWidth;
+          canvas.height = image.naturalHeight;
+          canvasWrap.classList.add('active');
+          dropZone.style.display = 'none';
+          canvasHint.textContent = `${maps[targetMap].label}: afbeelding geladen (${image.naturalWidth}×${image.naturalHeight}px). Klik nauwkeurig op elke pin/hartje.`;
+          redraw();
+        }
         renderPoints();
       };
       image.src = e.target.result;
@@ -419,17 +500,43 @@
     if (item) loadImageFile(item.getAsFile());
   });
 
+  function switchTab(key) {
+    if (key === activeMap) return;
+    activeMap = key;
+    tabMain.classList.toggle('active', key === 'main');
+    tabWhalefall.classList.toggle('active', key === 'whalefall');
+
+    const m = current();
+    if (m.img) {
+      canvas.width = m.img.naturalWidth;
+      canvas.height = m.img.naturalHeight;
+      canvasWrap.classList.add('active');
+      dropZone.style.display = 'none';
+      canvasHint.textContent = `${m.label}: afbeelding geladen (${m.img.naturalWidth}×${m.img.naturalHeight}px). Klik nauwkeurig op elke pin/hartje.`;
+      redraw();
+    } else {
+      canvasWrap.classList.remove('active');
+      dropZone.style.display = '';
+      canvasHint.textContent = '';
+    }
+    renderPoints();
+  }
+
+  tabMain.addEventListener('click', () => switchTab('main'));
+  tabWhalefall.addEventListener('click', () => switchTab('whalefall'));
+
   function redraw() {
-    if (!img) return;
+    const m = current();
+    if (!m.img) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(m.img, 0, 0, canvas.width, canvas.height);
     const radius = Math.max(canvas.width, canvas.height) * 0.014;
-    points.forEach((p, i) => {
+    m.points.forEach((p, i) => {
       const px = (p.x / 100) * canvas.width;
       const py = (p.y / 100) * canvas.height;
       ctx.beginPath();
       ctx.arc(px, py, radius, 0, Math.PI * 2);
-      ctx.fillStyle = '#FF8FA3';
+      ctx.fillStyle = m.underwater ? '#C94F68' : '#FF8FA3';
       ctx.fill();
       ctx.lineWidth = radius * 0.25;
       ctx.strokeStyle = '#ffffff';
@@ -438,90 +545,113 @@
       ctx.font = `bold ${radius * 1.1}px ui-rounded, sans-serif`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText(String(startNum() + i), px, py);
+      ctx.fillText(String(globalNum(activeMap, i)), px, py);
     });
   }
 
-  function startNum() {
-    return parseInt(startNumInput.value, 10) || 1;
-  }
-
   canvas.addEventListener('click', (e) => {
-    if (!img) return;
+    const m = current();
+    if (!m.img) return;
     const rect = canvas.getBoundingClientRect();
     const xPct = ((e.clientX - rect.left) / rect.width) * 100;
     const yPct = ((e.clientY - rect.top) / rect.height) * 100;
-    points.push({ x: Math.round(xPct * 10) / 10, y: Math.round(yPct * 10) / 10, desc: '' });
+    m.points.push({ x: Math.round(xPct * 10) / 10, y: Math.round(yPct * 10) / 10, desc: '', isDoris: false });
     redraw();
     renderPoints();
   });
 
+  function pointRowHtml(mapKey, i, p) {
+    const num = globalNum(mapKey, i);
+    const underwater = maps[mapKey].underwater;
+    return `
+      <li class="point-row" data-map="${mapKey}" data-idx="${i}">
+        <span class="point-num${underwater ? ' underwater' : ''}">${num}</span>
+        <span class="point-coords">${p.x}%, ${p.y}%</span>
+        <input class="point-desc" type="text" placeholder="${prefixInput.value} ${num}" value="${p.desc}" data-map="${mapKey}" data-idx="${i}">
+        <button class="point-doris${p.isDoris ? ' active' : ''}" data-map="${mapKey}" data-idx="${i}" title="Dit is Doris">🎀</button>
+        <button class="point-remove" data-map="${mapKey}" data-idx="${i}" title="Verwijderen">✕</button>
+      </li>
+    `;
+  }
+
   function renderPoints() {
-    pointCountEl.textContent = points.length;
-    pointsList.innerHTML = '';
-    if (points.length === 0) {
-      pointsList.innerHTML = '<li class="empty-hint">Klik op de kaart om punten toe te voegen</li>';
+    const total = maps.main.points.length + maps.whalefall.points.length;
+    pointCountEl.textContent = total;
+    tabMainCount.textContent = `${maps.main.points.length} punten`;
+    tabWhalefallCount.textContent = `${maps.whalefall.points.length} punten`;
+
+    if (total === 0) {
+      pointsList.innerHTML = '<li class="empty-hint">Klik op een kaart om punten toe te voegen</li>';
     } else {
-      points.forEach((p, i) => {
-        const li = document.createElement('li');
-        li.className = 'point-row';
-        li.innerHTML = `
-          <span class="point-num">${startNum() + i}</span>
-          <span class="point-coords">${p.x}%, ${p.y}%</span>
-          <input class="point-desc" type="text" placeholder="${prefixInput.value} ${startNum() + i}" value="${p.desc}" data-idx="${i}">
-          <button class="point-remove" data-idx="${i}" title="Verwijderen">✕</button>
-        `;
-        pointsList.appendChild(li);
-      });
+      pointsList.innerHTML =
+        maps.main.points.map((p, i) => pointRowHtml('main', i, p)).join('') +
+        maps.whalefall.points.map((p, i) => pointRowHtml('whalefall', i, p)).join('');
     }
     updateJson();
   }
 
   pointsList.addEventListener('input', (e) => {
     if (e.target.classList.contains('point-desc')) {
-      points[parseInt(e.target.dataset.idx, 10)].desc = e.target.value;
+      const mapKey = e.target.dataset.map;
+      const idx = parseInt(e.target.dataset.idx, 10);
+      maps[mapKey].points[idx].desc = e.target.value;
       updateJson();
     }
   });
 
   pointsList.addEventListener('click', (e) => {
+    const mapKey = e.target.dataset.map;
+    const idx = e.target.dataset.idx !== undefined ? parseInt(e.target.dataset.idx, 10) : null;
     if (e.target.classList.contains('point-remove')) {
-      points.splice(parseInt(e.target.dataset.idx, 10), 1);
-      redraw();
+      maps[mapKey].points.splice(idx, 1);
+      if (mapKey === activeMap) redraw();
+      renderPoints();
+    } else if (e.target.classList.contains('point-doris')) {
+      maps[mapKey].points[idx].isDoris = !maps[mapKey].points[idx].isDoris;
       renderPoints();
     }
   });
 
   startNumInput.addEventListener('input', () => { redraw(); renderPoints(); });
   prefixInput.addEventListener('input', () => renderPoints());
-  underwaterToggle.addEventListener('change', () => updateJson());
 
-  clearBtn.addEventListener('click', () => {
-    points = [];
+  clearCurrentBtn.addEventListener('click', () => {
+    current().points = [];
+    redraw();
+    renderPoints();
+  });
+
+  clearAllBtn.addEventListener('click', () => {
+    maps.main.points = [];
+    maps.whalefall.points = [];
     redraw();
     renderPoints();
   });
 
   function updateJson() {
-    if (points.length === 0) {
+    const total = maps.main.points.length + maps.whalefall.points.length;
+    if (total === 0) {
       jsonOut.value = '';
       copyBtn.disabled = true;
       return;
     }
-    const underwater = underwaterToggle.checked;
     const prefix = prefixInput.value || 'Locatie';
-    const arr = points.map((p, i) => {
-      const num = startNum() + i;
-      const desc = p.desc.trim() || `${prefix} ${num}`;
-      return {
-        num,
-        x: p.x,
-        y: p.y,
-        underwater,
-        descriptionNl: desc,
-        descriptionEn: desc,
-      };
-    });
+    const buildEntries = (mapKey) =>
+      maps[mapKey].points.map((p, i) => {
+        const num = globalNum(mapKey, i);
+        const desc = p.desc.trim() || `${prefix} ${num}`;
+        const entry = {
+          num,
+          x: p.x,
+          y: p.y,
+          underwater: maps[mapKey].underwater,
+          descriptionNl: desc,
+          descriptionEn: desc,
+        };
+        if (p.isDoris) entry.isDoris = true;
+        return entry;
+      });
+    const arr = [...buildEntries('main'), ...buildEntries('whalefall')];
     jsonOut.value = JSON.stringify(arr, null, 2);
     copyBtn.disabled = false;
   }
