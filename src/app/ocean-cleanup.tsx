@@ -36,6 +36,11 @@ const POLLUTANTS = {
     { name: 'Poluição de Casca Dura', desc: 'Mais resistente — exige mais esforço para limpar' },
     { name: 'Poluição de Casca Dura Rachada', desc: 'Mais resistente — depois se quebra em pedaços' },
   ],
+  fr: [
+    { name: 'Pollution Tourbillonnante', desc: 'Le type standard, rapide à retirer' },
+    { name: 'Pollution à Coquille Dure', desc: 'Plus coriace — demande plus d\'effort à nettoyer' },
+    { name: 'Pollution à Coquille Dure Fissurée', desc: 'Plus coriace — se brise ensuite en morceaux' },
+  ],
 } as const;
 
 const STRINGS = {
@@ -162,6 +167,37 @@ const STRINGS = {
       'Limpar a poluição rende Conchas do Mar, que se somam em Pontos de Coleção. Use-os para comprar móveis oceânicos como a Cortina de Contas de Conchas do Mar e a Vitrine de Coral e Conchas. Alguns níveis também dão chance de ganhar a caixa de presente Voice of the Deep (com um cartão com som real de golfinho, parte de uma campanha de proteção aos golfinhos).',
     unconfirmedDisclaimer:
       'Ainda não confirmado: a lista completa de móveis/custos em pontos, se a ferramenta de limpeza pode ser melhorada, quantos níveis de hobby existem, e eventuais limites diários.',
+  },
+  fr: {
+    title: 'Ocean Cleanup',
+    subtitle: 'Nettoyage de la pollution à Whalefall Canyon',
+    permanentDisclaimer: "Passe-temps permanent (mise à jour Oceanbound 2.7). Reste disponible même après la fin de l'événement Call of Whales.",
+    shellCatalog: '🐚 Catalogue de coquillages',
+    shellCatalogDesc: "Les 30 coquillages connus (source : captures d'écran personnelles + tracker communautaire)",
+    filterAll: 'Tous',
+    filterUndiscovered: '🔍 Pas encore découverts',
+    filterNotFiveStar: '⭐ Pas encore 5★',
+    filterNoMastery: '🏆 Pas encore de mastery',
+    goldLabel: 'Or (vendu à Albert Jr.)',
+    tokensLabel: 'Jetons (vendus à Azure)',
+    timeWindow: 'Plage horaire',
+    allDay: 'Toute la journée',
+    notDocumented: 'Pas encore documenté',
+    masteryAchieved: 'Mastery atteint',
+    unlockTitle: 'Déblocage',
+    unlockText:
+      'D.G. Member Niveau 7 → portail au pied de Whale Mountain → parle à Naga, puis à Rory → ouvre le menu Hobby (icône coquillage) → Améliorer → parle à Oliver pour commencer.',
+    swimTitle: '🏊 Nager',
+    swimText:
+      "À Whalefall Canyon, tu peux nager librement dans toutes les directions. Utilise Shift (ou le bouton dash sur mobile) pour un sprint sous-marin (une 'ruée de sirène'). Nager en dehors de cette zone sous-marine n'est pas possible pour l'instant.",
+    toolTitle: 'Outil',
+    toolText: 'Nettoyeur Océanique de Base — vise la pollution et maintiens le bouton de nettoyage enfoncé jusqu\'à ce qu\'elle disparaisse complètement.',
+    pollutantTypesTitle: 'Types de pollution',
+    rewardsTitle: 'Récompenses',
+    rewardsText:
+      "Nettoyer la pollution rapporte des Coquillages de Mer, qui s'additionnent en Points de Collection. Utilise-les pour acheter des meubles océaniques comme le Rideau de Perles Coquillages de Mer et la Vitrine Corail & Coquillages. Certains niveaux donnent aussi une chance d'obtenir le coffret-cadeau Voice of the Deep (avec une vraie carte au son de dauphin, dans le cadre d'une campagne de protection des dauphins).",
+    unconfirmedDisclaimer:
+      "Pas encore confirmé : la liste complète des meubles/coûts en points, si l'outil de nettoyage peut être amélioré, combien de niveaux de hobby il y a, et d'éventuelles limites quotidiennes.",
   },
 } as const;
 

@@ -38,7 +38,7 @@ export function useCatActions(): PetAction[] {
   return useMemo(
     () =>
       CAT_ACTIONS_RAW.map((r) => ({
-    label: language === 'es' ? r.labelEs : language === 'pt' ? r.labelPt : language === 'en' ? r.labelEn : r.labelNl,
+    label: language === 'es' ? r.labelEs : language === 'pt' ? r.labelPt : language === 'fr' ? r.labelFr : language === 'en' ? r.labelEn : r.labelNl,
     key: r.key,
       })),
     [language]

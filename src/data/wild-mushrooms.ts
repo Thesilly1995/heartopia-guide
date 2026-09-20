@@ -51,7 +51,7 @@ export function useWildMushrooms(): ForagedItem[] {
   return useMemo(
     () =>
       WILD_MUSHROOMS_RAW.map((r) => ({
-    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : r.nameEn,
+    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : r.nameEn,
     spot: language === 'es' ? r.spotEs : language === 'pt' ? r.spotPt : r.spotEn,
     sellPrice: r.sellPrice,
     energy: r.energy,

@@ -52,14 +52,14 @@ const FLOWERS_RAW: FlowerRaw[] = [
 ];
 
 const FLOWER_GROW_TIME_BY_LANG = (r: FlowerRaw, language: Language) =>
-  language === 'es' ? r.growTimeEs : language === 'pt' ? r.growTimePt : language === 'en' ? r.growTimeEn : r.growTimeNl;
+  language === 'es' ? r.growTimeEs : language === 'pt' ? r.growTimePt : language === 'fr' ? r.growTimeEn : language === 'en' ? r.growTimeEn : r.growTimeNl;
 
 export function useFlowers(): FlowerItem[] {
   const { language } = useLanguage();
   return useMemo(
     () =>
       FLOWERS_RAW.map((r) => ({
-    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : r.nameEn,
+    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : r.nameEn,
     rarity: r.rarityEn,
     growTime: FLOWER_GROW_TIME_BY_LANG(r, language),
     level: r.level,

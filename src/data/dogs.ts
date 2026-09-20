@@ -39,9 +39,9 @@ export function useDogs(): DogItem[] {
   return useMemo(
     () =>
       DOGS_RAW.map((r) => ({
-    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : r.nameEn,
-    size: language === 'es' ? r.sizeEs : language === 'pt' ? r.sizePt : language === 'en' ? r.sizeEn : r.sizeNl,
-    ability: language === 'es' ? r.abilityEs : language === 'pt' ? r.abilityPt : language === 'en' ? r.abilityEn : r.abilityNl,
+    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : r.nameEn,
+    size: language === 'es' ? r.sizeEs : language === 'pt' ? r.sizePt : language === 'fr' ? r.sizeEn : language === 'en' ? r.sizeEn : r.sizeNl,
+    ability: language === 'es' ? r.abilityEs : language === 'pt' ? r.abilityPt : language === 'fr' ? r.abilityEn : language === 'en' ? r.abilityEn : r.abilityNl,
     emoji: r.emoji,
       })),
     [language]

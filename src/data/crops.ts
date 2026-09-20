@@ -53,14 +53,14 @@ const CROPS_RAW: CropRaw[] = [
 ];
 
 const GROW_TIME_BY_LANG = (r: CropRaw, language: Language) =>
-  language === 'es' ? r.growTimeEs : language === 'pt' ? r.growTimePt : language === 'en' ? r.growTimeEn : r.growTimeNl;
+  language === 'es' ? r.growTimeEs : language === 'pt' ? r.growTimePt : language === 'fr' ? r.growTimeEn : language === 'en' ? r.growTimeEn : r.growTimeNl;
 
 export function useCrops(): CropItem[] {
   const { language } = useLanguage();
   return useMemo(
     () =>
       CROPS_RAW.map((r) => ({
-    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : r.nameEn,
+    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : r.nameEn,
     rarity: r.rarityEn,
     growTime: GROW_TIME_BY_LANG(r, language),
     level: r.level,

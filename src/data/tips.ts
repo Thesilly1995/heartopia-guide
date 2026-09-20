@@ -214,10 +214,10 @@ export function useTips(): TipCategory[] {
     () =>
       TIP_CATEGORIES_RAW.map((c) => ({
         key: c.key,
-        label: language === 'es' ? c.labelEs : language === 'pt' ? c.labelPt : language === 'en' ? c.labelEn : c.labelNl,
+        label: language === 'es' ? c.labelEs : language === 'pt' ? c.labelPt : language === 'fr' ? c.labelEn : language === 'en' ? c.labelEn : c.labelNl,
         tips: c.tips.map((t) => ({
-          title: language === 'es' ? t.titleEs : language === 'pt' ? t.titlePt : language === 'en' ? t.titleEn : t.titleNl,
-          body: language === 'es' ? t.bodyEs : language === 'pt' ? t.bodyPt : language === 'en' ? t.bodyEn : t.bodyNl,
+          title: language === 'es' ? t.titleEs : language === 'pt' ? t.titlePt : language === 'fr' ? t.titleEn : language === 'en' ? t.titleEn : t.titleNl,
+          body: language === 'es' ? t.bodyEs : language === 'pt' ? t.bodyPt : language === 'fr' ? t.bodyEn : language === 'en' ? t.bodyEn : t.bodyNl,
           emoji: t.emoji,
         })),
       })),
