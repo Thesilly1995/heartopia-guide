@@ -120,8 +120,11 @@ dat specifieke onderdeel.
   Een entry met `"isDoris": true` (bij beide velden mogelijk) markeert
   Doris' plek (NPC — ze is aanwezig tijdens regen, regenboog én
   meteorenregen, bij haar kun je dan shoppen) en krijgt in de app een
-  ander icoon dan de gewone locatiepinnen. Bij `rainbowSpots` staat ze
-  in Whalefall Canyon (`underwater: true`); bij `meteorSpots` staat ze
+  ander icoon dan de gewone locatiepinnen. Bij `rainbowSpots` kan ze
+  zowel op het hoofdeiland (`underwater: false`) als in Whalefall
+  Canyon (`underwater: true`) staan — soms zelfs op allebei tegelijk
+  (bevestigd door de gebruiker in deel-sessie sep 2026), dus geen
+  aanname meer dat het er maar één is; bij `meteorSpots` staat ze
   gewoon als losse pin tussen de andere ertsplekken op de hoofdeilandkaart.
   Het exacte tijdsblok waarin dit gebeurt hoort in `weekForecast` (zie
   hieronder), niet hier.
