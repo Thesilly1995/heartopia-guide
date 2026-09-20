@@ -88,6 +88,20 @@ const STRINGS = {
     goldLabel: 'Or (vendu à Albert Jr.)',
     tokensLabel: 'Jetons (vendus à Azure)',
   },
+  de: {
+    title: 'Aktuelles Event',
+    disclaimer:
+      'Dieser Tab zeigt nur Inhalte des AKTUELLEN Events. Sobald dieses Event endet, ersetzen wir diese Liste durch die Fische, Insekten, Vögel und Rezepte des neuen Events — Inhalte des alten Events sind dann nicht mehr erhältlich.',
+    insectsNote: 'Diese Season noch nicht freigeschaltet — Insekten werden in Woche 3 über Naniwa verfügbar. Wir ergänzen das, sobald es bekannt ist.',
+    fish: 'Fische',
+    birds: 'Vögel',
+    recipes: 'Rezepte',
+    insects: 'Insekten',
+    bestResult: 'Bestes Ergebnis',
+    empty: 'Momentan kein aktives Event — sobald ein neues Event beginnt, erscheint der Inhalt hier.',
+    goldLabel: 'Gold (verkauft an Albert Jr.)',
+    tokensLabel: 'Token (verkauft an Azure)',
+  },
 } as const;
 
 type EventItem = {
@@ -101,7 +115,7 @@ type EventItem = {
 };
 
 function mapSighting(item: RemoteEventSighting, language: Language): EventItem {
-  const note = language === 'nl' ? item.noteNl : language === 'es' ? item.noteEs ?? item.noteEn : language === 'pt' ? item.notePt ?? item.noteEn : language === 'fr' ? item.noteFr ?? item.noteEn : item.noteEn;
+  const note = language === 'nl' ? item.noteNl : language === 'es' ? item.noteEs ?? item.noteEn : language === 'pt' ? item.notePt ?? item.noteEn : language === 'de' ? item.noteDe ?? item.noteEn : language === 'fr' ? item.noteFr ?? item.noteEn : item.noteEn;
   return {
     name: item.nameEn,
     spot: item.spotEn,
@@ -113,7 +127,7 @@ function mapSighting(item: RemoteEventSighting, language: Language): EventItem {
 }
 
 function mapRecipe(item: RemoteEventRecipe, language: Language): EventItem {
-  const ingredients = language === 'es' ? item.ingredientsEs ?? item.ingredientsEn : language === 'pt' ? item.ingredientsPt ?? item.ingredientsEn : language === 'fr' ? item.ingredientsFr ?? item.ingredientsEn : item.ingredientsEn;
+  const ingredients = language === 'es' ? item.ingredientsEs ?? item.ingredientsEn : language === 'pt' ? item.ingredientsPt ?? item.ingredientsEn : language === 'de' ? item.ingredientsDe ?? item.ingredientsEn : language === 'fr' ? item.ingredientsFr ?? item.ingredientsEn : item.ingredientsEn;
   return {
     name: item.nameEn,
     ingredients,

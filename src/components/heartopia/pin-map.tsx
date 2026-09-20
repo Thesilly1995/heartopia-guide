@@ -25,6 +25,7 @@ const STRINGS = {
   es: { hint: '🔍 Toca para ampliar', reset: 'Restablecer zoom' },
   pt: { hint: '🔍 Toque para ampliar', reset: 'Redefinir zoom' },
   fr: { hint: '🔍 Touche pour agrandir', reset: 'Réinitialiser le zoom' },
+  de: { hint: '🔍 Tippen zum Vergrößern', reset: 'Zoom zurücksetzen' },
 } as const;
 
 export function PinMap({

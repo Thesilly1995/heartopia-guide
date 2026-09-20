@@ -57,6 +57,16 @@ const STRINGS = {
     testButton: 'Activer le premium de test (dev uniquement)',
     testNote: 'Visible uniquement en développement — les testeurs ne voient pas ceci.',
   },
+  de: {
+    lockedTitle: 'Nur für Premium-Mitglieder',
+    buyButton: (price: string | null) => (price ? `Premium kaufen (${price}) 👑` : 'Premium kaufen 👑'),
+    working: 'Wird bearbeitet...',
+    restore: 'Käufe wiederherstellen',
+    purchaseError: 'Kauf fehlgeschlagen — versuch es später noch einmal.',
+    notConfigured: 'Käufe sind noch nicht verfügbar — das wird bald freigeschaltet.',
+    testButton: 'Test-Premium aktivieren (nur Dev)',
+    testNote: 'Nur in der Entwicklung sichtbar — Tester sehen das nicht.',
+  },
 } as const;
 
 export function PremiumLockedView({ text }: { text: string }) {

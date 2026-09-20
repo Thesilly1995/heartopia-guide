@@ -47,6 +47,7 @@ export function useCurrentWeather(): CurrentWeather {
         language === 'es' ? weather.labelEs ?? weather.labelEn
         : language === 'pt' ? weather.labelPt ?? weather.labelEn
         : language === 'fr' ? weather.labelFr ?? weather.labelEn
+        : language === 'de' ? weather.labelDe ?? weather.labelEn
         : language === 'en' ? weather.labelEn
         : weather.labelNl,
       emoji: WEATHER_EMOJI[weather.kind] ?? '❔',

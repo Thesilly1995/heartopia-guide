@@ -34,6 +34,7 @@ const DOGS_NOTE = {
   es: 'Hay 37 razas de perros en el juego — estas son las razas confirmadas. Añadiremos más a medida que haya nuevos datos disponibles. Ten en cuenta: la comida favorita varía según cada perro individual, no según la raza.',
   pt: 'Existem 37 raças de cachorro no jogo — estas são as raças confirmadas. Vamos adicionar mais conforme novos dados forem conhecidos. Atenção: a comida favorita varia por cachorro individual, não por raça.',
   fr: "Il y a 37 races de chiens dans le jeu — voici les races confirmées. On complètera la liste dès que plus de données seront connues. Note : la nourriture préférée varie selon chaque chien individuel, pas selon la race.",
+  de: 'Es gibt 37 Hunderassen im Spiel — hier stehen die bestätigten Rassen. Wir ergänzen die Liste, sobald mehr Daten bekannt sind. Achtung: Das Lieblingsessen unterscheidet sich pro einzelnem Hund, nicht pro Rasse.',
 } as const;
 
 const STRINGS = {
@@ -161,6 +162,31 @@ const STRINGS = {
     triedRecipes: 'Plats',
     triedCrops: 'Cultures',
     triedWildFruit: 'Fruits sauvages',
+  },
+  de: {
+    title: 'Dog & Cat Moments',
+    cats: 'Katzen',
+    dogs: 'Hunde',
+    adoptionSlots: 'Adoptionsplätze pro Level',
+    care: 'Pflege',
+    careValue: 'Streicheln, füttern, waschen, zusammen sein, Tricks, spazieren gehen',
+    size: 'Größe',
+    specialAbility: 'Besondere Fähigkeit',
+    randomTraits: 'Lieblingsessen und Persönlichkeit unterscheiden sich pro einzelnem Tier — finde es selbst heraus!',
+    friendshipLevel: 'Freundschaftslevel',
+    trainedActions: 'Trainierte Aktionen',
+    feedingList: 'Fütterungsliste',
+    feedingCount: (n: number) => (n === 1 ? '1 Eintrag' : `${n} Einträge`),
+    feedingHint: 'Schreib hier auf, was du diesem Tier schon gefüttert hast, und tippe aufs Herz, wenn es sich als Favorit herausstellt.',
+    feedingPlaceholder: 'Z. B. Apfel, gegrillter Pilz...',
+    feedingAdd: 'Hinzufügen',
+    feedingEmpty: 'Noch nichts eingetragen — füge hinzu, was du ihm schon gefüttert hast.',
+    petNameLabel: 'Name',
+    petNamePlaceholder: 'Name deines Haustiers',
+    triedHint: 'Das sind bekannte Gerichte, Feldfrüchte und Wildfrüchte aus dem Spiel — das Lieblingsessen ist bei jedem Tier anders, nutze dies als Checkliste für das, was du schon ausprobiert hast.',
+    triedRecipes: 'Gerichte',
+    triedCrops: 'Feldfrüchte',
+    triedWildFruit: 'Wildfrüchte',
   },
 } as const;
 

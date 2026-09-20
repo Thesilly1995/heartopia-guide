@@ -49,6 +49,13 @@ const STRINGS = {
       "60+ badges, basés sur une capture d'écran de ton propre aperçu des Succès. Touche l'icône pour marquer un badge comme obtenu, ou utilise le compteur pour suivre ta progression. Il reste encore quelques badges entièrement cachés qui ne sont pas dans cette liste (nom pas encore connu).",
     hiddenDivider: '🔒 Succès Cachés',
   },
+  de: {
+    title: 'Badges',
+    subtitle: 'Erfolge & Profiltitel (D.G. Level 15+)',
+    disclaimer:
+      '60+ Badges, basierend auf einem Screenshot deiner eigenen Erfolgs-Übersicht. Tippe auf das Icon, um ein Badge als erreicht zu markieren, oder nutze den Zähler, um deinen Fortschritt zu verfolgen. Es gibt noch ein paar komplett versteckte Badges, die nicht in dieser Liste stehen (Name noch unbekannt).',
+    hiddenDivider: '🔒 Versteckte Erfolge',
+  },
 } as const;
 
 export default function BadgesScreen() {

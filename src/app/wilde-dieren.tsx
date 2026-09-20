@@ -71,6 +71,17 @@ const STRINGS = {
     map: '🗺️ Carte',
     list: '📋 Liste',
   },
+  de: {
+    title: 'Wilde Tiere',
+    subtitle: 'Futtertröge, Lieblingsessen & Freundschaft',
+    feedingSpot: 'Futtertrog',
+    favoriteWeather: 'Lieblingswetter',
+    favoriteFood: 'Lieblingsessen',
+    friendshipLevel: 'Freundschaftslevel',
+    eventHeading: 'Event-Tiere',
+    map: '🗺️ Karte',
+    list: '📋 Liste',
+  },
 } as const;
 
 export default function WildeDierenScreen() {

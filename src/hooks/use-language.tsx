@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createContext, type ReactNode, useContext, useEffect, useState } from 'react';
 
-export type Language = 'nl' | 'en' | 'es' | 'pt' | 'fr';
+export type Language = 'nl' | 'en' | 'es' | 'pt' | 'fr' | 'de';
 
 export const LANGUAGES: { code: Language; label: string }[] = [
   { code: 'nl', label: 'NL' },
@@ -9,6 +9,7 @@ export const LANGUAGES: { code: Language; label: string }[] = [
   { code: 'es', label: 'ES' },
   { code: 'pt', label: 'PT' },
   { code: 'fr', label: 'FR' },
+  { code: 'de', label: 'DE' },
 ];
 
 const VALID_LANGUAGES: Language[] = LANGUAGES.map((l) => l.code);

@@ -10,13 +10,13 @@ export default function TuinierenScreen() {
   const { language } = useLanguage();
   return (
     <HobbyListScreen
-      title={{ nl: 'Tuinieren', en: 'Gardening', es: 'Jardinería', pt: 'Jardinagem', fr: 'Jardinage' }[language]}
+      title={{ nl: 'Tuinieren', en: 'Gardening', es: 'Jardinería', pt: 'Jardinagem', fr: 'Jardinage', de: 'Gärtnern' }[language]}
       icon="🌱"
       gradient={[COLORS.forestSoft, COLORS.yellow]}
       storageKey="tuinieren"
       subTabs={[
-        { key: 'gewassen', label: { nl: 'Gewassen', en: 'Crops', es: 'Cultivos', pt: 'Cultivos', fr: 'Cultures' }[language], items: crops },
-        { key: 'bloemen', label: { nl: 'Bloemen', en: 'Flowers', es: 'Flores', pt: 'Flores', fr: 'Fleurs' }[language], items: flowers },
+        { key: 'gewassen', label: { nl: 'Gewassen', en: 'Crops', es: 'Cultivos', pt: 'Cultivos', fr: 'Cultures', de: 'Anbauprodukte' }[language], items: crops },
+        { key: 'bloemen', label: { nl: 'Bloemen', en: 'Flowers', es: 'Flores', pt: 'Flores', fr: 'Fleurs', de: 'Blumen' }[language], items: flowers },
       ]}
     />
   );

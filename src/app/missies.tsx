@@ -101,6 +101,23 @@ const DAILY = {
     { key: 'd17', label: "5 cartes d'oiseaux pour Bailey J" },
     { key: 'd18', label: 'Récolter du bois rare' },
   ],
+  de: [
+    { key: 'd0', label: 'Täglicher Check-in' },
+    { key: 'd1', label: '5x Bewohneranfrage (Resident Requests)' },
+    { key: 'd3', label: 'Shop-Nachschub ansehen (Möbel & Kleidung)' },
+    { key: 'd4', label: 'Post/Postfach prüfen' },
+    { key: 'd6', label: 'Haustier füttern, streicheln & trainieren' },
+    { key: 'd7', label: 'Wildtiere füttern' },
+    { key: 'd10', label: 'Pflanzen ernten & gießen' },
+    { key: 'd11', label: 'Blumen checken & gießen' },
+    { key: 'd12', label: 'Ka Chings Laden ansehen' },
+    { key: 'd13', label: 'Azure ansehen (falls Event aktiv)' },
+    { key: 'd14', label: 'Labor checken' },
+    { key: 'd15', label: 'Wandernde Eiche fällen' },
+    { key: 'd16', label: 'Fluorit abbauen' },
+    { key: 'd17', label: '5 Vogelkarten für Bailey J' },
+    { key: 'd18', label: 'Seltenes Holz sammeln' },
+  ],
 } as const;
 
 const WEEKLY = {
@@ -137,6 +154,13 @@ const WEEKLY = {
     { key: 'w2', label: 'Collecter des Bulles Roses' },
     { key: 'w3', label: "Objectifs hebdomadaires de l'événement (si actif)" },
     { key: 'w4', label: 'Vérifier les codes' },
+    { key: 'w5', label: 'Home Evaluation' },
+  ],
+  de: [
+    { key: 'w1', label: 'Wöchentliche Aufgaben abschließen (D.G. Level 13+)' },
+    { key: 'w2', label: 'Rosa Blasen sammeln' },
+    { key: 'w3', label: 'Wöchentliche Event-Ziele (falls aktiv)' },
+    { key: 'w4', label: 'Codes checken' },
     { key: 'w5', label: 'Home Evaluation' },
   ],
 } as const;
@@ -191,6 +215,16 @@ const SHOPS = {
     { key: 's6', label: 'Laboratoire (offres)' },
     { key: 's7', label: 'Boutique de cuisine (Massimo)' },
     { key: 's8', label: "Boutique d'oiseaux (Bailey)" },
+  ],
+  de: [
+    { key: 's1', label: 'Buchladen' },
+    { key: 's2', label: 'Insektenladen (Naniwa)' },
+    { key: 's3', label: 'Angelladen (Vanya)' },
+    { key: 's4', label: 'Gartenladen (Blanc)' },
+    { key: 's5', label: 'Instrumentenladen (Annie)' },
+    { key: 's6', label: 'Labor (Angebote)' },
+    { key: 's7', label: 'Kochladen (Massimo)' },
+    { key: 's8', label: 'Vogelladen (Bailey)' },
   ],
 } as const;
 
@@ -272,6 +306,21 @@ const STRINGS = {
     ownDailiesPlaceholder: 'Ex. acheter une offre Ka Ching...',
     add: 'Ajouter',
     ownDailiesEmpty: "Rien d'ajouté pour l'instant — ajoute ici tes propres tâches quotidiennes.",
+  },
+  de: {
+    title: 'Missionen',
+    daily: 'Täglich',
+    weekly: 'Wöchentlich',
+    reset: 'Zurücksetzen',
+    resetDaily: 'Jeden Tag um 06:00 Uhr (Serverzeit)',
+    resetWeekly: 'Jeden Samstag um 06:00 Uhr (Serverzeit)',
+    resetAll: 'Alles zurücksetzen',
+    checkShops: 'Shops checken',
+    dailyTasks: 'Tägliche Aufgaben',
+    ownDailies: 'Eigene tägliche Aufgaben',
+    ownDailiesPlaceholder: 'Z. B. Ka Ching-Angebot kaufen...',
+    add: 'Hinzufügen',
+    ownDailiesEmpty: 'Noch nichts hinzugefügt — trage hier deine eigenen täglichen Aufgaben ein.',
   },
 } as const;
 
