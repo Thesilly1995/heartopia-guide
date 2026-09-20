@@ -1,3 +1,16 @@
+> **Update 20 sep 2026:** Duits is inmiddels volledig live in de app (`nameDe`/`labelDe`
+> in alle catalogusdata + volledige schermtekst-vertaling), via een complete
+> namenlijst die de gebruiker apart aanleverde — niet via de screenshot-matches
+> hieronder. Dit bestand blijft staan als referentie, want de screenshot-namen zijn
+> rechtstreeks uit het spel (hoge zekerheid) en wijken op minstens één punt af van
+> wat er nu live staat: "European Crayfish" kreeg in de verwerkte namenlijst
+> `nameDe: "Europäischer Flusskrebs"`, maar deze staging-tabel zegt op basis van een
+> screenshot `Edelkrebs` (✅). Nog niet gecorrigeerd — moet met de gebruiker
+> afgestemd worden welke naam klopt voor te veel andere entries om zonder overleg
+> te wijzigen. Frans staat hier nog wél als "nog te doen" (zie onderaan), maar is
+> inmiddels ook al volledig live via dezelfde eigen-vertaal-aanpak als Spaans/
+> Portugees — dus ook dat is achterhaald.
+
 # Duits/Frans namen — staging (nog niet verwerkt in de app)
 
 Doel van dit bestand: Duitse (en straks Franse) officiële in-game namen verzamelen
