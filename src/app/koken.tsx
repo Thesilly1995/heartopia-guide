@@ -8,7 +8,7 @@ export default function KokenScreen() {
   const { language } = useLanguage();
   return (
     <HobbyListScreen
-      title={{ nl: 'Koken', en: 'Cooking', es: 'Cocinar', pt: 'Cozinhar', fr: 'Cuisine' }[language]}
+      title={{ nl: 'Koken', en: 'Cooking', es: 'Cocinar', pt: 'Cozinhar', fr: 'Cuisine', de: 'Kochen' }[language]}
       icon="🍳"
       items={recipes}
       gradient={[COLORS.coral, COLORS.yellow]}

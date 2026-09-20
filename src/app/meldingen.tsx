@@ -106,6 +106,25 @@ const STRINGS = {
     permissionNote: "La première fois que tu actives une catégorie, ton appareil te demandera l'autorisation pour les notifications.",
     errorPrefix: "Échec de l'enregistrement :",
   },
+  de: {
+    title: 'Benachrichtigungen',
+    subtitle: 'Wähle, wofür du eine Push-Benachrichtigung erhalten möchtest',
+    updateTitle: '🔄 Neue Version verfügbar',
+    updateText:
+      'Funktioniert automatisch für alle, keine Einstellung nötig: Sobald du die App öffnest und ein neues Update verfügbar ist, erscheint ein Pop-up mit einem Button, um sofort zu aktualisieren.',
+    lockedText:
+      'Push-Benachrichtigungen für Rainbow/Meteorregen, neue Events und neue Codes sind eine Premium-Funktion.',
+    rainbowMeteorTitle: '🌈☄️ Rainbow & Meteorregen',
+    rainbowMeteorText: 'Benachrichtigung, sobald ein Rainbow-Moment oder Meteorregen beginnt.',
+    eventTitle: '🎉 Neues Event',
+    eventText: 'Benachrichtigung, sobald ein neues Event startet.',
+    codesTitle: '🎁 Neuer Code',
+    codesText: 'Benachrichtigung, sobald ein neuer Gift-Code hinzugefügt wird.',
+    backupTitle: '☁️ Cloud-Speicher-Erinnerung',
+    backupText: 'Wöchentliche Erinnerung, deinen Fortschritt zu sichern.',
+    permissionNote: 'Wenn du zum ersten Mal eine Kategorie aktivierst, fragt dein Gerät um Erlaubnis für Benachrichtigungen.',
+    errorPrefix: 'Registrierung fehlgeschlagen:',
+  },
 } as const;
 
 export default function MeldingenScreen() {

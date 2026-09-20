@@ -102,6 +102,23 @@ const STRINGS = {
     mailboxNote: "📮 N'oublie pas non plus le bouquet près de ta propre boîte aux lettres — il est toujours là, mais pas sur la carte (puisque c'est ton propre emplacement de maison).",
     meteorLingerNote: "⛏️ Les morceaux de minerai restent minables jusqu'à 24h après le début de la pluie de météores (donc jusqu'à la même heure le lendemain) — cette carte reste donc utile un moment après la fin de la pluie de météores elle-même.",
   },
+  de: {
+    title: 'Rainbow & Meteorschauer',
+    subtitle: 'Sträuße & Sternsplitter pro Event',
+    rainbowTab: '🌈 Rainbow',
+    meteorTab: '☄️ Meteorschauer',
+    emptyText: 'Momentan nicht aktiv. Sobald das wieder passiert, erscheinen hier die aktuellen Standorte.',
+    resetProgress: 'Fortschritt zurücksetzen',
+    whalefallLabel: '🌊 Whalefall Canyon',
+    whalefallDisclaimer:
+      'Während eines Rainbow-Moments gibt es in Whalefall Canyon 4 Strauß-Stellen, aber du kannst nur 1 von den 4 bekommen — welche das ist, ist von Spieler zu Spieler unterschiedlich.',
+    dorisNoteWhalefall:
+      '👧 Schau nach der 👧-Markierung (Hauptinsel oder Whalefall Canyon), um zu sehen, wo Doris gerade ist — bei ihr kannst du während Regen, Regenbogen und Meteorschauer einkaufen. Das genaue Zeitfenster siehst du auf dem Startbildschirm bei "Wetter diese Woche".',
+    dorisNoteLand:
+      '👧 Während des Meteorschauers steht Doris an Land (siehe Markierung unten) — bei ihr kannst du dann einkaufen. Das genaue Zeitfenster siehst du auf dem Startbildschirm bei "Wetter diese Woche".',
+    mailboxNote: '📮 Vergiss auch nicht den Strauß bei deinem eigenen Briefkasten — der ist immer da, steht aber nicht auf der Karte (weil das dein eigener Hausplatz ist).',
+    meteorLingerNote: '⛏️ Die Erzstücke bleiben bis 24 Stunden nach Beginn des Meteorschauers abbaubar (also bis zur gleichen Zeit am nächsten Tag) — diese Karte bleibt also noch eine Weile nützlich, nachdem der Meteorschauer selbst vorbei ist.',
+  },
 } as const;
 
 export default function RainbowMeteorScreen() {

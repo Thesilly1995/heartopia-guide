@@ -36,6 +36,10 @@ const STRINGS = {
     searchPlaceholder: 'Rechercher par nom...',
     collected: (n: number, t: number) => `${n} / ${t} collectés`,
   },
+  de: {
+    searchPlaceholder: 'Nach Namen suchen...',
+    collected: (n: number, t: number) => `${n} / ${t} gesammelt`,
+  },
 } as const;
 
 export function CollectionListScreen({

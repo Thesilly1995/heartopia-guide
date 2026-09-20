@@ -8,7 +8,7 @@ export default function VissenScreen() {
   const { language } = useLanguage();
   return (
     <HobbyListScreen
-      title={{ nl: 'Vissen', en: 'Fishing', es: 'Pesca', pt: 'Pesca', fr: 'Pêche' }[language]}
+      title={{ nl: 'Vissen', en: 'Fishing', es: 'Pesca', pt: 'Pesca', fr: 'Pêche', de: 'Angeln' }[language]}
       icon="🎣"
       items={fish}
       gradient={[COLORS.sky, COLORS.coral]}
