@@ -71,6 +71,17 @@ const STRINGS = {
     list: '📋 Liste',
     whalefallLabel: '🌊 16-19 (Whalefall Canyon)',
   },
+  de: {
+    title: 'Wöchentliche Blasen',
+    subtitle: 'Rosa Blasen voller Belohnungen',
+    disclaimer:
+      'Es gibt jede Woche 19 rosa Blasen (15 auf der Hauptinsel, 4 unter Wasser in Whalefall Canyon) — die genauen Orte und Belohnungen wechseln jeden Samstag. Die Karte unten zeigt die Orte dieser Woche.',
+    resetAll: 'Alles zurücksetzen',
+    source: 'Quelle: Community-Karte (Illuminight)',
+    map: '🗺️ Karte',
+    list: '📋 Liste',
+    whalefallLabel: '🌊 16-19 (Whalefall Canyon)',
+  },
 } as const;
 
 const ISLAND_MAP = require('@/assets/images/maps/island-map.jpg');

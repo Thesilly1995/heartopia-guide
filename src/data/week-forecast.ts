@@ -74,6 +74,14 @@ const LABELS = {
     meteor: 'Pluie de météores',
     heatwave: 'Canicule',
   },
+  de: {
+    normal: 'Nichts Besonderes',
+    rain: 'Regen',
+    rainbow: 'Regenbogen',
+    warm_sun: 'Warme Sonne',
+    meteor: 'Meteorenregen',
+    heatwave: 'Hitzewelle',
+  },
 } as const;
 
 const BLOCK_LABELS: Record<WeekForecastBlock, string> = {
@@ -89,9 +97,10 @@ const WEEKDAYS = {
   es: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
   pt: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'],
   fr: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+  de: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
 } as const;
 
-const TODAY_LABEL = { nl: 'Vandaag', en: 'Today', es: 'Hoy', pt: 'Hoje', fr: "Aujourd'hui" } as const;
+const TODAY_LABEL = { nl: 'Vandaag', en: 'Today', es: 'Hoy', pt: 'Hoje', fr: "Aujourd'hui", de: 'Heute' } as const;
 
 /**
  * De weekvoorspelling (in-game weekvoorspelling-telefoontje): één rij per

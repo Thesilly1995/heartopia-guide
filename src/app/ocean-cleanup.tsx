@@ -41,6 +41,11 @@ const POLLUTANTS = {
     { name: 'Pollution à Coquille Dure', desc: 'Plus coriace — demande plus d\'effort à nettoyer' },
     { name: 'Pollution à Coquille Dure Fissurée', desc: 'Plus coriace — se brise ensuite en morceaux' },
   ],
+  de: [
+    { name: 'Wirbelnde Verschmutzung', desc: 'Der Standardtyp, schnell zu entfernen' },
+    { name: 'Hartschalen-Verschmutzung', desc: 'Zäher — kostet mehr Mühe zu reinigen' },
+    { name: 'Hartschalen-Verschmutzung, gerissen', desc: 'Zäher — zerfällt danach in Stücke' },
+  ],
 } as const;
 
 const STRINGS = {
@@ -198,6 +203,37 @@ const STRINGS = {
       "Nettoyer la pollution rapporte des Coquillages de Mer, qui s'additionnent en Points de Collection. Utilise-les pour acheter des meubles océaniques comme le Rideau de Perles Coquillages de Mer et la Vitrine Corail & Coquillages. Certains niveaux donnent aussi une chance d'obtenir le coffret-cadeau Voice of the Deep (avec une vraie carte au son de dauphin, dans le cadre d'une campagne de protection des dauphins).",
     unconfirmedDisclaimer:
       "Pas encore confirmé : la liste complète des meubles/coûts en points, si l'outil de nettoyage peut être amélioré, combien de niveaux de hobby il y a, et d'éventuelles limites quotidiennes.",
+  },
+  de: {
+    title: 'Ocean Cleanup',
+    subtitle: 'Verschmutzung aufräumen in Whalefall Canyon',
+    permanentDisclaimer: 'Dauerhaftes Hobby (Oceanbound 2.7-Update). Bleibt auch nach Ende des Call of Whales-Events bestehen.',
+    shellCatalog: '🐚 Muschelkatalog',
+    shellCatalogDesc: 'Alle 30 bekannten Muscheln (Quelle: eigene Screenshots + Community-Tracker)',
+    filterAll: 'Alle',
+    filterUndiscovered: '🔍 Noch zu entdecken',
+    filterNotFiveStar: '⭐ Noch nicht 5★',
+    filterNoMastery: '🏆 Noch keine Mastery',
+    goldLabel: 'Gold (verkauft an Albert Jr.)',
+    tokensLabel: 'Token (verkauft an Azure)',
+    timeWindow: 'Zeitfenster',
+    allDay: 'Ganzer Tag',
+    notDocumented: 'Noch nicht dokumentiert',
+    masteryAchieved: 'Mastery erreicht',
+    unlockTitle: 'Freischalten',
+    unlockText:
+      'D.G. Member Level 7 → Portal am Fuß von Whale Mountain → sprich mit Naga, dann Rory → öffne das Hobby-Menü (Muschel-Symbol) → Upgrade → sprich mit Oliver, um zu starten.',
+    swimTitle: '🏊 Schwimmen',
+    swimText:
+      "In Whalefall Canyon kannst du frei in jede Richtung schwimmen. Nutze Shift (oder den Dash-Knopf auf Mobilgeräten) für einen Unterwasser-Sprint (einen 'Meerjungfrauen-Spurt'). Schwimmen außerhalb dieser Unterwasserzone ist derzeit nicht möglich.",
+    toolTitle: 'Werkzeug',
+    toolText: 'Basis-Ozeanreiniger — ziele auf die Verschmutzung und halte die Reinigungstaste gedrückt, bis sie vollständig verschwunden ist.',
+    pollutantTypesTitle: 'Arten von Verschmutzung',
+    rewardsTitle: 'Belohnungen',
+    rewardsText:
+      'Verschmutzung aufräumen bringt Seemuscheln ein, die sich zu Sammelpunkten summieren. Damit kaufst du Ozean-Möbel wie den Seemuschel-Perlenvorhang und die Koralle & Muschel-Vitrine. Bestimmte Level geben auch eine Chance auf die Voice of the Deep-Geschenkbox (mit einer echten Delfingeräusch-Karte, Teil einer Delfinschutz-Kampagne).',
+    unconfirmedDisclaimer:
+      'Noch nicht bestätigt: die vollständige Liste der Möbel/Punktkosten, ob das Reinigungswerkzeug verbessert werden kann, wie viele Hobby-Level es gibt, und etwaige Tageslimits.',
   },
 } as const;
 

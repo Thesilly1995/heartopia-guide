@@ -28,7 +28,7 @@ interface CatalogDef {
   key: string;
   href: string;
   icon: string;
-  title: { nl: string; en: string; es: string; pt: string; fr: string };
+  title: { nl: string; en: string; es: string; pt: string; fr: string; de: string };
   total: number;
   masteryKeys: string[];
   starsKeys: string[];
@@ -86,7 +86,7 @@ export function useCatalogProgress(): CatalogProgressEntry[] {
         key: 'vissen',
         href: '/vissen',
         icon: '🎣',
-        title: { nl: 'Vissen', en: 'Fishing', es: 'Pesca', pt: 'Pesca', fr: 'Pêche' },
+        title: { nl: 'Vissen', en: 'Fishing', es: 'Pesca', pt: 'Pesca', fr: 'Pêche', de: 'Angeln' },
         total: fish.length,
         masteryKeys: ['heartopia:vissen:mastery'],
         starsKeys: ['heartopia:vissen:stars'],
@@ -95,7 +95,7 @@ export function useCatalogProgress(): CatalogProgressEntry[] {
         key: 'koken',
         href: '/koken',
         icon: '🍳',
-        title: { nl: 'Koken', en: 'Cooking', es: 'Cocinar', pt: 'Cozinhar', fr: 'Cuisine' },
+        title: { nl: 'Koken', en: 'Cooking', es: 'Cocinar', pt: 'Cozinhar', fr: 'Cuisine', de: 'Kochen' },
         total: recipes.length,
         masteryKeys: ['heartopia:koken:mastery'],
         starsKeys: ['heartopia:koken:stars'],
@@ -104,7 +104,7 @@ export function useCatalogProgress(): CatalogProgressEntry[] {
         key: 'tuinieren',
         href: '/tuinieren',
         icon: '🌱',
-        title: { nl: 'Tuinieren', en: 'Gardening', es: 'Jardinería', pt: 'Jardinagem', fr: 'Jardinage' },
+        title: { nl: 'Tuinieren', en: 'Gardening', es: 'Jardinería', pt: 'Jardinagem', fr: 'Jardinage', de: 'Gärtnern' },
         total: crops.length + flowers.length,
         masteryKeys: ['heartopia:tuinieren:gewassen:mastery', 'heartopia:tuinieren:bloemen:mastery'],
         starsKeys: ['heartopia:tuinieren:gewassen:stars', 'heartopia:tuinieren:bloemen:stars'],
@@ -113,7 +113,7 @@ export function useCatalogProgress(): CatalogProgressEntry[] {
         key: 'insecten',
         href: '/insecten',
         icon: '🦋',
-        title: { nl: 'Insecten', en: 'Insects', es: 'Insectos', pt: 'Insetos', fr: 'Insectes' },
+        title: { nl: 'Insecten', en: 'Insects', es: 'Insectos', pt: 'Insetos', fr: 'Insectes', de: 'Insekten' },
         total: insects.length,
         masteryKeys: ['heartopia:insecten:mastery'],
         starsKeys: ['heartopia:insecten:stars'],
@@ -122,7 +122,7 @@ export function useCatalogProgress(): CatalogProgressEntry[] {
         key: 'vogels',
         href: '/vogels',
         icon: '🐦',
-        title: { nl: 'Vogels', en: 'Birds', es: 'Aves', pt: 'Aves', fr: 'Oiseaux' },
+        title: { nl: 'Vogels', en: 'Birds', es: 'Aves', pt: 'Aves', fr: 'Oiseaux', de: 'Vögel' },
         total: birds.length,
         masteryKeys: ['heartopia:vogels:mastery'],
         starsKeys: ['heartopia:vogels:stars'],
@@ -131,7 +131,7 @@ export function useCatalogProgress(): CatalogProgressEntry[] {
         key: 'beeldhouwen',
         href: '/beeldhouwen',
         icon: '🏖️',
-        title: { nl: 'Beeldhouwen', en: 'Sculpting', es: 'Escultura', pt: 'Escultura', fr: 'Sculpture' },
+        title: { nl: 'Beeldhouwen', en: 'Sculpting', es: 'Escultura', pt: 'Escultura', fr: 'Sculpture', de: 'Bildhauen' },
         total: sand.length + snow.length,
         masteryKeys: ['heartopia:beeldhouwen:zand:mastery', 'heartopia:beeldhouwen:sneeuw:mastery'],
         starsKeys: ['heartopia:beeldhouwen:zand:stars', 'heartopia:beeldhouwen:sneeuw:stars'],
@@ -140,7 +140,7 @@ export function useCatalogProgress(): CatalogProgressEntry[] {
         key: 'ocean-cleanup',
         href: '/ocean-cleanup',
         icon: '🌊',
-        title: { nl: 'Ocean Cleanup', en: 'Ocean Cleanup', es: 'Limpieza del océano', pt: 'Limpeza do oceano', fr: 'Nettoyage de l\'océan' },
+        title: { nl: 'Ocean Cleanup', en: 'Ocean Cleanup', es: 'Limpieza del océano', pt: 'Limpeza do oceano', fr: 'Nettoyage de l\'océan', de: 'Ocean Cleanup' },
         total: shells.length,
         masteryKeys: ['heartopia:schelpen:sterren:mastery'],
         starsKeys: ['heartopia:schelpen:sterren'],

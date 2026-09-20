@@ -9,6 +9,7 @@ const NO_EVENT = {
   datesEs: 'Te avisaremos en cuanto empiece el próximo evento',
   datesPt: 'Avisaremos assim que o próximo evento começar',
   datesFr: 'Nous vous préviendrons dès que le prochain événement commencera',
+  datesDe: 'Wir informieren dich, sobald das nächste Event beginnt',
   emoji: '🗓️',
 } as const;
 
@@ -32,6 +33,7 @@ export function useCurrentEventMeta(): CurrentEventMeta {
       language === 'es' ? remote.datesEs ?? remote.datesEn
       : language === 'pt' ? remote.datesPt ?? remote.datesEn
       : language === 'fr' ? remote.datesFr ?? remote.datesEn
+      : language === 'de' ? remote.datesDe ?? remote.datesEn
       : language === 'en' ? remote.datesEn
       : remote.datesNl;
     return {
@@ -46,6 +48,7 @@ export function useCurrentEventMeta(): CurrentEventMeta {
       language === 'es' ? NO_EVENT.datesEs
       : language === 'pt' ? NO_EVENT.datesPt
       : language === 'fr' ? NO_EVENT.datesFr
+      : language === 'de' ? NO_EVENT.datesDe
       : language === 'en' ? NO_EVENT.datesEn
       : NO_EVENT.datesNl,
     emoji: NO_EVENT.emoji,

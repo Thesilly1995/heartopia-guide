@@ -39,6 +39,13 @@ const STRINGS = {
     disclaimer:
       '110 puzzles et 40 livres de l\'onglet "Other Collections" du Collection Book, basés sur des captures d\'écran personnelles. Appuie sur un élément pour le marquer comme collecté.',
   },
+  de: {
+    title: 'Puzzles & Bücher',
+    puzzlesLabel: 'Puzzles',
+    booksLabel: 'Bücher',
+    disclaimer:
+      '110 Puzzles und 40 Bücher aus dem Tab "Other Collections" des Collection Book, basierend auf eigenen Screenshots. Tippe auf ein Element, um es als gesammelt zu markieren.',
+  },
 } as const;
 
 export default function PuzzelsBoekenScreen() {
