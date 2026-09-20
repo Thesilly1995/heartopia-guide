@@ -32,6 +32,10 @@ const STRINGS = {
     searchPlaceholder: 'Buscar por nome...',
     collected: (n: number, t: number) => `${n} / ${t} coletados`,
   },
+  fr: {
+    searchPlaceholder: 'Rechercher par nom...',
+    collected: (n: number, t: number) => `${n} / ${t} collectés`,
+  },
 } as const;
 
 export function CollectionListScreen({

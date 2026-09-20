@@ -55,6 +55,17 @@ const STRINGS = {
     activeBadge: '👑 Premium ativo',
     disablePremium: 'Desativar premium de teste',
   },
+  fr: {
+    title: 'Tableau de progression',
+    subtitle: 'Progression de mastery dans tous tes catalogues',
+    totalLabel: 'Progression totale',
+    countLabel: (m: number, t: number) => `${m} / ${t} mastery obtenus`,
+    starsLabel: (n: number, max: number) => `⭐ ${n} / ${max} étoiles`,
+    lockedText:
+      "Le tableau de progression montre en un coup d'œil combien de mastery tu as obtenu dans chaque catalogue (Pêche, Cuisine, Jardinage, Insectes, Oiseaux, Sculpture, Ocean Cleanup).",
+    activeBadge: '👑 Premium actif',
+    disablePremium: 'Désactiver le premium test',
+  },
 } as const;
 
 type DashboardStrings = (typeof STRINGS)[keyof typeof STRINGS];

@@ -102,17 +102,17 @@ const RECIPES_RAW: RecipeRaw[] = [
 ];
 
 const TOOL_BY_LANG = (r: RecipeRaw, language: Language) =>
-  language === 'es' ? r.toolEs : language === 'pt' ? r.toolPt : language === 'en' ? r.toolEn : r.toolNl;
+  language === 'es' ? r.toolEs : language === 'pt' ? r.toolPt : language === 'fr' ? r.toolEn : language === 'en' ? r.toolEn : r.toolNl;
 
 const INGREDIENTS_BY_LANG = (r: RecipeRaw, language: Language) =>
-  language === 'es' ? r.ingredientsEs : language === 'pt' ? r.ingredientsPt : language === 'en' ? r.ingredientsEn : r.ingredientsNl;
+  language === 'es' ? r.ingredientsEs : language === 'pt' ? r.ingredientsPt : language === 'fr' ? r.ingredientsEn : language === 'en' ? r.ingredientsEn : r.ingredientsNl;
 
 export function useRecipes(): RecipeItem[] {
   const { language } = useLanguage();
   return useMemo(
     () =>
       RECIPES_RAW.map((r) => ({
-    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : r.nameEn,
+    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : r.nameEn,
     rarity: language === 'es' ? r.rarityEs : language === 'pt' ? r.rarityPt : r.rarityEn,
     tool: TOOL_BY_LANG(r, language),
     ingredients: INGREDIENTS_BY_LANG(r, language),

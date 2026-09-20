@@ -19,6 +19,7 @@ const STRINGS = {
   en: { hint: '🔍 Tap to enlarge' },
   es: { hint: '🔍 Toca para ampliar' },
   pt: { hint: '🔍 Toque para ampliar' },
+  fr: { hint: '🔍 Touche pour agrandir' },
 } as const;
 
 export function PinMap({

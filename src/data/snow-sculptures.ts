@@ -56,14 +56,14 @@ const SNOW_SCULPTURES_RAW: SculptureRaw[] = [
 ];
 
 const SNOW_METHOD_BY_LANG = (r: SculptureRaw, language: Language) =>
-  language === 'es' ? r.methodEs : language === 'pt' ? r.methodPt : language === 'en' ? r.methodEn : r.methodNl;
+  language === 'es' ? r.methodEs : language === 'pt' ? r.methodPt : language === 'fr' ? r.methodEn : language === 'en' ? r.methodEn : r.methodNl;
 
 export function useSnowSculptures(): SculptureItem[] {
   const { language } = useLanguage();
   return useMemo(
     () =>
       SNOW_SCULPTURES_RAW.map((r) => ({
-    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : r.nameEn,
+    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : r.nameEn,
     rarity: r.rarityEn,
     method: SNOW_METHOD_BY_LANG(r, language),
     level: r.level,

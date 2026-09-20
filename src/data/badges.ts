@@ -101,7 +101,7 @@ export function useBadges(): BadgeItem[] {
   return useMemo(
     () =>
       BADGES_RAW.map((r) => ({
-    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : r.nameEn,
+    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : r.nameEn,
     emoji: r.emoji,
     hidden: r.hidden,
     iconKey: r.iconKey,

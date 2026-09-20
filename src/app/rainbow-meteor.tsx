@@ -85,6 +85,23 @@ const STRINGS = {
     mailboxNote: '📮 Não esqueça também do buquê perto da sua própria caixa de correio — ele sempre está lá, mas não aparece no mapa (porque é o seu próprio ponto de casa).',
     meteorLingerNote: '⛏️ Os pedaços de minério continuam mineráveis até 24h depois do início da chuva de meteoros (ou seja, até o mesmo horário no dia seguinte) — este mapa continua útil por um tempo mesmo depois que a chuva de meteoros termina.',
   },
+  fr: {
+    title: 'Rainbow & Pluie de Météores',
+    subtitle: "Bouquets et éclats d'étoile par événement",
+    rainbowTab: '🌈 Rainbow',
+    meteorTab: '☄️ Pluie de Météores',
+    emptyText: "Pas actif en ce moment. Dès que ça se reproduit, les emplacements actuels apparaîtront ici.",
+    resetProgress: 'Réinitialiser la progression',
+    whalefallLabel: '🌊 Whalefall Canyon',
+    whalefallDisclaimer:
+      "Pendant un moment Rainbow, Whalefall Canyon compte 4 emplacements de bouquet, mais tu ne peux en récupérer qu'1 sur 4 — lequel dépend du joueur.",
+    dorisNoteWhalefall:
+      "👧 Doris se trouve à Whalefall Canyon pendant la pluie, l'arc-en-ciel ET la pluie de météores — tu peux faire des achats chez elle à ce moment-là. Regarde l'écran d'accueil sous « Météo cette semaine » pour la plage horaire exacte.",
+    dorisNoteLand:
+      "👧 Pendant la pluie de météores, Doris est sur la terre ferme (voir l'épingle ci-dessous) — tu peux faire des achats chez elle à ce moment-là. Regarde l'écran d'accueil sous « Météo cette semaine » pour la plage horaire exacte.",
+    mailboxNote: "📮 N'oublie pas non plus le bouquet près de ta propre boîte aux lettres — il est toujours là, mais pas sur la carte (puisque c'est ton propre emplacement de maison).",
+    meteorLingerNote: "⛏️ Les morceaux de minerai restent minables jusqu'à 24h après le début de la pluie de météores (donc jusqu'à la même heure le lendemain) — cette carte reste donc utile un moment après la fin de la pluie de météores elle-même.",
+  },
 } as const;
 
 export default function RainbowMeteorScreen() {

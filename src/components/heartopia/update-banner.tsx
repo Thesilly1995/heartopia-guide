@@ -34,6 +34,13 @@ const STRINGS = {
     updating: 'Processando...',
     dismiss: 'Mais tarde',
   },
+  fr: {
+    title: '🔄 Nouvelle version disponible',
+    text: 'Une mise à jour avec le dernier contenu et des améliorations est disponible.',
+    update: 'Mettre à jour maintenant',
+    updating: 'Chargement...',
+    dismiss: 'Plus tard',
+  },
 } as const;
 
 /**
