@@ -84,6 +84,23 @@ const DAILY = {
     { key: 'd17', label: '5 cartas de pássaro para Bailey J' },
     { key: 'd18', label: 'Coletar madeira rara' },
   ],
+  fr: [
+    { key: 'd0', label: 'Check-in quotidien' },
+    { key: 'd1', label: '5x Demande de résident (Resident Requests)' },
+    { key: 'd3', label: 'Vérifier le réassort des boutiques (meubles et vêtements)' },
+    { key: 'd4', label: 'Vérifier le courrier/la boîte aux lettres' },
+    { key: 'd6', label: 'Nourrir, caresser et entraîner ton animal' },
+    { key: 'd7', label: 'Nourrir les animaux sauvages' },
+    { key: 'd10', label: 'Récolter les cultures et les arroser' },
+    { key: 'd11', label: 'Vérifier les fleurs et les arroser' },
+    { key: 'd12', label: 'Vérifier la boutique de Ka Ching' },
+    { key: 'd13', label: 'Vérifier Azure (si un événement est actif)' },
+    { key: 'd14', label: 'Vérifier le Laboratoire' },
+    { key: 'd15', label: 'Couper le Chêne Errant' },
+    { key: 'd16', label: 'Extraire la Fluorite' },
+    { key: 'd17', label: "5 cartes d'oiseaux pour Bailey J" },
+    { key: 'd18', label: 'Récolter du bois rare' },
+  ],
 } as const;
 
 const WEEKLY = {
@@ -113,6 +130,13 @@ const WEEKLY = {
     { key: 'w2', label: 'Coletar Bolhas Rosa' },
     { key: 'w3', label: 'Metas semanais do evento (se ativo)' },
     { key: 'w4', label: 'Conferir códigos' },
+    { key: 'w5', label: 'Home Evaluation' },
+  ],
+  fr: [
+    { key: 'w1', label: 'Terminer les tâches hebdomadaires (D.G. Niveau 13+)' },
+    { key: 'w2', label: 'Collecter des Bulles Roses' },
+    { key: 'w3', label: "Objectifs hebdomadaires de l'événement (si actif)" },
+    { key: 'w4', label: 'Vérifier les codes' },
     { key: 'w5', label: 'Home Evaluation' },
   ],
 } as const;
@@ -157,6 +181,16 @@ const SHOPS = {
     { key: 's6', label: 'Laboratório (ofertas)' },
     { key: 's7', label: 'Loja de culinária (Massimo)' },
     { key: 's8', label: 'Loja de pássaros (Bailey)' },
+  ],
+  fr: [
+    { key: 's1', label: 'Librairie' },
+    { key: 's2', label: "Boutique d'insectes (Naniwa)" },
+    { key: 's3', label: 'Boutique de pêche (Vanya)' },
+    { key: 's4', label: 'Boutique de jardin (Blanc)' },
+    { key: 's5', label: "Boutique d'instruments (Annie)" },
+    { key: 's6', label: 'Laboratoire (offres)' },
+    { key: 's7', label: 'Boutique de cuisine (Massimo)' },
+    { key: 's8', label: "Boutique d'oiseaux (Bailey)" },
   ],
 } as const;
 
@@ -223,6 +257,21 @@ const STRINGS = {
     ownDailiesPlaceholder: 'Ex.: comprar oferta da Ka Ching...',
     add: 'Adicionar',
     ownDailiesEmpty: 'Nada adicionado ainda — coloque aqui suas próprias tarefas diárias.',
+  },
+  fr: {
+    title: 'Missions',
+    daily: 'Quotidien',
+    weekly: 'Hebdomadaire',
+    reset: 'Réinitialisation',
+    resetDaily: 'Tous les jours à 06h00 (heure du serveur)',
+    resetWeekly: 'Tous les samedis à 06h00 (heure du serveur)',
+    resetAll: 'Tout réinitialiser',
+    checkShops: 'Vérifier les boutiques',
+    dailyTasks: 'Tâches quotidiennes',
+    ownDailies: 'Tes propres tâches quotidiennes',
+    ownDailiesPlaceholder: 'Ex. acheter une offre Ka Ching...',
+    add: 'Ajouter',
+    ownDailiesEmpty: "Rien d'ajouté pour l'instant — ajoute ici tes propres tâches quotidiennes.",
   },
 } as const;
 

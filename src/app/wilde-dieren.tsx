@@ -60,6 +60,17 @@ const STRINGS = {
     map: '🗺️ Mapa',
     list: '📋 Lista',
   },
+  fr: {
+    title: 'Animaux Sauvages',
+    subtitle: 'Mangeoires, nourriture préférée et amitié',
+    feedingSpot: 'Mangeoire',
+    favoriteWeather: 'Météo préférée',
+    favoriteFood: 'Nourriture préférée',
+    friendshipLevel: "Niveau d'amitié",
+    eventHeading: "Animaux d'événement",
+    map: '🗺️ Carte',
+    list: '📋 Liste',
+  },
 } as const;
 
 export default function WildeDierenScreen() {

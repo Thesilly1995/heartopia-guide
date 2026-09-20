@@ -52,23 +52,23 @@ const WILD_ANIMALS_RAW: WildAnimalRaw[] = [
 ];
 
 const WEATHER_BY_LANG = (r: WildAnimalRaw, language: Language) =>
-  language === 'es' ? r.weatherEs : language === 'pt' ? r.weatherPt : language === 'en' ? r.weatherEn : r.weatherNl;
+  language === 'es' ? r.weatherEs : language === 'pt' ? r.weatherPt : language === 'fr' ? r.weatherEn : language === 'en' ? r.weatherEn : r.weatherNl;
 
 const FOODS_BY_LANG = (r: WildAnimalRaw, language: Language) =>
   language === 'es' ? r.foodsEs : language === 'pt' ? r.foodsPt : r.foodsEn;
 
 const SPOT_BY_LANG = (r: WildAnimalRaw, language: Language) =>
-  language === 'es' ? r.spotEs : language === 'pt' ? r.spotPt : language === 'en' ? r.spotEn : r.spotNl;
+  language === 'es' ? r.spotEs : language === 'pt' ? r.spotPt : language === 'fr' ? r.spotEn : language === 'en' ? r.spotEn : r.spotNl;
 
 const NOTE_BY_LANG = (r: WildAnimalRaw, language: Language) =>
-  language === 'es' ? r.noteEs : language === 'pt' ? r.notePt : language === 'en' ? r.noteEn : r.noteNl;
+  language === 'es' ? r.noteEs : language === 'pt' ? r.notePt : language === 'fr' ? r.noteEn : language === 'en' ? r.noteEn : r.noteNl;
 
 export function useWildAnimals(): WildAnimalItem[] {
   const { language } = useLanguage();
   return useMemo(
     () =>
       WILD_ANIMALS_RAW.map((r) => ({
-    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : r.nameEn,
+    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : r.nameEn,
     weather: WEATHER_BY_LANG(r, language),
     foods: FOODS_BY_LANG(r, language),
     spot: SPOT_BY_LANG(r, language),

@@ -33,6 +33,7 @@ const DOGS_NOTE = {
   en: "There are 37 dog breeds in the game — these are the confirmed breeds. We'll add more as data becomes known. Note: favorite food differs per individual dog, not per breed.",
   es: 'Hay 37 razas de perros en el juego — estas son las razas confirmadas. Añadiremos más a medida que haya nuevos datos disponibles. Ten en cuenta: la comida favorita varía según cada perro individual, no según la raza.',
   pt: 'Existem 37 raças de cachorro no jogo — estas são as raças confirmadas. Vamos adicionar mais conforme novos dados forem conhecidos. Atenção: a comida favorita varia por cachorro individual, não por raça.',
+  fr: "Il y a 37 races de chiens dans le jeu — voici les races confirmées. On complètera la liste dès que plus de données seront connues. Note : la nourriture préférée varie selon chaque chien individuel, pas selon la race.",
 } as const;
 
 const STRINGS = {
@@ -135,6 +136,31 @@ const STRINGS = {
     triedRecipes: 'Pratos',
     triedCrops: 'Plantações',
     triedWildFruit: 'Frutas silvestres',
+  },
+  fr: {
+    title: 'Dog & Cat Moments',
+    cats: 'Chats',
+    dogs: 'Chiens',
+    adoptionSlots: "Places d'adoption par niveau",
+    care: 'Soins',
+    careValue: 'Caresser, nourrir, laver, passer du temps ensemble, tours, promener',
+    size: 'Taille',
+    specialAbility: 'Capacité spéciale',
+    randomTraits: "La nourriture préférée et la personnalité varient selon chaque animal individuel — découvre-le toi-même !",
+    friendshipLevel: "Niveau d'amitié",
+    trainedActions: 'Actions entraînées',
+    feedingList: "Liste d'alimentation",
+    feedingCount: (n: number) => (n === 1 ? '1 élément' : `${n} éléments`),
+    feedingHint: "Note ici ce que tu as déjà donné à manger à cet animal, et touche le cœur si ça s'avère être un favori.",
+    feedingPlaceholder: 'Ex. pomme, champignon grillé...',
+    feedingAdd: 'Ajouter',
+    feedingEmpty: "Rien d'ajouté pour l'instant — ajoute ce que tu lui as déjà donné à manger.",
+    petNameLabel: 'Nom',
+    petNamePlaceholder: 'Nom de ton animal',
+    triedHint: "Voici les plats, cultures et fruits sauvages connus du jeu — la nourriture préférée varie selon chaque animal, utilise ceci comme une liste de ce que tu as déjà essayé.",
+    triedRecipes: 'Plats',
+    triedCrops: 'Cultures',
+    triedWildFruit: 'Fruits sauvages',
   },
 } as const;
 

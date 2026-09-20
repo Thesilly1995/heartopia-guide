@@ -128,12 +128,12 @@ export function useBirds(): BirdItem[] {
   return useMemo(
     () =>
       BIRDS_RAW.map((r) => ({
-    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : r.nameEn,
+    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : r.nameEn,
     rarity: r.rarityEn,
     spot: r.spotEn,
     watertype: r.watertypeEn,
-    time: language === 'es' ? localizeTime(r.timeEn, 'es') : language === 'pt' ? localizeTime(r.timeEn, 'pt') : language === 'en' ? r.timeEn : r.timeNl,
-    weather: language === 'es' ? localizeWeather(r.weatherEn, 'es') : language === 'pt' ? localizeWeather(r.weatherEn, 'pt') : language === 'en' ? r.weatherEn : r.weatherNl,
+    time: language === 'es' ? localizeTime(r.timeEn, 'es') : language === 'pt' ? localizeTime(r.timeEn, 'pt') : language === 'fr' ? localizeTime(r.timeEn, 'fr') : language === 'en' ? r.timeEn : r.timeNl,
+    weather: language === 'es' ? localizeWeather(r.weatherEn, 'es') : language === 'pt' ? localizeWeather(r.weatherEn, 'pt') : language === 'fr' ? localizeWeather(r.weatherEn, 'fr') : language === 'en' ? r.weatherEn : r.weatherNl,
     level: r.level,
     rarityColorKey: r.rarityColorKey,
     xp: r.xp,

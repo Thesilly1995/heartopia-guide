@@ -29,7 +29,11 @@ export function useRainbowSpots(): EventSpot[] {
         x: spot.x,
         y: spot.y,
         description:
-          language === 'es' ? spot.descriptionEs ?? spot.descriptionEn : language === 'pt' ? spot.descriptionPt ?? spot.descriptionEn : language === 'en' ? spot.descriptionEn : spot.descriptionNl,
+          language === 'es' ? spot.descriptionEs ?? spot.descriptionEn
+          : language === 'pt' ? spot.descriptionPt ?? spot.descriptionEn
+          : language === 'fr' ? spot.descriptionFr ?? spot.descriptionEn
+          : language === 'en' ? spot.descriptionEn
+          : spot.descriptionNl,
         underwater: spot.underwater,
         isDoris: spot.isDoris ?? false,
       }));

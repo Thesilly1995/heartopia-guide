@@ -46,6 +46,7 @@ const WEATHER_WORDS = {
   en: ['Sunny', 'Rainy', 'Rainbow'],
   es: ['Soleado', 'Lluvia', 'Arcoíris'],
   pt: ['Ensolarado', 'Chuva', 'Arco-íris'],
+  fr: ['Ensoleillé', 'Pluie', 'Arc-en-ciel'],
 } as const;
 
 const TIME_WORDS = {
@@ -53,6 +54,7 @@ const TIME_WORDS = {
   en: ['Night', 'Dawn', 'Day', 'Dusk'],
   es: ['Noche', 'Amanecer', 'Día', 'Atardecer'],
   pt: ['Noite', 'Amanhecer', 'Dia', 'Entardecer'],
+  fr: ['Nuit', 'Aube', 'Jour', 'Crépuscule'],
 } as const;
 
 const STRINGS = {
@@ -159,6 +161,32 @@ const STRINGS = {
     progressUndiscovered: '🔍 Ainda não descoberto',
     progressNotFiveStar: '⭐ Ainda sem 5★',
     progressNoMastery: '🏆 Ainda sem maestria',
+  },
+  fr: {
+    back: '‹ Retour',
+    itemsInGuide: (n: number) => `${n} éléments dans ce guide`,
+    searchPlaceholder: 'Rechercher par nom...',
+    all: 'Tous',
+    allWeather: 'Toute météo',
+    allTime: 'Tous les horaires',
+    allSpots: 'Tous les endroits',
+    showSpots: (n: number) => `📍 Filtrer par endroit (${n})`,
+    hideSpots: '▲ Réduire',
+    spot: 'Endroit',
+    time: 'Horaire',
+    weather: 'Météo',
+    tool: 'Outil',
+    ingredients: 'Ingrédients',
+    growTime: 'Temps de pousse',
+    seedPrice: 'Prix de la graine',
+    method: 'Comment l\'obtenir',
+    sellPriceByStar: 'Prix de vente par étoile',
+    sellPriceUnknown: 'Pas encore confirmé',
+    bestResult: 'Meilleur résultat',
+    masteryAchieved: 'Maîtrise obtenue',
+    progressUndiscovered: '🔍 Pas encore découvert',
+    progressNotFiveStar: '⭐ Pas encore 5★',
+    progressNoMastery: '🏆 Pas encore de maîtrise',
   },
 } as const;
 

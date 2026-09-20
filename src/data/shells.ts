@@ -62,7 +62,7 @@ export function useShells(): ShellItem[] {
   return useMemo(
     () =>
       SHELLS_RAW.map((r) => ({
-    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : r.nameEn,
+    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : r.nameEn,
     level: r.level,
     gold: r.gold,
     tokens: r.tokens,

@@ -32,6 +32,13 @@ const STRINGS = {
     disclaimer:
       '110 quebra-cabeças e 40 livros da aba "Other Collections" do Collection Book, baseados em capturas de tela próprias. Toque em um item para marcá-lo como coletado.',
   },
+  fr: {
+    title: 'Puzzles et Livres',
+    puzzlesLabel: 'Puzzles',
+    booksLabel: 'Livres',
+    disclaimer:
+      '110 puzzles et 40 livres de l\'onglet "Other Collections" du Collection Book, basés sur des captures d\'écran personnelles. Appuie sur un élément pour le marquer comme collecté.',
+  },
 } as const;
 
 export default function PuzzelsBoekenScreen() {
