@@ -34,7 +34,7 @@ export function useEventInsects(): EventSightingItem[] {
       EVENT_INSECTS_RAW.map((r) => ({
     name: r.nameEn,
     spot: r.spotEn,
-    note: language === 'es' ? r.noteEs : language === 'pt' ? r.notePt : language === 'en' ? r.noteEn : r.noteNl,
+    note: language === 'es' ? r.noteEs : language === 'pt' ? r.notePt : language === 'fr' ? r.noteEn : language === 'de' ? r.noteEn : language === 'en' ? r.noteEn : r.noteNl,
     emoji: r.emoji,
       })),
     [language]

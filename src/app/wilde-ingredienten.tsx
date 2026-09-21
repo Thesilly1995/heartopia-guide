@@ -14,6 +14,8 @@ const STRINGS = {
   en: { title: 'Wild Ingredients', subtitle: 'Fruit, mushrooms & materials to forage', fruit: 'Fruit', mushrooms: 'Mushrooms', materials: 'Materials', energy: 'Energy' },
   es: { title: 'Ingredientes Silvestres', subtitle: 'Fruta, hongos y materiales para recolectar', fruit: 'Fruta', mushrooms: 'Hongos', materials: 'Materiales', energy: 'Energía' },
   pt: { title: 'Ingredientes Selvagens', subtitle: 'Frutas, cogumelos e materiais para coletar', fruit: 'Frutas', mushrooms: 'Cogumelos', materials: 'Materiais', energy: 'Energia' },
+  fr: { title: 'Ingrédients Sauvages', subtitle: 'Fruits, champignons et matériaux à récolter', fruit: 'Fruits', mushrooms: 'Champignons', materials: 'Matériaux', energy: 'Énergie' },
+  de: { title: 'Wilde Zutaten', subtitle: 'Früchte, Pilze & Materialien zum Sammeln', fruit: 'Früchte', mushrooms: 'Pilze', materials: 'Materialien', energy: 'Energie' },
 } as const;
 
 export default function WildeIngredientenScreen() {

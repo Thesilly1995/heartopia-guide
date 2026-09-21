@@ -10,10 +10,12 @@ export interface DailyPlots {
   fluoritePlot: string | null;
 }
 
-/** `es`/`pt` zijn optioneel in de JSON — ontbreken ze (nog), dan valt de app terug op Engels. */
-function localizedPlot(nl: string, en: string, es: string | undefined, pt: string | undefined, language: Language): string {
+/** `es`/`pt`/`fr`/`de` zijn optioneel in de JSON — ontbreken ze (nog), dan valt de app terug op Engels. */
+function localizedPlot(nl: string, en: string, es: string | undefined, pt: string | undefined, fr: string | undefined, de: string | undefined, language: Language): string {
   if (language === 'es') return es ?? en;
   if (language === 'pt') return pt ?? en;
+  if (language === 'fr') return fr ?? en;
+  if (language === 'de') return de ?? en;
   return language === 'en' ? en : nl;
 }
 
@@ -35,14 +37,14 @@ export function useDailyPlots(): DailyPlots {
     const calendarEntry = payload?.dailyPlotsCalendar?.find((entry) => entry.date === today);
     if (calendarEntry) {
       return {
-        oakPlot: localizedPlot(calendarEntry.oakPlotNl, calendarEntry.oakPlotEn, calendarEntry.oakPlotEs, calendarEntry.oakPlotPt, language),
-        fluoritePlot: localizedPlot(calendarEntry.fluoritePlotNl, calendarEntry.fluoritePlotEn, calendarEntry.fluoritePlotEs, calendarEntry.fluoritePlotPt, language),
+        oakPlot: localizedPlot(calendarEntry.oakPlotNl, calendarEntry.oakPlotEn, calendarEntry.oakPlotEs, calendarEntry.oakPlotPt, calendarEntry.oakPlotFr, calendarEntry.oakPlotDe, language),
+        fluoritePlot: localizedPlot(calendarEntry.fluoritePlotNl, calendarEntry.fluoritePlotEn, calendarEntry.fluoritePlotEs, calendarEntry.fluoritePlotPt, calendarEntry.fluoritePlotFr, calendarEntry.fluoritePlotDe, language),
       };
     }
     if (!payload?.dailyPlots) return { oakPlot: null, fluoritePlot: null };
     return {
-      oakPlot: localizedPlot(payload.dailyPlots.oakPlotNl, payload.dailyPlots.oakPlotEn, payload.dailyPlots.oakPlotEs, payload.dailyPlots.oakPlotPt, language),
-      fluoritePlot: localizedPlot(payload.dailyPlots.fluoritePlotNl, payload.dailyPlots.fluoritePlotEn, payload.dailyPlots.fluoritePlotEs, payload.dailyPlots.fluoritePlotPt, language),
+      oakPlot: localizedPlot(payload.dailyPlots.oakPlotNl, payload.dailyPlots.oakPlotEn, payload.dailyPlots.oakPlotEs, payload.dailyPlots.oakPlotPt, payload.dailyPlots.oakPlotFr, payload.dailyPlots.oakPlotDe, language),
+      fluoritePlot: localizedPlot(payload.dailyPlots.fluoritePlotNl, payload.dailyPlots.fluoritePlotEn, payload.dailyPlots.fluoritePlotEs, payload.dailyPlots.fluoritePlotPt, payload.dailyPlots.fluoritePlotFr, payload.dailyPlots.fluoritePlotDe, language),
     };
   }, [payload, language, server.offsetHours]);
 }

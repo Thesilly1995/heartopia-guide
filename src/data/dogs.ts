@@ -14,6 +14,8 @@ interface DogRaw {
   nameEn: string;
   nameEs: string;
   namePt: string;
+  nameFr: string;
+  nameDe: string;
   sizeNl: string;
   sizeEn: string;
   sizeEs: string;
@@ -26,11 +28,11 @@ interface DogRaw {
 }
 
 const DOGS_RAW: DogRaw[] = [
-  { nameNl: "Poedel", nameEn: "Poodle", nameEs: "Caniche", namePt: "Poodle", sizeNl: "Klein", sizeEn: "Small", sizeEs: "Pequeño", sizePt: "Pequeno", abilityNl: null, abilityEn: null, abilityEs: null, abilityPt: null, emoji: "🐶" },
-  { nameNl: "Corgi", nameEn: "Corgi", nameEs: "Corgi", namePt: "Corgi", sizeNl: "Klein", sizeEn: "Small", sizeEs: "Pequeño", sizePt: "Pequeno", abilityNl: null, abilityEn: null, abilityEs: null, abilityPt: null, emoji: "🐶" },
-  { nameNl: "Husky", nameEn: "Husky", nameEs: "Husky", namePt: "Husky", sizeNl: "Middel", sizeEn: "Medium", sizeEs: "Mediano", sizePt: "Médio", abilityNl: null, abilityEn: null, abilityEs: null, abilityPt: null, emoji: "🐶" },
-  { nameNl: "Shiba Inu", nameEn: "Shiba Inu", nameEs: "Shiba Inu", namePt: "Shiba Inu", sizeNl: "Middel", sizeEn: "Medium", sizeEs: "Mediano", sizePt: "Médio", abilityNl: null, abilityEn: null, abilityEs: null, abilityPt: null, emoji: "🐶" },
-  { nameNl: "Golden Retriever", nameEn: "Golden Retriever", nameEs: "Golden Retriever", namePt: "Golden Retriever", sizeNl: "Groot", sizeEn: "Large", sizeEs: "Grande", sizePt: "Grande", abilityNl: "Kan Goudzakjes als cadeau geven", abilityEn: "Can gift Gold Pouches", abilityEs: "Puede regalar Bolsas de Oro", abilityPt: "Pode presentear Bolsas de Ouro", emoji: "🐶" },
+  { nameNl: "Poedel", nameEn: "Poodle", nameEs: "Caniche", namePt: "Poodle", nameFr: "Caniche", nameDe: "Pudel", sizeNl: "Klein", sizeEn: "Small", sizeEs: "Pequeño", sizePt: "Pequeno", abilityNl: null, abilityEn: null, abilityEs: null, abilityPt: null, emoji: "🐶" },
+  { nameNl: "Corgi", nameEn: "Corgi", nameEs: "Corgi", namePt: "Corgi", nameFr: "Corgi", nameDe: "Corgi", sizeNl: "Klein", sizeEn: "Small", sizeEs: "Pequeño", sizePt: "Pequeno", abilityNl: null, abilityEn: null, abilityEs: null, abilityPt: null, emoji: "🐶" },
+  { nameNl: "Husky", nameEn: "Husky", nameEs: "Husky", namePt: "Husky", nameFr: "Husky", nameDe: "Husky", sizeNl: "Middel", sizeEn: "Medium", sizeEs: "Mediano", sizePt: "Médio", abilityNl: null, abilityEn: null, abilityEs: null, abilityPt: null, emoji: "🐶" },
+  { nameNl: "Shiba Inu", nameEn: "Shiba Inu", nameEs: "Shiba Inu", namePt: "Shiba Inu", nameFr: "Shiba Inu", nameDe: "Shiba Inu", sizeNl: "Middel", sizeEn: "Medium", sizeEs: "Mediano", sizePt: "Médio", abilityNl: null, abilityEn: null, abilityEs: null, abilityPt: null, emoji: "🐶" },
+  { nameNl: "Golden Retriever", nameEn: "Golden Retriever", nameEs: "Golden Retriever", namePt: "Golden Retriever", nameFr: "Golden Retriever", nameDe: "Golden Retriever", sizeNl: "Groot", sizeEn: "Large", sizeEs: "Grande", sizePt: "Grande", abilityNl: "Kan Goudzakjes als cadeau geven", abilityEn: "Can gift Gold Pouches", abilityEs: "Puede regalar Bolsas de Oro", abilityPt: "Pode presentear Bolsas de Ouro", emoji: "🐶" },
 ];
 
 export function useDogs(): DogItem[] {
@@ -38,9 +40,9 @@ export function useDogs(): DogItem[] {
   return useMemo(
     () =>
       DOGS_RAW.map((r) => ({
-    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : r.nameEn,
-    size: language === 'es' ? r.sizeEs : language === 'pt' ? r.sizePt : language === 'en' ? r.sizeEn : r.sizeNl,
-    ability: language === 'es' ? r.abilityEs : language === 'pt' ? r.abilityPt : language === 'en' ? r.abilityEn : r.abilityNl,
+    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : language === 'de' ? r.nameDe : r.nameEn,
+    size: language === 'es' ? r.sizeEs : language === 'pt' ? r.sizePt : language === 'fr' ? r.sizeEn : language === 'de' ? r.sizeEn : language === 'en' ? r.sizeEn : r.sizeNl,
+    ability: language === 'es' ? r.abilityEs : language === 'pt' ? r.abilityPt : language === 'fr' ? r.abilityEn : language === 'de' ? r.abilityEn : language === 'en' ? r.abilityEn : r.abilityNl,
     emoji: r.emoji,
       })),
     [language]

@@ -87,6 +87,44 @@ const STRINGS = {
     permissionNote: 'Na primeira vez que você ativar uma categoria, seu aparelho vai pedir permissão para notificações.',
     errorPrefix: 'Falha no registro:',
   },
+  fr: {
+    title: 'Notifications',
+    subtitle: 'Choisis les sujets pour lesquels tu veux une notification push',
+    updateTitle: '🔄 Nouvelle version disponible',
+    updateText:
+      "Fonctionne automatiquement pour tout le monde, aucun réglage nécessaire : dès que tu ouvres l'app et qu'une nouvelle mise à jour est disponible, une fenêtre apparaît avec un bouton pour mettre à jour immédiatement.",
+    lockedText:
+      'Les notifications push pour Rainbow/Pluie de météores, les nouveaux événements et les nouveaux codes sont une fonctionnalité Premium.',
+    rainbowMeteorTitle: '🌈☄️ Rainbow & Pluie de météores',
+    rainbowMeteorText: 'Notification dès qu\'un moment Rainbow ou une pluie de météores commence.',
+    eventTitle: '🎉 Nouvel événement',
+    eventText: 'Notification dès qu\'un nouvel événement commence.',
+    codesTitle: '🎁 Nouveau code',
+    codesText: "Notification dès qu'un nouveau code cadeau est ajouté.",
+    backupTitle: '☁️ Rappel de sauvegarde cloud',
+    backupText: 'Rappel hebdomadaire pour sauvegarder ta progression.',
+    permissionNote: "La première fois que tu actives une catégorie, ton appareil te demandera l'autorisation pour les notifications.",
+    errorPrefix: "Échec de l'enregistrement :",
+  },
+  de: {
+    title: 'Benachrichtigungen',
+    subtitle: 'Wähle, wofür du eine Push-Benachrichtigung erhalten möchtest',
+    updateTitle: '🔄 Neue Version verfügbar',
+    updateText:
+      'Funktioniert automatisch für alle, keine Einstellung nötig: Sobald du die App öffnest und ein neues Update verfügbar ist, erscheint ein Pop-up mit einem Button, um sofort zu aktualisieren.',
+    lockedText:
+      'Push-Benachrichtigungen für Rainbow/Meteorregen, neue Events und neue Codes sind eine Premium-Funktion.',
+    rainbowMeteorTitle: '🌈☄️ Rainbow & Meteorregen',
+    rainbowMeteorText: 'Benachrichtigung, sobald ein Rainbow-Moment oder Meteorregen beginnt.',
+    eventTitle: '🎉 Neues Event',
+    eventText: 'Benachrichtigung, sobald ein neues Event startet.',
+    codesTitle: '🎁 Neuer Code',
+    codesText: 'Benachrichtigung, sobald ein neuer Gift-Code hinzugefügt wird.',
+    backupTitle: '☁️ Cloud-Speicher-Erinnerung',
+    backupText: 'Wöchentliche Erinnerung, deinen Fortschritt zu sichern.',
+    permissionNote: 'Wenn du zum ersten Mal eine Kategorie aktivierst, fragt dein Gerät um Erlaubnis für Benachrichtigungen.',
+    errorPrefix: 'Registrierung fehlgeschlagen:',
+  },
 } as const;
 
 export default function MeldingenScreen() {

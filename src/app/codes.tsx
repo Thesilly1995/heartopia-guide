@@ -41,6 +41,20 @@ const STRINGS = {
     copy: 'Copiar',
     expires: 'Expira',
   },
+  fr: {
+    title: 'Codes Actifs',
+    lastChecked: (date: string) => `Dernière vérification : ${date}`,
+    copied: 'Copié !',
+    copy: 'Copier',
+    expires: 'Expire',
+  },
+  de: {
+    title: 'Aktive Codes',
+    lastChecked: (date: string) => `Zuletzt geprüft: ${date}`,
+    copied: 'Kopiert!',
+    copy: 'Kopieren',
+    expires: 'Läuft ab',
+  },
 } as const;
 
 export default function CodesScreen() {
@@ -55,9 +69,9 @@ export default function CodesScreen() {
 
   const lastCheckedDate = useMemo(() => {
     if (!payload?.updatedAt) return null;
-    const locale = { nl: 'nl-NL', en: 'en-US', es: 'es-ES', pt: 'pt-BR' }[language];
+    const locale = { nl: 'nl-NL', en: 'en-US', es: 'es-ES', pt: 'pt-BR', fr: 'fr-FR', de: 'de-DE' }[language];
     const options: Intl.DateTimeFormatOptions =
-      language === 'en' || language === 'es' || language === 'pt'
+      language === 'en' || language === 'es' || language === 'pt' || language === 'fr' || language === 'de'
         ? { month: 'short', day: 'numeric', year: 'numeric' }
         : { day: 'numeric', month: 'long', year: 'numeric' };
     return new Intl.DateTimeFormat(locale, options).format(new Date(payload.updatedAt));

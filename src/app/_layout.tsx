@@ -2,6 +2,7 @@ import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import 'react-native-url-polyfill/auto';
 
@@ -27,17 +28,19 @@ export default function RootLayout() {
     maybeRequestReview();
   }, []);
   return (
-    <LanguageProvider>
-      <ServerProvider>
-        <PremiumProvider>
-          <AuthProvider>
-            <NotificationsProvider>
-              <AppContent />
-            </NotificationsProvider>
-          </AuthProvider>
-        </PremiumProvider>
-      </ServerProvider>
-    </LanguageProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <LanguageProvider>
+        <ServerProvider>
+          <PremiumProvider>
+            <AuthProvider>
+              <NotificationsProvider>
+                <AppContent />
+              </NotificationsProvider>
+            </AuthProvider>
+          </PremiumProvider>
+        </ServerProvider>
+      </LanguageProvider>
+    </GestureHandlerRootView>
   );
 }
 

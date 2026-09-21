@@ -22,6 +22,14 @@ const STRINGS = {
     label: '📢 Publicidade',
     note: 'Espaço reservado — membros Premium não verão anúncios',
   },
+  fr: {
+    label: '📢 Publicité',
+    note: 'Espace réservé — les membres Premium ne verront pas de publicités',
+  },
+  de: {
+    label: '📢 Werbung',
+    note: 'Platzhalter — Premium-Mitglieder sehen bald keine Werbung mehr',
+  },
 } as const;
 
 /**

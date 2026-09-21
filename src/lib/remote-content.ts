@@ -15,6 +15,8 @@ export interface RemoteMapSpot {
   /** Optioneel — ontbreekt dit (nog) in de JSON, dan valt de app terug op Engels. */
   descriptionEs?: string;
   descriptionPt?: string;
+  descriptionFr?: string;
+  descriptionDe?: string;
 }
 
 export interface RemoteBubbleSpot extends RemoteMapSpot {
@@ -27,6 +29,8 @@ export interface RemoteBubbleWeek {
   weekLabelEn: string;
   weekLabelEs?: string;
   weekLabelPt?: string;
+  weekLabelFr?: string;
+  weekLabelDe?: string;
   spots: RemoteBubbleSpot[];
 }
 
@@ -40,10 +44,14 @@ export interface RemoteDailyPlots {
   oakPlotEn: string;
   oakPlotEs?: string;
   oakPlotPt?: string;
+  oakPlotFr?: string;
+  oakPlotDe?: string;
   fluoritePlotNl: string;
   fluoritePlotEn: string;
   fluoritePlotEs?: string;
   fluoritePlotPt?: string;
+  fluoritePlotFr?: string;
+  fluoritePlotDe?: string;
 }
 
 export interface RemoteDailyPlotDay {
@@ -53,10 +61,14 @@ export interface RemoteDailyPlotDay {
   oakPlotEn: string;
   oakPlotEs?: string;
   oakPlotPt?: string;
+  oakPlotFr?: string;
+  oakPlotDe?: string;
   fluoritePlotNl: string;
   fluoritePlotEn: string;
   fluoritePlotEs?: string;
   fluoritePlotPt?: string;
+  fluoritePlotFr?: string;
+  fluoritePlotDe?: string;
 }
 
 export interface RemoteEventSighting {
@@ -64,14 +76,20 @@ export interface RemoteEventSighting {
   nameEn: string;
   nameEs?: string;
   namePt?: string;
+  nameFr?: string;
+  nameDe?: string;
   spotNl: string;
   spotEn: string;
   spotEs?: string;
   spotPt?: string;
+  spotFr?: string;
+  spotDe?: string;
   noteNl: string | null;
   noteEn: string | null;
   noteEs?: string | null;
   notePt?: string | null;
+  noteFr?: string | null;
+  noteDe?: string | null;
   emoji: string;
   gold?: (number | null)[] | null;
   tokens?: (number | null)[] | null;
@@ -82,10 +100,14 @@ export interface RemoteEventRecipe {
   nameEn: string;
   nameEs?: string;
   namePt?: string;
+  nameFr?: string;
+  nameDe?: string;
   ingredientsNl: string[];
   ingredientsEn: string[];
   ingredientsEs?: string[];
   ingredientsPt?: string[];
+  ingredientsFr?: string[];
+  ingredientsDe?: string[];
   emoji: string;
   gold?: (number | null)[] | null;
   tokens?: (number | null)[] | null;
@@ -98,6 +120,8 @@ export interface RemoteEventOverride {
   datesEn: string;
   datesEs?: string;
   datesPt?: string;
+  datesFr?: string;
+  datesDe?: string;
   fish: RemoteEventSighting[];
   birds: RemoteEventSighting[];
   recipes: RemoteEventRecipe[];
@@ -112,6 +136,8 @@ export interface RemoteWeather {
   labelEn: string;
   labelEs?: string;
   labelPt?: string;
+  labelFr?: string;
+  labelDe?: string;
   /** ISO-timestamp (UTC) waarop dit 6-uursblok eindigt — bepaalt of de weergave als verouderd geldt. */
   validUntil: string;
 }
@@ -122,10 +148,14 @@ export interface RemoteCode {
   rewardEn: string;
   rewardEs?: string;
   rewardPt?: string;
+  rewardFr?: string;
+  rewardDe?: string;
   expiresNl: string;
   expiresEn: string;
   expiresEs?: string;
   expiresPt?: string;
+  expiresFr?: string;
+  expiresDe?: string;
 }
 
 export type WeekForecastKind = 'normal' | 'rain' | 'rainbow' | 'warm_sun' | 'meteor' | 'heatwave';

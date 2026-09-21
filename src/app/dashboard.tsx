@@ -55,6 +55,28 @@ const STRINGS = {
     activeBadge: '👑 Premium ativo',
     disablePremium: 'Desativar premium de teste',
   },
+  fr: {
+    title: 'Tableau de progression',
+    subtitle: 'Progression de mastery dans tous tes catalogues',
+    totalLabel: 'Progression totale',
+    countLabel: (m: number, t: number) => `${m} / ${t} mastery obtenus`,
+    starsLabel: (n: number, max: number) => `⭐ ${n} / ${max} étoiles`,
+    lockedText:
+      "Le tableau de progression montre en un coup d'œil combien de mastery tu as obtenu dans chaque catalogue (Pêche, Cuisine, Jardinage, Insectes, Oiseaux, Sculpture, Ocean Cleanup).",
+    activeBadge: '👑 Premium actif',
+    disablePremium: 'Désactiver le premium test',
+  },
+  de: {
+    title: 'Fortschritts-Dashboard',
+    subtitle: 'Mastery-Fortschritt in all deinen Katalogen',
+    totalLabel: 'Gesamtfortschritt',
+    countLabel: (m: number, t: number) => `${m} / ${t} Mastery erreicht`,
+    starsLabel: (n: number, max: number) => `⭐ ${n} / ${max} Sterne`,
+    lockedText:
+      'Das Fortschritts-Dashboard zeigt dir auf einen Blick, wie viel Mastery du in jedem Katalog erreicht hast (Angeln, Kochen, Gärtnern, Insekten, Vögel, Bildhauerei, Ocean Cleanup).',
+    activeBadge: '👑 Premium aktiv',
+    disablePremium: 'Test-Premium deaktivieren',
+  },
 } as const;
 
 type DashboardStrings = (typeof STRINGS)[keyof typeof STRINGS];

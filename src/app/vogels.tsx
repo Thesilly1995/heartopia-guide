@@ -8,7 +8,7 @@ export default function VogelsScreen() {
   const { language } = useLanguage();
   return (
     <HobbyListScreen
-      title={{ nl: 'Vogels', en: 'Birds', es: 'Aves', pt: 'Aves' }[language]}
+      title={{ nl: 'Vogels', en: 'Birds', es: 'Aves', pt: 'Aves', fr: 'Oiseaux', de: 'Vögel' }[language]}
       icon="🐦"
       items={birds}
       gradient={[COLORS.sky, COLORS.forestSoft]}

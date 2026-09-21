@@ -8,6 +8,8 @@ const NO_EVENT = {
   datesEn: "We'll let you know once the next event starts",
   datesEs: 'Te avisaremos en cuanto empiece el próximo evento',
   datesPt: 'Avisaremos assim que o próximo evento começar',
+  datesFr: 'Nous vous préviendrons dès que le prochain événement commencera',
+  datesDe: 'Wir informieren dich, sobald das nächste Event beginnt',
   emoji: '🗓️',
 } as const;
 
@@ -28,7 +30,12 @@ export function useCurrentEventMeta(): CurrentEventMeta {
 
   if (remote) {
     const dates =
-      language === 'es' ? remote.datesEs ?? remote.datesEn : language === 'pt' ? remote.datesPt ?? remote.datesEn : language === 'en' ? remote.datesEn : remote.datesNl;
+      language === 'es' ? remote.datesEs ?? remote.datesEn
+      : language === 'pt' ? remote.datesPt ?? remote.datesEn
+      : language === 'fr' ? remote.datesFr ?? remote.datesEn
+      : language === 'de' ? remote.datesDe ?? remote.datesEn
+      : language === 'en' ? remote.datesEn
+      : remote.datesNl;
     return {
       name: remote.nameEn,
       dates,
@@ -37,7 +44,13 @@ export function useCurrentEventMeta(): CurrentEventMeta {
   }
   return {
     name: NO_EVENT.nameEn,
-    dates: language === 'es' ? NO_EVENT.datesEs : language === 'pt' ? NO_EVENT.datesPt : language === 'en' ? NO_EVENT.datesEn : NO_EVENT.datesNl,
+    dates:
+      language === 'es' ? NO_EVENT.datesEs
+      : language === 'pt' ? NO_EVENT.datesPt
+      : language === 'fr' ? NO_EVENT.datesFr
+      : language === 'de' ? NO_EVENT.datesDe
+      : language === 'en' ? NO_EVENT.datesEn
+      : NO_EVENT.datesNl,
     emoji: NO_EVENT.emoji,
   };
 }

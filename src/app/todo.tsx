@@ -38,6 +38,20 @@ const STRINGS = {
     add: 'Adicionar',
     empty: 'Ainda não tem nada na sua lista — adicione algo!',
   },
+  fr: {
+    title: 'À faire',
+    subtitle: 'Qu\'est-ce que tu veux encore faire dans le jeu ?',
+    placeholder: 'Ex. terminer le nouveau quartier, attraper tous les papillons...',
+    add: 'Ajouter',
+    empty: 'Rien sur ta liste pour l\'instant — ajoute quelque chose !',
+  },
+  de: {
+    title: 'To-do',
+    subtitle: 'Was möchtest du noch im Spiel machen?',
+    placeholder: 'Z.B. das neue Viertel fertigstellen, alle Schmetterlinge fangen...',
+    add: 'Hinzufügen',
+    empty: 'Noch nichts auf deiner Liste — füg etwas hinzu!',
+  },
 } as const;
 
 interface TodoItem {

@@ -16,54 +16,54 @@ import { usePremium } from '@/hooks/use-premium';
 import { SERVERS, useServer } from '@/hooks/use-server';
 import { formatGmtOffset } from '@/lib/reset-schedule';
 
-type LocalizedText = { nl: string; en: string; es: string; pt: string };
+type LocalizedText = { nl: string; en: string; es: string; pt: string; fr: string; de: string };
 
 const SECTIONS: {
   label: LocalizedText;
   items: { href: string | null; icon: string; title: LocalizedText; desc: LocalizedText }[];
 }[] = [
   {
-    label: { nl: "Hobby's", en: 'Hobbies', es: 'Aficiones', pt: 'Hobbies' },
+    label: { nl: "Hobby's", en: 'Hobbies', es: 'Aficiones', pt: 'Hobbies', fr: 'Loisirs', de: 'Hobbys' },
     items: [
-      { href: '/vissen', icon: '🎣', title: { nl: 'Vissen', en: 'Fishing', es: 'Pesca', pt: 'Pesca' }, desc: { nl: 'Vissoorten, plekken & tijden', en: 'Fish species, spots & times', es: 'Especies de peces, lugares y horarios', pt: 'Espécies de peixes, locais e horários' } },
-      { href: '/koken', icon: '🍳', title: { nl: 'Koken', en: 'Cooking', es: 'Cocinar', pt: 'Cozinhar' }, desc: { nl: 'Recepten & ingrediënten', en: 'Recipes & ingredients', es: 'Recetas e ingredientes', pt: 'Receitas e ingredientes' } },
-      { href: '/tuinieren', icon: '🌱', title: { nl: 'Tuinieren', en: 'Gardening', es: 'Jardinería', pt: 'Jardinagem' }, desc: { nl: 'Zaden, groei & oogst', en: 'Seeds, growth & harvest', es: 'Semillas, crecimiento y cosecha', pt: 'Sementes, crescimento e colheita' } },
-      { href: '/insecten', icon: '🦋', title: { nl: 'Insecten', en: 'Insects', es: 'Insectos', pt: 'Insetos' }, desc: { nl: 'Vlinders, kevers & meer', en: 'Butterflies, beetles & more', es: 'Mariposas, escarabajos y más', pt: 'Borboletas, besouros e mais' } },
-      { href: '/vogels', icon: '🐦', title: { nl: 'Vogels', en: 'Birds', es: 'Aves', pt: 'Aves' }, desc: { nl: 'Vogelsoorten & plekken', en: 'Bird species & spots', es: 'Especies de aves y lugares', pt: 'Espécies de aves e locais' } },
-      { href: '/beeldhouwen', icon: '🏖️', title: { nl: 'Beeldhouwen', en: 'Sculpting', es: 'Escultura', pt: 'Escultura' }, desc: { nl: 'Zand- en sneeuwsculpturen', en: 'Sand and snow sculptures', es: 'Esculturas de arena y nieve', pt: 'Esculturas de areia e neve' } },
-      { href: '/ocean-cleanup', icon: '🌊', title: { nl: 'Ocean Cleanup', en: 'Ocean Cleanup', es: 'Limpieza del océano', pt: 'Limpeza do oceano' }, desc: { nl: 'Vervuiling opruimen & schelpen', en: 'Cleaning up pollution & shells', es: 'Limpiar la contaminación y conchas', pt: 'Limpar a poluição e conchas' } },
-      { href: '/huisdieren', icon: '🐾', title: { nl: 'Dog & Cat Moments', en: 'Dog & Cat Moments', es: 'Dog & Cat Moments', pt: 'Dog & Cat Moments' }, desc: { nl: 'Huisdieren adopteren & verzorgen', en: 'Adopt & care for pets', es: 'Adopta y cuida mascotas', pt: 'Adote e cuide de animais de estimação' } },
+      { href: '/vissen', icon: '🎣', title: { nl: 'Vissen', en: 'Fishing', es: 'Pesca', pt: 'Pesca', fr: 'Pêche', de: 'Angeln' }, desc: { nl: 'Vissoorten, plekken & tijden', en: 'Fish species, spots & times', es: 'Especies de peces, lugares y horarios', pt: 'Espécies de peixes, locais e horários', fr: 'Espèces de poissons, lieux et horaires', de: 'Fischarten, Orte & Zeiten' } },
+      { href: '/koken', icon: '🍳', title: { nl: 'Koken', en: 'Cooking', es: 'Cocinar', pt: 'Cozinhar', fr: 'Cuisine', de: 'Kochen' }, desc: { nl: 'Recepten & ingrediënten', en: 'Recipes & ingredients', es: 'Recetas e ingredientes', pt: 'Receitas e ingredientes', fr: 'Recettes et ingrédients', de: 'Rezepte & Zutaten' } },
+      { href: '/tuinieren', icon: '🌱', title: { nl: 'Tuinieren', en: 'Gardening', es: 'Jardinería', pt: 'Jardinagem', fr: 'Jardinage', de: 'Gärtnern' }, desc: { nl: 'Zaden, groei & oogst', en: 'Seeds, growth & harvest', es: 'Semillas, crecimiento y cosecha', pt: 'Sementes, crescimento e colheita', fr: 'Graines, croissance et récolte', de: 'Samen, Wachstum & Ernte' } },
+      { href: '/insecten', icon: '🦋', title: { nl: 'Insecten', en: 'Insects', es: 'Insectos', pt: 'Insetos', fr: 'Insectes', de: 'Insekten' }, desc: { nl: 'Vlinders, kevers & meer', en: 'Butterflies, beetles & more', es: 'Mariposas, escarabajos y más', pt: 'Borboletas, besouros e mais', fr: 'Papillons, coléoptères et plus', de: 'Schmetterlinge, Käfer & mehr' } },
+      { href: '/vogels', icon: '🐦', title: { nl: 'Vogels', en: 'Birds', es: 'Aves', pt: 'Aves', fr: 'Oiseaux', de: 'Vögel' }, desc: { nl: 'Vogelsoorten & plekken', en: 'Bird species & spots', es: 'Especies de aves y lugares', pt: 'Espécies de aves e locais', fr: 'Espèces d\'oiseaux et lieux', de: 'Vogelarten & Orte' } },
+      { href: '/beeldhouwen', icon: '🏖️', title: { nl: 'Beeldhouwen', en: 'Sculpting', es: 'Escultura', pt: 'Escultura', fr: 'Sculpture', de: 'Bildhauen' }, desc: { nl: 'Zand- en sneeuwsculpturen', en: 'Sand and snow sculptures', es: 'Esculturas de arena y nieve', pt: 'Esculturas de areia e neve', fr: 'Sculptures de sable et de neige', de: 'Sand- und Schneeskulpturen' } },
+      { href: '/ocean-cleanup', icon: '🌊', title: { nl: 'Ocean Cleanup', en: 'Ocean Cleanup', es: 'Limpieza del océano', pt: 'Limpeza do oceano', fr: 'Ocean Cleanup', de: 'Ocean Cleanup' }, desc: { nl: 'Vervuiling opruimen & schelpen', en: 'Cleaning up pollution & shells', es: 'Limpiar la contaminación y conchas', pt: 'Limpar a poluição e conchas', fr: 'Nettoyer la pollution et les coquillages', de: 'Verschmutzung aufräumen & Muscheln' } },
+      { href: '/huisdieren', icon: '🐾', title: { nl: 'Dog & Cat Moments', en: 'Dog & Cat Moments', es: 'Dog & Cat Moments', pt: 'Dog & Cat Moments', fr: 'Dog & Cat Moments', de: 'Dog & Cat Moments' }, desc: { nl: 'Huisdieren adopteren & verzorgen', en: 'Adopt & care for pets', es: 'Adopta y cuida mascotas', pt: 'Adote e cuide de animais de estimação', fr: 'Adopter et prendre soin des animaux', de: 'Haustiere adoptieren & pflegen' } },
     ],
   },
   {
-    label: { nl: 'Extra', en: 'Extra', es: 'Extra', pt: 'Extra' },
+    label: { nl: 'Extra', en: 'Extra', es: 'Extra', pt: 'Extra', fr: 'Extra', de: 'Extra' },
     items: [
-      { href: '/wilde-dieren', icon: '🦊', title: { nl: 'Wilde Dieren', en: 'Wild Animals', es: 'Animales Salvajes', pt: 'Animais Selvagens' }, desc: { nl: 'Voertroggen, eten & vriendschap', en: 'Feeding troughs, food & friendship', es: 'Comederos, comida y amistad', pt: 'Comedouros, comida e amizade' } },
-      { href: '/wilde-ingredienten', icon: '🌿', title: { nl: 'Wilde Ingrediënten', en: 'Wild Ingredients', es: 'Ingredientes Silvestres', pt: 'Ingredientes Selvagens' }, desc: { nl: 'Fruit, paddenstoelen & materialen', en: 'Fruit, mushrooms & materials', es: 'Fruta, setas y materiales', pt: 'Frutas, cogumelos e materiais' } },
+      { href: '/wilde-dieren', icon: '🦊', title: { nl: 'Wilde Dieren', en: 'Wild Animals', es: 'Animales Salvajes', pt: 'Animais Selvagens', fr: 'Animaux Sauvages', de: 'Wildtiere' }, desc: { nl: 'Voertroggen, eten & vriendschap', en: 'Feeding troughs, food & friendship', es: 'Comederos, comida y amistad', pt: 'Comedouros, comida e amizade', fr: 'Mangeoires, nourriture et amitié', de: 'Futtertröge, Essen & Freundschaft' } },
+      { href: '/wilde-ingredienten', icon: '🌿', title: { nl: 'Wilde Ingrediënten', en: 'Wild Ingredients', es: 'Ingredientes Silvestres', pt: 'Ingredientes Selvagens', fr: 'Ingrédients Sauvages', de: 'Wilde Zutaten' }, desc: { nl: 'Fruit, paddenstoelen & materialen', en: 'Fruit, mushrooms & materials', es: 'Fruta, setas y materiales', pt: 'Frutas, cogumelos e materiais', fr: 'Fruits, champignons et matériaux', de: 'Obst, Pilze & Materialien' } },
     ],
   },
   {
-    label: { nl: 'Spel', en: 'Game', es: 'Juego', pt: 'Jogo' },
+    label: { nl: 'Spel', en: 'Game', es: 'Juego', pt: 'Jogo', fr: 'Jeu', de: 'Spiel' },
     items: [
-      { href: '/badges', icon: '🏅', title: { nl: 'Badges', en: 'Badges', es: 'Insignias', pt: 'Emblemas' }, desc: { nl: 'Prestaties & profieltitels', en: 'Achievements & profile titles', es: 'Logros y títulos de perfil', pt: 'Conquistas e títulos de perfil' } },
-      { href: '/puzzels-boeken', icon: '🧩', title: { nl: 'Puzzels & Boeken', en: 'Puzzles & Books', es: 'Puzzles y Libros', pt: 'Quebra-cabeças e Livros' }, desc: { nl: 'Other Collections: puzzels & boeken', en: 'Other Collections: puzzles & books', es: 'Other Collections: puzzles y libros', pt: 'Other Collections: quebra-cabeças e livros' } },
-      { href: '/codes', icon: '🎁', title: { nl: 'Codes', en: 'Codes', es: 'Códigos', pt: 'Códigos' }, desc: { nl: 'Actieve & verlopen codes', en: 'Active & expired codes', es: 'Códigos activos y caducados', pt: 'Códigos ativos e expirados' } },
+      { href: '/badges', icon: '🏅', title: { nl: 'Badges', en: 'Badges', es: 'Insignias', pt: 'Emblemas', fr: 'Badges', de: 'Abzeichen' }, desc: { nl: 'Prestaties & profieltitels', en: 'Achievements & profile titles', es: 'Logros y títulos de perfil', pt: 'Conquistas e títulos de perfil', fr: 'Succès et titres de profil', de: 'Erfolge & Profiltitel' } },
+      { href: '/puzzels-boeken', icon: '🧩', title: { nl: 'Puzzels & Boeken', en: 'Puzzles & Books', es: 'Puzzles y Libros', pt: 'Quebra-cabeças e Livros', fr: 'Puzzles et Livres', de: 'Rätsel & Bücher' }, desc: { nl: 'Other Collections: puzzels & boeken', en: 'Other Collections: puzzles & books', es: 'Other Collections: puzzles y libros', pt: 'Other Collections: quebra-cabeças e livros', fr: 'Other Collections : puzzles et livres', de: 'Other Collections: Rätsel & Bücher' } },
+      { href: '/codes', icon: '🎁', title: { nl: 'Codes', en: 'Codes', es: 'Códigos', pt: 'Códigos', fr: 'Codes', de: 'Codes' }, desc: { nl: 'Actieve & verlopen codes', en: 'Active & expired codes', es: 'Códigos activos y caducados', pt: 'Códigos ativos e expirados', fr: 'Codes actifs et expirés', de: 'Aktive & abgelaufene Codes' } },
     ],
   },
   {
-    label: { nl: 'Premium', en: 'Premium', es: 'Premium', pt: 'Premium' },
+    label: { nl: 'Premium', en: 'Premium', es: 'Premium', pt: 'Premium', fr: 'Premium', de: 'Premium' },
     items: [
-      { href: '/dashboard', icon: '📊', title: { nl: 'Voortgangsdashboard', en: 'Progress Dashboard', es: 'Panel de Progreso', pt: 'Painel de Progresso' }, desc: { nl: 'Overzicht van je voortgang in alle catalogussen', en: 'Overview of your progress across all catalogs', es: 'Resumen de tu progreso en todos los catálogos', pt: 'Resumo do seu progresso em todos os catálogos' } },
-      { href: '/meldingen', icon: '🔔', title: { nl: 'Meldingen', en: 'Notifications', es: 'Notificaciones', pt: 'Notificações' }, desc: { nl: 'Herinneringen bij nieuwe events & bijzonder weer', en: 'Reminders for new events & special weather', es: 'Recordatorios de nuevos eventos y clima especial', pt: 'Lembretes de novos eventos e clima especial' } },
-      { href: '/cloud-save', icon: '☁️', title: { nl: 'Cloud Save', en: 'Cloud Save', es: 'Guardado en la Nube', pt: 'Salvamento na Nuvem' }, desc: { nl: 'Voortgang bewaren & gebruiken op een ander toestel', en: 'Save your progress & use it on another device', es: 'Guarda tu progreso y úsalo en otro dispositivo', pt: 'Salve seu progresso e use em outro dispositivo' } },
-      { href: '/tips', icon: '💡', title: { nl: 'Tips & Tricks', en: 'Tips & Tricks', es: 'Trucos y Consejos', pt: 'Dicas e Truques' }, desc: { nl: 'Handige weetjes over het spel en events', en: 'Handy things to know about the game and events', es: 'Datos útiles sobre el juego y los eventos', pt: 'Informações úteis sobre o jogo e eventos' } },
+      { href: '/dashboard', icon: '📊', title: { nl: 'Voortgangsdashboard', en: 'Progress Dashboard', es: 'Panel de Progreso', pt: 'Painel de Progresso', fr: 'Tableau de Progression', de: 'Fortschritts-Dashboard' }, desc: { nl: 'Overzicht van je voortgang in alle catalogussen', en: 'Overview of your progress across all catalogs', es: 'Resumen de tu progreso en todos los catálogos', pt: 'Resumo do seu progresso em todos os catálogos', fr: 'Aperçu de votre progression dans tous les catalogues', de: 'Überblick über deinen Fortschritt in allen Katalogen' } },
+      { href: '/meldingen', icon: '🔔', title: { nl: 'Meldingen', en: 'Notifications', es: 'Notificaciones', pt: 'Notificações', fr: 'Notifications', de: 'Benachrichtigungen' }, desc: { nl: 'Herinneringen bij nieuwe events & bijzonder weer', en: 'Reminders for new events & special weather', es: 'Recordatorios de nuevos eventos y clima especial', pt: 'Lembretes de novos eventos e clima especial', fr: 'Rappels pour les nouveaux événements et la météo spéciale', de: 'Erinnerungen bei neuen Events & besonderem Wetter' } },
+      { href: '/cloud-save', icon: '☁️', title: { nl: 'Cloud Save', en: 'Cloud Save', es: 'Guardado en la Nube', pt: 'Salvamento na Nuvem', fr: 'Sauvegarde Cloud', de: 'Cloud-Speicherung' }, desc: { nl: 'Voortgang bewaren & gebruiken op een ander toestel', en: 'Save your progress & use it on another device', es: 'Guarda tu progreso y úsalo en otro dispositivo', pt: 'Salve seu progresso e use em outro dispositivo', fr: 'Sauvegardez votre progression et utilisez-la sur un autre appareil', de: 'Fortschritt speichern & auf einem anderen Gerät nutzen' } },
+      { href: '/tips', icon: '💡', title: { nl: 'Tips & Tricks', en: 'Tips & Tricks', es: 'Trucos y Consejos', pt: 'Dicas e Truques', fr: 'Astuces et Conseils', de: 'Tipps & Tricks' }, desc: { nl: 'Handige weetjes over het spel en events', en: 'Handy things to know about the game and events', es: 'Datos útiles sobre el juego y los eventos', pt: 'Informações úteis sobre o jogo e eventos', fr: 'Infos utiles à savoir sur le jeu et les événements', de: 'Nützliches Wissen über das Spiel und Events' } },
     ],
   },
   {
-    label: { nl: 'Overig', en: 'Other', es: 'Otros', pt: 'Outros' },
+    label: { nl: 'Overig', en: 'Other', es: 'Otros', pt: 'Outros', fr: 'Autre', de: 'Sonstiges' },
     items: [
-      { href: '/todo', icon: '📝', title: { nl: 'To-do', en: 'To-do', es: 'Tareas', pt: 'Tarefas' }, desc: { nl: 'Wat wil je nog gaan doen?', en: 'What do you still want to do?', es: '¿Qué más quieres hacer?', pt: 'O que você ainda quer fazer?' } },
-      { href: '/feedback', icon: '💡', title: { nl: 'Feedback', en: 'Feedback', es: 'Comentarios', pt: 'Feedback' }, desc: { nl: 'Deel je ideeën voor de gids', en: 'Share your ideas for the guide', es: 'Comparte tus ideas para la guía', pt: 'Compartilhe suas ideias para o guia' } },
+      { href: '/todo', icon: '📝', title: { nl: 'To-do', en: 'To-do', es: 'Tareas', pt: 'Tarefas', fr: 'À faire', de: 'To-do' }, desc: { nl: 'Wat wil je nog gaan doen?', en: 'What do you still want to do?', es: '¿Qué más quieres hacer?', pt: 'O que você ainda quer fazer?', fr: 'Que voulez-vous encore faire ?', de: 'Was möchtest du noch tun?' } },
+      { href: '/feedback', icon: '💡', title: { nl: 'Feedback', en: 'Feedback', es: 'Comentarios', pt: 'Feedback', fr: 'Retour', de: 'Feedback' }, desc: { nl: 'Deel je ideeën voor de gids', en: 'Share your ideas for the guide', es: 'Comparte tus ideas para la guía', pt: 'Compartilhe suas ideias para o guia', fr: 'Partagez vos idées pour le guide', de: 'Teile deine Ideen für den Guide' } },
     ],
   },
 ];
@@ -132,6 +132,38 @@ const STRINGS = {
     dailyResetNote: 'Reinício diário 06:00',
     serverModalTitle: 'Escolha seu servidor',
     langModalTitle: 'Escolha seu idioma',
+  },
+  fr: {
+    welcome: 'Bienvenue sur',
+    title: 'Heartopedia',
+    unknown: 'Inconnu — nous allons vérifier',
+    active: 'Actif maintenant',
+    inactive: 'Non actif',
+    forecastTitle: 'Météo cette semaine',
+    comingSoon: 'Bientôt disponible ✨',
+    premiumRequired: 'Nécessite Premium 👑',
+    premiumTestOn: 'Test : Premium ACTIVÉ',
+    premiumTestOff: 'Test : Premium DÉSACTIVÉ',
+    premiumBenefits: 'Obtenir des avantages ✨',
+    dailyResetNote: 'Réinitialisation quotidienne 06:00',
+    serverModalTitle: 'Choisissez votre serveur',
+    langModalTitle: 'Choisissez votre langue',
+  },
+  de: {
+    welcome: 'Willkommen bei',
+    title: 'Heartopedia',
+    unknown: 'Unbekannt — wir fragen nach',
+    active: 'Gerade aktiv',
+    inactive: 'Nicht aktiv',
+    forecastTitle: 'Wetter diese Woche',
+    comingSoon: 'Demnächst ✨',
+    premiumRequired: 'Erfordert Premium 👑',
+    premiumTestOn: 'Test: Premium AN',
+    premiumTestOff: 'Test: Premium AUS',
+    premiumBenefits: 'Vorteile erhalten ✨',
+    dailyResetNote: 'Tägliches Reset 06:00',
+    serverModalTitle: 'Wähle deinen Server',
+    langModalTitle: 'Wähle deine Sprache',
   },
 } as const;
 

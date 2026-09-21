@@ -30,6 +30,16 @@ const STRINGS = {
     subtitle: 'Informações úteis sobre o jogo e os eventos',
     lockedText: 'Dicas e Truques é um recurso Premium.',
   },
+  fr: {
+    title: 'Astuces & Conseils',
+    subtitle: 'Infos pratiques sur le jeu et les événements',
+    lockedText: 'Astuces & Conseils est une fonctionnalité Premium.',
+  },
+  de: {
+    title: 'Tipps & Tricks',
+    subtitle: 'Praktische Infos über das Spiel und Events',
+    lockedText: 'Tipps & Tricks ist eine Premium-Funktion.',
+  },
 } as const;
 
 export default function TipsScreen() {

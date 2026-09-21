@@ -28,7 +28,7 @@ const STRINGS = {
     whalefallDisclaimer:
       'In Whalefall Canyon staan tijdens een Rainbow-moment 4 boeketplekken, maar je kunt er maar 1 van de 4 pakken — welke dat is, verschilt per speler.',
     dorisNoteWhalefall:
-      '👧 Doris staat bij Whalefall Canyon tijdens regen, regenboog én meteorenregen — bij haar kun je dan shoppen. Het exacte tijdsblok zie je op het homescherm bij "Weer deze week".',
+      '👧 Kijk naar de 👧-pin (hoofdeiland of Whalefall Canyon) om te zien waar Doris nu staat — bij haar kun je shoppen tijdens regen, regenboog én meteorenregen. Het exacte tijdsblok zie je op het homescherm bij "Weer deze week".',
     dorisNoteLand:
       '👧 Doris staat tijdens meteorenregen aan land (zie de pin hieronder) — bij haar kun je dan shoppen. Het exacte tijdsblok zie je op het homescherm bij "Weer deze week".',
     mailboxNote: '📮 Vergeet ook niet het boeket bij je eigen brievenbus — die staat er altijd, maar niet op de kaart (want dat is jouw eigen huisplek).',
@@ -45,7 +45,7 @@ const STRINGS = {
     whalefallDisclaimer:
       "During a Rainbow moment, Whalefall Canyon has 4 bouquet spots, but you can only grab 1 of the 4 — which one differs per player.",
     dorisNoteWhalefall:
-      "👧 Doris is at Whalefall Canyon during rain, rainbow AND meteor showers — you can shop with her then. Check the homescreen's \"Weather this week\" for the exact time block.",
+      "👧 Check the 👧 pin (main island or Whalefall Canyon) to see where Doris currently is — you can shop with her during rain, rainbow, and meteor showers. Check the homescreen's \"Weather this week\" for the exact time block.",
     dorisNoteLand:
       "👧 During meteor showers Doris is on land (see the pin below) — you can shop with her then. Check the homescreen's \"Weather this week\" for the exact time block.",
     mailboxNote: "📮 Don't forget the bouquet above your own mailbox either — it's always there, but not on the map (since that's your own house spot).",
@@ -62,7 +62,7 @@ const STRINGS = {
     whalefallDisclaimer:
       'Durante un momento Rainbow, Whalefall Canyon tiene 4 puntos de ramo, pero solo puedes conseguir 1 de los 4 — cuál depende de cada jugador.',
     dorisNoteWhalefall:
-      '👧 Doris está en Whalefall Canyon durante la lluvia, el arcoíris Y la lluvia de meteoros — puedes comprarle en esos momentos. Consulta la pantalla de inicio en "El clima esta semana" para ver el horario exacto.',
+      '👧 Consulta el pin 👧 (isla principal o Whalefall Canyon) para ver dónde está Doris ahora — puedes comprarle durante la lluvia, el arcoíris y la lluvia de meteoros. Consulta la pantalla de inicio en "El clima esta semana" para ver el horario exacto.',
     dorisNoteLand:
       '👧 Durante la lluvia de meteoros, Doris está en tierra (mira el pin abajo) — puedes comprarle en esos momentos. Consulta la pantalla de inicio en "El clima esta semana" para ver el horario exacto.',
     mailboxNote: '📮 Tampoco olvides el ramo junto a tu propio buzón — siempre está ahí, pero no aparece en el mapa (porque es tu propio punto de casa).',
@@ -79,11 +79,45 @@ const STRINGS = {
     whalefallDisclaimer:
       'Durante um momento Rainbow, Whalefall Canyon tem 4 pontos de buquê, mas você só pode pegar 1 dos 4 — qual deles varia de jogador para jogador.',
     dorisNoteWhalefall:
-      '👧 A Doris fica em Whalefall Canyon durante chuva, arco-íris E chuva de meteoros — você pode comprar com ela nesses momentos. Veja o horário exato na tela inicial em "Clima desta semana".',
+      '👧 Veja o pin 👧 (ilha principal ou Whalefall Canyon) para saber onde a Doris está agora — você pode comprar com ela durante chuva, arco-íris e chuva de meteoros. Veja o horário exato na tela inicial em "Clima desta semana".',
     dorisNoteLand:
       '👧 Durante a chuva de meteoros, a Doris fica em terra (veja o pin abaixo) — você pode comprar com ela nesse momento. Veja o horário exato na tela inicial em "Clima desta semana".',
     mailboxNote: '📮 Não esqueça também do buquê perto da sua própria caixa de correio — ele sempre está lá, mas não aparece no mapa (porque é o seu próprio ponto de casa).',
     meteorLingerNote: '⛏️ Os pedaços de minério continuam mineráveis até 24h depois do início da chuva de meteoros (ou seja, até o mesmo horário no dia seguinte) — este mapa continua útil por um tempo mesmo depois que a chuva de meteoros termina.',
+  },
+  fr: {
+    title: 'Rainbow & Pluie de Météores',
+    subtitle: "Bouquets et éclats d'étoile par événement",
+    rainbowTab: '🌈 Rainbow',
+    meteorTab: '☄️ Pluie de Météores',
+    emptyText: "Pas actif en ce moment. Dès que ça se reproduit, les emplacements actuels apparaîtront ici.",
+    resetProgress: 'Réinitialiser la progression',
+    whalefallLabel: '🌊 Whalefall Canyon',
+    whalefallDisclaimer:
+      "Pendant un moment Rainbow, Whalefall Canyon compte 4 emplacements de bouquet, mais tu ne peux en récupérer qu'1 sur 4 — lequel dépend du joueur.",
+    dorisNoteWhalefall:
+      "👧 Regarde l'épingle 👧 (île principale ou Whalefall Canyon) pour voir où se trouve Doris en ce moment — tu peux faire des achats chez elle pendant la pluie, l'arc-en-ciel et la pluie de météores. Regarde l'écran d'accueil sous « Météo cette semaine » pour la plage horaire exacte.",
+    dorisNoteLand:
+      "👧 Pendant la pluie de météores, Doris est sur la terre ferme (voir l'épingle ci-dessous) — tu peux faire des achats chez elle à ce moment-là. Regarde l'écran d'accueil sous « Météo cette semaine » pour la plage horaire exacte.",
+    mailboxNote: "📮 N'oublie pas non plus le bouquet près de ta propre boîte aux lettres — il est toujours là, mais pas sur la carte (puisque c'est ton propre emplacement de maison).",
+    meteorLingerNote: "⛏️ Les morceaux de minerai restent minables jusqu'à 24h après le début de la pluie de météores (donc jusqu'à la même heure le lendemain) — cette carte reste donc utile un moment après la fin de la pluie de météores elle-même.",
+  },
+  de: {
+    title: 'Rainbow & Meteorschauer',
+    subtitle: 'Sträuße & Sternsplitter pro Event',
+    rainbowTab: '🌈 Rainbow',
+    meteorTab: '☄️ Meteorschauer',
+    emptyText: 'Momentan nicht aktiv. Sobald das wieder passiert, erscheinen hier die aktuellen Standorte.',
+    resetProgress: 'Fortschritt zurücksetzen',
+    whalefallLabel: '🌊 Whalefall Canyon',
+    whalefallDisclaimer:
+      'Während eines Rainbow-Moments gibt es in Whalefall Canyon 4 Strauß-Stellen, aber du kannst nur 1 von den 4 bekommen — welche das ist, ist von Spieler zu Spieler unterschiedlich.',
+    dorisNoteWhalefall:
+      '👧 Schau nach der 👧-Markierung (Hauptinsel oder Whalefall Canyon), um zu sehen, wo Doris gerade ist — bei ihr kannst du während Regen, Regenbogen und Meteorschauer einkaufen. Das genaue Zeitfenster siehst du auf dem Startbildschirm bei "Wetter diese Woche".',
+    dorisNoteLand:
+      '👧 Während des Meteorschauers steht Doris an Land (siehe Markierung unten) — bei ihr kannst du dann einkaufen. Das genaue Zeitfenster siehst du auf dem Startbildschirm bei "Wetter diese Woche".',
+    mailboxNote: '📮 Vergiss auch nicht den Strauß bei deinem eigenen Briefkasten — der ist immer da, steht aber nicht auf der Karte (weil das dein eigener Hausplatz ist).',
+    meteorLingerNote: '⛏️ Die Erzstücke bleiben bis 24 Stunden nach Beginn des Meteorschauers abbaubar (also bis zur gleichen Zeit am nächsten Tag) — diese Karte bleibt also noch eine Weile nützlich, nachdem der Meteorschauer selbst vorbei ist.',
   },
 } as const;
 

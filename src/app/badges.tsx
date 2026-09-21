@@ -42,6 +42,20 @@ const STRINGS = {
       '60+ emblemas, baseados em uma captura de tela do seu próprio resumo de Conquistas. Toque no ícone para marcar um emblema como conquistado, ou use o contador para acompanhar o progresso. Ainda existem alguns emblemas totalmente ocultos que não estão nesta lista (nome ainda desconhecido).',
     hiddenDivider: '🔒 Conquistas Ocultas',
   },
+  fr: {
+    title: 'Badges',
+    subtitle: 'Succès & titres de profil (D.G. Niveau 15+)',
+    disclaimer:
+      "60+ badges, basés sur une capture d'écran de ton propre aperçu des Succès. Touche l'icône pour marquer un badge comme obtenu, ou utilise le compteur pour suivre ta progression. Il reste encore quelques badges entièrement cachés qui ne sont pas dans cette liste (nom pas encore connu).",
+    hiddenDivider: '🔒 Succès Cachés',
+  },
+  de: {
+    title: 'Badges',
+    subtitle: 'Erfolge & Profiltitel (D.G. Level 15+)',
+    disclaimer:
+      '60+ Badges, basierend auf einem Screenshot deiner eigenen Erfolgs-Übersicht. Tippe auf das Icon, um ein Badge als erreicht zu markieren, oder nutze den Zähler, um deinen Fortschritt zu verfolgen. Es gibt noch ein paar komplett versteckte Badges, die nicht in dieser Liste stehen (Name noch unbekannt).',
+    hiddenDivider: '🔒 Versteckte Erfolge',
+  },
 } as const;
 
 export default function BadgesScreen() {

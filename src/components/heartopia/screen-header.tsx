@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { useLanguage } from '@/hooks/use-language';
 
-const BACK_LABEL = { nl: '‹ Terug', en: '‹ Back', es: '‹ Volver', pt: '‹ Voltar' } as const;
+const BACK_LABEL = { nl: '‹ Terug', en: '‹ Back', es: '‹ Volver', pt: '‹ Voltar', fr: '‹ Retour', de: '‹ Zurück' } as const;
 
 export interface ScreenHeaderTab {
   key: string;
