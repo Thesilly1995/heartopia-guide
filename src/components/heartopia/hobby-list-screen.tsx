@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import { useEffect, useMemo, useState } from 'react';
-import { FlatList, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { RarityPill } from '@/components/heartopia/rarity-pill';
@@ -347,8 +347,8 @@ export function HobbyListScreen({
     });
   }, [activeItems, query, maxLevel, weatherFilter, timeFilter, spotFilter, progressFilter, stars, mastery]);
 
-  return (
-    <SafeAreaView style={styles.safeArea} edges={['top']}>
+  const listHeader = (
+    <>
       <LinearGradient colors={gradient} style={styles.header} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}>
         <Pressable
           onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}
@@ -471,38 +471,38 @@ export function HobbyListScreen({
         )}
 
         {hasSpot && spotExpanded && (
-          <>
-            <ScrollView style={styles.spotScroll} contentContainerStyle={styles.spotScrollContent} nestedScrollEnabled>
-              {SPOT_FILTERS.map((spot) => {
-                const active = spotFilter === spot;
-                const label = spot === 'Alle' ? s.allSpots : spot;
-                return (
-                  <Pressable key={spot} onPress={() => setSpotFilter(spot)} style={[styles.chip, active && styles.chipActive]}>
-                    <Text style={[styles.chipText, active && styles.chipTextActive]}>{label}</Text>
-                  </Pressable>
-                );
-              })}
-            </ScrollView>
-            <View style={styles.chipRow}>
-              <Pressable onPress={() => setSpotExpanded(false)} style={styles.chip}>
-                <Text style={styles.chipText}>{s.hideSpots}</Text>
-              </Pressable>
-            </View>
-          </>
+          <View style={styles.chipRow}>
+            {SPOT_FILTERS.map((spot) => {
+              const active = spotFilter === spot;
+              const label = spot === 'Alle' ? s.allSpots : spot;
+              return (
+                <Pressable key={spot} onPress={() => setSpotFilter(spot)} style={[styles.chip, active && styles.chipActive]}>
+                  <Text style={[styles.chipText, active && styles.chipTextActive]}>{label}</Text>
+                </Pressable>
+              );
+            })}
+            <Pressable onPress={() => setSpotExpanded(false)} style={styles.chip}>
+              <Text style={styles.chipText}>{s.hideSpots}</Text>
+            </Pressable>
+          </View>
         )}
       </LinearGradient>
 
+      {activeTab?.disclaimer && (
+        <View style={styles.disclaimer}>
+          <Text style={styles.disclaimerText}>{activeTab.disclaimer}</Text>
+        </View>
+      )}
+    </>
+  );
+
+  return (
+    <SafeAreaView style={styles.safeArea} edges={['top']}>
       <FlatList
         data={visibleItems}
         keyExtractor={(item) => item.name}
         contentContainerStyle={styles.listContent}
-        ListHeaderComponent={
-          activeTab?.disclaimer ? (
-            <View style={styles.disclaimer}>
-              <Text style={styles.disclaimerText}>{activeTab.disclaimer}</Text>
-            </View>
-          ) : null
-        }
+        ListHeaderComponent={listHeader}
         renderItem={({ item }) => {
           const isOpen = openName === item.name;
           const weatherMatch = hasWeather && weatherFilter !== 'Alle' && !!item.weather?.includes(weatherFilter);
@@ -641,7 +641,16 @@ export function HobbyListScreen({
 function makeStyles(c: ThemeColors) {
   return StyleSheet.create({
     safeArea: { flex: 1, backgroundColor: c.bg },
-    header: { paddingHorizontal: 20, paddingTop: 16, paddingBottom: 16, borderBottomLeftRadius: 24, borderBottomRightRadius: 24 },
+    header: {
+      paddingHorizontal: 20,
+      paddingTop: 16,
+      paddingBottom: 16,
+      borderBottomLeftRadius: 24,
+      borderBottomRightRadius: 24,
+      marginHorizontal: -16,
+      marginTop: -16,
+      marginBottom: 6,
+    },
     backButton: { alignSelf: 'flex-start', marginBottom: 8 },
     backButtonText: { color: '#FFFFFF', fontSize: 14, fontWeight: '700' },
     headerTitle: { color: '#FFFFFF', fontSize: 22, fontWeight: '700' },
@@ -656,8 +665,6 @@ function makeStyles(c: ThemeColors) {
       color: c.forest,
     },
     chipRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 8 },
-    spotScroll: { maxHeight: 160, marginTop: 8 },
-    spotScrollContent: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, paddingBottom: 4 },
     chip: { paddingHorizontal: 10, paddingVertical: 5, borderRadius: 999, backgroundColor: 'rgba(255,255,255,0.25)', flexShrink: 0 },
     chipActive: { backgroundColor: '#FFFFFF' },
     chipText: { fontSize: 11, fontWeight: '700', color: '#FFFFFF' },
