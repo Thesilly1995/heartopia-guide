@@ -2,6 +2,10 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-09-21 (deel 56) — Nieuwe gift code toegevoegd
+
+Gebruiker leverde een nieuwe redemption-code aan (`p5m1k9q6a2r7`, zelfde beloning als de andere lopende "3x Wensterren/2x kleurstoffen/1x Vlekkeloze fluoriet"-codes, vervaldatum 30 sep 2026). Toegevoegd aan de bundel-fallbacklijst `CODES_RAW` in `src/data/codes.ts` (zie `docs/remote-content.md` voor hoe dit zich verhoudt tot de remote-`codes`-JSON, die voorrang heeft zodra `REMOTE_CONTENT_URL` is ingesteld en bereikbaar is).
+
 ## 2026-09-20/21 (deel 55) — Frans + Duits als volledige app-talen, kaart-tool-uitbreidingen, meerdere UI-bugfixes
 
 **Frans als volledige app-taal**: zelfde architectuur als de ES/PT-uitrol uit deel 54 (`Language`-type uitgebreid met `'fr'`, homescreen + `SECTIONS`-array zelf gedaan, ~26 scherm-/componentbestanden via 4 parallelle achtergrond-agents, 18 catalogusdatabestanden uitgebreid met `nameFr`/`labelFr` op basis van een door de gebruiker aangeleverde complete namenlijst per categorie, `remote-content.ts` uitgebreid met optionele `*Fr`-velden, lokaal beheerde content — bubble-locations/codes/event-meta/week-forecast/catalog-progress/current-weather/daily-plots/meteor-rainbow-spots — echt vertaald). Proactieve scan aan het eind vond 12 bestanden waar secundaire velden (growTime/method/ability/size/weather/spot/note/tool/ingredients/tips) bij ontbrekende Franse brondata stil terugvielen op **Nederlands i.p.v. Engels** — gefixt met een gerichte regex-ronde. Duitse namen (uit eerdere screenshot-staging, `docs/translations-de-fr-staging.md`, PR #129) bewust nog niet meegenomen, zoals gebruiker had gevraagd ("nog niet mergen").
