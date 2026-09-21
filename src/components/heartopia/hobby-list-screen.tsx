@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import { useEffect, useMemo, useState } from 'react';
-import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { FlatList, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { RarityPill } from '@/components/heartopia/rarity-pill';
@@ -471,20 +471,24 @@ export function HobbyListScreen({
         )}
 
         {hasSpot && spotExpanded && (
-          <View style={styles.chipRow}>
-            {SPOT_FILTERS.map((spot) => {
-              const active = spotFilter === spot;
-              const label = spot === 'Alle' ? s.allSpots : spot;
-              return (
-                <Pressable key={spot} onPress={() => setSpotFilter(spot)} style={[styles.chip, active && styles.chipActive]}>
-                  <Text style={[styles.chipText, active && styles.chipTextActive]}>{label}</Text>
-                </Pressable>
-              );
-            })}
-            <Pressable onPress={() => setSpotExpanded(false)} style={styles.chip}>
-              <Text style={styles.chipText}>{s.hideSpots}</Text>
-            </Pressable>
-          </View>
+          <>
+            <ScrollView style={styles.spotScroll} contentContainerStyle={styles.spotScrollContent} nestedScrollEnabled>
+              {SPOT_FILTERS.map((spot) => {
+                const active = spotFilter === spot;
+                const label = spot === 'Alle' ? s.allSpots : spot;
+                return (
+                  <Pressable key={spot} onPress={() => setSpotFilter(spot)} style={[styles.chip, active && styles.chipActive]}>
+                    <Text style={[styles.chipText, active && styles.chipTextActive]}>{label}</Text>
+                  </Pressable>
+                );
+              })}
+            </ScrollView>
+            <View style={styles.chipRow}>
+              <Pressable onPress={() => setSpotExpanded(false)} style={styles.chip}>
+                <Text style={styles.chipText}>{s.hideSpots}</Text>
+              </Pressable>
+            </View>
+          </>
         )}
       </LinearGradient>
 
@@ -652,6 +656,8 @@ function makeStyles(c: ThemeColors) {
       color: c.forest,
     },
     chipRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 8 },
+    spotScroll: { maxHeight: 160, marginTop: 8 },
+    spotScrollContent: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, paddingBottom: 4 },
     chip: { paddingHorizontal: 10, paddingVertical: 5, borderRadius: 999, backgroundColor: 'rgba(255,255,255,0.25)', flexShrink: 0 },
     chipActive: { backgroundColor: '#FFFFFF' },
     chipText: { fontSize: 11, fontWeight: '700', color: '#FFFFFF' },
