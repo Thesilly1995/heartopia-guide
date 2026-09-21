@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -243,8 +243,10 @@ export function HobbyListScreen({
   const [openName, setOpenName] = useState<string | null>(null);
   const [query, setQuery] = useState('');
   const [maxLevel, setMaxLevel] = useState<number>(99);
-  const [weatherFilter, setWeatherFilter] = useState<string>('Alle');
-  const [timeFilter, setTimeFilter] = useState<string>('Alle');
+  // Index i.p.v. de vertaalde tekst zelf, zodat de keuze geldig blijft (en
+  // opgeslagen kan worden) ongeacht taalwissels — 'Alle' is -1.
+  const [weatherIndex, setWeatherIndex] = useState<number>(-1);
+  const [timeIndex, setTimeIndex] = useState<number>(-1);
   const [spotFilter, setSpotFilter] = useState<string>('Alle');
   const [spotExpanded, setSpotExpanded] = useState(false);
   const [progressFilter, setProgressFilter] = useState<ProgressFilter>('all');
@@ -252,12 +254,8 @@ export function HobbyListScreen({
   const [stars, setStars] = useState<Record<string, number>>({});
   const [mastery, setMastery] = useState<Record<string, boolean>>({});
 
-  useEffect(() => {
-    setWeatherFilter('Alle');
-    setTimeFilter('Alle');
-    setSpotFilter('Alle');
-    setSpotExpanded(false);
-  }, [language]);
+  const weatherFilter = weatherIndex === -1 ? 'Alle' : WEATHER_WORDS[language][weatherIndex];
+  const timeFilter = timeIndex === -1 ? 'Alle' : TIME_WORDS[language][timeIndex];
 
   const activeTab = subTabs?.find((tab) => tab.key === activeSub);
   const activeItems = subTabs ? (activeTab?.items ?? []) : (items ?? []);
@@ -273,22 +271,46 @@ export function HobbyListScreen({
 
   const starsStorageKey = `heartopia:${activeStorageKey}:stars`;
   const masteryStorageKey = `heartopia:${activeStorageKey}:mastery`;
+  const filtersStorageKey = `heartopia:${activeStorageKey}:filters`;
+  // Voorkomt dat het opslag-effect hieronder de nét geladen filters van dit
+  // tabblad overschrijft met de (nog niet bijgewerkte) state van het vorige
+  // tabblad, vlak na het wisselen van subtab.
+  const hydratedKeyRef = useRef<string | null>(null);
 
   useEffect(() => {
+    hydratedKeyRef.current = null;
     (async () => {
       try {
-        const [starsRaw, masteryRaw] = await Promise.all([
+        const [starsRaw, masteryRaw, filtersRaw] = await Promise.all([
           AsyncStorage.getItem(starsStorageKey),
           AsyncStorage.getItem(masteryStorageKey),
+          AsyncStorage.getItem(filtersStorageKey),
         ]);
         setStars(starsRaw ? JSON.parse(starsRaw) : {});
         setMastery(masteryRaw ? JSON.parse(masteryRaw) : {});
+        const f = filtersRaw ? JSON.parse(filtersRaw) : null;
+        setMaxLevel(f?.maxLevel ?? 99);
+        setProgressFilter(f?.progressFilter ?? 'all');
+        setWeatherIndex(f?.weatherIndex ?? -1);
+        setTimeIndex(f?.timeIndex ?? -1);
+        setSpotFilter(f?.spotFilter ?? 'Alle');
       } catch {
         setStars({});
         setMastery({});
       }
+      hydratedKeyRef.current = activeStorageKey;
     })();
-  }, [starsStorageKey, masteryStorageKey]);
+  }, [starsStorageKey, masteryStorageKey, filtersStorageKey, activeStorageKey]);
+
+  useEffect(() => {
+    if (hydratedKeyRef.current !== activeStorageKey) return;
+    AsyncStorage.setItem(
+      filtersStorageKey,
+      JSON.stringify({ maxLevel, progressFilter, weatherIndex, timeIndex, spotFilter })
+    ).catch(() => {
+      // opslaan mislukt, lokale state blijft zichtbaar tot een herstart
+    });
+  }, [activeStorageKey, filtersStorageKey, maxLevel, progressFilter, weatherIndex, timeIndex, spotFilter]);
 
   const setItemStar = async (name: string, value: number) => {
     const current = stars[name] ?? 0;
@@ -435,7 +457,7 @@ export function HobbyListScreen({
               const label =
                 w === 'Alle' ? s.allWeather : `${w === WEATHER_WORDS[language][0] ? '☀️' : w === WEATHER_WORDS[language][1] ? '🌧️' : '🌈'} ${w}`;
               return (
-                <Pressable key={w} onPress={() => setWeatherFilter(w)} style={[styles.chip, active && styles.chipActive]}>
+                <Pressable key={w} onPress={() => setWeatherIndex(w === 'Alle' ? -1 : (WEATHER_WORDS[language] as readonly string[]).indexOf(w))} style={[styles.chip, active && styles.chipActive]}>
                   <Text style={[styles.chipText, active && styles.chipTextActive]}>{label}</Text>
                 </Pressable>
               );
@@ -452,7 +474,7 @@ export function HobbyListScreen({
                   ? s.allTime
                   : `${t === TIME_WORDS[language][0] ? '🌙' : t === TIME_WORDS[language][1] ? '🌅' : t === TIME_WORDS[language][2] ? '☀️' : '🌆'} ${t}`;
               return (
-                <Pressable key={t} onPress={() => setTimeFilter(t)} style={[styles.chip, active && styles.chipActive]}>
+                <Pressable key={t} onPress={() => setTimeIndex(t === 'Alle' ? -1 : (TIME_WORDS[language] as readonly string[]).indexOf(t))} style={[styles.chip, active && styles.chipActive]}>
                   <Text style={[styles.chipText, active && styles.chipTextActive]}>{label}</Text>
                 </Pressable>
               );
