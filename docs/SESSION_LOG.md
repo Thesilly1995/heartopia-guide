@@ -4,7 +4,9 @@ Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wa
 
 ## 2026-09-21 (deel 56) — Nieuwe gift code toegevoegd
 
-Gebruiker leverde een nieuwe redemption-code aan (`p5m1k9q6a2r7`, zelfde beloning als de andere lopende "3x Wensterren/2x kleurstoffen/1x Vlekkeloze fluoriet"-codes, vervaldatum 30 sep 2026). Toegevoegd aan de bundel-fallbacklijst `CODES_RAW` in `src/data/codes.ts` (zie `docs/remote-content.md` voor hoe dit zich verhoudt tot de remote-`codes`-JSON, die voorrang heeft zodra `REMOTE_CONTENT_URL` is ingesteld en bereikbaar is).
+Gebruiker leverde een nieuwe redemption-code aan (`p5m1k9q6a2r7`, zelfde beloning als de andere lopende "3x Wensterren/2x kleurstoffen/1x Vlekkeloze fluoriet"-codes, vervaldatum 30 sep 2026). Toegevoegd aan zowel de bundel-fallbacklijst `CODES_RAW` in `src/data/codes.ts` áls aan de live `remote-content.json` (die laatste heeft voorrang zodra bereikbaar — zie `docs/remote-content.md`), zodat de code ook echt zichtbaar wordt in de app zonder nieuwe release.
+
+**Workflow-afspraak spelweer bevestigd**: `weekForecast` in `remote-content.json` klopt gewoon en hoeft niet gecorrigeerd te worden — gebruiker levert dit standaard elke **zondag** aan voor de week erna (dus niet iets om zelf te controleren/als verouderd te flaggen tenzij de gebruiker aangeeft dat het niet klopt). Het losse `weather`-veld (huidig 6-uursblok, `validUntil`) stond nog op een oude datum (6 aug) — dat is dus kennelijk geen actief bijgehouden veld meer nu `weekForecast` de wekelijkse aanlevering afdekt; niet zelf gaan updaten zonder dat de gebruiker het aangeeft.
 
 ## 2026-09-20/21 (deel 55) — Frans + Duits als volledige app-talen, kaart-tool-uitbreidingen, meerdere UI-bugfixes
 
