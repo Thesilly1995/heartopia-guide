@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-20T00:00:00Z",
+  "updatedAt": "2026-09-21T08:00:00Z",
   "dailyPlotsCalendar": [
     {"date": "2026-08-09", "oakPlotNl": "Plot 6", "oakPlotEn": "Plot 6", "fluoritePlotNl": "Plot 11", "fluoritePlotEn": "Plot 11", "oakPlotEs": "Parcela 6", "oakPlotPt": "Lote 6", "fluoritePlotEs": "Parcela 11", "fluoritePlotPt": "Lote 11"},
     {"date": "2026-08-10", "oakPlotNl": "Plot 2", "oakPlotEn": "Plot 2", "fluoritePlotNl": "Plot 7", "fluoritePlotEn": "Plot 7", "oakPlotEs": "Parcela 2", "oakPlotPt": "Lote 2", "fluoritePlotEs": "Parcela 7", "fluoritePlotPt": "Lote 7"},
@@ -115,16 +115,7 @@
       {"nameNl": "Iriserende Neushoornkever", "nameEn": "Iridescent Rhinoceros Beetle", "spotNl": "Naniwa's Iridescent Beetle Event", "spotEn": "Naniwa's Iridescent Beetle Event", "noteNl": "Vereist speciale fase — ontgrendelt via Naniwa's Iridescent Beetle Event", "noteEn": "Requires a special phase — unlocks via Naniwa's Iridescent Beetle Event", "emoji": "🪲", "gold": [165, 247, 330, 660, 1320], "tokens": [45, 67, 90, 180, 360], "noteEs": "Requiere una fase especial — se desbloquea mediante Naniwa's Iridescent Beetle Event", "notePt": "Requer uma fase especial — desbloqueia através de Naniwa's Iridescent Beetle Event"}
     ]
   },
-  "rainbowSpots": [
-    {"num": 1, "x": 44.7, "y": 63.4, "underwater": false, "descriptionNl": "Hoofdeiland, centraal gebied", "descriptionEn": "Main island, central area", "descriptionEs": "Isla principal, zona central", "descriptionPt": "Ilha principal, área central", "descriptionFr": "Île principale, zone centrale"},
-    {"num": 2, "x": 45.7, "y": 58.8, "underwater": false, "descriptionNl": "Hoofdeiland, centraal gebied, bij locatie 1", "descriptionEn": "Main island, central area, near spot 1", "descriptionEs": "Isla principal, zona central, cerca del punto 1", "descriptionPt": "Ilha principal, área central, perto do ponto 1", "descriptionFr": "Île principale, zone centrale, près du point 1"},
-    {"num": 3, "x": 41.7, "y": 59.4, "underwater": false, "isDoris": true, "descriptionNl": "Doris (NPC) — shop hier tijdens Rainbow-momenten", "descriptionEn": "Doris (NPC) — shop here during Rainbow moments", "descriptionEs": "Doris (PNJ) — cómprale durante los momentos Rainbow", "descriptionPt": "Doris (NPC) — compre com ela durante os momentos Rainbow", "descriptionFr": "Doris (PNJ) — fais des achats chez elle pendant les moments Rainbow"},
-    {"num": 4, "x": 61.7, "y": 75.9, "underwater": true, "descriptionNl": "Whalefall Canyon, zuidelijk gebied", "descriptionEn": "Whalefall Canyon, south area", "descriptionEs": "Whalefall Canyon, zona sur", "descriptionPt": "Whalefall Canyon, área sul", "descriptionFr": "Whalefall Canyon, zone sud"},
-    {"num": 5, "x": 67.5, "y": 47.5, "underwater": true, "descriptionNl": "Whalefall Canyon, oostelijk gebied", "descriptionEn": "Whalefall Canyon, east area", "descriptionEs": "Whalefall Canyon, zona este", "descriptionPt": "Whalefall Canyon, área leste", "descriptionFr": "Whalefall Canyon, zone est"},
-    {"num": 6, "x": 46.3, "y": 48.6, "underwater": true, "descriptionNl": "Whalefall Canyon, centraal gebied", "descriptionEn": "Whalefall Canyon, central area", "descriptionEs": "Whalefall Canyon, zona central", "descriptionPt": "Whalefall Canyon, área central", "descriptionFr": "Whalefall Canyon, zone centrale"},
-    {"num": 7, "x": 21.5, "y": 47.5, "underwater": true, "descriptionNl": "Whalefall Canyon, westelijk gebied", "descriptionEn": "Whalefall Canyon, west area", "descriptionEs": "Whalefall Canyon, zona oeste", "descriptionPt": "Whalefall Canyon, área oeste", "descriptionFr": "Whalefall Canyon, zone ouest"},
-    {"num": 8, "x": 34.2, "y": 43.7, "underwater": true, "isDoris": true, "descriptionNl": "Doris (NPC) — shop hier tijdens Rainbow-momenten", "descriptionEn": "Doris (NPC) — shop here during Rainbow moments", "descriptionEs": "Doris (PNJ) — cómprale durante los momentos Rainbow", "descriptionPt": "Doris (NPC) — compre com ela durante os momentos Rainbow", "descriptionFr": "Doris (PNJ) — fais des achats chez elle pendant les moments Rainbow"}
-  ],
+  "rainbowSpots": [],
   "meteorSpots": [],
   "bubbleWeek": {
     "weekLabelNl": "Deze week (12-18 sep 2026)",
