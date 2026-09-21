@@ -2,6 +2,12 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-09-21 (deel 56) — Nieuwe gift code toegevoegd
+
+Gebruiker leverde een nieuwe redemption-code aan (`p5m1k9q6a2r7`, zelfde beloning als de andere lopende "3x Wensterren/2x kleurstoffen/1x Vlekkeloze fluoriet"-codes, vervaldatum 30 sep 2026). Toegevoegd aan zowel de bundel-fallbacklijst `CODES_RAW` in `src/data/codes.ts` áls aan de live `remote-content.json` (die laatste heeft voorrang zodra bereikbaar — zie `docs/remote-content.md`), zodat de code ook echt zichtbaar wordt in de app zonder nieuwe release.
+
+**Workflow-afspraak spelweer bevestigd**: `weekForecast` in `remote-content.json` klopt gewoon en hoeft niet gecorrigeerd te worden — gebruiker levert dit standaard elke **zondag** aan voor de week erna (dus niet iets om zelf te controleren/als verouderd te flaggen tenzij de gebruiker aangeeft dat het niet klopt). Het losse `weather`-veld (huidig 6-uursblok, `validUntil`) stond nog op een oude datum (6 aug) — dat is dus kennelijk geen actief bijgehouden veld meer nu `weekForecast` de wekelijkse aanlevering afdekt; niet zelf gaan updaten zonder dat de gebruiker het aangeeft.
+
 ## 2026-09-20/21 (deel 55) — Frans + Duits als volledige app-talen, kaart-tool-uitbreidingen, meerdere UI-bugfixes
 
 **Frans als volledige app-taal**: zelfde architectuur als de ES/PT-uitrol uit deel 54 (`Language`-type uitgebreid met `'fr'`, homescreen + `SECTIONS`-array zelf gedaan, ~26 scherm-/componentbestanden via 4 parallelle achtergrond-agents, 18 catalogusdatabestanden uitgebreid met `nameFr`/`labelFr` op basis van een door de gebruiker aangeleverde complete namenlijst per categorie, `remote-content.ts` uitgebreid met optionele `*Fr`-velden, lokaal beheerde content — bubble-locations/codes/event-meta/week-forecast/catalog-progress/current-weather/daily-plots/meteor-rainbow-spots — echt vertaald). Proactieve scan aan het eind vond 12 bestanden waar secundaire velden (growTime/method/ability/size/weather/spot/note/tool/ingredients/tips) bij ontbrekende Franse brondata stil terugvielen op **Nederlands i.p.v. Engels** — gefixt met een gerichte regex-ronde. Duitse namen (uit eerdere screenshot-staging, `docs/translations-de-fr-staging.md`, PR #129) bewust nog niet meegenomen, zoals gebruiker had gevraagd ("nog niet mergen").
