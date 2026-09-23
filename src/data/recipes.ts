@@ -1,7 +1,10 @@
 import type { ColorKey } from '@/constants/heartopia-colors';
 import { useMemo } from 'react';
 
+import { EventGroup } from '@/components/heartopia/event-groups-list';
 import { Language, useLanguage } from '@/hooks/use-language';
+import { buildRecipeEventGroups } from '@/lib/event-groups';
+import { useRemoteContent } from '@/lib/remote-content';
 
 export interface RecipeItem {
   name: string;
@@ -155,5 +158,15 @@ export function useRecipes(): RecipeItem[] {
     sellPriceByStar: r.sellPriceByStar,
       })),
     [language]
+  );
+}
+
+/** Recepten gegroepeerd per event (huidig event + archief) — voor de "Events"-subtab. */
+export function useRecipeEventGroups(): EventGroup[] {
+  const { language } = useLanguage();
+  const { payload } = useRemoteContent();
+  return useMemo(
+    () => buildRecipeEventGroups(payload?.event, payload?.pastEvents, language),
+    [payload, language]
   );
 }
