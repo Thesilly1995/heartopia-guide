@@ -149,10 +149,21 @@ dat specifieke onderdeel.
   ondersteund als terugval-formaat maar is achterhaald zodra deze
   kalender een entry voor vandaag heeft.
 - **`event`**: een volledige override van het "Huidig Event"-scherm.
-  Als dit veld ontbreekt, blijft de bestaande gebundelde Call of
-  Whales-content (zoals nu al in de app zit) getoond worden — dit
-  veld hoeft dus pas ingevuld te worden zodra het volgende event
-  begint.
+  Ontbreekt dit veld, dan toont de app "Geen actief event" (de
+  gebundelde fallback is leeg) — dit veld hoeft dus pas ingevuld te
+  worden zodra het volgende event begint.
+- **`pastEvents`**: archief van afgesloten events, zodat spelers via
+  het nieuwe "🎉 Events"-tabblad op de Vissen/Insecten/Vogels/Koken-
+  schermen kunnen terugkijken welke dieren/recepten bij welk event
+  hoorden (i.p.v. dat die content verdwijnt zodra een nieuw event
+  begint). Elke entry heeft dezelfde vorm als `event`
+  (`nameNl`/`nameEn`/…, `datesNl`/`datesEn`/…, plus optioneel
+  `fish`/`birds`/`insects`/`recipes` — laat een categorie weg als dat
+  event die niet had). **Werkwijze**: zodra een event eindigt en het
+  volgende begint, verhuist de oude `event`-inhoud naar een nieuwe
+  entry in `pastEvents` (in plaats van overschreven te worden), en
+  wordt `event` vervangen door het nieuwe event. Vertaalvelden buiten
+  nl/en zijn optioneel (vallen terug op Engels).
 - **`weather`**: het spelweer van dit moment. `kind` is `"sunny"`,
   `"rain"` of `"rainbow"` (bepaalt het icoontje); `labelNl`/`labelEn`
   zijn de weergegeven teksten (`"Zonnig"`/`"Sunny"`,
@@ -221,3 +232,12 @@ dat specifieke onderdeel.
 - `src/app/(tabs)/index.tsx` — toont bovenaan het homescreen: weer,
   weekvoorspelling, huidig event, Rainbow/Meteorenregen-status, en de
   dagelijkse plots.
+- `src/lib/event-groups.ts` — combineert `payload.event` + `payload.pastEvents`
+  tot gegroepeerde `EventGroup[]`-lijsten (per catalogus-categorie).
+- `src/components/heartopia/event-groups-list.tsx` — de UI die zo'n
+  gegroepeerde lijst rendert (kopje met naam+datum, daaronder de items).
+- `src/components/heartopia/hobby-list-screen.tsx` — de `HobbySubTab`
+  ondersteunt nu ook `eventGroups` (i.p.v. `items`) voor een "🎉 Events"-
+  subtab; zoek/filter-chips worden dan verborgen.
+  Vooralsnog alleen live op `src/app/vissen.tsx` (pilot) — de andere
+  catalogi (Insecten/Vogels/Koken) volgen na goedkeuring.

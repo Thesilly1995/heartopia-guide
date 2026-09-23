@@ -128,6 +128,31 @@ export interface RemoteEventOverride {
   insects: RemoteEventSighting[];
 }
 
+/**
+ * Eén afgesloten event in het archief (zie `pastEvents` hieronder) — zelfde
+ * vorm als `RemoteEventOverride`, maar alle categorieën zijn optioneel (een
+ * event had bv. alleen vissen en geen insecten) en er zit geen actieve
+ * countdown/disclaimer-logica aan vast zoals bij het huidige event.
+ */
+export interface RemoteEventArchiveEntry {
+  nameNl: string;
+  nameEn: string;
+  nameEs?: string;
+  namePt?: string;
+  nameFr?: string;
+  nameDe?: string;
+  datesNl: string;
+  datesEn: string;
+  datesEs?: string;
+  datesPt?: string;
+  datesFr?: string;
+  datesDe?: string;
+  fish?: RemoteEventSighting[];
+  birds?: RemoteEventSighting[];
+  insects?: RemoteEventSighting[];
+  recipes?: RemoteEventRecipe[];
+}
+
 export type WeatherKind = 'sunny' | 'rain' | 'rainbow';
 
 export interface RemoteWeather {
@@ -193,6 +218,14 @@ export interface RemoteContentPayload {
   /** Meerdaagse plot-kalender (bv. weken vooruit uit een in-game-kalenderafbeelding) — heeft voorrang op `dailyPlots` als er een entry voor vandaag in staat. */
   dailyPlotsCalendar?: RemoteDailyPlotDay[];
   event?: RemoteEventOverride;
+  /**
+   * Archief van afgesloten events — zodra een event eindigt, verhuist de
+   * inhoud van `event` hierheen (i.p.v. verloren te gaan) zodat spelers
+   * kunnen terugkijken welke vissen/vogels/insecten/recepten bij welk event
+   * hoorden. Elke entry krijgt een eigen kopje + datum in de catalogus-tabs
+   * (zie `docs/remote-content.md`).
+   */
+  pastEvents?: RemoteEventArchiveEntry[];
   weather?: RemoteWeather;
   /** Actieve redemption-codes — ontbreekt dit veld, dan valt de app terug op de gebundelde (per definitie verouderde) standaardlijst. */
   codes?: RemoteCode[];
