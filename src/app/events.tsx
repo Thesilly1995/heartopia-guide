@@ -15,7 +15,16 @@ import { useEventRecipes } from '@/data/event-recipes';
 import { Language, useLanguage } from '@/hooks/use-language';
 import { RemoteEventRecipe, RemoteEventSighting, useRemoteContent } from '@/lib/remote-content';
 
-const STORAGE_KEY = 'heartopia:event:sterren';
+// Zelfde sleutels als `storageKey` in vissen.tsx/vogels.tsx/koken.tsx/insecten.tsx
+// (zie `heartopia/hobby-list-screen.tsx`), zodat een score die je hier geeft
+// ook zichtbaar is in het bijbehorende catalogusscherm en andersom.
+const STORAGE_KEY_BY_TAB: Record<string, string> = {
+  fish: 'heartopia:vissen:stars',
+  birds: 'heartopia:vogels:stars',
+  recipes: 'heartopia:koken:stars',
+  insects: 'heartopia:insecten:stars',
+};
+const LEGACY_STORAGE_KEY = 'heartopia:event:sterren';
 
 const STRINGS = {
   nl: {
@@ -168,12 +177,45 @@ export default function EventsScreen() {
   useEffect(() => {
     (async () => {
       try {
-        const raw = await AsyncStorage.getItem(STORAGE_KEY);
+        const raw = await AsyncStorage.getItem(STORAGE_KEY_BY_TAB[tab]);
         setStars(raw ? JSON.parse(raw) : {});
       } catch {
         setStars({});
       }
     })();
+  }, [tab]);
+
+  // Eenmalige migratie: sterren die vóór deze update onder de oude, losse
+  // sleutel stonden, worden per categorie verdeeld naar de gedeelde sleutels
+  // hierboven, zodat bestaande scores niet verloren gaan.
+  useEffect(() => {
+    (async () => {
+      try {
+        const legacyRaw = await AsyncStorage.getItem(LEGACY_STORAGE_KEY);
+        if (!legacyRaw) return;
+        const legacyStars: Record<string, number> = JSON.parse(legacyRaw);
+        const namesByTab: Record<string, Set<string>> = {
+          fish: new Set(eventFish.map((i) => i.name)),
+          birds: new Set(eventBirds.map((i) => i.name)),
+          recipes: new Set(eventRecipes.map((i) => i.name)),
+          insects: new Set(eventInsects.map((i) => i.name)),
+        };
+        for (const tabKey of Object.keys(STORAGE_KEY_BY_TAB)) {
+          const entries = Object.entries(legacyStars).filter(([name]) => namesByTab[tabKey].has(name));
+          if (entries.length === 0) continue;
+          const storageKeyForTab = STORAGE_KEY_BY_TAB[tabKey];
+          const existingRaw = await AsyncStorage.getItem(storageKeyForTab);
+          const existing = existingRaw ? JSON.parse(existingRaw) : {};
+          await AsyncStorage.setItem(storageKeyForTab, JSON.stringify({ ...existing, ...Object.fromEntries(entries) }));
+        }
+        await AsyncStorage.removeItem(LEGACY_STORAGE_KEY);
+        const raw = await AsyncStorage.getItem(STORAGE_KEY_BY_TAB[tab]);
+        setStars(raw ? JSON.parse(raw) : {});
+      } catch {
+        // migratie mislukt, oude data blijft staan voor een volgende poging
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const setItemStar = async (name: string, value: number) => {
@@ -182,7 +224,7 @@ export default function EventsScreen() {
     const updated = { ...stars, [name]: nextValue };
     setStars(updated);
     try {
-      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+      await AsyncStorage.setItem(STORAGE_KEY_BY_TAB[tab], JSON.stringify(updated));
     } catch {
       // opslaan mislukt
     }
