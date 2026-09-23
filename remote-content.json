@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-22T17:00:00Z",
+  "updatedAt": "2026-09-23T19:45:00Z",
   "dailyPlotsCalendar": [
     {"date": "2026-08-09", "oakPlotNl": "Plot 6", "oakPlotEn": "Plot 6", "fluoritePlotNl": "Plot 11", "fluoritePlotEn": "Plot 11", "oakPlotEs": "Parcela 6", "oakPlotPt": "Lote 6", "fluoritePlotEs": "Parcela 11", "fluoritePlotPt": "Lote 11"},
     {"date": "2026-08-10", "oakPlotNl": "Plot 2", "oakPlotEn": "Plot 2", "fluoritePlotNl": "Plot 7", "fluoritePlotEn": "Plot 7", "oakPlotEs": "Parcela 2", "oakPlotPt": "Lote 2", "fluoritePlotEs": "Parcela 7", "fluoritePlotPt": "Lote 7"},
@@ -115,6 +115,54 @@
       {"nameNl": "Iriserende Neushoornkever", "nameEn": "Iridescent Rhinoceros Beetle", "spotNl": "Naniwa's Iridescent Beetle Event", "spotEn": "Naniwa's Iridescent Beetle Event", "noteNl": "Vereist speciale fase — ontgrendelt via Naniwa's Iridescent Beetle Event", "noteEn": "Requires a special phase — unlocks via Naniwa's Iridescent Beetle Event", "emoji": "🪲", "gold": [165, 247, 330, 660, 1320], "tokens": [45, 67, 90, 180, 360], "noteEs": "Requiere una fase especial — se desbloquea mediante Naniwa's Iridescent Beetle Event", "notePt": "Requer uma fase especial — desbloqueia através de Naniwa's Iridescent Beetle Event"}
     ]
   },
+  "pastEvents": [
+    {
+      "nameNl": "Call of Whales", "nameEn": "Call of Whales",
+      "datesNl": "11 juli – 22 augustus 2026", "datesEn": "Jul 11 – Aug 22, 2026",
+      "fish": [
+        {"nameNl": "Japanse Vliegende Inktvis", "nameEn": "Japanese Flying Squid", "spotNl": "Walviszee", "spotEn": "Whale Sea", "noteNl": null, "noteEn": null, "emoji": "🦑"},
+        {"nameNl": "Vuurvlieg-inktvis", "nameEn": "Firefly Squid", "spotNl": "Walviszee", "spotEn": "Whale Sea", "noteNl": null, "noteEn": null, "emoji": "🦑"},
+        {"nameNl": "Zeeslak", "nameEn": "Sea Slug", "spotNl": "Onbekend", "spotEn": "Unknown", "noteNl": null, "noteEn": null, "emoji": "🐌"},
+        {"nameNl": "Mandarijnvis", "nameEn": "Mandarin Fish", "spotNl": "Walviszee", "spotEn": "Whale Sea", "noteNl": null, "noteEn": null, "emoji": "🐟"},
+        {"nameNl": "Olijfkleurige Zeeschildpad", "nameEn": "Olive Ridley Turtle", "spotNl": "Walviszee", "spotEn": "Whale Sea", "noteNl": null, "noteEn": null, "emoji": "🐢"},
+        {"nameNl": "Platrugschildpad", "nameEn": "Flatback Turtle", "spotNl": "Walviszee", "spotEn": "Whale Sea", "noteNl": null, "noteEn": null, "emoji": "🐢"},
+        {"nameNl": "Sint-Jakobsschelp", "nameEn": "Scallop", "spotNl": "Walviszee", "spotEn": "Whale Sea", "noteNl": null, "noteEn": null, "emoji": "🐚"}
+      ],
+      "birds": [
+        {"nameNl": "Zwervende Albatros", "nameEn": "Wandering Albatross", "spotNl": "Amethyststrand", "spotEn": "Amethyst Beach", "noteNl": null, "noteEn": null, "emoji": "🐦"},
+        {"nameNl": "Grijsmantelalbatros", "nameEn": "Grey-mantled Albatross", "spotNl": "Stenen Klif", "spotEn": "Stone Cliff", "noteNl": null, "noteEn": null, "emoji": "🐦"},
+        {"nameNl": "Witte Lepelaar", "nameEn": "White Spoonbill", "spotNl": "Onsen Bergmeer", "spotEn": "Onsen Mountain Lake", "noteNl": null, "noteEn": null, "emoji": "🐦"},
+        {"nameNl": "Rode Lepelaar", "nameEn": "Roseate Spoonbill", "spotNl": "Onbekend", "spotEn": "Unknown", "noteNl": null, "noteEn": null, "emoji": "🐦"},
+        {"nameNl": "Witvleugelstern", "nameEn": "White Winged Tern", "spotNl": "Walvisberg", "spotEn": "Whale Mountain", "noteNl": null, "noteEn": null, "emoji": "🐦"},
+        {"nameNl": "Middelste Jager", "nameEn": "Pomarine Skua", "spotNl": "Amethyststrand / Windmolen Bloemenveld / Walvisberg", "spotEn": "Amethyst Beach / Windmill Flower Field / Whale Mountain", "noteNl": null, "noteEn": null, "emoji": "🐦"}
+      ],
+      "insects": [
+        {"nameNl": "Witbandige Erebus-mot", "nameEn": "White-banded Erebus Moth", "spotNl": "Geest-Eik Dennenbos", "spotEn": "Spirit-Oak Pine Forest", "noteNl": null, "noteEn": null, "emoji": "🦋"},
+        {"nameNl": "Blauwe Zijdeplantkever", "nameEn": "Blue Milkweed Beetle", "spotNl": "Boseiland", "spotEn": "Forest Island", "noteNl": null, "noteEn": null, "emoji": "🪲"},
+        {"nameNl": "Agrias-vlinder", "nameEn": "Agrias Butterfly", "spotNl": "Bospuzzel", "spotEn": "Forest Jump Puzzle", "noteNl": null, "noteEn": null, "emoji": "🦋"},
+        {"nameNl": "Morpho Luna", "nameEn": "Morpho Luna", "spotNl": "Onbekend", "spotEn": "Unknown", "noteNl": null, "noteEn": null, "emoji": "🦋"},
+        {"nameNl": "Groene Bloemkever", "nameEn": "Green Flower Chafer", "spotNl": "Hertentoren", "spotEn": "Deer Tower", "noteNl": null, "noteEn": null, "emoji": "🪲"}
+      ],
+      "recipes": [
+        {"nameNl": "IJskoud Oceaandrankje", "nameEn": "Ocean Iced Drink", "ingredientsNl": ["Spirulina Poeder x2", "Sterfruit x2"], "ingredientsEn": ["Spirulina Powder x2", "Starfruit x2"], "emoji": "🍹"},
+        {"nameNl": "Gegrilde Inktvis met Vruchtenjam", "nameEn": "Grilled Squid w/ Fruit Jam", "ingredientsNl": ["Wakame", "Japanse Vliegende Inktvis", "Zeedruif", "Jam (willekeurig)"], "ingredientsEn": ["Wakame", "Japanese Flying Squid", "Sea Grape", "Any Jam"], "emoji": "🦑"},
+        {"nameNl": "Gegrilde Inktvis met Bosbessenjam", "nameEn": "Grilled Squid w/ Blueberry Jam", "ingredientsNl": ["Wakame", "Japanse Vliegende Inktvis", "Zeedruif", "Bosbessenjam"], "ingredientsEn": ["Wakame", "Japanese Flying Squid", "Sea Grape", "Blueberry Jam"], "emoji": "🦑"},
+        {"nameNl": "Gegrilde Inktvis met Sterfruitjam", "nameEn": "Grilled Squid w/ Starfruit Jam", "ingredientsNl": ["Wakame", "Japanse Vliegende Inktvis", "Zeedruif", "Sterfruitjam"], "ingredientsEn": ["Wakame", "Japanese Flying Squid", "Sea Grape", "Starfruit Jam"], "emoji": "🦑"},
+        {"nameNl": "Gegrilde Inktvis met Aardbeienjam", "nameEn": "Grilled Squid w/ Strawberry Jam", "ingredientsNl": ["Wakame", "Japanse Vliegende Inktvis", "Zeedruif", "Aardbeienjam"], "ingredientsEn": ["Wakame", "Japanese Flying Squid", "Sea Grape", "Strawberry Jam"], "emoji": "🦑"},
+        {"nameNl": "Gegrilde Inktvis met Appeljam", "nameEn": "Grilled Squid w/ Apple Jam", "ingredientsNl": ["Wakame", "Japanse Vliegende Inktvis", "Zeedruif", "Appeljam"], "ingredientsEn": ["Wakame", "Japanese Flying Squid", "Sea Grape", "Apple Jam"], "emoji": "🦑"},
+        {"nameNl": "Gegrilde Inktvis met Ananasjam", "nameEn": "Grilled Squid w/ Pineapple Jam", "ingredientsNl": ["Wakame", "Japanse Vliegende Inktvis", "Zeedruif", "Ananasjam"], "ingredientsEn": ["Wakame", "Japanese Flying Squid", "Sea Grape", "Pineapple Jam"], "emoji": "🦑"},
+        {"nameNl": "Oceaanfeest", "nameEn": "Ocean Feast", "ingredientsNl": ["Maissoep", "IJskoud Oceaandrankje", "Gegrilde Inktvis (willekeurig)", "Parelcake (willekeurig)"], "ingredientsEn": ["Corn Soup", "Ocean Iced Drink", "Any Grilled Squid dish", "Any Pearl Cake"], "emoji": "🍽️"},
+        {"nameNl": "Sterfruitjam", "nameEn": "Starfruit Jam", "ingredientsNl": ["Sterfruit x4"], "ingredientsEn": ["Starfruit x4"], "emoji": "🍯"},
+        {"nameNl": "Bosbessen Parelcake", "nameEn": "Blueberry Pearl Cake", "ingredientsNl": ["Tarwe", "Melk", "Sint-Jakobsschelp", "Bosbes"], "ingredientsEn": ["Wheat", "Milk", "Scallop", "Blueberry"], "emoji": "🍰"},
+        {"nameNl": "Schelpen Parelcake", "nameEn": "Seashell Pearl Cake", "ingredientsNl": ["Sint-Jakobsschelp", "Melk", "Tarwe", "Fruit (willekeurig)"], "ingredientsEn": ["Scallop", "Milk", "Wheat", "Any Fruit"], "emoji": "🍰"},
+        {"nameNl": "Sterfruit Parelcake", "nameEn": "Starfruit Pearl Cake", "ingredientsNl": ["Sint-Jakobsschelp", "Melk", "Tarwe", "Sterfruit"], "ingredientsEn": ["Scallop", "Milk", "Wheat", "Starfruit"], "emoji": "🍰"},
+        {"nameNl": "Framboos Parelcake", "nameEn": "Raspberry Pearl Cake", "ingredientsNl": ["Melk", "Sint-Jakobsschelp", "Framboos", "Tarwe"], "ingredientsEn": ["Milk", "Scallop", "Raspberry", "Wheat"], "emoji": "🍰"},
+        {"nameNl": "Appel Parelcake", "nameEn": "Apple Pearl Cake", "ingredientsNl": ["Sint-Jakobsschelp", "Melk", "Appel", "Tarwe"], "ingredientsEn": ["Scallop", "Milk", "Apple", "Wheat"], "emoji": "🍰"},
+        {"nameNl": "Mandarijn Parelcake", "nameEn": "Mandarin Pearl Cake", "ingredientsNl": ["Sint-Jakobsschelp", "Tarwe", "Melk", "Mandarijn"], "ingredientsEn": ["Scallop", "Wheat", "Milk", "Mandarin"], "emoji": "🍰"},
+        {"nameNl": "Tomaten Zeevruchtensoep", "nameEn": "Tomato Seafood Soup", "ingredientsNl": ["Zeekraal", "Gewone Garnaal", "Tomaat", "Tarwe"], "ingredientsEn": ["Glasswort", "Common Prawn", "Tomato", "Wheat"], "emoji": "🍲"}
+      ]
+    }
+  ],
   "rainbowSpots": [],
   "meteorSpots": [],
   "bubbleWeek": {
