@@ -2,13 +2,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { FlatList, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { EventGroup, EventGroupsList } from '@/components/heartopia/event-groups-list';
 import { RarityPill } from '@/components/heartopia/rarity-pill';
 import { StarRow } from '@/components/heartopia/star-row';
 import { ColorKey, ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
-import { useLanguage } from '@/hooks/use-language';
+import { Language, useLanguage } from '@/hooks/use-language';
 
 export interface HobbyItem {
   name: string;
@@ -33,8 +34,11 @@ export interface HobbyItem {
 export interface HobbySubTab {
   key: string;
   label: string;
-  items: HobbyItem[];
+  /** Weglaten als deze subtab in plaats daarvan `eventGroups` gebruikt (events-tabblad). */
+  items?: HobbyItem[];
   disclaimer?: string;
+  /** Toont, i.p.v. de normale gefilterde lijst, items gegroepeerd per event met een kopje — zoek/filter-chips worden dan verborgen. */
+  eventGroups?: EventGroup[];
 }
 
 const LEVEL_FILTERS = ['Alle', 1, 3, 5, 7, 9] as const;
@@ -85,6 +89,8 @@ const STRINGS = {
     progressUndiscovered: '🔍 Nog te ontdekken',
     progressNotFiveStar: '⭐ Nog geen 5★',
     progressNoMastery: '🏆 Nog geen mastery',
+    eventsTab: '🎉 Events',
+    noEventsYet: 'Nog geen events vastgelegd voor deze catalogus.',
   },
   en: {
     back: '‹ Back',
@@ -111,6 +117,8 @@ const STRINGS = {
     progressUndiscovered: '🔍 Not discovered yet',
     progressNotFiveStar: '⭐ Not 5★ yet',
     progressNoMastery: '🏆 No mastery yet',
+    eventsTab: '🎉 Events',
+    noEventsYet: 'No events recorded yet for this catalog.',
   },
   es: {
     back: '‹ Volver',
@@ -137,6 +145,8 @@ const STRINGS = {
     progressUndiscovered: '🔍 Aún por descubrir',
     progressNotFiveStar: '⭐ Aún sin 5★',
     progressNoMastery: '🏆 Aún sin maestría',
+    eventsTab: '🎉 Eventos',
+    noEventsYet: 'Todavía no hay eventos registrados para este catálogo.',
   },
   pt: {
     back: '‹ Voltar',
@@ -163,6 +173,8 @@ const STRINGS = {
     progressUndiscovered: '🔍 Ainda não descoberto',
     progressNotFiveStar: '⭐ Ainda sem 5★',
     progressNoMastery: '🏆 Ainda sem maestria',
+    eventsTab: '🎉 Eventos',
+    noEventsYet: 'Ainda não há eventos registrados para este catálogo.',
   },
   fr: {
     back: '‹ Retour',
@@ -189,6 +201,8 @@ const STRINGS = {
     progressUndiscovered: '🔍 Pas encore découvert',
     progressNotFiveStar: '⭐ Pas encore 5★',
     progressNoMastery: '🏆 Pas encore de maîtrise',
+    eventsTab: '🎉 Événements',
+    noEventsYet: 'Aucun événement encore enregistré pour ce catalogue.',
   },
   de: {
     back: '‹ Zurück',
@@ -215,8 +229,15 @@ const STRINGS = {
     progressUndiscovered: '🔍 Noch zu entdecken',
     progressNotFiveStar: '⭐ Noch nicht 5★',
     progressNoMastery: '🏆 Noch keine Meisterschaft',
+    eventsTab: '🎉 Events',
+    noEventsYet: 'Noch keine Events für diesen Katalog erfasst.',
   },
 } as const;
+
+/** Gedeeld label voor de "Events"-subtab, te gebruiken door elk scherm dat `eventGroups` inzet. */
+export function eventsTabLabel(language: Language): string {
+  return STRINGS[language].eventsTab;
+}
 
 export function HobbyListScreen({
   title,
@@ -258,6 +279,7 @@ export function HobbyListScreen({
   const timeFilter = timeIndex === -1 ? 'Alle' : TIME_WORDS[language][timeIndex];
 
   const activeTab = subTabs?.find((tab) => tab.key === activeSub);
+  const isEventTab = !!activeTab?.eventGroups;
   const activeItems = subTabs ? (activeTab?.items ?? []) : (items ?? []);
   const hasWeather = activeItems.length > 0 && activeItems[0].weather !== undefined;
   const hasTime = activeItems.length > 0 && activeItems[0].time !== undefined;
@@ -402,8 +424,10 @@ export function HobbyListScreen({
           </View>
         )}
 
-        <Text style={styles.headerCount}>{s.itemsInGuide(visibleItems.length)}</Text>
+        {!isEventTab && <Text style={styles.headerCount}>{s.itemsInGuide(visibleItems.length)}</Text>}
 
+        {!isEventTab && (
+        <>
         <TextInput
           value={query}
           onChangeText={setQuery}
@@ -508,6 +532,8 @@ export function HobbyListScreen({
             </Pressable>
           </View>
         )}
+        </>
+        )}
       </LinearGradient>
 
       {activeTab?.disclaimer && (
@@ -517,6 +543,17 @@ export function HobbyListScreen({
       )}
     </>
   );
+
+  if (isEventTab) {
+    return (
+      <SafeAreaView style={styles.safeArea} edges={['top']}>
+        <ScrollView contentContainerStyle={styles.listContent}>
+          {listHeader}
+          <EventGroupsList groups={activeTab!.eventGroups!} emptyText={s.noEventsYet} />
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
