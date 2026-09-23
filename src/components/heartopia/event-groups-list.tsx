@@ -1,4 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 
@@ -26,6 +27,8 @@ export interface EventGroup {
 export function EventGroupsList({ groups, emptyText }: { groups: EventGroup[]; emptyText: string }) {
   const colors = useHeartopiaColors();
   const styles = makeStyles(colors);
+  // Het eerste event (huidig event) staat standaard open, de rest (archief) dicht.
+  const [openKey, setOpenKey] = useState<string | null>(groups[0]?.key ?? null);
 
   if (groups.length === 0) {
     return (
@@ -37,39 +40,46 @@ export function EventGroupsList({ groups, emptyText }: { groups: EventGroup[]; e
 
   return (
     <>
-      {groups.map((group) => (
-        <View key={group.key} style={styles.groupWrap}>
-          <View style={styles.groupHeader}>
-            <Text style={styles.groupTitle}>
-              {group.emoji} {group.eventName}
-            </Text>
-            <Text style={styles.groupDates}>{group.eventDates}</Text>
-          </View>
-          {group.items.map((item) => (
-            <View key={item.name} style={styles.card}>
-              <View style={styles.cardHeader}>
-                <View style={styles.emojiBadge}>
-                  <Text style={styles.emoji}>{item.emoji}</Text>
-                </View>
-                <Text style={styles.cardTitle} numberOfLines={1}>
-                  {item.name}
+      {groups.map((group) => {
+        const isOpen = openKey === group.key;
+        return (
+          <View key={group.key} style={styles.groupWrap}>
+            <Pressable style={styles.groupHeader} onPress={() => setOpenKey(isOpen ? null : group.key)}>
+              <View style={styles.groupHeaderText}>
+                <Text style={styles.groupTitle}>
+                  {group.emoji} {group.eventName} <Text style={styles.groupCount}>({group.items.length})</Text>
                 </Text>
+                <Text style={styles.groupDates}>{group.eventDates}</Text>
               </View>
-              {item.spot && <Text style={styles.detail}>📍 {item.spot}</Text>}
-              {item.ingredients && (
-                <View style={styles.ingredientRow}>
-                  {item.ingredients.map((ing) => (
-                    <Text key={ing} style={styles.ingredientPill}>
-                      {ing}
+              <Text style={styles.chevron}>{isOpen ? '⌄' : '›'}</Text>
+            </Pressable>
+            {isOpen &&
+              group.items.map((item) => (
+                <View key={item.name} style={styles.card}>
+                  <View style={styles.cardHeader}>
+                    <View style={styles.emojiBadge}>
+                      <Text style={styles.emoji}>{item.emoji}</Text>
+                    </View>
+                    <Text style={styles.cardTitle} numberOfLines={1}>
+                      {item.name}
                     </Text>
-                  ))}
+                  </View>
+                  {item.spot && <Text style={styles.detail}>📍 {item.spot}</Text>}
+                  {item.ingredients && (
+                    <View style={styles.ingredientRow}>
+                      {item.ingredients.map((ing) => (
+                        <Text key={ing} style={styles.ingredientPill}>
+                          {ing}
+                        </Text>
+                      ))}
+                    </View>
+                  )}
+                  {item.note && <Text style={styles.note}>⚠️ {item.note}</Text>}
                 </View>
-              )}
-              {item.note && <Text style={styles.note}>⚠️ {item.note}</Text>}
-            </View>
-          ))}
-        </View>
-      ))}
+              ))}
+          </View>
+        );
+      })}
     </>
   );
 }
@@ -79,9 +89,12 @@ function makeStyles(c: ThemeColors) {
     emptyWrap: { padding: 32, alignItems: 'center' },
     emptyText: { fontSize: 13, color: c.forestSoft, textAlign: 'center' },
     groupWrap: { marginBottom: 18 },
-    groupHeader: { marginBottom: 10, paddingHorizontal: 2 },
+    groupHeader: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 10, paddingHorizontal: 2, paddingVertical: 4 },
+    groupHeaderText: { flex: 1 },
     groupTitle: { fontSize: 16, fontWeight: '800', color: c.forest },
+    groupCount: { fontSize: 13, fontWeight: '600', color: c.forestSoft },
     groupDates: { fontSize: 10, color: c.forestSoft, marginTop: 1 },
+    chevron: { fontSize: 18, color: c.forestSoft },
     card: { backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.line, padding: 12, marginBottom: 8 },
     cardHeader: { flexDirection: 'row', alignItems: 'center', gap: 10 },
     emojiBadge: { width: 36, height: 36, borderRadius: 18, backgroundColor: c.iconBg, alignItems: 'center', justifyContent: 'center' },
