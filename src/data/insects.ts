@@ -1,7 +1,10 @@
 import type { ColorKey } from '@/constants/heartopia-colors';
 import { useMemo } from 'react';
 
+import { EventGroup } from '@/components/heartopia/event-groups-list';
 import { useLanguage } from '@/hooks/use-language';
+import { buildSightingEventGroups } from '@/lib/event-groups';
+import { useRemoteContent } from '@/lib/remote-content';
 import { localizeTime, localizeWeather } from '@/lib/time-weather-labels';
 
 export interface InsectItem {
@@ -141,5 +144,15 @@ export function useInsects(): InsectItem[] {
     sellPriceByStar: r.sellPriceByStar,
       })),
     [language]
+  );
+}
+
+/** Insecten gegroepeerd per event (huidig event + archief) — voor de "Events"-subtab. */
+export function useInsectEventGroups(): EventGroup[] {
+  const { language } = useLanguage();
+  const { payload } = useRemoteContent();
+  return useMemo(
+    () => buildSightingEventGroups('insects', payload?.event, payload?.pastEvents, language),
+    [payload, language]
   );
 }
