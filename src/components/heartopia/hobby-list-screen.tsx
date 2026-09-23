@@ -291,7 +291,10 @@ export function HobbyListScreen({
   }, [activeItems, hasSpot]);
   const activeStorageKey = subTabs ? `${storageKey}:${activeSub}` : storageKey;
 
-  const starsStorageKey = `heartopia:${activeStorageKey}:stars`;
+  // Sterren delen dezelfde sleutel voor alle subtabs van dit scherm (en het
+  // "Huidig Event"-scherm op home, zie `app/events.tsx`) zodat een score die
+  // je op de ene plek geeft, ook op de andere plek meteen zichtbaar is.
+  const starsStorageKey = `heartopia:${storageKey}:stars`;
   const masteryStorageKey = `heartopia:${activeStorageKey}:mastery`;
   const filtersStorageKey = `heartopia:${activeStorageKey}:filters`;
   // Voorkomt dat het opslag-effect hieronder de nét geladen filters van dit
