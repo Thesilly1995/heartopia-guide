@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { StarRow } from '@/components/heartopia/star-row';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 
 export interface EventGroupItem {
@@ -24,7 +25,20 @@ export interface EventGroup {
  * een kopje (naam + datum) per event — gebruikt door de "Events"-subtab van
  * `HobbyListScreen` (zie `pastEvents` in `remote-content.ts`).
  */
-export function EventGroupsList({ groups, emptyText }: { groups: EventGroup[]; emptyText: string }) {
+export function EventGroupsList({
+  groups,
+  emptyText,
+  stars,
+  onSetStar,
+  bestResultLabel,
+}: {
+  groups: EventGroup[];
+  emptyText: string;
+  /** Zelfde sterren-opslag als de "Alle"-subtab van dit scherm (zie `heartopia:${storageKey}:stars`), zodat een score op de ene plek ook op de andere zichtbaar is. */
+  stars: Record<string, number>;
+  onSetStar: (name: string, value: number) => void;
+  bestResultLabel: string;
+}) {
   const colors = useHeartopiaColors();
   const styles = makeStyles(colors);
   // Het eerste event (huidig event) staat standaard open, de rest (archief) dicht.
@@ -75,6 +89,10 @@ export function EventGroupsList({ groups, emptyText }: { groups: EventGroup[]; e
                     </View>
                   )}
                   {item.note && <Text style={styles.note}>⚠️ {item.note}</Text>}
+                  <View style={styles.starBox}>
+                    <Text style={styles.starBoxLabel}>{bestResultLabel}</Text>
+                    <StarRow value={stars[item.name] || 0} onSet={(n) => onSetStar(item.name, n)} />
+                  </View>
                 </View>
               ))}
           </View>
@@ -104,5 +122,7 @@ function makeStyles(c: ThemeColors) {
     ingredientRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 6 },
     ingredientPill: { fontSize: 11, color: c.forestSoft, backgroundColor: c.disclaimerBg, borderWidth: 1, borderColor: c.disclaimerBorder, paddingHorizontal: 8, paddingVertical: 3, borderRadius: 999 },
     note: { fontSize: 11, color: c.warningText, marginTop: 6 },
+    starBox: { marginTop: 10, padding: 8, borderRadius: 8, backgroundColor: c.disclaimerBg, borderWidth: 1, borderColor: c.disclaimerBorder, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+    starBoxLabel: { fontSize: 12, fontWeight: '700', color: c.forest },
   });
 }
