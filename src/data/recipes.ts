@@ -161,6 +161,25 @@ export function useRecipes(): RecipeItem[] {
   );
 }
 
+/** Bevestigd door de gebruiker (in-game gecheckt, sep 2026): gerechten die honden wél lusten — voor de voedingslijst bij Dog & Cat Moments. */
+const DOG_SAFE_RECIPE_NAMES_EN = [
+  'Apple Jam', 'Strawberry Jam', 'Raspberry Jam', 'Grape Jam', 'Blueberry Jam', 'Mixed Jam',
+  'Meat Burger', 'Meat Sauce Pasta', 'Baked Eggplant w/ Meat', 'Corn Soup', 'Seafood Risotto', 'Deluxe Seafood Platter',
+  'Oyster Mushroom Pie', 'Shiitake Pie', 'Button Mushroom Pie',
+];
+
+export function useDogSafeRecipes(): { name: string; emoji: string }[] {
+  const { language } = useLanguage();
+  return useMemo(
+    () =>
+      RECIPES_RAW.filter((r) => DOG_SAFE_RECIPE_NAMES_EN.includes(r.nameEn)).map((r) => ({
+        name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : language === 'de' ? r.nameDe : r.nameEn,
+        emoji: r.emoji,
+      })),
+    [language]
+  );
+}
+
 /** Recepten gegroepeerd per event (huidig event + archief) — voor de "Events"-subtab. */
 export function useRecipeEventGroups(): EventGroup[] {
   const { language } = useLanguage();
