@@ -48,7 +48,7 @@ const WILD_MUSHROOMS_RAW: ForagedRaw[] = [
 ];
 
 /** Bevestigd door de gebruiker (in-game gecheckt, sep 2026): de enige 3 wilde paddenstoelen die honden lusten — voor de voedingslijst bij Dog & Cat Moments. Katten eten geen enkele paddenstoel. */
-const DOG_SAFE_WILD_MUSHROOM_NAMES_EN = ['Button Mushroom', 'Oyster Mushroom', 'Shiitake'];
+const DOG_SAFE_WILD_MUSHROOM_NAMES_EN = ['Button Mushroom', 'Oyster Mushroom', 'Shiitake', 'Penny Bun'];
 
 export function useDogSafeWildMushrooms(): { name: string; emoji: string }[] {
   const { language } = useLanguage();
