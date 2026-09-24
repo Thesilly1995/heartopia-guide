@@ -552,7 +552,13 @@ export function HobbyListScreen({
       <SafeAreaView style={styles.safeArea} edges={['top']}>
         <ScrollView contentContainerStyle={styles.listContent}>
           {listHeader}
-          <EventGroupsList groups={activeTab!.eventGroups!} emptyText={s.noEventsYet} />
+          <EventGroupsList
+            groups={activeTab!.eventGroups!}
+            emptyText={s.noEventsYet}
+            stars={stars}
+            onSetStar={setItemStar}
+            bestResultLabel={s.bestResult}
+          />
         </ScrollView>
       </SafeAreaView>
     );
