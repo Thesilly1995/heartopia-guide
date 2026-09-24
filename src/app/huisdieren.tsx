@@ -27,6 +27,7 @@ const TRIED_DISHES_KEY = 'heartopia:huisdieren:geprobeerde-gerechten';
 interface FeedingEntry {
   text: string;
   favorite: boolean;
+  disliked: boolean;
 }
 
 const DOGS_NOTE = {
@@ -56,14 +57,12 @@ const STRINGS = {
     adoptionSlots: 'Adoptieslots per level',
     care: 'Verzorging',
     careValue: 'Aaien, voeren, wassen, samen zijn, trucjes, wandelen',
-    size: 'Grootte',
-    specialAbility: 'Speciale eigenschap',
     randomTraits: 'Favoriete eten en persoonlijkheid verschillen per individueel dier — ontdek het zelf!',
     friendshipLevel: 'Vriendschapsniveau',
     trainedActions: 'Getrainde Acties',
     feedingList: 'Voedingslijst',
     feedingCount: (n: number) => (n === 1 ? '1 item' : `${n} items`),
-    feedingHint: 'Schrijf hier op wat je dit dier al hebt gevoerd, en tik op het hartje als het een favoriet blijkt te zijn.',
+    feedingHint: 'Schrijf hier op wat je dit dier al hebt gevoerd, en tik op het hartje als het een favoriet blijkt te zijn, of op het kruisje als het dier het niet lust.',
     feedingPlaceholder: 'Bijv. appel, gegrilde champignon...',
     feedingAdd: 'Toevoegen',
     feedingEmpty: 'Nog niks ingevuld — voeg toe wat je al gevoerd hebt.',
@@ -83,14 +82,12 @@ const STRINGS = {
     adoptionSlots: 'Adoption slots per level',
     care: 'Care',
     careValue: 'Petting, feeding, washing, hanging out, tricks, walking',
-    size: 'Size',
-    specialAbility: 'Special ability',
     randomTraits: 'Favorite food and personality differ per individual animal — discover it yourself!',
     friendshipLevel: 'Friendship level',
     trainedActions: 'Trained Actions',
     feedingList: 'Feeding List',
     feedingCount: (n: number) => (n === 1 ? '1 item' : `${n} items`),
-    feedingHint: "Write down what you've fed this animal, and tap the heart if it turns out to be a favorite.",
+    feedingHint: "Write down what you've fed this animal, and tap the heart if it turns out to be a favorite, or the cross if the animal doesn't like it.",
     feedingPlaceholder: 'E.g. apple, grilled mushroom...',
     feedingAdd: 'Add',
     feedingEmpty: "Nothing added yet — add what you've already fed.",
@@ -110,14 +107,12 @@ const STRINGS = {
     adoptionSlots: 'Espacios de adopción por nivel',
     care: 'Cuidado',
     careValue: 'Acariciar, alimentar, lavar, pasar tiempo juntos, trucos, pasear',
-    size: 'Tamaño',
-    specialAbility: 'Habilidad especial',
     randomTraits: 'La comida favorita y la personalidad varían según cada animal individual — ¡descúbrelo tú mismo!',
     friendshipLevel: 'Nivel de amistad',
     trainedActions: 'Acciones entrenadas',
     feedingList: 'Lista de alimentación',
     feedingCount: (n: number) => (n === 1 ? '1 elemento' : `${n} elementos`),
-    feedingHint: 'Anota aquí lo que ya le has dado de comer a este animal, y toca el corazón si resulta ser un favorito.',
+    feedingHint: 'Anota aquí lo que ya le has dado de comer a este animal, toca el corazón si resulta ser un favorito, o la cruz si no le gusta.',
     feedingPlaceholder: 'Ej. manzana, champiñón a la parrilla...',
     feedingAdd: 'Añadir',
     feedingEmpty: 'Todavía no has añadido nada — añade lo que ya le has dado de comer.',
@@ -137,14 +132,12 @@ const STRINGS = {
     adoptionSlots: 'Vagas de adoção por nível',
     care: 'Cuidados',
     careValue: 'Fazer carinho, alimentar, dar banho, passar tempo junto, truques, passear',
-    size: 'Tamanho',
-    specialAbility: 'Habilidade especial',
     randomTraits: 'Comida favorita e personalidade variam por animal individual — descubra você mesmo!',
     friendshipLevel: 'Nível de amizade',
     trainedActions: 'Ações treinadas',
     feedingList: 'Lista de alimentação',
     feedingCount: (n: number) => (n === 1 ? '1 item' : `${n} itens`),
-    feedingHint: 'Anote aqui o que você já deu de comer a este bichinho, e toque no coração se for um favorito.',
+    feedingHint: 'Anote aqui o que você já deu de comer a este bichinho, toque no coração se for um favorito, ou no X se ele não gostar.',
     feedingPlaceholder: 'Ex.: maçã, cogumelo grelhado...',
     feedingAdd: 'Adicionar',
     feedingEmpty: 'Nada adicionado ainda — adicione o que você já deu de comer.',
@@ -164,14 +157,12 @@ const STRINGS = {
     adoptionSlots: "Places d'adoption par niveau",
     care: 'Soins',
     careValue: 'Caresser, nourrir, laver, passer du temps ensemble, tours, promener',
-    size: 'Taille',
-    specialAbility: 'Capacité spéciale',
     randomTraits: "La nourriture préférée et la personnalité varient selon chaque animal individuel — découvre-le toi-même !",
     friendshipLevel: "Niveau d'amitié",
     trainedActions: 'Actions entraînées',
     feedingList: "Liste d'alimentation",
     feedingCount: (n: number) => (n === 1 ? '1 élément' : `${n} éléments`),
-    feedingHint: "Note ici ce que tu as déjà donné à manger à cet animal, et touche le cœur si ça s'avère être un favori.",
+    feedingHint: "Note ici ce que tu as déjà donné à manger à cet animal, touche le cœur si ça s'avère être un favori, ou la croix si l'animal n'aime pas ça.",
     feedingPlaceholder: 'Ex. pomme, champignon grillé...',
     feedingAdd: 'Ajouter',
     feedingEmpty: "Rien d'ajouté pour l'instant — ajoute ce que tu lui as déjà donné à manger.",
@@ -191,14 +182,12 @@ const STRINGS = {
     adoptionSlots: 'Adoptionsplätze pro Level',
     care: 'Pflege',
     careValue: 'Streicheln, füttern, waschen, zusammen sein, Tricks, spazieren gehen',
-    size: 'Größe',
-    specialAbility: 'Besondere Fähigkeit',
     randomTraits: 'Lieblingsessen und Persönlichkeit unterscheiden sich pro einzelnem Tier — finde es selbst heraus!',
     friendshipLevel: 'Freundschaftslevel',
     trainedActions: 'Trainierte Aktionen',
     feedingList: 'Fütterungsliste',
     feedingCount: (n: number) => (n === 1 ? '1 Eintrag' : `${n} Einträge`),
-    feedingHint: 'Schreib hier auf, was du diesem Tier schon gefüttert hast, und tippe aufs Herz, wenn es sich als Favorit herausstellt.',
+    feedingHint: 'Schreib hier auf, was du diesem Tier schon gefüttert hast, und tippe aufs Herz, wenn es sich als Favorit herausstellt, oder aufs Kreuz, wenn es das Tier nicht mag.',
     feedingPlaceholder: 'Z. B. Apfel, gegrillter Pilz...',
     feedingAdd: 'Hinzufügen',
     feedingEmpty: 'Noch nichts eingetragen — füge hinzu, was du ihm schon gefüttert hast.',
@@ -314,13 +303,23 @@ export default function HuisdierenScreen() {
   const addFeedingEntry = (name: string) => {
     if (!foodInput.trim()) return;
     const current = feeding[name] || [];
-    saveFeeding({ ...feeding, [name]: [...current, { text: foodInput.trim(), favorite: false }] });
+    saveFeeding({ ...feeding, [name]: [...current, { text: foodInput.trim(), favorite: false, disliked: false }] });
     setFoodInput('');
   };
 
   const toggleFeedingFavorite = (name: string, index: number) => {
     const current = feeding[name] || [];
-    const updatedEntries = current.map((entry, i) => (i === index ? { ...entry, favorite: !entry.favorite } : entry));
+    const updatedEntries = current.map((entry, i) =>
+      i === index ? { ...entry, favorite: !entry.favorite, disliked: false } : entry
+    );
+    saveFeeding({ ...feeding, [name]: updatedEntries });
+  };
+
+  const toggleFeedingDisliked = (name: string, index: number) => {
+    const current = feeding[name] || [];
+    const updatedEntries = current.map((entry, i) =>
+      i === index ? { ...entry, disliked: !entry.disliked, favorite: false } : entry
+    );
     saveFeeding({ ...feeding, [name]: updatedEntries });
   };
 
@@ -402,7 +401,6 @@ export default function HuisdierenScreen() {
         }
         renderItem={({ item: pet }) => {
           const isOpen = openName === pet.name;
-          const size = 'size' in pet ? pet.size : null;
           return (
             <View style={styles.card}>
               <Pressable style={styles.cardHeader} onPress={() => setOpenName(isOpen ? null : pet.name)}>
@@ -431,14 +429,7 @@ export default function HuisdierenScreen() {
                     />
                   </View>
 
-                  {size || pet.ability ? (
-                    <View style={styles.detailGrid}>
-                      {size && <InfoCard label={s.size} value={size} />}
-                      {pet.ability && <InfoCard label={s.specialAbility} value={pet.ability} full />}
-                    </View>
-                  ) : (
-                    <Text style={styles.mutedText}>{s.randomTraits}</Text>
-                  )}
+                  <Text style={styles.mutedText}>{s.randomTraits}</Text>
 
                   <View style={styles.bondBox}>
                     <Text style={styles.bondBoxLabel}>{s.friendshipLevel}</Text>
@@ -511,6 +502,9 @@ export default function HuisdierenScreen() {
                             <View key={`${entry.text}-${index}`} style={styles.foodRow}>
                               <Pressable hitSlop={8} onPress={() => toggleFeedingFavorite(pet.name, index)}>
                                 <Text style={styles.heartIcon}>{entry.favorite ? '❤️' : '🤍'}</Text>
+                              </Pressable>
+                              <Pressable hitSlop={8} onPress={() => toggleFeedingDisliked(pet.name, index)}>
+                                <Text style={[styles.crossIcon, entry.disliked && styles.crossIconActive]}>✕</Text>
                               </Pressable>
                               <Text style={styles.foodLabel} numberOfLines={1}>
                                 {entry.text}
@@ -590,7 +584,6 @@ function makeStyles(c: ThemeColors) {
     bondText: { fontSize: 12, fontWeight: '700', color: c.yellow, marginTop: 2 },
     chevron: { fontSize: 18, color: c.forestSoft },
     cardBody: { paddingHorizontal: 14, paddingBottom: 14 },
-    detailGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
     mutedText: { fontSize: 12, color: c.forestSoft },
     bondBox: { marginTop: 10, padding: 10, borderRadius: 10, backgroundColor: c.disclaimerBg, borderWidth: 1, borderColor: c.disclaimerBorder, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
     bondBoxLabel: { fontSize: 12, fontWeight: '700', color: c.forest },
@@ -608,6 +601,8 @@ function makeStyles(c: ThemeColors) {
     foodAddButtonText: { color: '#FFFFFF', fontWeight: '700', fontSize: 12 },
     foodRow: { flexDirection: 'row', alignItems: 'center', gap: 8, padding: 8, borderRadius: 8, backgroundColor: c.surfaceSoft },
     heartIcon: { fontSize: 15 },
+    crossIcon: { fontSize: 15, fontWeight: '700', color: c.line },
+    crossIconActive: { color: c.coralDark },
     foodLabel: { flex: 1, fontSize: 12, color: c.forest },
     foodRemoveText: { fontSize: 13, color: c.forestSoft },
     nameRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 10 },
