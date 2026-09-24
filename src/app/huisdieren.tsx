@@ -30,13 +30,13 @@ interface FeedingEntry {
   disliked: boolean;
 }
 
-const DOGS_NOTE = {
-  nl: 'Er zijn 37 hondenrassen in het spel — hier staan de bevestigde rassen. We vullen de lijst aan zodra er meer data bekend is. Let op: het favoriete eten verschilt per individuele hond, niet per ras.',
-  en: "There are 37 dog breeds in the game — these are the confirmed breeds. We'll add more as data becomes known. Note: favorite food differs per individual dog, not per breed.",
-  es: 'Hay 37 razas de perros en el juego — estas son las razas confirmadas. Añadiremos más a medida que haya nuevos datos disponibles. Ten en cuenta: la comida favorita varía según cada perro individual, no según la raza.',
-  pt: 'Existem 37 raças de cachorro no jogo — estas são as raças confirmadas. Vamos adicionar mais conforme novos dados forem conhecidos. Atenção: a comida favorita varia por cachorro individual, não por raça.',
-  fr: "Il y a 37 races de chiens dans le jeu — voici les races confirmées. On complètera la liste dès que plus de données seront connues. Note : la nourriture préférée varie selon chaque chien individuel, pas selon la race.",
-  de: 'Es gibt 37 Hunderassen im Spiel — hier stehen die bestätigten Rassen. Wir ergänzen die Liste, sobald mehr Daten bekannt sind. Achtung: Das Lieblingsessen unterscheidet sich pro einzelnem Hund, nicht pro Rasse.',
+const FAVORITE_FOOD_NOTE = {
+  nl: 'Let op: het favoriete eten verschilt per individueel dier, niet per ras.',
+  en: 'Note: favorite food differs per individual animal, not per breed.',
+  es: 'Ten en cuenta: la comida favorita varía según cada animal individual, no según la raza.',
+  pt: 'Atenção: a comida favorita varia por bichinho individual, não por raça.',
+  fr: "Note : la nourriture préférée varie selon chaque animal individuel, pas selon la race.",
+  de: 'Achtung: Das Lieblingsessen unterscheidet sich pro einzelnem Tier, nicht pro Rasse.',
 } as const;
 
 /** Voer uit de winkel (Joan), bevestigd door de gebruiker in-game (sep 2026) — geen recept, dus los van RECIPES_RAW gehouden. */
@@ -394,9 +394,7 @@ export default function HuisdierenScreen() {
               <InfoCard label={s.adoptionSlots} value={tab === 'cats' ? 'Lv.1 / 2 / 5 / 7 / 9' : 'Lv.1 / 4 / 8'} />
               <InfoCard label={s.care} value={s.careValue} />
             </View>
-            {tab === 'dogs' && (
-              <Text style={styles.disclaimer}>{DOGS_NOTE[language]}</Text>
-            )}
+            <Text style={styles.disclaimer}>{FAVORITE_FOOD_NOTE[language]}</Text>
           </View>
         }
         renderItem={({ item: pet }) => {
