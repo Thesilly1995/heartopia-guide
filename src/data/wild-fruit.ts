@@ -33,6 +33,21 @@ const WILD_FRUIT_RAW: ForagedRaw[] = [
   { nameNl: "Framboos", nameEn: "Raspberry", nameEs: "Frambuesa", namePt: "Framboesa", nameFr: "Framboise", nameDe: "Himbeere", spotNl: "Thuisfront: West", spotEn: "Home front: West", spotEs: "Frente del hogar: Oeste", spotPt: "Frente da casa: Oeste", sellPrice: "26 🪙", energy: "+7", emoji: "🍓" },
 ];
 
+/** Bevestigd door de gebruiker (in-game gecheckt, sep 2026): de enige wilde vrucht die honden lusten — voor de voedingslijst bij Dog & Cat Moments. Katten eten geen wilde vruchten. */
+const DOG_SAFE_WILD_FRUIT_NAMES_EN = ['Apple'];
+
+export function useDogSafeWildFruit(): { name: string; emoji: string }[] {
+  const { language } = useLanguage();
+  return useMemo(
+    () =>
+      WILD_FRUIT_RAW.filter((r) => DOG_SAFE_WILD_FRUIT_NAMES_EN.includes(r.nameEn)).map((r) => ({
+        name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : language === 'de' ? r.nameDe : r.nameEn,
+        emoji: r.emoji,
+      })),
+    [language]
+  );
+}
+
 export function useWildFruit(): ForagedItem[] {
   const { language } = useLanguage();
   return useMemo(
