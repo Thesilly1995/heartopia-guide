@@ -14,6 +14,7 @@ import { useDogActions } from '@/data/dog-actions';
 import { DogItem, useDogs } from '@/data/dogs';
 import { useCatSafeFish } from '@/data/fish';
 import { useDogSafeRecipes } from '@/data/recipes';
+import { useDogSafeWildMushrooms } from '@/data/wild-mushrooms';
 import { Language, useLanguage } from '@/hooks/use-language';
 
 const BONDS_KEY = 'heartopia:huisdieren:vriendschap';
@@ -71,6 +72,7 @@ const STRINGS = {
     triedRecipes: 'Gerechten',
     triedPetFood: 'Voer uit de winkel',
     triedFish: 'Vissen',
+    triedWildMushrooms: 'Wilde paddenstoelen',
   },
   en: {
     title: 'Dog & Cat Moments',
@@ -96,6 +98,7 @@ const STRINGS = {
     triedRecipes: 'Dishes',
     triedPetFood: 'Shop food',
     triedFish: 'Fish',
+    triedWildMushrooms: 'Wild mushrooms',
   },
   es: {
     title: 'Dog & Cat Moments',
@@ -121,6 +124,7 @@ const STRINGS = {
     triedRecipes: 'Platos',
     triedPetFood: 'Comida de la tienda',
     triedFish: 'Peces',
+    triedWildMushrooms: 'Setas silvestres',
   },
   pt: {
     title: 'Dog & Cat Moments',
@@ -146,6 +150,7 @@ const STRINGS = {
     triedRecipes: 'Pratos',
     triedPetFood: 'Comida da loja',
     triedFish: 'Peixes',
+    triedWildMushrooms: 'Cogumelos silvestres',
   },
   fr: {
     title: 'Dog & Cat Moments',
@@ -171,6 +176,7 @@ const STRINGS = {
     triedRecipes: 'Plats',
     triedPetFood: 'Nourriture du magasin',
     triedFish: 'Poissons',
+    triedWildMushrooms: 'Champignons sauvages',
   },
   de: {
     title: 'Dog & Cat Moments',
@@ -196,6 +202,7 @@ const STRINGS = {
     triedRecipes: 'Gerichte',
     triedPetFood: 'Futter aus dem Laden',
     triedFish: 'Fische',
+    triedWildMushrooms: 'Wildpilze',
   },
 } as const;
 
@@ -210,6 +217,7 @@ export default function HuisdierenScreen() {
   const DOGS = useDogs();
   const CAT_SAFE_FISH = useCatSafeFish();
   const DOG_SAFE_RECIPES = useDogSafeRecipes();
+  const DOG_SAFE_WILD_MUSHROOMS = useDogSafeWildMushrooms();
   const [tab, setTab] = useState<'cats' | 'dogs'>('cats');
   const petFood = PET_FOOD_ITEMS[language];
   const TRIED_ITEMS = useMemo(
@@ -222,8 +230,9 @@ export default function HuisdierenScreen() {
         : [
             { label: s.triedPetFood, items: petFood.dog },
             { label: s.triedRecipes, items: DOG_SAFE_RECIPES },
+            { label: s.triedWildMushrooms, items: DOG_SAFE_WILD_MUSHROOMS },
           ],
-    [tab, s, petFood, CAT_SAFE_FISH, DOG_SAFE_RECIPES]
+    [tab, s, petFood, CAT_SAFE_FISH, DOG_SAFE_RECIPES, DOG_SAFE_WILD_MUSHROOMS]
   );
   const [openName, setOpenName] = useState<string | null>(null);
   const [foodOpenName, setFoodOpenName] = useState<string | null>(null);

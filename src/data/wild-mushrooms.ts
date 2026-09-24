@@ -47,6 +47,21 @@ const WILD_MUSHROOMS_RAW: ForagedRaw[] = [
   { nameNl: "Bizarre Eekhoorntjesbrood (Rood)", nameEn: "Bizzare Penny Bun (Red)", nameEs: "Boleto Extraño (Rojo)", namePt: "Cogumelo Porcini Bizarro (Vermelho)", nameFr: "Cèpe bizarre (rouge)", nameDe: "Bizarre Steinpilze (rot)", spotNl: "Bos", spotEn: "Forest", spotEs: "Bosque", spotPt: "Floresta", sellPrice: "16 🪙", energy: "—", emoji: "🍄" },
 ];
 
+/** Bevestigd door de gebruiker (in-game gecheckt, sep 2026): de enige 3 wilde paddenstoelen die honden lusten — voor de voedingslijst bij Dog & Cat Moments. Katten eten geen enkele paddenstoel. */
+const DOG_SAFE_WILD_MUSHROOM_NAMES_EN = ['Button Mushroom', 'Oyster Mushroom', 'Shiitake'];
+
+export function useDogSafeWildMushrooms(): { name: string; emoji: string }[] {
+  const { language } = useLanguage();
+  return useMemo(
+    () =>
+      WILD_MUSHROOMS_RAW.filter((r) => DOG_SAFE_WILD_MUSHROOM_NAMES_EN.includes(r.nameEn)).map((r) => ({
+        name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : language === 'de' ? r.nameDe : r.nameEn,
+        emoji: r.emoji,
+      })),
+    [language]
+  );
+}
+
 export function useWildMushrooms(): ForagedItem[] {
   const { language } = useLanguage();
   return useMemo(
