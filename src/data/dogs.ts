@@ -24,6 +24,11 @@ const DOGS_RAW: DogRaw[] = [
   { nameNl: "Shiba Inu", nameEn: "Shiba Inu", nameEs: "Shiba Inu", namePt: "Shiba Inu", nameFr: "Shiba Inu", nameDe: "Shiba Inu", emoji: "🐶" },
   { nameNl: "Golden Retriever", nameEn: "Golden Retriever", nameEs: "Golden Retriever", namePt: "Golden Retriever", nameFr: "Golden Retriever", nameDe: "Golden Retriever", emoji: "🐶" },
   { nameNl: "Dalmatiër", nameEn: "Dalmatian", nameEs: "Dálmata", namePt: "Dálmata", nameFr: "Dalmatien", nameDe: "Dalmatiner", emoji: "🐶" },
+  { nameNl: "Labrador", nameEn: "Labrador", nameEs: "Labrador", namePt: "Labrador", nameFr: "Labrador", nameDe: "Labrador", emoji: "🐶" },
+  { nameNl: "Duitse Herder", nameEn: "German Shepherd", nameEs: "Pastor Alemán", namePt: "Pastor Alemão", nameFr: "Berger Allemand", nameDe: "Deutscher Schäferhund", emoji: "🐶" },
+  { nameNl: "Beagle", nameEn: "Beagle", nameEs: "Beagle", namePt: "Beagle", nameFr: "Beagle", nameDe: "Beagle", emoji: "🐶" },
+  { nameNl: "Rottweiler", nameEn: "Rottweiler", nameEs: "Rottweiler", namePt: "Rottweiler", nameFr: "Rottweiler", nameDe: "Rottweiler", emoji: "🐶" },
+  { nameNl: "Berner Sennenhond", nameEn: "Bernese Mountain Dog", nameEs: "Boyero de Berna", namePt: "Boiadeiro de Berna", nameFr: "Bouvier Bernois", nameDe: "Berner Sennenhund", emoji: "🐶" },
 ];
 
 export function useDogs(): DogItem[] {
