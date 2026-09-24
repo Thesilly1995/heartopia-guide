@@ -36,6 +36,7 @@ const CATS_RAW: CatRaw[] = [
   { nameNl: "Zilveren Britse Korthaar", nameEn: "Silver British Shorthair", nameEs: "Británico de Pelo Corto Plateado", namePt: "British Shorthair Prateado", nameFr: "British Shorthair argenté", nameDe: "Silberne Britisch Kurzhaar", emoji: "🐱" },
   { nameNl: "Klassiek Zilver Gevlekte Kat", nameEn: "Classic Silver Spotted Cat", nameEs: "Gato Plateado Moteado Clásico", namePt: "Gato Prateado Manchado Clássico", nameFr: "Chat tacheté argenté classique", nameDe: "Klassisch silbergefleckte Katze", emoji: "🐱" },
   { nameNl: "Gouden Luipaardkat", nameEn: "Golden Leopard Cat", nameEs: "Gato Leopardo Dorado", namePt: "Gato Leopardo Dourado", nameFr: "Chat léopard doré", nameDe: "Goldene Leopardenkatze", emoji: "🐱" },
+  { nameNl: "Koeienkat", nameEn: "Cow Cat", nameEs: "Gato Vaca", namePt: "Gato Vaca", nameFr: "Chat vache", nameDe: "Kuh-Katze", emoji: "🐱" },
 ];
 
 export function useCats(): CatItem[] {

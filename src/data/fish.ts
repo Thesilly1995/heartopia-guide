@@ -168,11 +168,16 @@ export function useFish(): FishItem[] {
   );
 }
 
-/** Bevestigd door de gebruiker (in-game gecheckt, sep 2026): vissen die katten wél lusten — voor de voedingslijst bij Dog & Cat Moments. */
+/** Bevestigd door de gebruiker (in-game gecheckt, sep 2026, + community-tracker "Heartopia Price List" van AthenaMM): vissen die katten wél lusten — voor de voedingslijst bij Dog & Cat Moments. */
 const CAT_SAFE_FISH_NAMES_EN = [
   'Sardine', 'Common Chub', 'European Perch', 'Crucian Carp', 'Common Whitefish', 'Largemouth Bass',
   'Atlantic Mackerel', 'False Scad', 'Sea Bass', 'European Plaice', 'Anglerfish', 'Skipjack Tuna',
   'Cat Shark', 'Atlantic Salmon', 'Bluefin Tuna', 'Swordfish', 'European Lobster',
+  'Atlantic Pygmy Octopus', 'Beltfish', 'Burbot', 'Clownfish', 'Common Bleak', 'Common Octopus',
+  'Common Rudd', 'European Crayfish', 'European Flying Squid', 'European Smelt', 'Goby', 'Grayling',
+  'Huchen', 'Mediterranean Killifish', 'Mud Sunfish', 'Mussel', 'Oriental Shrimp', 'Pufferfish',
+  'Red-Bellied Piranha', 'River Crab', 'Schneider', 'Sea Stickleback', 'Spined Loach', 'Stone Loach',
+  'Striped Red Mullet', 'Tench', 'Zander',
 ];
 
 export function useCatSafeFish(): { name: string; emoji: string }[] {

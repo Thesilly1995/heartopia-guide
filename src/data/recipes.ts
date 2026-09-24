@@ -163,12 +163,12 @@ export function useRecipes(): RecipeItem[] {
 
 /** Bevestigd door de gebruiker (in-game gecheckt, sep 2026): gerechten die honden wél lusten — voor de voedingslijst bij Dog & Cat Moments. */
 const DOG_SAFE_RECIPE_NAMES_EN = [
-  'Apple Jam', 'Strawberry Jam', 'Raspberry Jam', 'Grape Jam', 'Blueberry Jam', 'Mixed Jam',
+  'Apple Jam', 'Strawberry Jam', 'Raspberry Jam', 'Grape Jam', 'Blueberry Jam', 'Mixed Jam', 'Pineapple Jam',
   'Meat Burger', 'Meat Sauce Pasta', 'Baked Eggplant w/ Meat', 'Corn Soup', 'Seafood Risotto', 'Deluxe Seafood Platter',
   'Steamed Golden King Crab', 'Steamed King Crab',
   'Tomato Sauce', 'House Salad', 'Rustic Ratatouille',
-  'Grilled Oyster Mushroom', 'Grilled Button Mushroom', 'Grilled Shiitake Mushroom',
-  'Oyster Mushroom Pie', 'Shiitake Pie', 'Button Mushroom Pie', 'Penny Bun Pie',
+  'Grilled Oyster Mushroom', 'Grilled Button Mushroom', 'Grilled Shiitake Mushroom', 'Grilled Penny Bun',
+  'Mushroom Pie', 'Oyster Mushroom Pie', 'Shiitake Pie', 'Button Mushroom Pie', 'Penny Bun Pie',
 ];
 
 export function useDogSafeRecipes(): { name: string; emoji: string }[] {
