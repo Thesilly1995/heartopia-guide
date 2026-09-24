@@ -168,6 +168,25 @@ export function useFish(): FishItem[] {
   );
 }
 
+/** Bevestigd door de gebruiker (in-game gecheckt, sep 2026): vissen die katten wél lusten — voor de voedingslijst bij Dog & Cat Moments. */
+const CAT_SAFE_FISH_NAMES_EN = [
+  'Sardine', 'Common Chub', 'European Perch', 'Crucian Carp', 'Common Whitefish', 'Largemouth Bass',
+  'Atlantic Mackerel', 'False Scad', 'Sea Bass', 'European Plaice', 'Anglerfish', 'Skipjack Tuna',
+  'Nursehound', 'Atlantic Salmon', 'Bluefin Tuna', 'Swordfish', 'European Lobster',
+];
+
+export function useCatSafeFish(): { name: string; emoji: string }[] {
+  const { language } = useLanguage();
+  return useMemo(
+    () =>
+      FISH_RAW.filter((r) => CAT_SAFE_FISH_NAMES_EN.includes(r.nameEn)).map((r) => ({
+        name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : language === 'de' ? r.nameDe : r.nameEn,
+        emoji: r.emoji,
+      })),
+    [language]
+  );
+}
+
 /** Vissen gegroepeerd per event (huidig event + archief) — voor de "Events"-subtab op het Vissen-scherm. */
 export function useFishEventGroups(): EventGroup[] {
   const { language } = useLanguage();

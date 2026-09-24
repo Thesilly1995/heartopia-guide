@@ -10,12 +10,11 @@ import { StarRow } from '@/components/heartopia/star-row';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { useCatActions } from '@/data/cat-actions';
 import { CatItem, useCats } from '@/data/cats';
-import { useCrops } from '@/data/crops';
 import { useDogActions } from '@/data/dog-actions';
 import { DogItem, useDogs } from '@/data/dogs';
-import { useRecipes } from '@/data/recipes';
-import { useWildFruit } from '@/data/wild-fruit';
-import { useLanguage } from '@/hooks/use-language';
+import { useCatSafeFish } from '@/data/fish';
+import { useDogSafeRecipes } from '@/data/recipes';
+import { Language, useLanguage } from '@/hooks/use-language';
 
 const BONDS_KEY = 'heartopia:huisdieren:vriendschap';
 const ACTIONS_KEY = 'heartopia:huisdieren:acties';
@@ -36,6 +35,16 @@ const DOGS_NOTE = {
   fr: "Il y a 37 races de chiens dans le jeu — voici les races confirmées. On complètera la liste dès que plus de données seront connues. Note : la nourriture préférée varie selon chaque chien individuel, pas selon la race.",
   de: 'Es gibt 37 Hunderassen im Spiel — hier stehen die bestätigten Rassen. Wir ergänzen die Liste, sobald mehr Daten bekannt sind. Achtung: Das Lieblingsessen unterscheidet sich pro einzelnem Hund, nicht pro Rasse.',
 } as const;
+
+/** Voer uit de winkel (Joan), bevestigd door de gebruiker in-game (sep 2026) — geen recept, dus los van RECIPES_RAW gehouden. */
+const PET_FOOD_ITEMS: Record<Language, { cat: { name: string; emoji: string }[]; dog: { name: string; emoji: string }[] }> = {
+  nl: { cat: [{ name: 'Kattenvoer', emoji: '🥫' }, { name: 'Universeel Huisdiervoer', emoji: '🥫' }], dog: [{ name: 'Hondenvoer', emoji: '🥫' }, { name: 'Universeel Huisdiervoer', emoji: '🥫' }] },
+  en: { cat: [{ name: 'Cat Food', emoji: '🥫' }, { name: 'Universal Pet Food', emoji: '🥫' }], dog: [{ name: 'Dog Food', emoji: '🥫' }, { name: 'Universal Pet Food', emoji: '🥫' }] },
+  es: { cat: [{ name: 'Comida para Gatos', emoji: '🥫' }, { name: 'Comida Universal para Mascotas', emoji: '🥫' }], dog: [{ name: 'Comida para Perros', emoji: '🥫' }, { name: 'Comida Universal para Mascotas', emoji: '🥫' }] },
+  pt: { cat: [{ name: 'Ração para Gato', emoji: '🥫' }, { name: 'Ração Universal para Animais', emoji: '🥫' }], dog: [{ name: 'Ração para Cachorro', emoji: '🥫' }, { name: 'Ração Universal para Animais', emoji: '🥫' }] },
+  fr: { cat: [{ name: 'Nourriture pour chat', emoji: '🥫' }, { name: 'Nourriture universelle pour animaux', emoji: '🥫' }], dog: [{ name: 'Nourriture pour chien', emoji: '🥫' }, { name: 'Nourriture universelle pour animaux', emoji: '🥫' }] },
+  de: { cat: [{ name: 'Katzenfutter', emoji: '🥫' }, { name: 'Universelles Tierfutter', emoji: '🥫' }], dog: [{ name: 'Hundefutter', emoji: '🥫' }, { name: 'Universelles Tierfutter', emoji: '🥫' }] },
+};
 
 const STRINGS = {
   nl: {
@@ -58,10 +67,10 @@ const STRINGS = {
     feedingEmpty: 'Nog niks ingevuld — voeg toe wat je al gevoerd hebt.',
     petNameLabel: 'Naam',
     petNamePlaceholder: 'Naam van je huisdier',
-    triedHint: 'Dit zijn bekende gerechten, gewassen en wilde vruchten uit het spel — favoriete eten verschilt per dier, gebruik dit als aftekenlijst van wat je al geprobeerd hebt.',
+    triedHint: 'Dit zijn de items die katten/honden daadwerkelijk kunnen eten (bevestigd in-game) — favoriete eten verschilt per dier, gebruik dit als aftekenlijst van wat je al geprobeerd hebt. Rauwe gewassen en wilde vruchten eten ze niet.',
     triedRecipes: 'Gerechten',
-    triedCrops: 'Gewassen',
-    triedWildFruit: 'Wilde vruchten',
+    triedPetFood: 'Voer uit de winkel',
+    triedFish: 'Vissen',
   },
   en: {
     title: 'Dog & Cat Moments',
@@ -83,10 +92,10 @@ const STRINGS = {
     feedingEmpty: "Nothing added yet — add what you've already fed.",
     petNameLabel: 'Name',
     petNamePlaceholder: "Your pet's name",
-    triedHint: "These are known dishes, crops and wild fruit from the game — favorite food differs per pet, use this as a checklist of what you've already tried.",
+    triedHint: "These are the items cats/dogs can actually eat (confirmed in-game) — favorite food differs per pet, use this as a checklist of what you've already tried. They won't eat raw crops or wild fruit.",
     triedRecipes: 'Dishes',
-    triedCrops: 'Crops',
-    triedWildFruit: 'Wild fruit',
+    triedPetFood: 'Shop food',
+    triedFish: 'Fish',
   },
   es: {
     title: 'Dog & Cat Moments',
@@ -108,10 +117,10 @@ const STRINGS = {
     feedingEmpty: 'Todavía no has añadido nada — añade lo que ya le has dado de comer.',
     petNameLabel: 'Nombre',
     petNamePlaceholder: 'Nombre de tu mascota',
-    triedHint: 'Estos son platos, cultivos y frutas silvestres conocidos del juego — la comida favorita varía según cada mascota, úsalo como lista de lo que ya has probado.',
+    triedHint: 'Estos son los alimentos que gatos/perros realmente pueden comer (confirmado en el juego) — la comida favorita varía según cada mascota, úsalo como lista de lo que ya has probado. No comen cultivos crudos ni frutas silvestres.',
     triedRecipes: 'Platos',
-    triedCrops: 'Cultivos',
-    triedWildFruit: 'Frutas silvestres',
+    triedPetFood: 'Comida de la tienda',
+    triedFish: 'Peces',
   },
   pt: {
     title: 'Dog & Cat Moments',
@@ -133,10 +142,10 @@ const STRINGS = {
     feedingEmpty: 'Nada adicionado ainda — adicione o que você já deu de comer.',
     petNameLabel: 'Nome',
     petNamePlaceholder: 'Nome do seu bichinho',
-    triedHint: 'Estes são pratos, plantações e frutas silvestres conhecidos do jogo — a comida favorita varia por bichinho, use isso como lista do que você já experimentou.',
+    triedHint: 'Estes são os itens que gatos/cachorros realmente podem comer (confirmado no jogo) — a comida favorita varia por bichinho, use isso como lista do que você já experimentou. Eles não comem plantações cruas nem frutas silvestres.',
     triedRecipes: 'Pratos',
-    triedCrops: 'Plantações',
-    triedWildFruit: 'Frutas silvestres',
+    triedPetFood: 'Comida da loja',
+    triedFish: 'Peixes',
   },
   fr: {
     title: 'Dog & Cat Moments',
@@ -158,10 +167,10 @@ const STRINGS = {
     feedingEmpty: "Rien d'ajouté pour l'instant — ajoute ce que tu lui as déjà donné à manger.",
     petNameLabel: 'Nom',
     petNamePlaceholder: 'Nom de ton animal',
-    triedHint: "Voici les plats, cultures et fruits sauvages connus du jeu — la nourriture préférée varie selon chaque animal, utilise ceci comme une liste de ce que tu as déjà essayé.",
+    triedHint: "Voici les aliments que les chats/chiens peuvent vraiment manger (confirmé en jeu) — la nourriture préférée varie selon chaque animal, utilise ceci comme une liste de ce que tu as déjà essayé. Ils ne mangent pas de cultures crues ni de fruits sauvages.",
     triedRecipes: 'Plats',
-    triedCrops: 'Cultures',
-    triedWildFruit: 'Fruits sauvages',
+    triedPetFood: 'Nourriture du magasin',
+    triedFish: 'Poissons',
   },
   de: {
     title: 'Dog & Cat Moments',
@@ -183,10 +192,10 @@ const STRINGS = {
     feedingEmpty: 'Noch nichts eingetragen — füge hinzu, was du ihm schon gefüttert hast.',
     petNameLabel: 'Name',
     petNamePlaceholder: 'Name deines Haustiers',
-    triedHint: 'Das sind bekannte Gerichte, Feldfrüchte und Wildfrüchte aus dem Spiel — das Lieblingsessen ist bei jedem Tier anders, nutze dies als Checkliste für das, was du schon ausprobiert hast.',
+    triedHint: 'Das sind die Dinge, die Katzen/Hunde wirklich essen können (im Spiel bestätigt) — das Lieblingsessen ist bei jedem Tier anders, nutze dies als Checkliste für das, was du schon ausprobiert hast. Rohe Feldfrüchte und Wildfrüchte fressen sie nicht.',
     triedRecipes: 'Gerichte',
-    triedCrops: 'Feldfrüchte',
-    triedWildFruit: 'Wildfrüchte',
+    triedPetFood: 'Futter aus dem Laden',
+    triedFish: 'Fische',
   },
 } as const;
 
@@ -199,18 +208,23 @@ export default function HuisdierenScreen() {
   const CATS = useCats();
   const DOG_ACTIONS = useDogActions();
   const DOGS = useDogs();
-  const RECIPES = useRecipes();
-  const CROPS = useCrops();
-  const WILD_FRUIT = useWildFruit();
-  const TRIED_ITEMS = useMemo(
-    () => [
-      { label: s.triedRecipes, items: RECIPES },
-      { label: s.triedCrops, items: CROPS },
-      { label: s.triedWildFruit, items: WILD_FRUIT },
-    ],
-    [s, RECIPES, CROPS, WILD_FRUIT]
-  );
+  const CAT_SAFE_FISH = useCatSafeFish();
+  const DOG_SAFE_RECIPES = useDogSafeRecipes();
   const [tab, setTab] = useState<'cats' | 'dogs'>('cats');
+  const petFood = PET_FOOD_ITEMS[language];
+  const TRIED_ITEMS = useMemo(
+    () =>
+      tab === 'cats'
+        ? [
+            { label: s.triedPetFood, items: petFood.cat },
+            { label: s.triedFish, items: CAT_SAFE_FISH },
+          ]
+        : [
+            { label: s.triedPetFood, items: petFood.dog },
+            { label: s.triedRecipes, items: DOG_SAFE_RECIPES },
+          ],
+    [tab, s, petFood, CAT_SAFE_FISH, DOG_SAFE_RECIPES]
+  );
   const [openName, setOpenName] = useState<string | null>(null);
   const [foodOpenName, setFoodOpenName] = useState<string | null>(null);
   const [actionsOpenName, setActionsOpenName] = useState<string | null>(null);
