@@ -14,6 +14,7 @@ import { useDogActions } from '@/data/dog-actions';
 import { DogItem, useDogs } from '@/data/dogs';
 import { useCatSafeFish } from '@/data/fish';
 import { useDogSafeRecipes } from '@/data/recipes';
+import { useDogSafeWildFruit } from '@/data/wild-fruit';
 import { useDogSafeWildMushrooms } from '@/data/wild-mushrooms';
 import { Language, useLanguage } from '@/hooks/use-language';
 
@@ -68,11 +69,12 @@ const STRINGS = {
     feedingEmpty: 'Nog niks ingevuld — voeg toe wat je al gevoerd hebt.',
     petNameLabel: 'Naam',
     petNamePlaceholder: 'Naam van je huisdier',
-    triedHint: 'Dit zijn de items die katten/honden daadwerkelijk kunnen eten (bevestigd in-game) — favoriete eten verschilt per dier, gebruik dit als aftekenlijst van wat je al geprobeerd hebt. Rauwe gewassen en wilde vruchten eten ze niet.',
+    triedHint: 'Dit zijn de items die katten/honden daadwerkelijk kunnen eten (bevestigd in-game) — favoriete eten verschilt per dier, gebruik dit als aftekenlijst van wat je al geprobeerd hebt. Rauwe gewassen eten ze niet.',
     triedRecipes: 'Gerechten',
     triedPetFood: 'Voer uit de winkel',
     triedFish: 'Vissen',
     triedWildMushrooms: 'Wilde paddenstoelen',
+    triedWildFruit: 'Wilde vruchten',
   },
   en: {
     title: 'Dog & Cat Moments',
@@ -94,11 +96,12 @@ const STRINGS = {
     feedingEmpty: "Nothing added yet — add what you've already fed.",
     petNameLabel: 'Name',
     petNamePlaceholder: "Your pet's name",
-    triedHint: "These are the items cats/dogs can actually eat (confirmed in-game) — favorite food differs per pet, use this as a checklist of what you've already tried. They won't eat raw crops or wild fruit.",
+    triedHint: "These are the items cats/dogs can actually eat (confirmed in-game) — favorite food differs per pet, use this as a checklist of what you've already tried. They won't eat raw crops.",
     triedRecipes: 'Dishes',
     triedPetFood: 'Shop food',
     triedFish: 'Fish',
     triedWildMushrooms: 'Wild mushrooms',
+    triedWildFruit: 'Wild fruit',
   },
   es: {
     title: 'Dog & Cat Moments',
@@ -120,11 +123,12 @@ const STRINGS = {
     feedingEmpty: 'Todavía no has añadido nada — añade lo que ya le has dado de comer.',
     petNameLabel: 'Nombre',
     petNamePlaceholder: 'Nombre de tu mascota',
-    triedHint: 'Estos son los alimentos que gatos/perros realmente pueden comer (confirmado en el juego) — la comida favorita varía según cada mascota, úsalo como lista de lo que ya has probado. No comen cultivos crudos ni frutas silvestres.',
+    triedHint: 'Estos son los alimentos que gatos/perros realmente pueden comer (confirmado en el juego) — la comida favorita varía según cada mascota, úsalo como lista de lo que ya has probado. No comen cultivos crudos.',
     triedRecipes: 'Platos',
     triedPetFood: 'Comida de la tienda',
     triedFish: 'Peces',
     triedWildMushrooms: 'Setas silvestres',
+    triedWildFruit: 'Frutas silvestres',
   },
   pt: {
     title: 'Dog & Cat Moments',
@@ -146,11 +150,12 @@ const STRINGS = {
     feedingEmpty: 'Nada adicionado ainda — adicione o que você já deu de comer.',
     petNameLabel: 'Nome',
     petNamePlaceholder: 'Nome do seu bichinho',
-    triedHint: 'Estes são os itens que gatos/cachorros realmente podem comer (confirmado no jogo) — a comida favorita varia por bichinho, use isso como lista do que você já experimentou. Eles não comem plantações cruas nem frutas silvestres.',
+    triedHint: 'Estes são os itens que gatos/cachorros realmente podem comer (confirmado no jogo) — a comida favorita varia por bichinho, use isso como lista do que você já experimentou. Eles não comem plantações cruas.',
     triedRecipes: 'Pratos',
     triedPetFood: 'Comida da loja',
     triedFish: 'Peixes',
     triedWildMushrooms: 'Cogumelos silvestres',
+    triedWildFruit: 'Frutas silvestres',
   },
   fr: {
     title: 'Dog & Cat Moments',
@@ -172,11 +177,12 @@ const STRINGS = {
     feedingEmpty: "Rien d'ajouté pour l'instant — ajoute ce que tu lui as déjà donné à manger.",
     petNameLabel: 'Nom',
     petNamePlaceholder: 'Nom de ton animal',
-    triedHint: "Voici les aliments que les chats/chiens peuvent vraiment manger (confirmé en jeu) — la nourriture préférée varie selon chaque animal, utilise ceci comme une liste de ce que tu as déjà essayé. Ils ne mangent pas de cultures crues ni de fruits sauvages.",
+    triedHint: "Voici les aliments que les chats/chiens peuvent vraiment manger (confirmé en jeu) — la nourriture préférée varie selon chaque animal, utilise ceci comme une liste de ce que tu as déjà essayé. Ils ne mangent pas de cultures crues.",
     triedRecipes: 'Plats',
     triedPetFood: 'Nourriture du magasin',
     triedFish: 'Poissons',
     triedWildMushrooms: 'Champignons sauvages',
+    triedWildFruit: 'Fruits sauvages',
   },
   de: {
     title: 'Dog & Cat Moments',
@@ -198,11 +204,12 @@ const STRINGS = {
     feedingEmpty: 'Noch nichts eingetragen — füge hinzu, was du ihm schon gefüttert hast.',
     petNameLabel: 'Name',
     petNamePlaceholder: 'Name deines Haustiers',
-    triedHint: 'Das sind die Dinge, die Katzen/Hunde wirklich essen können (im Spiel bestätigt) — das Lieblingsessen ist bei jedem Tier anders, nutze dies als Checkliste für das, was du schon ausprobiert hast. Rohe Feldfrüchte und Wildfrüchte fressen sie nicht.',
+    triedHint: 'Das sind die Dinge, die Katzen/Hunde wirklich essen können (im Spiel bestätigt) — das Lieblingsessen ist bei jedem Tier anders, nutze dies als Checkliste für das, was du schon ausprobiert hast. Rohe Feldfrüchte fressen sie nicht.',
     triedRecipes: 'Gerichte',
     triedPetFood: 'Futter aus dem Laden',
     triedFish: 'Fische',
     triedWildMushrooms: 'Wildpilze',
+    triedWildFruit: 'Wildfrüchte',
   },
 } as const;
 
@@ -218,6 +225,7 @@ export default function HuisdierenScreen() {
   const CAT_SAFE_FISH = useCatSafeFish();
   const DOG_SAFE_RECIPES = useDogSafeRecipes();
   const DOG_SAFE_WILD_MUSHROOMS = useDogSafeWildMushrooms();
+  const DOG_SAFE_WILD_FRUIT = useDogSafeWildFruit();
   const [tab, setTab] = useState<'cats' | 'dogs'>('cats');
   const petFood = PET_FOOD_ITEMS[language];
   const TRIED_ITEMS = useMemo(
@@ -231,8 +239,9 @@ export default function HuisdierenScreen() {
             { label: s.triedPetFood, items: petFood.dog },
             { label: s.triedRecipes, items: DOG_SAFE_RECIPES },
             { label: s.triedWildMushrooms, items: DOG_SAFE_WILD_MUSHROOMS },
+            { label: s.triedWildFruit, items: DOG_SAFE_WILD_FRUIT },
           ],
-    [tab, s, petFood, CAT_SAFE_FISH, DOG_SAFE_RECIPES, DOG_SAFE_WILD_MUSHROOMS]
+    [tab, s, petFood, CAT_SAFE_FISH, DOG_SAFE_RECIPES, DOG_SAFE_WILD_MUSHROOMS, DOG_SAFE_WILD_FRUIT]
   );
   const [openName, setOpenName] = useState<string | null>(null);
   const [foodOpenName, setFoodOpenName] = useState<string | null>(null);
