@@ -32,6 +32,7 @@ const DAILY = {
     { key: 'd16', label: 'Fluoriet hakken' },
     { key: 'd17', label: '5 vogelkaarten voor Bailey J' },
     { key: 'd18', label: 'Zeldzaam hout verzamelen' },
+    { key: 'd19', label: 'Zee dailies (Whalefall Canyon)' },
   ],
   en: [
     { key: 'd0', label: 'Daily check-in' },
@@ -49,6 +50,7 @@ const DAILY = {
     { key: 'd16', label: 'Mine the Fluorite' },
     { key: 'd17', label: '5 bird cards for Bailey J' },
     { key: 'd18', label: 'Collect rare timber' },
+    { key: 'd19', label: 'Sea dailies (Whalefall Canyon)' },
   ],
   es: [
     { key: 'd0', label: 'Check-in diario' },
@@ -66,6 +68,7 @@ const DAILY = {
     { key: 'd16', label: 'Extraer Fluorita' },
     { key: 'd17', label: '5 cartas de pájaro para Bailey J' },
     { key: 'd18', label: 'Recolectar madera rara' },
+    { key: 'd19', label: 'Dailies del mar (Whalefall Canyon)' },
   ],
   pt: [
     { key: 'd0', label: 'Check-in diário' },
@@ -83,6 +86,7 @@ const DAILY = {
     { key: 'd16', label: 'Minerar Fluorita' },
     { key: 'd17', label: '5 cartas de pássaro para Bailey J' },
     { key: 'd18', label: 'Coletar madeira rara' },
+    { key: 'd19', label: 'Dailies do mar (Whalefall Canyon)' },
   ],
   fr: [
     { key: 'd0', label: 'Check-in quotidien' },
@@ -100,6 +104,7 @@ const DAILY = {
     { key: 'd16', label: 'Extraire la Fluorite' },
     { key: 'd17', label: "5 cartes d'oiseaux pour Bailey J" },
     { key: 'd18', label: 'Récolter du bois rare' },
+    { key: 'd19', label: 'Dailies de la mer (Whalefall Canyon)' },
   ],
   de: [
     { key: 'd0', label: 'Täglicher Check-in' },
@@ -117,6 +122,7 @@ const DAILY = {
     { key: 'd16', label: 'Fluorit abbauen' },
     { key: 'd17', label: '5 Vogelkarten für Bailey J' },
     { key: 'd18', label: 'Seltenes Holz sammeln' },
+    { key: 'd19', label: 'Meeres-Dailies (Whalefall Canyon)' },
   ],
 } as const;
 
