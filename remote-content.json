@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-25T17:01:21Z",
+  "updatedAt": "2026-09-25T20:49:21Z",
   "dailyPlotsCalendar": [
     {"date": "2026-08-09", "oakPlotNl": "Plot 6", "oakPlotEn": "Plot 6", "fluoritePlotNl": "Plot 11", "fluoritePlotEn": "Plot 11", "oakPlotEs": "Parcela 6", "oakPlotPt": "Lote 6", "fluoritePlotEs": "Parcela 11", "fluoritePlotPt": "Lote 11"},
     {"date": "2026-08-10", "oakPlotNl": "Plot 2", "oakPlotEn": "Plot 2", "fluoritePlotNl": "Plot 7", "fluoritePlotEn": "Plot 7", "oakPlotEs": "Parcela 2", "oakPlotPt": "Lote 2", "fluoritePlotEs": "Parcela 7", "fluoritePlotPt": "Lote 7"},
@@ -160,6 +160,18 @@
         {"nameNl": "Appel Parelcake", "nameEn": "Apple Pearl Cake", "ingredientsNl": ["Sint-Jakobsschelp", "Melk", "Appel", "Tarwe"], "ingredientsEn": ["Scallop", "Milk", "Apple", "Wheat"], "emoji": "🍰"},
         {"nameNl": "Mandarijn Parelcake", "nameEn": "Mandarin Pearl Cake", "ingredientsNl": ["Sint-Jakobsschelp", "Tarwe", "Melk", "Mandarijn"], "ingredientsEn": ["Scallop", "Wheat", "Milk", "Mandarin"], "emoji": "🍰"},
         {"nameNl": "Tomaten Zeevruchtensoep", "nameEn": "Tomato Seafood Soup", "ingredientsNl": ["Zeekraal", "Gewone Garnaal", "Tomaat", "Tarwe"], "ingredientsEn": ["Glasswort", "Common Prawn", "Tomato", "Wheat"], "emoji": "🍲"}
+      ]
+    },
+    {
+      "nameNl": "Mid-Autumn Festival", "nameEn": "Mid-Autumn Festival",
+      "datesNl": "Vanaf 25 sep 2026 (Limited-Time Shop)", "datesEn": "From Sep 25, 2026 (Limited-Time Shop)",
+      "recipes": [
+        {"nameNl": "Maankoek", "nameEn": "Mooncake", "ingredientsNl": ["Tarwe ×2", "Ei ×2"], "ingredientsEn": ["Wheat x2", "Egg x2"], "emoji": "🥮"},
+        {"nameNl": "Custard Lava Maankoek", "nameEn": "Custard Lava Mooncake", "ingredientsNl": ["Maankoek ×3", "Melk"], "ingredientsEn": ["Mooncake x3", "Milk"], "emoji": "🥮"},
+        {"nameNl": "Chocolade Maankoek", "nameEn": "Chocolate Mooncake", "ingredientsNl": ["Tarwe ×2", "Ei", "Cacao"], "ingredientsEn": ["Wheat x2", "Egg", "Cocoa"], "emoji": "🥮"},
+        {"nameNl": "Grote Chocolade Maankoek", "nameEn": "Large Chocolate Mooncake", "ingredientsNl": ["Chocolade Maankoek ×3", "Melk"], "ingredientsEn": ["Chocolate Mooncake x3", "Milk"], "emoji": "🥮"},
+        {"nameNl": "IJshuid-Maankoek (Konijntje)", "nameEn": "Bunny Ice-Skin Mooncake", "ingredientsNl": ["Rijstmeelzak ×2", "Melk", "Rode Bonenpasta"], "ingredientsEn": ["Rice Flour Bag x2", "Milk", "Red Bean Paste"], "emoji": "🥮"},
+        {"nameNl": "Grote IJshuid-Maankoek (Konijntje)", "nameEn": "Large Bunny Ice-Skin Mooncake", "ingredientsNl": ["IJshuid-Maankoek (Konijntje) ×4"], "ingredientsEn": ["Bunny Ice-Skin Mooncake x4"], "emoji": "🥮"}
       ]
     }
   ],
