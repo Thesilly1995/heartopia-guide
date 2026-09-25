@@ -210,7 +210,7 @@ export interface RemoteContentPayload {
   updatedAt: string;
   /** Rainbow-boeketten op de hoofdeiland- en Whalefall Canyon-kaart, onderscheiden via `underwater`. */
   rainbowSpots?: RemoteEventSpot[];
-  /** Meteorenregen-ertsplekken — kan net als `rainbowSpots` op de hoofdeiland- én Whalefall Canyon-kaart staan (`underwater`), en Doris (`isDoris`) kan hier ook bij staan. */
+  /** Meteorenregen-kristalfragmenten — kan net als `rainbowSpots` op de hoofdeiland- én Whalefall Canyon-kaart staan (`underwater`), en Doris (`isDoris`) kan hier ook bij staan. */
   meteorSpots?: RemoteEventSpot[];
   /** Wekelijkse roze-bubbels-locaties (verspringen elke zaterdag 6:00) — ontbreekt dit veld, dan valt de app terug op de gebundelde (verouderde) standaardlijst. */
   bubbleWeek?: RemoteBubbleWeek;

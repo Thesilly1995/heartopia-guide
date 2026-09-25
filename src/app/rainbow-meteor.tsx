@@ -32,7 +32,7 @@ const STRINGS = {
     dorisNoteLand:
       '👧 Doris staat tijdens meteorenregen aan land (zie de pin hieronder) — bij haar kun je dan shoppen. Het exacte tijdsblok zie je op het homescherm bij "Weer deze week".',
     mailboxNote: '📮 Vergeet ook niet het boeket bij je eigen brievenbus — die staat er altijd, maar niet op de kaart (want dat is jouw eigen huisplek).',
-    meteorLingerNote: '⛏️ De ertsstukken blijven hakbaar tot 24u na de start van de meteorenregen (dus tot dezelfde tijd de volgende dag) — deze kaart blijft dus nog een tijd bruikbaar nadat de meteorenregen zelf is afgelopen.',
+    meteorLingerNote: '💎 De kristalfragmenten blijven beschikbaar tot 24u na de start van de meteorenregen (dus tot dezelfde tijd de volgende dag) — deze kaart blijft dus nog een tijd bruikbaar nadat de meteorenregen zelf is afgelopen.',
   },
   en: {
     title: 'Rainbow & Meteor Shower',
@@ -49,7 +49,7 @@ const STRINGS = {
     dorisNoteLand:
       "👧 During meteor showers Doris is on land (see the pin below) — you can shop with her then. Check the homescreen's \"Weather this week\" for the exact time block.",
     mailboxNote: "📮 Don't forget the bouquet above your own mailbox either — it's always there, but not on the map (since that's your own house spot).",
-    meteorLingerNote: '⛏️ Ore pieces stay mineable for 24h after the meteor shower starts (so until the same time the next day) — this map stays useful for a while even after the shower itself has ended.',
+    meteorLingerNote: '💎 The crystal fragments stay available for 24h after the meteor shower starts (so until the same time the next day) — this map stays useful for a while even after the shower itself has ended.',
   },
   es: {
     title: 'Rainbow & Lluvia de Meteoros',
@@ -66,7 +66,7 @@ const STRINGS = {
     dorisNoteLand:
       '👧 Durante la lluvia de meteoros, Doris está en tierra (mira el pin abajo) — puedes comprarle en esos momentos. Consulta la pantalla de inicio en "El clima esta semana" para ver el horario exacto.',
     mailboxNote: '📮 Tampoco olvides el ramo junto a tu propio buzón — siempre está ahí, pero no aparece en el mapa (porque es tu propio punto de casa).',
-    meteorLingerNote: '⛏️ Los trozos de mineral se pueden seguir picando hasta 24h después del inicio de la lluvia de meteoros (es decir, hasta la misma hora al día siguiente) — este mapa sigue siendo útil un buen rato después de que termine la lluvia de meteoros.',
+    meteorLingerNote: '💎 Los fragmentos de cristal siguen disponibles hasta 24h después del inicio de la lluvia de meteoros (es decir, hasta la misma hora al día siguiente) — este mapa sigue siendo útil un buen rato después de que termine la lluvia de meteoros.',
   },
   pt: {
     title: 'Rainbow & Chuva de Meteoros',
@@ -83,7 +83,7 @@ const STRINGS = {
     dorisNoteLand:
       '👧 Durante a chuva de meteoros, a Doris fica em terra (veja o pin abaixo) — você pode comprar com ela nesse momento. Veja o horário exato na tela inicial em "Clima desta semana".',
     mailboxNote: '📮 Não esqueça também do buquê perto da sua própria caixa de correio — ele sempre está lá, mas não aparece no mapa (porque é o seu próprio ponto de casa).',
-    meteorLingerNote: '⛏️ Os pedaços de minério continuam mineráveis até 24h depois do início da chuva de meteoros (ou seja, até o mesmo horário no dia seguinte) — este mapa continua útil por um tempo mesmo depois que a chuva de meteoros termina.',
+    meteorLingerNote: '💎 Os fragmentos de cristal continuam disponíveis até 24h depois do início da chuva de meteoros (ou seja, até o mesmo horário no dia seguinte) — este mapa continua útil por um tempo mesmo depois que a chuva de meteoros termina.',
   },
   fr: {
     title: 'Rainbow & Pluie de Météores',
@@ -100,7 +100,7 @@ const STRINGS = {
     dorisNoteLand:
       "👧 Pendant la pluie de météores, Doris est sur la terre ferme (voir l'épingle ci-dessous) — tu peux faire des achats chez elle à ce moment-là. Regarde l'écran d'accueil sous « Météo cette semaine » pour la plage horaire exacte.",
     mailboxNote: "📮 N'oublie pas non plus le bouquet près de ta propre boîte aux lettres — il est toujours là, mais pas sur la carte (puisque c'est ton propre emplacement de maison).",
-    meteorLingerNote: "⛏️ Les morceaux de minerai restent minables jusqu'à 24h après le début de la pluie de météores (donc jusqu'à la même heure le lendemain) — cette carte reste donc utile un moment après la fin de la pluie de météores elle-même.",
+    meteorLingerNote: "💎 Les fragments de cristal restent disponibles jusqu'à 24h après le début de la pluie de météores (donc jusqu'à la même heure le lendemain) — cette carte reste donc utile un moment après la fin de la pluie de météores elle-même.",
   },
   de: {
     title: 'Rainbow & Meteorschauer',
@@ -117,7 +117,7 @@ const STRINGS = {
     dorisNoteLand:
       '👧 Während des Meteorschauers steht Doris an Land (siehe Markierung unten) — bei ihr kannst du dann einkaufen. Das genaue Zeitfenster siehst du auf dem Startbildschirm bei "Wetter diese Woche".',
     mailboxNote: '📮 Vergiss auch nicht den Strauß bei deinem eigenen Briefkasten — der ist immer da, steht aber nicht auf der Karte (weil das dein eigener Hausplatz ist).',
-    meteorLingerNote: '⛏️ Die Erzstücke bleiben bis 24 Stunden nach Beginn des Meteorschauers abbaubar (also bis zur gleichen Zeit am nächsten Tag) — diese Karte bleibt also noch eine Weile nützlich, nachdem der Meteorschauer selbst vorbei ist.',
+    meteorLingerNote: '💎 Die Kristallfragmente bleiben bis 24 Stunden nach Beginn des Meteorschauers verfügbar (also bis zur gleichen Zeit am nächsten Tag) — diese Karte bleibt also noch eine Weile nützlich, nachdem der Meteorschauer selbst vorbei ist.',
   },
 } as const;
 

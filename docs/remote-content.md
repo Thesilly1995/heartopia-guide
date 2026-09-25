@@ -2,7 +2,7 @@
 
 ## Waarom
 
-Rainbow-boeketten, meteorenregen-ertsplekken, de dagelijkse Zwervende
+Rainbow-boeketten, meteorenregen-kristalfragmenten, de dagelijkse Zwervende
 Eik-plot, de dagelijkse Fluoriet-plot, het huidige event, het
 spelweer (wisselt elke 6 uur), en de actieve gift codes wisselen
 regelmatig. Die data zit niet vast in de app — hij wordt bij het
@@ -125,7 +125,7 @@ dat specifieke onderdeel.
   Canyon (`underwater: true`) staan — soms zelfs op allebei tegelijk
   (bevestigd door de gebruiker in deel-sessie sep 2026), dus geen
   aanname meer dat het er maar één is; bij `meteorSpots` staat ze
-  gewoon als losse pin tussen de andere ertsplekken op de hoofdeilandkaart.
+  gewoon als losse pin tussen de andere fragment-plekken op de hoofdeilandkaart.
   Het exacte tijdsblok waarin dit gebeurt hoort in `weekForecast` (zie
   hieronder), niet hier.
 - **`bubbleWeek`**: de 19 roze-bubbels-locaties van deze week (15 op de
