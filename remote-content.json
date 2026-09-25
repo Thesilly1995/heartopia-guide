@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-25T10:09:57Z",
+  "updatedAt": "2026-09-25T10:11:54Z",
   "dailyPlotsCalendar": [
     {"date": "2026-08-09", "oakPlotNl": "Plot 6", "oakPlotEn": "Plot 6", "fluoritePlotNl": "Plot 11", "fluoritePlotEn": "Plot 11", "oakPlotEs": "Parcela 6", "oakPlotPt": "Lote 6", "fluoritePlotEs": "Parcela 11", "fluoritePlotPt": "Lote 11"},
     {"date": "2026-08-10", "oakPlotNl": "Plot 2", "oakPlotEn": "Plot 2", "fluoritePlotNl": "Plot 7", "fluoritePlotEn": "Plot 7", "oakPlotEs": "Parcela 2", "oakPlotPt": "Lote 2", "fluoritePlotEs": "Parcela 7", "fluoritePlotPt": "Lote 7"},
@@ -164,18 +164,7 @@
     }
   ],
   "rainbowSpots": [],
-  "meteorSpots": [
-    {"num": 1, "x": 19.8, "y": 39.8, "underwater": false, "descriptionNl": "Ertsplek 1", "descriptionEn": "Ore Spot 1"},
-    {"num": 2, "x": 14, "y": 40.9, "underwater": false, "descriptionNl": "Ertsplek 2", "descriptionEn": "Ore Spot 2"},
-    {"num": 3, "x": 10.6, "y": 50.9, "underwater": false, "descriptionNl": "Ertsplek 3", "descriptionEn": "Ore Spot 3"},
-    {"num": 4, "x": 5.9, "y": 58.7, "underwater": false, "descriptionNl": "Ertsplek 4", "descriptionEn": "Ore Spot 4"},
-    {"num": 5, "x": 11.8, "y": 61.6, "underwater": false, "isDoris": true, "descriptionNl": "Doris (NPC) — shop hier tijdens meteorenregen", "descriptionEn": "Doris (NPC) — shop here during meteor showers"},
-    {"num": 6, "x": 13.6, "y": 66, "underwater": false, "descriptionNl": "Ertsplek 6", "descriptionEn": "Ore Spot 6"},
-    {"num": 7, "x": 14.2, "y": 73.5, "underwater": false, "descriptionNl": "Ertsplek 7", "descriptionEn": "Ore Spot 7"},
-    {"num": 8, "x": 16.2, "y": 75, "underwater": false, "descriptionNl": "Ertsplek 8", "descriptionEn": "Ore Spot 8"},
-    {"num": 9, "x": 20.1, "y": 80.8, "underwater": false, "descriptionNl": "Ertsplek 9", "descriptionEn": "Ore Spot 9"},
-    {"num": 10, "x": 24.3, "y": 85.8, "underwater": false, "descriptionNl": "Ertsplek 10", "descriptionEn": "Ore Spot 10"}
-  ],
+  "meteorSpots": [],
   "bubbleWeek": {
     "weekLabelNl": "Deze week (19-25 sep 2026)",
     "weekLabelEn": "This week (Sep 19-25, 2026)",
