@@ -48,7 +48,12 @@ function hadSpots(payload, key) {
   return Array.isArray(payload?.[key]) && payload[key].length > 0;
 }
 
-// Rainbow: leeg -> gevuld = net begonnen.
+// Rainbow: leeg -> gevuld = net begonnen. LET OP (sep 2026): deze melding
+// vuurt zodra de wijziging naar main gepusht wordt, ongeacht het klokuur —
+// dus rainbowSpots/meteorSpots pas vullen op het moment dat het venster
+// écht begint (bv. 18:00 servertijd), nooit vooraf. Ook nooit "leeg -> vol
+// -> leeg -> vol" doen op al-live data om een typefout te fixen (dat vuurt
+// een spookmelding) — bewerk bestaande entries in place.
 if (!hadSpots(prev, 'rainbowSpots') && hadSpots(curr, 'rainbowSpots')) {
   messages.push({
     category: 'rainbow_meteor',
@@ -65,8 +70,8 @@ if (!hadSpots(prev, 'meteorSpots') && hadSpots(curr, 'meteorSpots')) {
     category: 'rainbow_meteor',
     titleNl: '☄️ Meteorenregen is begonnen!',
     titleEn: '☄️ Meteor shower has started!',
-    bodyNl: 'Bekijk de ertslocaties in Heartopedia.',
-    bodyEn: 'Check the ore locations in Heartopedia.',
+    bodyNl: 'Bekijk de fragment-locaties in Heartopedia.',
+    bodyEn: 'Check the shard locations in Heartopedia.',
   });
 }
 
