@@ -1,4 +1,5 @@
 import { useLanguage } from '@/hooks/use-language';
+import { eventEmoji } from '@/lib/event-groups';
 import { useRemoteContent } from '@/lib/remote-content';
 
 const NO_EVENT = {
@@ -39,7 +40,7 @@ export function useCurrentEventMeta(): CurrentEventMeta {
     return {
       name: remote.nameEn,
       dates,
-      emoji: '🎉',
+      emoji: eventEmoji(remote.nameEn, '🎉'),
     };
   }
   return {
