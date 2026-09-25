@@ -2,6 +2,17 @@ import { EventGroup, EventGroupItem } from '@/components/heartopia/event-groups-
 import { Language } from '@/hooks/use-language';
 import { RemoteEventArchiveEntry, RemoteEventOverride, RemoteEventRecipe, RemoteEventSighting } from '@/lib/remote-content';
 
+/** Eigen icoon per event (op naam, want die is taal-onafhankelijk), anders de generieke standaard. */
+const EVENT_EMOJI_BY_NAME_EN: Record<string, string> = {
+  'Echo of Ancients': '🗿',
+  'Mid-Autumn Festival': '🍂',
+  'Call of Whales': '🐳',
+};
+
+export function eventEmoji(nameEn: string, fallback: string): string {
+  return EVENT_EMOJI_BY_NAME_EN[nameEn] ?? fallback;
+}
+
 function localizedEventName(ev: { nameNl: string; nameEn: string; nameEs?: string; namePt?: string; nameFr?: string; nameDe?: string }, language: Language): string {
   if (language === 'es') return ev.nameEs ?? ev.nameEn;
   if (language === 'pt') return ev.namePt ?? ev.nameEn;
@@ -48,7 +59,7 @@ export function buildSightingEventGroups(
       key: 'current',
       eventName: localizedEventName(currentEvent, language),
       eventDates: localizedEventDates(currentEvent, language),
-      emoji: '🎉',
+      emoji: eventEmoji(currentEvent.nameEn, '🎉'),
       items: currentItems.map((i) => localizedSighting(i, language)),
     });
   }
@@ -60,7 +71,7 @@ export function buildSightingEventGroups(
       key: `past-${index}`,
       eventName: localizedEventName(ev, language),
       eventDates: localizedEventDates(ev, language),
-      emoji: '🗓️',
+      emoji: eventEmoji(ev.nameEn, '🗓️'),
       items: items.map((i) => localizedSighting(i, language)),
     });
   });
@@ -81,7 +92,7 @@ export function buildRecipeEventGroups(
       key: 'current',
       eventName: localizedEventName(currentEvent, language),
       eventDates: localizedEventDates(currentEvent, language),
-      emoji: '🎉',
+      emoji: eventEmoji(currentEvent.nameEn, '🎉'),
       items: currentEvent.recipes.map((i) => localizedRecipe(i, language)),
     });
   }
@@ -92,7 +103,7 @@ export function buildRecipeEventGroups(
       key: `past-${index}`,
       eventName: localizedEventName(ev, language),
       eventDates: localizedEventDates(ev, language),
-      emoji: '🗓️',
+      emoji: eventEmoji(ev.nameEn, '🗓️'),
       items: ev.recipes.map((i) => localizedRecipe(i, language)),
     });
   });
