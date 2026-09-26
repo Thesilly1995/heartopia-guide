@@ -2,10 +2,14 @@ import { useMemo } from 'react';
 
 import { useLanguage } from '@/hooks/use-language';
 
+const BLOEMEN_KWEEKGIDS = require('@/assets/images/tips/bloemen-kweekgids.jpg');
+
 export interface TipItem {
   title: string;
   body: string;
   emoji: string;
+  /** Optionele afbeelding (bv. een community-kweekgids) i.p.v. alleen tekst. */
+  image?: number;
 }
 
 export interface TipCategory {
@@ -24,6 +28,7 @@ interface TipRaw {
   bodyEs: string;
   bodyPt: string;
   emoji: string;
+  image?: number;
 }
 
 interface TipCategoryRaw {
@@ -206,6 +211,27 @@ const TIP_CATEGORIES_RAW: TipCategoryRaw[] = [
       },
     ],
   },
+  {
+    key: 'bloemen',
+    labelNl: 'Bloemen kweken',
+    labelEn: 'Growing flowers',
+    labelEs: 'Cultivar flores',
+    labelPt: 'Cultivar flores',
+    tips: [
+      {
+        titleNl: 'Community-kweekgids: kruisen & sterren',
+        titleEn: 'Community growing guide: crossbreeding & stars',
+        titleEs: 'Guía de cultivo de la comunidad: cruces y estrellas',
+        titlePt: 'Guia de cultivo da comunidade: cruzamentos e estrelas',
+        bodyNl: 'Een aangeleverde infographic over bloemen kruisen en sterniveaus verhogen — gemaakt door @liviafae.',
+        bodyEn: 'A community-made infographic about crossbreeding flowers and raising star levels — made by @liviafae.',
+        bodyEs: 'Una infografía de la comunidad sobre cruces de flores y cómo subir el nivel de estrellas — hecha por @liviafae.',
+        bodyPt: 'Um infográfico feito pela comunidade sobre cruzamento de flores e como subir o nível de estrelas — feito por @liviafae.',
+        emoji: '🌸',
+        image: BLOEMEN_KWEEKGIDS,
+      },
+    ],
+  },
 ];
 
 export function useTips(): TipCategory[] {
@@ -219,6 +245,7 @@ export function useTips(): TipCategory[] {
           title: language === 'es' ? t.titleEs : language === 'pt' ? t.titlePt : language === 'fr' ? t.titleEn : language === 'de' ? t.titleEn : language === 'en' ? t.titleEn : t.titleNl,
           body: language === 'es' ? t.bodyEs : language === 'pt' ? t.bodyPt : language === 'fr' ? t.bodyEn : language === 'de' ? t.bodyEn : language === 'en' ? t.bodyEn : t.bodyNl,
           emoji: t.emoji,
+          image: t.image,
         })),
       })),
     [language]
