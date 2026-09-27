@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-27T16:03:27Z",
+  "updatedAt": "2026-09-27T16:15:00Z",
   "dailyPlotsCalendar": [
     {"date": "2026-08-09", "oakPlotNl": "Plot 6", "oakPlotEn": "Plot 6", "fluoritePlotNl": "Plot 11", "fluoritePlotEn": "Plot 11", "oakPlotEs": "Parcela 6", "oakPlotPt": "Lote 6", "fluoritePlotEs": "Parcela 11", "fluoritePlotPt": "Lote 11"},
     {"date": "2026-08-10", "oakPlotNl": "Plot 2", "oakPlotEn": "Plot 2", "fluoritePlotNl": "Plot 7", "fluoritePlotEn": "Plot 7", "oakPlotEs": "Parcela 2", "oakPlotPt": "Lote 2", "fluoritePlotEs": "Parcela 7", "fluoritePlotPt": "Lote 7"},
@@ -176,9 +176,9 @@
     }
   ],
   "rainbowSpots": [
-    {"num": 1, "x": 77.6, "y": 86.7, "underwater": false, "descriptionNl": "Locatie 1", "descriptionEn": "Location 1"},
-    {"num": 2, "x": 71.8, "y": 82.9, "underwater": false, "descriptionNl": "Locatie 2", "descriptionEn": "Location 2"},
-    {"num": 3, "x": 73.8, "y": 84.6, "underwater": false, "isDoris": true, "descriptionNl": "Doris", "descriptionEn": "Doris"},
+    {"num": 1, "x": 30.6, "y": 90.7, "underwater": false, "descriptionNl": "Locatie 1", "descriptionEn": "Location 1"},
+    {"num": 2, "x": 32.6, "y": 92.2, "underwater": false, "isDoris": true, "descriptionNl": "Doris", "descriptionEn": "Doris"},
+    {"num": 3, "x": 35.4, "y": 93.6, "underwater": false, "descriptionNl": "Locatie 3", "descriptionEn": "Location 3"},
     {"num": 4, "x": 62.3, "y": 75.8, "underwater": true, "descriptionNl": "Locatie 4", "descriptionEn": "Location 4"},
     {"num": 5, "x": 69.5, "y": 49.1, "underwater": true, "descriptionNl": "Locatie 5", "descriptionEn": "Location 5"},
     {"num": 6, "x": 45.9, "y": 47.5, "underwater": true, "descriptionNl": "Locatie 6", "descriptionEn": "Location 6"},
