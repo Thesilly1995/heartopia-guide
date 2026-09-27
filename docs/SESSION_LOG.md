@@ -2,6 +2,16 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-09-27 (deel 58) — Meteorenregen-ertsplekken/Doris gaan nu automatisch offline
+
+Terugkerend pijnpunt sinds deel 34/40: na afloop van een meteorenregen-venster moest `meteorSpots` handmatig geleegd worden (via een `send_later`-reminder die elke keer opnieuw ingepland moest worden) — één keer vergeten, waarna de plekken ten onrechte "actief" bleven staan. Gebruiker vroeg of dit automatisch kan.
+
+**Oplossing**: `useMeteorSpots()` (`src/data/meteor-spots.ts`) filtert de ruwe `meteorSpots`-lijst nu zelf o.b.v. `weekForecast` i.p.v. blind te vertrouwen op wat er in `remote-content.json` staat. Voor elke `weekForecast`-entry met `{"kind": "meteor", "block": "18-00"}` wordt de blokstart omgerekend naar een `Date` (zelfde "servertijd-als-UTC-velden"-truc als `serverNow`/`currentDailyResetKey` in `src/lib/reset-schedule.ts`, nu ge-exporteerd als `serverNow`). Ertsplekken (`isDoris: false`) blijven zichtbaar tot 24u na die blokstart, Doris (`isDoris: true`) alleen tijdens het 6-uursblok zelf (6u) — zelfde regels als voorheen handmatig toegepast, nu automatisch per render herberekend t.o.v. de geselecteerde server (`useServer().offsetHours`, elke server kan een andere real-world-tijd voor "servertijd 18:00" hebben).
+
+**Belangrijk gedragsdetail**: als `weekForecast` voor geen enkele dag een `meteor`-kind met `block` bevat, worden de plekken **altijd** verborgen, ook als `meteorSpots` zelf toevallig nog (verouderde) coördinaten bevat — bewust fail-safe, want `weekForecast` wordt sowieso elke week door de gebruiker aangeleverd en is dus de betrouwbare bron van "is er deze week een meteorenregen en wanneer". Gevolg: coördinaten mogen voortaan gewoon vooraf ingevuld worden zodra bekend (geen handmatig "tijdelijk terugzetten" meer nodig zoals in deel 57/PR #170) — de app toont ze vanzelf pas zodra het blok daadwerkelijk begint, en verbergt ze vanzelf weer 24u later. **Geen `send_later`-reminders meer nodig voor `meteorSpots`.**
+
+**Nog niet meegenomen**: `rainbowSpots` heeft dit probleem ook (zelfde "vergeten te legen"-risico, zie deel 34), maar gebruiker vroeg specifiek naar de meteorenregen — `rainbowSpots` moet dus nog steeds handmatig geleegd worden. Zou met dezelfde aanpak te doen zijn (Rainbow-venster staat alleen niet met een vast blok in `weekForecast` op dezelfde manier, dus vereist eerst uitzoeken hoe dat venster wél betrouwbaar te detecteren is).
+
 ## 2026-09-21/26 (deel 57) — Events-tabblad uitgerold, voedingslijsten hond/kat, meteorenregen-cyclus, event-iconen, Tips & Tricks-bloemencategorie
 
 Lange doorlopende sessie (deel 56 werd niet na elke losse wijziging bijgewerkt) met veel losse, kleine gebruikersverzoeken, elk als eigen commit/PR gemerged (#151 t/m #182). Belangrijkste lijnen:
