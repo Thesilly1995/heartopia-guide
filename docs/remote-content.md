@@ -106,20 +106,22 @@ dat specifieke onderdeel.
   eilandkaart. `x`/`y` zijn percentages (0-100) t.o.v. de kaartafbeelding
   (`assets/images/maps/island-map.jpg`), zelfde systeem als de
   bestaande Bubbels-kaart. Laat de array leeg (`[]`) of weg als de
-  gebeurtenis niet actief is — dus ook weer legen zodra het moment
-  voorbij is, anders blijven de Whalefall Canyon-plekken en Doris
-  onterecht zichtbaar.
-  **`meteorSpots` gaat sinds sep 2026 automatisch offline**: de app
-  (`src/data/meteor-spots.ts`) toont de plekken alléén als de
-  bijbehorende `weekForecast`-entry met `"kind": "meteor"` + `block`
-  aangeeft dat het venster (nog) loopt — ertsplekken tot 24u na de
-  blokstart, Doris alleen tijdens het 6-uursblok zelf. Je hoeft
-  `meteorSpots` dus **niet meer handmatig te legen** na afloop (geen
-  `send_later`-reminder meer nodig); je moet wél zorgen dat de
-  `weekForecast`-entry voor die dag een `meteor`-kind met `block` heeft
-  vóórdat je de coördinaten invult, anders blijven de plekken
-  (bewust, fail-safe) verborgen. `rainbowSpots` heeft deze automatiek
-  (nog) niet en moet nog steeds handmatig geleegd worden.
+  gebeurtenis niet actief is (bv. nog geen coördinaten bekend).
+  **Beide gaan sinds sep 2026 automatisch offline** (`useKindWindowActive`
+  in `src/lib/event-window.ts`, gebruikt door `src/data/meteor-spots.ts`
+  en `src/data/rainbow-spots.ts`): de app toont de plekken alléén als de
+  bijbehorende `weekForecast`-entry met `"kind": "meteor"`/`"rainbow"` +
+  `block` aangeeft dat het venster (nog) loopt, per geselecteerde server
+  (`useServer().offsetHours`) — dus niet voor iedereen op hetzelfde
+  wereldwijde moment, maar op ieders eigen servertijd 18:00 e.d.
+  Ertsplekken blijven zichtbaar tot 24u na de meteor-blokstart, Doris bij
+  meteorenregen alleen tijdens het 6-uursblok zelf; bij Rainbow geldt voor
+  alle plekken (incl. Doris) gewoon het 6-uursblok zelf, geen langer
+  hakvenster erna. Je hoeft deze velden dus **niet meer handmatig te
+  legen** na afloop (geen `send_later`-reminder meer nodig); je moet wél
+  zorgen dat de `weekForecast`-entry voor die dag het bijbehorende
+  `kind` + `block` heeft vóórdat je de coördinaten invult, anders blijven
+  de plekken (bewust, fail-safe) verborgen.
   `rainbowSpots` ondersteunt `underwater: true` voor de 4 boeketplekken
   in Whalefall Canyon (`whalefall-map.jpg`, van de 4 kan een speler er
   maar 1 daadwerkelijk pakken, verschilt per speler) — die krijgen in
