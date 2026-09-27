@@ -1,9 +1,10 @@
 import { useMemo, useState } from 'react';
-import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { PremiumLockedView } from '@/components/heartopia/premium-locked';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
+import { ZoomableImage } from '@/components/heartopia/zoomable-image';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { useTips } from '@/data/tips';
 import { useLanguage } from '@/hooks/use-language';
@@ -74,7 +75,7 @@ export default function TipsScreen() {
                           <Text style={styles.cardTitle}>{tip.title}</Text>
                         </View>
                         <Text style={styles.cardBody}>{tip.body}</Text>
-                        {tip.image && <Image source={tip.image} style={styles.tipImage} resizeMode="contain" />}
+                        {tip.image && <ZoomableImage source={tip.image} aspectRatio={1} />}
                       </View>
                     ))}
                   </View>
@@ -105,6 +106,5 @@ function makeStyles(c: ThemeColors) {
     emoji: { fontSize: 18 },
     cardTitle: { fontSize: 13, fontWeight: '700', color: c.forest, flex: 1 },
     cardBody: { fontSize: 12, color: c.forestSoft, lineHeight: 17 },
-    tipImage: { width: '100%', aspectRatio: 1, borderRadius: 10, marginTop: 4 },
   });
 }
