@@ -109,6 +109,17 @@ dat specifieke onderdeel.
   gebeurtenis niet actief is — dus ook weer legen zodra het moment
   voorbij is, anders blijven de Whalefall Canyon-plekken en Doris
   onterecht zichtbaar.
+  **`meteorSpots` gaat sinds sep 2026 automatisch offline**: de app
+  (`src/data/meteor-spots.ts`) toont de plekken alléén als de
+  bijbehorende `weekForecast`-entry met `"kind": "meteor"` + `block`
+  aangeeft dat het venster (nog) loopt — ertsplekken tot 24u na de
+  blokstart, Doris alleen tijdens het 6-uursblok zelf. Je hoeft
+  `meteorSpots` dus **niet meer handmatig te legen** na afloop (geen
+  `send_later`-reminder meer nodig); je moet wél zorgen dat de
+  `weekForecast`-entry voor die dag een `meteor`-kind met `block` heeft
+  vóórdat je de coördinaten invult, anders blijven de plekken
+  (bewust, fail-safe) verborgen. `rainbowSpots` heeft deze automatiek
+  (nog) niet en moet nog steeds handmatig geleegd worden.
   `rainbowSpots` ondersteunt `underwater: true` voor de 4 boeketplekken
   in Whalefall Canyon (`whalefall-map.jpg`, van de 4 kan een speler er
   maar 1 daadwerkelijk pakken, verschilt per speler) — die krijgen in

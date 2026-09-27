@@ -1,5 +1,5 @@
 /** "Nu", verschoven naar de vaste UTC-offset van de geselecteerde server (los van het toestel-tijdzone). */
-function serverNow(offsetHours: number): Date {
+export function serverNow(offsetHours: number): Date {
   return new Date(Date.now() + offsetHours * 3600000);
 }
 
