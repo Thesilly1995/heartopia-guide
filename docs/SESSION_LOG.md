@@ -2,6 +2,16 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-09-27 (deel 59) — Rainbow-locaties (incl. 1x foutieve coördinaten gecorrigeerd) + per-server automatische offline-detectie voor Rainbow
+
+**Rainbow-locaties ingevuld** (8 punten via de kaart-tool: 3 hoofdeiland, 5 Whalefall Canyon, Doris op beide kaarten tegelijk, #186) voor het venster van 27 sep 18:00-00:00 servertijd. Gebruiker meldde meteen daarna dat de 3 hoofdeiland-coördinaten per ongeluk op de verkeerde kaart waren aangewezen — gecorrigeerd (#187, Doris verschoof van punt 3 naar punt 2), Whalefall Canyon-punten klopten al en bleven ongewijzigd.
+
+**Aanleiding volgende fix**: gebruiker kreeg feedback dat de SEA-server de Rainbow-locaties "10 uur te laat" zag verschijnen. Verklaring: `rainbowSpots` werd (anders dan `meteorSpots` sinds deel 58) nog steeds als kale aan/uit-lijst behandeld, ingesteld op één vast wereldwijd moment (Global's 18:00). Een Sea-speler (GMT+7, 6u vóór op Global GMT+1) bereikt zijn eigen lokale 18:00 juist eerder in echte tijd — dus tegen de tijd dat de pins (getimed op Global) live gingen, was voor Sea het venster alweer een tijd bezig/voorbij, vandaar de "te laat"-klacht.
+
+**Fix**: dezelfde aanpak als bij `meteorSpots` nu ook voor `rainbowSpots`, en de gedeelde logica geëxtraheerd naar `src/lib/event-window.ts` (`useKindWindowActive(kind, windowHours)` — herbruikbare hook die aan de hand van `weekForecast` + de **geselecteerde server** van de speler zelf bepaalt of een blok van dat `kind` nog binnen `windowHours` na de start valt). `useMeteorSpots()` en `useRainbowSpots()` roepen 'm nu allebei aan i.p.v. hun eigen gedupliceerde blokstart-berekening. Voor Rainbow geldt één window van 6u (het blok zelf, geen extra hakvenster zoals bij meteor-ertsplekken) voor alle plekken incl. Doris. **Kernpunt**: elke speler ziet het venster nu automatisch opengaan/sluiten op zíjn eigen servertijd 18:00, niet op één gedeeld wereldwijd moment — lost het Sea-probleem structureel op (en voor alle andere servers ook, niet alleen Sea).
+
+**Nog een aandachtspunt**: gebruiker gaf aan op zoek te gaan naar een Discord/Facebook-community die Rainbow/meteor-locaties op **Asia-tijd** deelt, om zeker te weten dat updates op tijd binnenkomen — Asia bereikt 18:00 servertijd als eerste van alle vijf servers (GMT+9), dus als de bron op Asia-tijd werkt, is er voor alle andere servers nog ruim de tijd om de coördinaten te verwerken vóór hun eigen venster opent.
+
 ## 2026-09-27 (deel 58) — Meteorenregen-ertsplekken/Doris gaan nu automatisch offline
 
 Terugkerend pijnpunt sinds deel 34/40: na afloop van een meteorenregen-venster moest `meteorSpots` handmatig geleegd worden (via een `send_later`-reminder die elke keer opnieuw ingepland moest worden) — één keer vergeten, waarna de plekken ten onrechte "actief" bleven staan. Gebruiker vroeg of dit automatisch kan.

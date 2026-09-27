@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 
 import { useLanguage } from '@/hooks/use-language';
+import { useKindWindowActive } from '@/lib/event-window';
 import { useRemoteContent } from '@/lib/remote-content';
 
 export interface EventSpot {
@@ -18,12 +19,20 @@ export interface EventSpot {
 // sessie de actuele locaties handmatig invult. Zie docs/remote-content.md.
 const RAINBOW_SPOTS_FALLBACK: EventSpot[] = [];
 
+/**
+ * Alle Rainbow-locaties (hoofdeiland + Whalefall Canyon + Doris) horen bij
+ * hetzelfde 6-uursblok — automatisch verborgen zodra dat blok voorbij is
+ * o.b.v. `weekForecast` (zie `useKindWindowActive`), zodat ze niet langer
+ * handmatig geleegd hoeven te worden. Anders dan bij meteorenregen is er
+ * geen langer "hakvenster" erna.
+ */
 export function useRainbowSpots(): EventSpot[] {
   const { language } = useLanguage();
   const { payload } = useRemoteContent();
+  const active = useKindWindowActive('rainbow', 6);
 
   return useMemo(() => {
-    if (payload?.rainbowSpots && payload.rainbowSpots.length > 0) {
+    if (active && payload?.rainbowSpots && payload.rainbowSpots.length > 0) {
       return payload.rainbowSpots.map((spot) => ({
         num: spot.num,
         x: spot.x,
@@ -40,5 +49,5 @@ export function useRainbowSpots(): EventSpot[] {
       }));
     }
     return RAINBOW_SPOTS_FALLBACK;
-  }, [payload, language]);
+  }, [payload, language, active]);
 }
