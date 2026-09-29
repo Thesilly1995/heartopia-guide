@@ -30,6 +30,15 @@ interface FeedingEntry {
   disliked: boolean;
 }
 
+/** Oude opslag had 1 naam (string) per ras; migreert dat naar het huidige array-formaat. */
+function migratePetNames(raw: Record<string, string | string[]>): Record<string, string[]> {
+  const migrated: Record<string, string[]> = {};
+  for (const [breed, value] of Object.entries(raw)) {
+    migrated[breed] = Array.isArray(value) ? value : [value];
+  }
+  return migrated;
+}
+
 const FAVORITE_FOOD_NOTE = {
   nl: 'Let op: het favoriete eten verschilt per individueel dier, niet per ras.',
   en: 'Note: favorite food differs per individual animal, not per breed.',
@@ -68,6 +77,7 @@ const STRINGS = {
     feedingEmpty: 'Nog niks ingevuld — voeg toe wat je al gevoerd hebt.',
     petNameLabel: 'Naam',
     petNamePlaceholder: 'Naam van je huisdier',
+    petNameAdd: '+ Nog een naam',
     triedHint: 'Dit zijn de items die katten/honden daadwerkelijk kunnen eten (bevestigd in-game) — favoriete eten verschilt per dier, gebruik dit als aftekenlijst van wat je al geprobeerd hebt. Rauwe gewassen eten ze niet.',
     triedRecipes: 'Gerechten',
     triedPetFood: 'Voer uit de winkel',
@@ -93,6 +103,7 @@ const STRINGS = {
     feedingEmpty: "Nothing added yet — add what you've already fed.",
     petNameLabel: 'Name',
     petNamePlaceholder: "Your pet's name",
+    petNameAdd: '+ Add another name',
     triedHint: "These are the items cats/dogs can actually eat (confirmed in-game) — favorite food differs per pet, use this as a checklist of what you've already tried. They won't eat raw crops.",
     triedRecipes: 'Dishes',
     triedPetFood: 'Shop food',
@@ -118,6 +129,7 @@ const STRINGS = {
     feedingEmpty: 'Todavía no has añadido nada — añade lo que ya le has dado de comer.',
     petNameLabel: 'Nombre',
     petNamePlaceholder: 'Nombre de tu mascota',
+    petNameAdd: '+ Añadir otro nombre',
     triedHint: 'Estos son los alimentos que gatos/perros realmente pueden comer (confirmado en el juego) — la comida favorita varía según cada mascota, úsalo como lista de lo que ya has probado. No comen cultivos crudos.',
     triedRecipes: 'Platos',
     triedPetFood: 'Comida de la tienda',
@@ -143,6 +155,7 @@ const STRINGS = {
     feedingEmpty: 'Nada adicionado ainda — adicione o que você já deu de comer.',
     petNameLabel: 'Nome',
     petNamePlaceholder: 'Nome do seu bichinho',
+    petNameAdd: '+ Adicionar outro nome',
     triedHint: 'Estes são os itens que gatos/cachorros realmente podem comer (confirmado no jogo) — a comida favorita varia por bichinho, use isso como lista do que você já experimentou. Eles não comem plantações cruas.',
     triedRecipes: 'Pratos',
     triedPetFood: 'Comida da loja',
@@ -168,6 +181,7 @@ const STRINGS = {
     feedingEmpty: "Rien d'ajouté pour l'instant — ajoute ce que tu lui as déjà donné à manger.",
     petNameLabel: 'Nom',
     petNamePlaceholder: 'Nom de ton animal',
+    petNameAdd: '+ Ajouter un autre nom',
     triedHint: "Voici les aliments que les chats/chiens peuvent vraiment manger (confirmé en jeu) — la nourriture préférée varie selon chaque animal, utilise ceci comme une liste de ce que tu as déjà essayé. Ils ne mangent pas de cultures crues.",
     triedRecipes: 'Plats',
     triedPetFood: 'Nourriture du magasin',
@@ -193,6 +207,7 @@ const STRINGS = {
     feedingEmpty: 'Noch nichts eingetragen — füge hinzu, was du ihm schon gefüttert hast.',
     petNameLabel: 'Name',
     petNamePlaceholder: 'Name deines Haustiers',
+    petNameAdd: '+ Weiteren Namen hinzufügen',
     triedHint: 'Das sind die Dinge, die Katzen/Hunde wirklich essen können (im Spiel bestätigt) — das Lieblingsessen ist bei jedem Tier anders, nutze dies als Checkliste für das, was du schon ausprobiert hast. Rohe Feldfrüchte fressen sie nicht.',
     triedRecipes: 'Gerichte',
     triedPetFood: 'Futter aus dem Laden',
@@ -239,7 +254,7 @@ export default function HuisdierenScreen() {
   const [bonds, setBonds] = useState<Record<string, number>>({});
   const [actions, setActions] = useState<Record<string, number>>({});
   const [feeding, setFeeding] = useState<Record<string, FeedingEntry[]>>({});
-  const [petNames, setPetNames] = useState<Record<string, string>>({});
+  const [petNames, setPetNames] = useState<Record<string, string[]>>({});
   const [triedDishes, setTriedDishes] = useState<Record<string, string[]>>({});
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
 
@@ -256,7 +271,7 @@ export default function HuisdierenScreen() {
         setBonds(bondsRaw ? JSON.parse(bondsRaw) : {});
         setActions(actionsRaw ? JSON.parse(actionsRaw) : {});
         setFeeding(feedingRaw ? JSON.parse(feedingRaw) : {});
-        setPetNames(namesRaw ? JSON.parse(namesRaw) : {});
+        setPetNames(namesRaw ? migratePetNames(JSON.parse(namesRaw)) : {});
         setTriedDishes(triedRaw ? JSON.parse(triedRaw) : {});
       } catch {
         setBonds({});
@@ -328,14 +343,29 @@ export default function HuisdierenScreen() {
     saveFeeding({ ...feeding, [name]: current.filter((_, i) => i !== index) });
   };
 
-  const setPetName = async (name: string, value: string) => {
-    const updated = { ...petNames, [name]: value };
+  const savePetNames = async (updated: Record<string, string[]>) => {
     setPetNames(updated);
     try {
       await AsyncStorage.setItem(NAMES_KEY, JSON.stringify(updated));
     } catch {
       // opslaan mislukt
     }
+  };
+
+  const setPetNameAt = (breed: string, index: number, value: string) => {
+    const current = petNames[breed] || [''];
+    const updatedNames = current.map((n, i) => (i === index ? value : n));
+    savePetNames({ ...petNames, [breed]: updatedNames });
+  };
+
+  const addPetName = (breed: string) => {
+    const current = petNames[breed] || [''];
+    savePetNames({ ...petNames, [breed]: [...current, ''] });
+  };
+
+  const removePetNameAt = (breed: string, index: number) => {
+    const current = petNames[breed] || [''];
+    savePetNames({ ...petNames, [breed]: current.filter((_, i) => i !== index) });
   };
 
   const toggleTriedDish = async (name: string, dish: string) => {
@@ -416,16 +446,26 @@ export default function HuisdierenScreen() {
 
               {isOpen && (
                 <View style={styles.cardBody}>
-                  <View style={styles.nameRow}>
-                    <Text style={styles.nameLabel}>{s.petNameLabel}</Text>
-                    <TextInput
-                      value={petNames[pet.name] || ''}
-                      onChangeText={(text) => setPetName(pet.name, text)}
-                      placeholder={s.petNamePlaceholder}
-                      placeholderTextColor={colors.forestSoft}
-                      style={styles.nameInput}
-                    />
-                  </View>
+                  {(petNames[pet.name] && petNames[pet.name].length > 0 ? petNames[pet.name] : ['']).map((petName, index) => (
+                    <View key={index} style={styles.nameRow}>
+                      {index === 0 && <Text style={styles.nameLabel}>{s.petNameLabel}</Text>}
+                      <TextInput
+                        value={petName}
+                        onChangeText={(text) => setPetNameAt(pet.name, index, text)}
+                        placeholder={s.petNamePlaceholder}
+                        placeholderTextColor={colors.forestSoft}
+                        style={[styles.nameInput, index > 0 && styles.nameInputIndented]}
+                      />
+                      {(petNames[pet.name]?.length || 0) > 1 && (
+                        <Pressable hitSlop={8} onPress={() => removePetNameAt(pet.name, index)}>
+                          <Text style={styles.foodRemoveText}>✕</Text>
+                        </Pressable>
+                      )}
+                    </View>
+                  ))}
+                  <Pressable style={styles.addNameButton} onPress={() => addPetName(pet.name)}>
+                    <Text style={styles.addNameButtonText}>{s.petNameAdd}</Text>
+                  </Pressable>
 
                   <Text style={styles.mutedText}>{s.randomTraits}</Text>
 
@@ -604,8 +644,11 @@ function makeStyles(c: ThemeColors) {
     foodLabel: { flex: 1, fontSize: 12, color: c.forest },
     foodRemoveText: { fontSize: 13, color: c.forestSoft },
     nameRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 10 },
-    nameLabel: { fontSize: 12, fontWeight: '700', color: c.forest },
+    nameLabel: { fontSize: 12, fontWeight: '700', color: c.forest, width: 40 },
     nameInput: { flex: 1, borderWidth: 1, borderColor: c.line, borderRadius: 10, paddingHorizontal: 10, paddingVertical: 7, fontSize: 13, color: c.forest, backgroundColor: c.card },
+    nameInputIndented: { marginLeft: 48 },
+    addNameButton: { alignSelf: 'flex-start', marginBottom: 10 },
+    addNameButtonText: { fontSize: 12, fontWeight: '700', color: c.coral },
     triedToggleText: { fontSize: 12, fontWeight: '700', color: c.forest },
     triedIntro: { marginTop: 10 },
     triedSection: { marginTop: 6, gap: 8, marginBottom: 4 },
