@@ -9,32 +9,39 @@ import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { useLanguage } from '@/hooks/use-language';
 
 const PHOTO_KEY = 'heartopia:profiel:foto';
+const NAME_KEY = 'heartopia:profiel:naam';
 const UID_KEY = 'heartopia:profiel:uid';
 
 const STRINGS = {
-  nl: { uidLabel: 'Jouw Heartopia UID', uidPlaceholder: 'UID invoeren', copy: 'Kopiëren', copied: 'Gekopieerd!' },
-  en: { uidLabel: 'Your Heartopia UID', uidPlaceholder: 'Enter UID', copy: 'Copy', copied: 'Copied!' },
-  es: { uidLabel: 'Tu UID de Heartopia', uidPlaceholder: 'Introduce el UID', copy: 'Copiar', copied: '¡Copiado!' },
-  pt: { uidLabel: 'Seu UID do Heartopia', uidPlaceholder: 'Digite o UID', copy: 'Copiar', copied: 'Copiado!' },
-  fr: { uidLabel: 'Ton UID Heartopia', uidPlaceholder: "Saisis l'UID", copy: 'Copier', copied: 'Copié !' },
-  de: { uidLabel: 'Deine Heartopia-UID', uidPlaceholder: 'UID eingeben', copy: 'Kopieren', copied: 'Kopiert!' },
+  nl: { nameLabel: 'Naam', namePlaceholder: 'Naam invoeren', uidLabel: 'UID', uidPlaceholder: 'UID invoeren', copy: 'Kopiëren', copied: 'Gekopieerd!' },
+  en: { nameLabel: 'Name', namePlaceholder: 'Enter name', uidLabel: 'UID', uidPlaceholder: 'Enter UID', copy: 'Copy', copied: 'Copied!' },
+  es: { nameLabel: 'Nombre', namePlaceholder: 'Introduce el nombre', uidLabel: 'UID', uidPlaceholder: 'Introduce el UID', copy: 'Copiar', copied: '¡Copiado!' },
+  pt: { nameLabel: 'Nome', namePlaceholder: 'Digite o nome', uidLabel: 'UID', uidPlaceholder: 'Digite o UID', copy: 'Copiar', copied: 'Copiado!' },
+  fr: { nameLabel: 'Nom', namePlaceholder: 'Saisis le nom', uidLabel: 'UID', uidPlaceholder: "Saisis l'UID", copy: 'Copier', copied: 'Copié !' },
+  de: { nameLabel: 'Name', namePlaceholder: 'Name eingeben', uidLabel: 'UID', uidPlaceholder: 'UID eingeben', copy: 'Kopieren', copied: 'Kopiert!' },
 } as const;
 
-/** Puur lokaal (op dit toestel) — geen account/backend, alleen handig om je UID makkelijk te delen. */
+/** Puur lokaal (op dit toestel) — geen account/backend, alleen handig om je naam/UID makkelijk te delen. */
 export function ProfileCard() {
   const colors = useHeartopiaColors();
   const styles = useMemo(() => makeStyles(colors), [colors]);
   const { language } = useLanguage();
   const s = STRINGS[language];
   const [photoUri, setPhotoUri] = useState<string | null>(null);
+  const [name, setName] = useState('');
   const [uid, setUid] = useState('');
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     (async () => {
       try {
-        const [photo, savedUid] = await Promise.all([AsyncStorage.getItem(PHOTO_KEY), AsyncStorage.getItem(UID_KEY)]);
+        const [photo, savedName, savedUid] = await Promise.all([
+          AsyncStorage.getItem(PHOTO_KEY),
+          AsyncStorage.getItem(NAME_KEY),
+          AsyncStorage.getItem(UID_KEY),
+        ]);
         if (photo) setPhotoUri(photo);
+        if (savedName) setName(savedName);
         if (savedUid) setUid(savedUid);
       } catch {
         // opslag niet beschikbaar, blijft leeg
@@ -61,6 +68,15 @@ export function ProfileCard() {
     }
   };
 
+  const saveName = async (value: string) => {
+    setName(value);
+    try {
+      await AsyncStorage.setItem(NAME_KEY, value);
+    } catch {
+      // opslaan mislukt
+    }
+  };
+
   const saveUid = async (value: string) => {
     setUid(value);
     try {
@@ -78,7 +94,7 @@ export function ProfileCard() {
   };
 
   return (
-    <View style={styles.card}>
+    <View style={styles.row}>
       <Pressable style={styles.avatarButton} onPress={pickPhoto} hitSlop={4}>
         {photoUri ? (
           <Image source={{ uri: photoUri }} style={styles.avatar} contentFit="cover" />
@@ -92,15 +108,25 @@ export function ProfileCard() {
         </View>
       </Pressable>
 
-      <View style={styles.uidSection}>
-        <Text style={styles.uidLabel}>{s.uidLabel}</Text>
-        <View style={styles.uidRow}>
+      <View style={styles.infoSection}>
+        <View style={styles.fieldRow}>
+          <Text style={styles.fieldLabel}>{s.nameLabel}</Text>
+          <TextInput
+            value={name}
+            onChangeText={saveName}
+            placeholder={s.namePlaceholder}
+            placeholderTextColor={colors.forestSoft}
+            style={styles.fieldInput}
+          />
+        </View>
+        <View style={styles.fieldRow}>
+          <Text style={styles.fieldLabel}>{s.uidLabel}</Text>
           <TextInput
             value={uid}
             onChangeText={saveUid}
             placeholder={s.uidPlaceholder}
             placeholderTextColor={colors.forestSoft}
-            style={styles.uidInput}
+            style={styles.fieldInput}
             autoCapitalize="none"
           />
           <Pressable style={[styles.copyButton, copied && styles.copyButtonActive]} onPress={copyUid}>
@@ -114,16 +140,7 @@ export function ProfileCard() {
 
 function makeStyles(c: ThemeColors) {
   return StyleSheet.create({
-    card: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      backgroundColor: c.card,
-      borderWidth: 1,
-      borderColor: c.line,
-      borderRadius: 16,
-      padding: 12,
-      gap: 12,
-    },
+    row: { flexDirection: 'row', alignItems: 'center', gap: 12 },
     avatarButton: { position: 'relative' },
     avatar: { width: 52, height: 52, borderRadius: 26 },
     avatarPlaceholder: { backgroundColor: c.iconBg, alignItems: 'center', justifyContent: 'center' },
@@ -139,14 +156,14 @@ function makeStyles(c: ThemeColors) {
       alignItems: 'center',
       justifyContent: 'center',
       borderWidth: 2,
-      borderColor: c.card,
+      borderColor: c.bg,
     },
     avatarBadgeText: { fontSize: 10 },
-    uidSection: { flex: 1, gap: 6 },
-    uidLabel: { fontSize: 11, fontWeight: '700', color: c.forestSoft },
-    uidRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-    uidInput: { flex: 1, borderWidth: 1, borderColor: c.line, borderRadius: 10, paddingHorizontal: 10, paddingVertical: 7, fontSize: 13, color: c.forest, backgroundColor: c.surfaceSoft },
-    copyButton: { paddingHorizontal: 12, paddingVertical: 8, borderRadius: 999, backgroundColor: c.chipBg },
+    infoSection: { flex: 1, gap: 6 },
+    fieldRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+    fieldLabel: { fontSize: 11, fontWeight: '700', color: c.forestSoft, width: 32 },
+    fieldInput: { flex: 1, borderWidth: 1, borderColor: c.line, borderRadius: 10, paddingHorizontal: 10, paddingVertical: 6, fontSize: 13, color: c.forest, backgroundColor: c.surfaceSoft },
+    copyButton: { paddingHorizontal: 12, paddingVertical: 7, borderRadius: 999, backgroundColor: c.chipBg },
     copyButtonActive: { backgroundColor: c.yellow },
     copyText: { fontSize: 11, fontWeight: '700', color: c.skyDark },
     copyTextActive: { color: c.forest },
