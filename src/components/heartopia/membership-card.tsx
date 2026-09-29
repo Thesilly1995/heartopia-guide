@@ -10,10 +10,19 @@ const ACTIVATED_KEY = 'heartopia:membership:geactiveerd';
 
 type MembershipType = 'junior' | 'full';
 
-/** Beloningen zoals getoond in de Acorn Store (GAMG Junior/Full Membership). */
-const TIERS: Record<MembershipType, { days: number; dailyDiamonds: number; totalDiamonds: number; dailyTickets: number; totalTickets: number; activationHearts: number }> = {
-  junior: { days: 7, dailyDiamonds: 30, totalDiamonds: 210, dailyTickets: 0, totalTickets: 0, activationHearts: 30 },
-  full: { days: 30, dailyDiamonds: 20, totalDiamonds: 600, dailyTickets: 2, totalTickets: 60, activationHearts: 180 },
+/**
+ * Beloningen zoals getoond in de Acorn Store (GAMG Junior/Full Membership).
+ * 🏅 = gouden medailles, 💙 = blauwe hartjes, 💗 = roze hartjes.
+ */
+const TIERS: Record<MembershipType, { days: number; dailyBlueHearts: number; totalBlueHearts: number; dailyMedals: number; totalMedals: number; activationHearts: number }> = {
+  junior: { days: 7, dailyBlueHearts: 30, totalBlueHearts: 210, dailyMedals: 0, totalMedals: 0, activationHearts: 30 },
+  full: { days: 30, dailyBlueHearts: 20, totalBlueHearts: 600, dailyMedals: 2, totalMedals: 60, activationHearts: 180 },
+};
+
+/** Junior = zilver, Full = goud — matcht de kaartkleur in de Acorn Store. */
+const TIER_BADGE_COLORS: Record<MembershipType, { bg: string; border: string }> = {
+  junior: { bg: '#D9DEE3', border: '#AEB6C0' },
+  full: { bg: '#FFD166', border: '#E0A93A' },
 };
 
 const FULL_PERKS = {
@@ -252,7 +261,9 @@ export function MembershipCard() {
       <Pressable style={styles.row} onPress={openModal}>
         {type && activatedAt ? (
           <>
-            <Text style={styles.acornIcon}>🌰</Text>
+            <View style={[styles.membershipBadge, { backgroundColor: TIER_BADGE_COLORS[type].bg, borderColor: TIER_BADGE_COLORS[type].border }]}>
+              <Text style={styles.membershipBadgeIcon}>🌰</Text>
+            </View>
             <View style={styles.infoSection}>
               <Text style={styles.typeText}>{s.typeLabel(type)}</Text>
               <Text style={[styles.remainingText, isExpired && styles.expiredText]}>
@@ -260,8 +271,8 @@ export function MembershipCard() {
               </Text>
             </View>
             <View style={styles.rewardsRow}>
-              {TIERS[type].totalTickets > 0 && <Text style={styles.rewardText}>🎫{TIERS[type].totalTickets}</Text>}
-              <Text style={styles.rewardText}>💎{TIERS[type].totalDiamonds}</Text>
+              {TIERS[type].totalMedals > 0 && <Text style={styles.rewardText}>🏅{TIERS[type].totalMedals}</Text>}
+              <Text style={styles.rewardText}>💙{TIERS[type].totalBlueHearts}</Text>
               <Text style={styles.rewardText}>💗{TIERS[type].activationHearts}</Text>
             </View>
           </>
@@ -277,9 +288,15 @@ export function MembershipCard() {
 
             <View style={styles.typeToggleRow}>
               <Pressable style={[styles.typeOption, draftType === 'junior' && styles.typeOptionActive]} onPress={() => setDraftType('junior')}>
+                <View style={[styles.membershipBadge, { backgroundColor: TIER_BADGE_COLORS.junior.bg, borderColor: TIER_BADGE_COLORS.junior.border }]}>
+                  <Text style={styles.membershipBadgeIcon}>🌰</Text>
+                </View>
                 <Text style={[styles.typeOptionText, draftType === 'junior' && styles.typeOptionTextActive]}>{s.typeJunior}</Text>
               </Pressable>
               <Pressable style={[styles.typeOption, draftType === 'full' && styles.typeOptionActive]} onPress={() => setDraftType('full')}>
+                <View style={[styles.membershipBadge, { backgroundColor: TIER_BADGE_COLORS.full.bg, borderColor: TIER_BADGE_COLORS.full.border }]}>
+                  <Text style={styles.membershipBadgeIcon}>🌰</Text>
+                </View>
                 <Text style={[styles.typeOptionText, draftType === 'full' && styles.typeOptionTextActive]}>{s.typeFull}</Text>
               </Pressable>
             </View>
@@ -287,11 +304,11 @@ export function MembershipCard() {
             <View style={styles.rewardsPreview}>
               <Text style={styles.rewardsPreviewLabel}>{s.dailyRewards}</Text>
               <Text style={styles.rewardsPreviewValue}>
-                {tier.dailyTickets > 0 ? `🎫${tier.dailyTickets} ` : ''}💎{tier.dailyDiamonds}
+                {tier.dailyMedals > 0 ? `🏅${tier.dailyMedals} ` : ''}💙{tier.dailyBlueHearts}
               </Text>
               <Text style={styles.rewardsPreviewLabel}>{s.totalRewards(tier.days)}</Text>
               <Text style={styles.rewardsPreviewValue}>
-                {tier.totalTickets > 0 ? `🎫${tier.totalTickets} ` : ''}💎{tier.totalDiamonds}
+                {tier.totalMedals > 0 ? `🏅${tier.totalMedals} ` : ''}💙{tier.totalBlueHearts}
               </Text>
               <Text style={styles.rewardsPreviewLabel}>{s.activationRewards}</Text>
               <Text style={styles.rewardsPreviewValue}>💗{tier.activationHearts}</Text>
@@ -356,7 +373,8 @@ export function MembershipCard() {
 function makeStyles(c: ThemeColors) {
   return StyleSheet.create({
     row: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-    acornIcon: { fontSize: 26 },
+    membershipBadge: { width: 32, height: 24, borderRadius: 6, borderWidth: 1.5, alignItems: 'center', justifyContent: 'center' },
+    membershipBadgeIcon: { fontSize: 13 },
     infoSection: { flex: 1 },
     typeText: { fontSize: 13, fontWeight: '700', color: c.forest },
     remainingText: { fontSize: 12, color: c.forestSoft, marginTop: 1 },
@@ -369,7 +387,7 @@ function makeStyles(c: ThemeColors) {
     modalCard: { width: '100%', maxWidth: 340, maxHeight: '85%', backgroundColor: c.card, borderRadius: 18, padding: 16, gap: 10 },
     modalTitle: { fontSize: 15, fontWeight: '700', color: c.forest },
     typeToggleRow: { flexDirection: 'row', gap: 8 },
-    typeOption: { flex: 1, paddingVertical: 10, borderRadius: 12, backgroundColor: c.surfaceSoft, borderWidth: 1, borderColor: c.line, alignItems: 'center' },
+    typeOption: { flex: 1, paddingVertical: 10, borderRadius: 12, backgroundColor: c.surfaceSoft, borderWidth: 1, borderColor: c.line, alignItems: 'center', gap: 6 },
     typeOptionActive: { backgroundColor: c.coral, borderColor: c.coral },
     typeOptionText: { fontSize: 13, fontWeight: '700', color: c.forest },
     typeOptionTextActive: { color: '#FFFFFF' },
