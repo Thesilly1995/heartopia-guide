@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react';
 import { Modal, Platform, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { MembershipCard } from '@/components/heartopia/membership-card';
 import { ProfileCard } from '@/components/heartopia/profile-card';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { useBubblesProgress } from '@/data/bubbles-progress';
@@ -208,6 +209,8 @@ export default function HomeScreen() {
 
         <View style={styles.profileCardWrapper}>
           <ProfileCard />
+          <View style={styles.profileDivider} />
+          <MembershipCard />
         </View>
 
         <Link href="/events" asChild>
@@ -429,7 +432,8 @@ function makeStyles(c: ThemeColors) {
     serverOptionText: { fontSize: 14, fontWeight: '600', color: c.forest },
     serverOptionOffset: { fontSize: 12, color: c.forestSoft },
     serverOptionTextActive: { color: '#FFFFFF' },
-    profileCardWrapper: { marginTop: 4 },
+    profileCardWrapper: { marginTop: 4, gap: 10 },
+    profileDivider: { height: StyleSheet.hairlineWidth, backgroundColor: c.line },
     statusCard: {
       flexDirection: 'row',
       alignItems: 'center',
