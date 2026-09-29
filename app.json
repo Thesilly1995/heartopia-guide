@@ -50,6 +50,14 @@
       ],
       "expo-notifications",
       [
+        "expo-image-picker",
+        {
+          "photosPermission": "Heartopedia gebruikt je foto's alleen om een profielfoto in te stellen.",
+          "cameraPermission": false,
+          "microphonePermission": false
+        }
+      ],
+      [
         "expo-build-properties",
         {
           "android": {
