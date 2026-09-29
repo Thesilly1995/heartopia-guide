@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react';
 import { Modal, Platform, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { ProfileCard } from '@/components/heartopia/profile-card';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { useBubblesProgress } from '@/data/bubbles-progress';
 import { useDailyPlots } from '@/data/daily-plots';
@@ -203,6 +204,10 @@ export default function HomeScreen() {
               </Pressable>
             </View>
           </View>
+        </View>
+
+        <View style={styles.profileCardWrapper}>
+          <ProfileCard />
         </View>
 
         <Link href="/events" asChild>
@@ -424,6 +429,7 @@ function makeStyles(c: ThemeColors) {
     serverOptionText: { fontSize: 14, fontWeight: '600', color: c.forest },
     serverOptionOffset: { fontSize: 12, color: c.forestSoft },
     serverOptionTextActive: { color: '#FFFFFF' },
+    profileCardWrapper: { marginTop: 4 },
     statusCard: {
       flexDirection: 'row',
       alignItems: 'center',
