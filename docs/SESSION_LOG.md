@@ -2,6 +2,25 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-09-30 (deel 60) — Kaart-tool v2 (tabbladen/Doris-toggle), bubbelweken t/m 26 sep-2 okt, rainbow-locaties (Doris op beide kaarten)
+
+**Kaart-coördinaten-tool grote upgrade**: gebruiker leverde zelf een herbouwde versie aan (geüpload bestand, niet door mij geschreven) en vroeg om die live te zetten op dezelfde artifact-URL. Nieuw t.o.v. de vorige versie (met losse 📍/🌊-knoppen): beide kaarten (hoofdeiland + Whalefall Canyon) worden nu als tabbladen tegelijk bijgehouden (eigen punten-lijst per kaart, wisselen van tabblad verliest niks), nummering loopt automatisch door over beide kaarten heen, `underwater` wordt automatisch gezet op basis van het actieve tabblad (lost de eerdere kopieerfout structureel op i.p.v. steeds handmatig corrigeren), en een Doris-toggle (🎀) per punt zet `isDoris: true` in de output. Eén gecombineerde JSON-output voor beide kaarten samen. Gepubliceerd over dezelfde artifact-URL (blijft `https://claude.ai/code/artifact/1012aa23-...`).
+
+**Bubbelweken verwerkt**: 12-18 sep (#127), 19-25 sep, 26 sep-2 okt (#185) — telkens hoofdeiland + Whalefall Canyon via de tool, richting-gebaseerde NL/EN/ES/PT-omschrijvingen (schema van `remote-content.json` had inmiddels Spaans/Portugees gekregen door ander werk, dus vanaf 19-25 sep ook die twee talen ingevuld). Onderweg twee keer een mergeconflict op alleen het `updatedAt`-veld gehad doordat `main` tussentijds door parallel werk was bijgewerkt — opgelost door de branch opnieuw vanaf `origin/main` te resetten en te mergen.
+
+**Rainbow-locaties ingevuld** (#196): 3 hoofdeiland- + 5 Whalefall Canyon-punten via de nieuwe tool, met 2 Doris-punten — gebruiker bevestigde expliciet dat Doris dit keer op **beide** kaarten tegelijk is gezien (wijkt af van de eerdere vastgelegde aanname "Doris alleen bij Whalefall Canyon", dus dat gold kennelijk niet universeel).
+
+**Belangrijke correctie over multi-server-timing**: gebruiker vroeg om bij het live zetten van rainbow/meteor rekening te houden met de 5 verschillende servers (Global GMT+1, Sea GMT+7, Tw/Hk/Mo GMT+8, America GMT-5, Asia GMT+9 — zie `src/hooks/use-server.tsx`), omdat Asia/Sea eerder in hun venster zitten dan Global. Eerst per ongeluk een merge ingepland op "12:00 UTC" (verkeerde aanname dat het merge-moment het venster bepaalt). **Bleek onnodig**: sinds deel 59 bepaalt `useKindWindowActive` (`src/lib/event-window.ts`) het venster al volledig automatisch per geselecteerde server, puur uit het `block`-veld in `weekForecast` (hier: 30 sep, blok "12-18") — geen enkele render-tijd-afhankelijkheid. De enige relevante vraag is dus: **hoe eerder gemerged, hoe beter** (zodat geen enkel server-venster de data mist), nooit hoe laat. Geplande 12:00-merge geannuleerd, meteen gemerged (09:15 UTC) — Asia's venster (03:00-09:00 UTC) bleek al net gesloten toen de coördinaten binnenkwamen, Sea/Tw-Hk-Mo/Global konden nog (deels) profiteren. **Les voor mezelf**: bij toekomstige rainbow/meteor-locaties nooit meer een geplande merge-tijd instellen — altijd zo snel mogelijk mergen zodra de data compleet is, en het per-server-venster aan de bestaande client-side logica overlaten.
+
+### Nog open
+
+- Weekvoorspelling na 30 sep nog niet ingevuld.
+- Overige oude punten (pushmeldingen-setup, RevenueCat-key, productietoegang) staan nog steeds open uit eerdere delen.
+
+### Repo-status
+
+Alles gecommit en gepusht naar `main` op `github.com/Thesilly1995/heartopia-guide`.
+
 ## 2026-09-27 (deel 59) — Rainbow-locaties (incl. 1x foutieve coördinaten gecorrigeerd) + per-server automatische offline-detectie voor Rainbow
 
 **Rainbow-locaties ingevuld** (8 punten via de kaart-tool: 3 hoofdeiland, 5 Whalefall Canyon, Doris op beide kaarten tegelijk, #186) voor het venster van 27 sep 18:00-00:00 servertijd. Gebruiker meldde meteen daarna dat de 3 hoofdeiland-coördinaten per ongeluk op de verkeerde kaart waren aangewezen — gecorrigeerd (#187, Doris verschoof van punt 3 naar punt 2), Whalefall Canyon-punten klopten al en bleven ongewijzigd.
