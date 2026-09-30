@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { createContext, type ReactNode, useCallback, useContext, useEffect, useState } from 'react';
+import { createContext, type ReactNode, useCallback, useContext, useEffect, useRef, useState } from 'react';
 
+import { useServer } from '@/hooks/use-server';
 import {
   ALL_CATEGORIES,
   deletePushToken,
@@ -55,10 +56,16 @@ async function loadEnabled(): Promise<Record<NotificationCategory, boolean>> {
 }
 
 export function NotificationsProvider({ children }: { children: ReactNode }) {
+  const { server } = useServer();
   const [token, setToken] = useState<string | null>(null);
   const [enabled, setEnabled] = useState<Record<NotificationCategory, boolean>>(DEFAULT_ENABLED);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Altijd de laatst geselecteerde server bij de hand hebben in syncToSupabase/effects
+  // zonder die als dependency te hoeven opnemen (zou anders elke server-wissel een
+  // nieuwe syncToSupabase-identiteit geven en de mount-only-effect-logica compliceren).
+  const serverRef = useRef(server.id);
+  serverRef.current = server.id;
 
   useEffect(() => {
     (async () => {
@@ -73,7 +80,7 @@ export function NotificationsProvider({ children }: { children: ReactNode }) {
         if (registered.error) setError(registered.error);
         if (registered.token) {
           setToken(registered.token);
-          const saved = await savePushToken(registered.token, active);
+          const saved = await savePushToken(registered.token, active, serverRef.current);
           if (saved.error) setError(saved.error);
         }
       }
@@ -86,10 +93,22 @@ export function NotificationsProvider({ children }: { children: ReactNode }) {
     if (active.length === 0) {
       await deletePushToken(nextToken);
     } else {
-      const saved = await savePushToken(nextToken, active);
+      const saved = await savePushToken(nextToken, active, serverRef.current);
       if (saved.error) setError(saved.error);
     }
   }, []);
+
+  // Server gewisseld terwijl er al een geregistreerd token is? Dan opnieuw opslaan
+  // zodat de Rainbow/meteorenregen-melding voortaan op de nieuwe servertijd vuurt.
+  useEffect(() => {
+    if (!token) return;
+    const active = ALL_CATEGORIES.filter((category) => enabled[category]);
+    if (active.length === 0) return;
+    savePushToken(token, active, server.id).then((saved) => {
+      if (saved.error) setError(saved.error);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [server.id]);
 
   const enableCategory = useCallback(
     async (category: NotificationCategory) => {

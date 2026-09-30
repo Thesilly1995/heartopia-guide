@@ -28,10 +28,16 @@ app-code staat volledig klaar. Er zijn twee delen:
 - `scripts/send-content-notifications.mjs` +
   `.github/workflows/notify-content-changes.yml`: vergelijkt bij elke push
   naar `main` die `remote-content.json` raakt de vorige met de nieuwe versie,
-  en verstuurt een melding zodra Rainbow/meteorenregen van leeg naar gevuld
-  gaat (= net begonnen), er een nieuw event verschijnt, of er een nieuwe code
-  bijkomt. Werkt dus ook als jij zelf het bestand rechtstreeks op GitHub
-  bewerkt, niet alleen via een sessie met mij.
+  en verstuurt een melding zodra er een nieuw event verschijnt of er een
+  nieuwe code bijkomt. Werkt dus ook als jij zelf het bestand rechtstreeks op
+  GitHub bewerkt, niet alleen via een sessie met mij.
+- `scripts/send-server-timed-notifications.mjs` +
+  `.github/workflows/notify-server-timed.yml`: draait elke 15 minuten en
+  verstuurt de Rainbow/meteorenregen-"is begonnen"-melding **per server**, op
+  het moment dat het venster daadwerkelijk opengaat op de servertijd van de
+  ontvanger (zie "Server-timing", hieronder) — i.p.v. bij elke wijziging van
+  `remote-content.json`, want die kan nu vooraf gebeuren (de app zelf bepaalt
+  wanneer Rainbow/meteorenregen zichtbaar wordt, zie `src/lib/event-window.ts`).
 - `scripts/send-backup-reminder.mjs` +
   `.github/workflows/send-backup-reminder.yml`: verstuurt wekelijks (zondag
   18:00 UTC = 20:00 zomertijd / 19:00 wintertijd) een herinnering naar alle
@@ -153,6 +159,56 @@ Zie `src/lib/push-notifications.ts` (`savePushToken`/`deletePushToken`,
 gebruiken `supabase.rpc(...)`). De tabel-policies hierboven blijven
 onschadelijk staan (niet meer gebruikt door de app, maar ook geen kwaad).
 
+### Migratie: server-kolom toevoegen (30 sep 2026)
+
+**Aanleiding**: gebruiker kreeg de Rainbow-melding uren te vroeg (op het
+moment dat de data gepusht werd, niet op het moment dat het venster echt
+opengaat op haar eigen servertijd). De in-app weergave was al langer
+per-server automatisch (`src/lib/event-window.ts`, sinds deel 58/59), maar de
+pushmelding niet — die vuurde nog steeds bij elke `remote-content.json`-wijziging,
+ongeacht klokuur of server. Opgelost door de Rainbow/meteorenregen-melding te
+verplaatsen naar een cron-job die per server checkt of het venster nét
+begonnen is (zie hierboven) — dat vereist wel te weten welke server bij welk
+token hoort, vandaar deze kolom.
+
+In het Supabase-dashboard → SQL Editor → dit uitvoeren:
+
+```sql
+alter table push_tokens add column if not exists server text not null default 'global';
+
+drop function if exists public.save_push_token(text, text, text[]);
+
+create or replace function public.save_push_token(p_token text, p_platform text, p_categories text[], p_server text default 'global')
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  insert into push_tokens (token, platform, categories, server, updated_at)
+  values (p_token, p_platform, p_categories, p_server, now())
+  on conflict (token) do update
+    set platform = excluded.platform,
+        categories = excluded.categories,
+        server = excluded.server,
+        updated_at = excluded.updated_at;
+end;
+$$;
+
+grant execute on function public.save_push_token(text, text, text[], text) to anon, authenticated;
+```
+
+Na deze migratie + de bijbehorende app-update (`eas update`, geen nieuwe build
+nodig — puur JS): bestaande tokens krijgen automatisch `server = 'global'`
+(kolom-default) totdat de gebruiker de app opnieuw opent (dan wordt de
+daadwerkelijke geselecteerde server opgeslagen, zie `src/hooks/use-notifications.tsx`).
+
+**Server-timing**: de server-ids in `push_tokens.server` en de offsets in
+`scripts/send-server-timed-notifications.mjs` moeten in sync blijven met
+`SERVERS` in `src/hooks/use-server.tsx` (`global`/`sea`/`twhkmo`/`america`/`asia`).
+Wijzigt die lijst ooit (nieuwe server, ander offset), dan moet dat op alle drie
+de plekken bijgewerkt worden.
+
 ### 3. GitHub Actions-secrets instellen
 
 Repo → **Settings → Secrets and variables → Actions → New repository
@@ -177,9 +233,14 @@ scherm openen (als Premium-lid), een categorie aanzetten, toestemming geven.
   om toestemming (alleen de eerste keer).
 - Check in Supabase (tabel `push_tokens`) of er een rij met je token
   verschijnt.
-- Een test-wijziging pushen naar `remote-content.json` op `main` (bv.
-  `rainbowSpots` van `[]` naar een paar testpunten) en de Actions-tab op
-  GitHub checken of de workflow draait en of je toestel een melding krijgt.
+- Een nieuw event of nieuwe code toevoegen aan `remote-content.json` op
+  `main` en de Actions-tab checken of de "Notify content changes"-workflow
+  draait en je toestel een melding krijgt.
+- Voor Rainbow/meteorenregen: `workflow_dispatch` op "Notify server-timed
+  weather" handmatig draaien via de Actions-tab (i.p.v. 15 min wachten) —
+  vuurt alleen als er op dat moment voor minstens één server een venster
+  binnen de laatste `FIRE_WINDOW_MINUTES` is gestart én de bijbehorende
+  spots-lijst niet leeg is.
 
 ## iOS
 
