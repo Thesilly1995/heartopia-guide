@@ -1,17 +1,25 @@
 #!/usr/bin/env node
 /**
  * Vergelijkt de vorige en huidige `remote-content.json` en verstuurt
- * pushmeldingen (via Expo's push-API) voor relevante wijzigingen: Rainbow of
- * meteorenregen die net begonnen is, een nieuw event, of nieuwe gift codes.
- * Draait als GitHub Action bij elke push naar main die remote-content.json
- * raakt — zie .github/workflows/notify-content-changes.yml en
- * docs/push-notifications-setup.md.
+ * pushmeldingen (via Expo's push-API) voor een nieuw event of nieuwe gift
+ * codes. Draait als GitHub Action bij elke push naar main die
+ * remote-content.json raakt — zie .github/workflows/notify-content-changes.yml
+ * en docs/push-notifications-setup.md.
+ *
+ * Rainbow/meteorenregen "is begonnen" zit hier NIET meer in — dat gebeurt
+ * per server op het exacte moment dat het venster opengaat, zie
+ * send-server-timed-notifications.mjs. Dit script vuurt bij een push naar
+ * main, ongeacht klokuur, en dat klopt niet meer sinds rainbowSpots/
+ * meteorSpots vooraf ingevuld mogen worden (de app zelf bepaalt wanneer
+ * ze zichtbaar worden, zie src/lib/event-window.ts) — anders krijgen
+ * spelers de melding uren voor hun eigen servertijd-venster opengaat.
  *
  * Vereiste env vars: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY.
  * Argumenten: <pad-naar-vorige-json> <pad-naar-huidige-json>
  */
 
 import { readFileSync } from 'node:fs';
+import { fetchTokens, sendPushBatch } from './push-helpers.mjs';
 
 const [, , prevPath, currPath] = process.argv;
 const SUPABASE_URL = process.env.SUPABASE_URL;
@@ -39,41 +47,10 @@ function readJson(path) {
 const prev = readJson(prevPath);
 const curr = readJson(currPath);
 
-/** @typedef {{ category: 'rainbow_meteor' | 'event' | 'codes', titleNl: string, titleEn: string, bodyNl: string, bodyEn: string }} PushMessage */
+/** @typedef {{ category: 'event' | 'codes', titleNl: string, titleEn: string, bodyNl: string, bodyEn: string }} PushMessage */
 
 /** @type {PushMessage[]} */
 const messages = [];
-
-function hadSpots(payload, key) {
-  return Array.isArray(payload?.[key]) && payload[key].length > 0;
-}
-
-// Rainbow: leeg -> gevuld = net begonnen. LET OP (sep 2026): deze melding
-// vuurt zodra de wijziging naar main gepusht wordt, ongeacht het klokuur —
-// dus rainbowSpots/meteorSpots pas vullen op het moment dat het venster
-// écht begint (bv. 18:00 servertijd), nooit vooraf. Ook nooit "leeg -> vol
-// -> leeg -> vol" doen op al-live data om een typefout te fixen (dat vuurt
-// een spookmelding) — bewerk bestaande entries in place.
-if (!hadSpots(prev, 'rainbowSpots') && hadSpots(curr, 'rainbowSpots')) {
-  messages.push({
-    category: 'rainbow_meteor',
-    titleNl: '🌈 Rainbow is begonnen!',
-    titleEn: '🌈 Rainbow has started!',
-    bodyNl: 'Bekijk de boeketlocaties in Heartopedia.',
-    bodyEn: 'Check the bouquet locations in Heartopedia.',
-  });
-}
-
-// Meteorenregen: leeg -> gevuld = net begonnen.
-if (!hadSpots(prev, 'meteorSpots') && hadSpots(curr, 'meteorSpots')) {
-  messages.push({
-    category: 'rainbow_meteor',
-    titleNl: '☄️ Meteorenregen is begonnen!',
-    titleEn: '☄️ Meteor shower has started!',
-    bodyNl: 'Bekijk de fragment-locaties in Heartopedia.',
-    bodyEn: 'Check the shard locations in Heartopedia.',
-  });
-}
 
 // Nieuw event: event aanwezig en de naam is veranderd (of er was nog geen event).
 const prevEventName = prev?.event?.nameNl ?? null;
@@ -107,58 +84,8 @@ if (messages.length === 0) {
   process.exit(0);
 }
 
-async function fetchTokensForCategory(category) {
-  const url = `${SUPABASE_URL}/rest/v1/push_tokens?select=token&categories=cs.{${category}}`;
-  const response = await fetch(url, {
-    headers: {
-      apikey: SUPABASE_SERVICE_ROLE_KEY,
-      Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
-    },
-  });
-  if (!response.ok) {
-    console.error(`Supabase-query mislukt voor categorie ${category}: HTTP ${response.status}`);
-    return [];
-  }
-  const rows = await response.json();
-  return rows.map((row) => row.token);
-}
-
-/** Expo's push-API accepteert max. 100 berichten per request. */
-function chunk(array, size) {
-  const chunks = [];
-  for (let i = 0; i < array.length; i += size) chunks.push(array.slice(i, i + size));
-  return chunks;
-}
-
-async function sendPushBatch(tokens, message) {
-  if (tokens.length === 0) return;
-  const payloads = tokens.map((token) => ({
-    to: token,
-    // Taal is hier niet per gebruiker bekend (geen account-systeem) — NL+EN
-    // samen in één bericht, zelfde aanpak als de rest van de app bij content
-    // waar de taalvoorkeur van de ontvanger niet server-side bekend is.
-    title: `${message.titleNl} / ${message.titleEn}`,
-    body: `${message.bodyNl}\n${message.bodyEn}`,
-    sound: 'default',
-  }));
-
-  for (const batch of chunk(payloads, 100)) {
-    const response = await fetch('https://exp.host/--/api/v2/push/send', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify(batch),
-    });
-    if (!response.ok) {
-      console.error(`Expo push-API gaf HTTP ${response.status} voor "${message.titleNl}"`);
-      continue;
-    }
-    const result = await response.json();
-    console.log(`Verstuurd naar ${batch.length} toestel(len) voor "${message.titleNl}":`, JSON.stringify(result.data ?? result));
-  }
-}
-
 for (const message of messages) {
-  const tokens = await fetchTokensForCategory(message.category);
+  const tokens = await fetchTokens(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, { category: message.category });
   console.log(`${message.category}: ${tokens.length} toestel(len) geabonneerd op "${message.titleNl}"`);
   await sendPushBatch(tokens, message);
 }

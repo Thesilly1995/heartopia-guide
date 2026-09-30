@@ -1,0 +1,27 @@
+name: Notify server-timed weather (Rainbow/meteor)
+
+# Draait elke 15 minuten (aansluitend op FIRE_WINDOW_MINUTES in het script)
+# en verstuurt de Rainbow/meteorenregen-"is begonnen"-melding per server, op
+# het exacte moment dat het venster op de servertijd van die speler opengaat.
+# Zie scripts/send-server-timed-notifications.mjs en
+# docs/push-notifications-setup.md.
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch: {}
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Per-server melding versturen indien een venster nu opengaat
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: node scripts/send-server-timed-notifications.mjs

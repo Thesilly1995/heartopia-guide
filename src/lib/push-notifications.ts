@@ -64,18 +64,28 @@ export async function registerForPushNotificationsAsync(): Promise<PushRegistrat
 }
 
 /**
- * Slaat het push-token + welke categorieën aanstaan op in Supabase, via de
- * `save_push_token` RPC (tabel `push_tokens`, zie
+ * Slaat het push-token + welke categorieën aanstaan + geselecteerde server op
+ * in Supabase, via de `save_push_token` RPC (tabel `push_tokens`, zie
  * docs/push-notifications-setup.md). Gebruikt een RPC i.p.v. een directe
  * upsert op de tabel omdat een directe schrijfactie als anon/authenticated
  * onverklaarbaar op een RLS-fout stuitte ondanks correcte policies — de RPC
  * (security definer) omzeilt dat.
+ *
+ * `server` (bv. "global") bepaalt op welk moment de Rainbow/meteorenregen-
+ * melding voor dit toestel verstuurd wordt — zie
+ * scripts/send-server-timed-notifications.mjs, moet matchen met de
+ * server-ids in src/hooks/use-server.tsx.
  */
-export async function savePushToken(token: string, categories: NotificationCategory[]): Promise<{ ok: boolean; error: string | null }> {
+export async function savePushToken(
+  token: string,
+  categories: NotificationCategory[],
+  server: string
+): Promise<{ ok: boolean; error: string | null }> {
   const { error } = await supabase.rpc('save_push_token', {
     p_token: token,
     p_platform: Platform.OS,
     p_categories: categories,
+    p_server: server,
   });
   return { ok: !error, error: error?.message ?? null };
 }
