@@ -42,7 +42,7 @@ export function useWildMaterials(): ForagedItem[] {
   return useMemo(
     () =>
       WILD_MATERIALS_RAW.map((r) => ({
-    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : language === 'de' ? r.nameDe : r.nameEn,
+    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : language === 'de' ? r.nameDe : language === 'en' ? r.nameEn : r.nameNl,
     spot: language === 'es' ? r.spotEs : language === 'pt' ? r.spotPt : r.spotEn,
     sellPrice: r.sellPrice,
     energy: r.energy,

@@ -147,7 +147,7 @@ export function useRecipes(): RecipeItem[] {
   return useMemo(
     () =>
       RECIPES_RAW.map((r) => ({
-    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : language === 'de' ? r.nameDe : r.nameEn,
+    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : language === 'de' ? r.nameDe : language === 'en' ? r.nameEn : r.nameNl,
     rarity: language === 'es' ? r.rarityEs : language === 'pt' ? r.rarityPt : r.rarityEn,
     tool: TOOL_BY_LANG(r, language),
     ingredients: INGREDIENTS_BY_LANG(r, language),
@@ -176,7 +176,7 @@ export function useDogSafeRecipes(): { name: string; emoji: string }[] {
   return useMemo(
     () =>
       RECIPES_RAW.filter((r) => DOG_SAFE_RECIPE_NAMES_EN.includes(r.nameEn)).map((r) => ({
-        name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : language === 'de' ? r.nameDe : r.nameEn,
+        name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : language === 'de' ? r.nameDe : language === 'en' ? r.nameEn : r.nameNl,
         emoji: r.emoji,
       })),
     [language]
