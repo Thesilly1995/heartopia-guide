@@ -23,9 +23,10 @@ Heartopedia is een onofficiële, door fans gemaakte gids voor de mobiele game
 Heartopia — alles wat je nodig hebt om niks te missen, overzichtelijk op één plek.
 
 🎣 CATALOGI VOOR ELKE HOBBY
-Vissen, koken, tuinieren, insecten, vogels, beeldhouwen en ocean cleanup — met
-zoeken, filters op level en weer, uitklapbare details en een vinkje zodra je
-mastery hebt behaald. Ook Dog & Cat Moments, wilde dieren en wilde ingrediënten.
+Vissen, koken, tuinieren, insecten, vogels, beeldhouwen, ocean cleanup en
+puzzels & boeken — met zoeken, filters op level en weer, uitklapbare details
+en een vinkje zodra je mastery hebt behaald. Ook Dog & Cat Moments (met eigen
+namen per huisdier), wilde dieren en wilde ingrediënten.
 
 🏅 BADGES & MISSIES
 Zie in één oogopslag welke badges je al hebt en welke nog niet, inclusief de
@@ -36,6 +37,10 @@ De wekelijkse roze bubbels, regenboogboeketten en meteorenregen-locaties
 wisselen voortdurend — Heartopedia houdt de actuele plekken bij op een
 interactieve kaart, in plaats van een verouderde vaste lijst.
 
+🌍 VOOR ELKE SERVER
+Kies je eigen server (Global, Sea, TW/HK/MO, America of Asia) — kaarten,
+weekweer en reset-tijden tellen automatisch mee op jouw eigen servertijd.
+
 🌦️ WEEKWEER & DAGELIJKSE PLOTS
 Bekijk het weer van de hele week vooruit (inclusief hittegolven en
 meteorenregens), en waar de Zwervende Eik en de Fluoriet-plek vandaag staan.
@@ -43,15 +48,22 @@ meteorenregens), en waar de Zwervende Eik en de Fluoriet-plek vandaag staan.
 🎁 ACTIEVE CODES
 Een bijgehouden lijst met geldige redemption-codes en hun beloningen.
 
+🪪 PROFIEL & MEMBERSHIP
+Je eigen profielkaart met foto en Heartopia-UID, plus een aftelling voor je
+Membership-type met een overzicht van de beloningen die eraan komen.
+
 💡 FEEDBACK & TO-DO
 Deel ideeën voor de gids (zichtbaar voor alle gebruikers) en houd je eigen
 speel-to-do-lijstje bij.
 
 👑 PREMIUM (optioneel)
 Een voortgangsdashboard over al je catalogi, cloud save om je voortgang op een
-ander toestel terug te zetten, en een advertentievrije ervaring.
+ander toestel terug te zetten, pushmeldingen (regenboog/meteorenregen, nieuwe
+events, nieuwe codes, wekelijkse cloud save-herinnering), en een
+advertentievrije ervaring.
 
-🇳🇱 🇬🇧 Volledig beschikbaar in het Nederlands en Engels.
+🌐 Volledig beschikbaar in het Nederlands, Engels, Spaans, Portugees, Frans
+en Duits.
 
 Heartopedia is niet gemaakt door, en niet verbonden aan, de officiële
 ontwikkelaars of uitgevers van Heartopia — puur een gids van een fan voor
@@ -72,9 +84,10 @@ Heartopedia is an unofficial, fan-made guide for the mobile game Heartopia —
 everything you need to never miss a thing, organized in one place.
 
 🎣 A CATALOG FOR EVERY HOBBY
-Fishing, cooking, gardening, insects, birds, sculpting and ocean cleanup — with
-search, level/weather filters, expandable details, and a checkmark once you've
-reached mastery. Plus Dog & Cat Moments, wild animals and wild ingredients.
+Fishing, cooking, gardening, insects, birds, sculpting, ocean cleanup and
+puzzles & books — with search, level/weather filters, expandable details, and
+a checkmark once you've reached mastery. Plus Dog & Cat Moments (with your own
+name per pet), wild animals and wild ingredients.
 
 🏅 BADGES & MISSIONS
 See at a glance which badges you have and which you don't, including hidden
@@ -85,6 +98,10 @@ Weekly pink bubbles, rainbow bouquets and meteor shower locations change all
 the time — Heartopedia tracks the current spots on an interactive map instead
 of a stale fixed list.
 
+🌍 FOR EVERY SERVER
+Pick your own server (Global, Sea, TW/HK/MO, America or Asia) — maps, weekly
+weather and reset times all count automatically in your own server time.
+
 🌦️ WEEKLY WEATHER & DAILY PLOTS
 See the whole week's weather ahead (including heatwaves and meteor showers),
 and where today's Wandering Oak and Fluorite spot are.
@@ -92,15 +109,20 @@ and where today's Wandering Oak and Fluorite spot are.
 🎁 ACTIVE CODES
 A maintained list of valid redemption codes and their rewards.
 
+🪪 PROFILE & MEMBERSHIP
+Your own profile card with a photo and your Heartopia UID, plus a countdown
+for your Membership tier with an overview of the rewards coming your way.
+
 💡 FEEDBACK & TO-DO
 Share ideas for the guide (visible to all users) and keep your own personal
 to-do list.
 
 👑 PREMIUM (optional)
 A progress dashboard across all your catalogs, cloud save to restore your
-progress on another device, and an ad-free experience.
+progress on another device, push notifications (rainbow/meteor shower, new
+events, new codes, weekly cloud save reminder), and an ad-free experience.
 
-🇳🇱 🇬🇧 Fully available in Dutch and English.
+🌐 Fully available in Dutch, English, Spanish, Portuguese, French and German.
 
 Heartopedia is not made by, and not affiliated with, the official developers
 or publishers of Heartopia — just a guide made by a fan, for other fans.
