@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { useLanguage } from '@/hooks/use-language';
 import { useServer } from '@/hooks/use-server';
-import { currentDailyResetKey } from '@/lib/reset-schedule';
+import { currentCalendarDateKey } from '@/lib/reset-schedule';
 import { RemoteWeekForecastSlot, useRemoteContent, WeekForecastBlock, WeekForecastKind } from '@/lib/remote-content';
 
 export interface WeekForecastSlot {
@@ -118,7 +118,7 @@ export function useWeekForecast(): WeekForecastEntry[] {
 
   return useMemo(() => {
     const entries = payload?.weekForecast ?? [];
-    const today = currentDailyResetKey(server.offsetHours);
+    const today = currentCalendarDateKey(server.offsetHours);
     return entries
       .filter((entry) => entry.date >= today)
       .sort((a, b) => a.date.localeCompare(b.date))
