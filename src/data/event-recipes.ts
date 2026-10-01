@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 
+import { useLanguage } from '@/hooks/use-language';
+
 export interface EventRecipeItem {
   name: string;
   ingredients: string[];
@@ -21,13 +23,14 @@ interface EventRecipeRaw {
 const EVENT_RECIPES_RAW: EventRecipeRaw[] = [];
 
 export function useEventRecipes(): EventRecipeItem[] {
+  const { language } = useLanguage();
   return useMemo(
     () =>
       EVENT_RECIPES_RAW.map((r) => ({
-    name: r.nameEn,
+    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameEn : language === 'de' ? r.nameEn : language === 'en' ? r.nameEn : r.nameNl,
     ingredients: r.ingredientsEn,
     emoji: r.emoji,
       })),
-    []
+    [language]
   );
 }

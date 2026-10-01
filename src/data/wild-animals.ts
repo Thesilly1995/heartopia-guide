@@ -69,7 +69,7 @@ export function useWildAnimals(): WildAnimalItem[] {
   return useMemo(
     () =>
       WILD_ANIMALS_RAW.map((r) => ({
-    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : language === 'de' ? r.nameDe : r.nameEn,
+    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : language === 'de' ? r.nameDe : language === 'en' ? r.nameEn : r.nameNl,
     weather: WEATHER_BY_LANG(r, language),
     foods: FOODS_BY_LANG(r, language),
     spot: SPOT_BY_LANG(r, language),

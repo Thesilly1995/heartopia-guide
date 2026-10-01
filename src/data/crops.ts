@@ -61,7 +61,7 @@ export function useCrops(): CropItem[] {
   return useMemo(
     () =>
       CROPS_RAW.map((r) => ({
-    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : language === 'de' ? r.nameDe : r.nameEn,
+    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : language === 'de' ? r.nameDe : language === 'en' ? r.nameEn : r.nameNl,
     rarity: r.rarityEn,
     growTime: GROW_TIME_BY_LANG(r, language),
     level: r.level,

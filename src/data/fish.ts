@@ -152,7 +152,7 @@ export function useFish(): FishItem[] {
   return useMemo(
     () =>
       FISH_RAW.map((r) => ({
-    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : language === 'de' ? r.nameDe : r.nameEn,
+    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : language === 'de' ? r.nameDe : language === 'en' ? r.nameEn : r.nameNl,
     rarity: r.rarityEn,
     spot: r.spotEn,
     watertype: r.watertypeEn,
@@ -185,7 +185,7 @@ export function useCatSafeFish(): { name: string; emoji: string }[] {
   return useMemo(
     () =>
       FISH_RAW.filter((r) => CAT_SAFE_FISH_NAMES_EN.includes(r.nameEn)).map((r) => ({
-        name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : language === 'de' ? r.nameDe : r.nameEn,
+        name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : language === 'de' ? r.nameDe : language === 'en' ? r.nameEn : r.nameNl,
         emoji: r.emoji,
       })),
     [language]

@@ -132,7 +132,7 @@ export function useBirds(): BirdItem[] {
   return useMemo(
     () =>
       BIRDS_RAW.map((r) => ({
-    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : language === 'de' ? r.nameDe : r.nameEn,
+    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : language === 'de' ? r.nameDe : language === 'en' ? r.nameEn : r.nameNl,
     rarity: r.rarityEn,
     spot: r.spotEn,
     watertype: r.watertypeEn,

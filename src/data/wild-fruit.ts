@@ -41,7 +41,7 @@ export function useDogSafeWildFruit(): { name: string; emoji: string }[] {
   return useMemo(
     () =>
       WILD_FRUIT_RAW.filter((r) => DOG_SAFE_WILD_FRUIT_NAMES_EN.includes(r.nameEn)).map((r) => ({
-        name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : language === 'de' ? r.nameDe : r.nameEn,
+        name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : language === 'de' ? r.nameDe : language === 'en' ? r.nameEn : r.nameNl,
         emoji: r.emoji,
       })),
     [language]
@@ -53,7 +53,7 @@ export function useWildFruit(): ForagedItem[] {
   return useMemo(
     () =>
       WILD_FRUIT_RAW.map((r) => ({
-    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : language === 'de' ? r.nameDe : r.nameEn,
+    name: language === 'es' ? r.nameEs : language === 'pt' ? r.namePt : language === 'fr' ? r.nameFr : language === 'de' ? r.nameDe : language === 'en' ? r.nameEn : r.nameNl,
     spot: language === 'es' ? r.spotEs : language === 'pt' ? r.spotPt : r.spotEn,
     sellPrice: r.sellPrice,
     energy: r.energy,
