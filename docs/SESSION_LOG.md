@@ -2,6 +2,14 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-10-01 (deel 61) — Catalogus-zoekfunctie: Nederlandse naam werd genegeerd in nl-taalmodus (#200)
+
+**Aanleiding**: gebruiker kreeg feedback dat zoeken op "oranje" (NL) in de insecten-catalogus de oranje vlinder niet vond, terwijl "orange" (EN) wel werkte. Gevraagd om alle zoekfuncties in alle catalogi/talen te checken op dezelfde fout.
+
+**Root cause**: de `name`-ternary in de `useX()`-hooks van **alle** catalogus-databestanden miste de laatste `language === 'en' ? r.nameEn : r.nameNl`-afsplitsing die andere velden (zoals `time`/`weather` in `insects.ts`) in dezelfde bestanden al wél correct hadden — zonder die afsplitsing viel elke taal die niet es/pt/fr/de was (dus ook `nl`, de default) terug op `r.nameEn`. Zoeken (`collection-list-screen.tsx`/`hobby-list-screen.tsx`, beide filteren op `item.name.toLowerCase().includes(...)`) matchte daardoor een Nederlandse zoekterm niet met de (foutief Engelse) weergavenaam.
+
+**Fix**: zelfde patroon gevonden en gecorrigeerd in 16 actieve catalogi (`insects.ts`, `birds.ts`, `fish.ts` ×2, `cats.ts`, `dogs.ts`, `recipes.ts` ×2, `badges.ts`, `crops.ts`, `flowers.ts`, `shells.ts`, `wild-animals.ts`, `wild-fruit.ts` ×2, `wild-materials.ts`, `wild-mushrooms.ts` ×2, `sand-sculptures.ts`, `snow-sculptures.ts` — 20 occurrences in totaal), plus de nog ongebruikte `event-birds.ts`/`event-fish.ts`/`event-insects.ts`/`event-recipes.ts` (lege data-arrays, voor toekomstige event-catalogi) zodat dezelfde fout niet terugkomt zodra daar data aan toegevoegd wordt. Puur lokale databestanden (geen `remote-content.json`) — vereist dus een `eas update` om live te komen, geen nieuwe build.
+
 ## 2026-09-30 (deel 60) — Kaart-tool v2 (tabbladen/Doris-toggle), bubbelweken t/m 26 sep-2 okt, rainbow-locaties (Doris op beide kaarten)
 
 **Kaart-coördinaten-tool grote upgrade**: gebruiker leverde zelf een herbouwde versie aan (geüpload bestand, niet door mij geschreven) en vroeg om die live te zetten op dezelfde artifact-URL. Nieuw t.o.v. de vorige versie (met losse 📍/🌊-knoppen): beide kaarten (hoofdeiland + Whalefall Canyon) worden nu als tabbladen tegelijk bijgehouden (eigen punten-lijst per kaart, wisselen van tabblad verliest niks), nummering loopt automatisch door over beide kaarten heen, `underwater` wordt automatisch gezet op basis van het actieve tabblad (lost de eerdere kopieerfout structureel op i.p.v. steeds handmatig corrigeren), en een Doris-toggle (🎀) per punt zet `isDoris: true` in de output. Eén gecombineerde JSON-output voor beide kaarten samen. Gepubliceerd over dezelfde artifact-URL (blijft `https://claude.ai/code/artifact/1012aa23-...`).
