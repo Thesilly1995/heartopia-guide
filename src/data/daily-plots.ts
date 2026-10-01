@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { Language, useLanguage } from '@/hooks/use-language';
 import { useServer } from '@/hooks/use-server';
-import { currentDailyResetKey } from '@/lib/reset-schedule';
+import { currentCalendarDateKey } from '@/lib/reset-schedule';
 import { useRemoteContent } from '@/lib/remote-content';
 
 export interface DailyPlots {
@@ -33,7 +33,7 @@ export function useDailyPlots(): DailyPlots {
   const { payload } = useRemoteContent();
 
   return useMemo(() => {
-    const today = currentDailyResetKey(server.offsetHours);
+    const today = currentCalendarDateKey(server.offsetHours);
     const calendarEntry = payload?.dailyPlotsCalendar?.find((entry) => entry.date === today);
     if (calendarEntry) {
       return {

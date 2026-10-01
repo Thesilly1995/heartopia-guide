@@ -19,6 +19,16 @@ export function currentDailyResetKey(offsetHours: number): string {
   return dateKeyUTC(boundary);
 }
 
+/**
+ * De kalenderdatum op de server (00:00-grens) — voor content die bij de
+ * daadwerkelijke kalenderdag hoort (weekvoorspelling "Vandaag"-label,
+ * dagelijkse plot-kalender), los van het 06:00-moment waarop missies/
+ * dagelijkse taken in-game resetten (zie `currentDailyResetKey`).
+ */
+export function currentCalendarDateKey(offsetHours: number): string {
+  return dateKeyUTC(serverNow(offsetHours));
+}
+
 /** Speelweek-grens ligt op zaterdag 06:00 (servertijd) — zelfde moment als de Roze Bubbels-wissel. */
 export function currentWeeklyResetKey(offsetHours: number): string {
   const now = serverNow(offsetHours);
