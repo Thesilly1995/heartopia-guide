@@ -110,7 +110,7 @@ export function ProfileCard() {
 
       <View style={styles.infoSection}>
         <View style={styles.fieldRow}>
-          <Text style={styles.fieldLabel}>{s.nameLabel}</Text>
+          <Text style={styles.fieldLabel} numberOfLines={1}>{s.nameLabel}</Text>
           <TextInput
             value={name}
             onChangeText={saveName}
@@ -120,7 +120,7 @@ export function ProfileCard() {
           />
         </View>
         <View style={styles.fieldRow}>
-          <Text style={styles.fieldLabel}>{s.uidLabel}</Text>
+          <Text style={styles.fieldLabel} numberOfLines={1}>{s.uidLabel}</Text>
           <TextInput
             value={uid}
             onChangeText={saveUid}
@@ -161,7 +161,7 @@ function makeStyles(c: ThemeColors) {
     avatarBadgeText: { fontSize: 10 },
     infoSection: { flex: 1, gap: 6 },
     fieldRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-    fieldLabel: { fontSize: 11, fontWeight: '700', color: c.forestSoft, width: 32 },
+    fieldLabel: { fontSize: 11, fontWeight: '700', color: c.forestSoft, width: 48, flexShrink: 0 },
     fieldInput: { flex: 1, borderWidth: 1, borderColor: c.line, borderRadius: 10, paddingHorizontal: 10, paddingVertical: 6, fontSize: 13, color: c.forest, backgroundColor: c.surfaceSoft },
     copyButton: { paddingHorizontal: 12, paddingVertical: 7, borderRadius: 999, backgroundColor: c.chipBg },
     copyButtonActive: { backgroundColor: c.yellow },
