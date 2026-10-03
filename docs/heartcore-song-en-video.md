@@ -1,0 +1,77 @@
+# Heartcore — songtekst en videoplan
+
+Personage (door gebruiker aangeleverd, geen Heartopedia-boek erbij want de app staat buiten Heartcore):
+blonde golvende haren, grote blauwe cowboyhoed met sterretjesband en blauwe steen, blauwe ogen,
+hartvormige gouden oorbellen met veertje, blauw franjevest, vingerloze handschoenen, kralenarmbandjes,
+houten achtergrond met plant en zwevende gouden lichtjes (vuurvliegjes). Cozy, warme sfeer.
+
+## Songtekst: "Heartcore" (Nederlands)
+
+**Stijl-prompt voor Suno/Udio**: cozy indie-pop, warme akoestische gitaar, zachte country-twang,
+lichte drums, dromerige belletjes, vrouwelijke zang, 90 bpm, vrolijk en gezellig.
+
+[Couplet 1]
+De zon komt op boven ons kleine eiland,
+vuurvliegjes dansen nog even na.
+Ik zet mijn hoed recht, pak mijn tas en mijn net,
+vandaag wacht er weer een nieuw verhaal.
+Een vlinder, een vis, een bloem aan de rand,
+elke dag een schatkist in mijn hand.
+
+[Pre-chorus]
+En ik zie je daar, je zwaait naar mij,
+samen is het altijd net wat mooier.
+
+[Refrein]
+Heartcore, Heartcore, hier hoor ik thuis,
+met een hart vol licht en een hoed op mijn krullen.
+Heartcore, Heartcore, we zijn nooit alleen,
+elke ster en elke vriend maakt de nacht weer warm.
+Oh, Heartcore, jij bent mijn thuis.
+
+[Couplet 2]
+We delen de tips en we delen de buit,
+een regenboog boven de zee.
+Een sterrenregen, een wens in de nacht,
+en jij die zegt: "Kom, loop met mij mee."
+Geen race, geen haast, gewoon lachen en zijn,
+samen is de wereld hier klein.
+
+[Bridge]
+Als het stil wordt, tel ik de lichtjes,
+elk van hen een naam, een gezicht.
+Alle vrienden, dichtbij of ver weg,
+jullie zijn mijn lantaarnlicht.
+
+[Refrein, 1 toon hoger]
+Heartcore, Heartcore, hier hoor ik thuis,
+met een hart vol licht en een hoed op mijn krullen.
+Heartcore, Heartcore, we zijn nooit alleen,
+elke ster en elke vriend maakt de nacht weer warm.
+Oh, Heartcore, jij bent mijn thuis.
+
+[Outro, zacht]
+Heartcore... jij bent mijn thuis.
+
+## Video (±30-45 sec, verticaal 9:16)
+
+**Stap 1 — boek weghalen uit het plaatje** (apart bewerkingsstap, niet iets wat Claude zelf kan):
+gebruik een AI-beeldeditor (bijv. Gemini/Nano Banana, Photoshop Generative Fill, Canva Magic Edit)
+met de prompt: "Remove the book from her hands. Keep her hands relaxed, one hand lightly raised
+waving, the other at her side. Keep everything else exactly the same."
+Controleer daarna handen en vingers (AI maakt die vaak fout).
+
+**Stap 2 — animeren** (Kling, Runway, Luma, Veo, Hailuo): upload het bewerkte plaatje als startbeeld.
+Voorbeeld-prompts per clip (5 sec elk):
+1. "Anime girl in blue cowboy hat smiles and gently waves at the camera, golden fireflies float
+   softly, leaves sway, subtle breathing, warm cozy light, static camera."
+2. "Slow push-in on her face, she blinks and tilts her head, heart earrings sway, fireflies drift."
+3. "She tips her hat with one hand and winks, sparkles around her, camera slightly pulls back."
+4. "She turns her head toward the side with a happy smile, hair moves in a soft breeze."
+5. Eindbeeld: stil beeld met ruimte voor de tekst "HEARTCORE" + Discord-uitnodiging.
+
+**Stap 3 — samenstellen**: clips in CapCut achter elkaar, Suno-nummer eronder, songtekst als
+ondertitels in beeld, logo/uitnodigingslink aan het einde. Gebruik refrein als hoogtepunt.
+
+**Tip voor consistentie**: AI-video kan het gezicht per clip licht laten afwijken. Houd clips kort,
+gebruik steeds hetzelfde startbeeld en kies de beste take per clip.

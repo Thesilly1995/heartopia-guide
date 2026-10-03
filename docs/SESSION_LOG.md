@@ -2,6 +2,15 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-10-03 (deel 63) — Songtekst Heartcore + videoplan met eigen personage
+
+**Aanleiding**: gebruiker leverde een afbeelding van een eigen personage aan (blond meisje, blauwe cowboyhoed, hartoorbellen) dat een boek "Heartopedia" vasthoudt, en vroeg om een Heartcore-songtekst en een video met dit personage **zonder het boek** (de app staat buiten Heartcore).
+
+**Resultaat**: `docs/heartcore-song-en-video.md` met Nederlandse songtekst ("Heartcore"), Suno-stijlprompt, en een videoplan (boek weghalen via een AI-beeldeditor, animeren via Kling/Runway/Luma/Veo met clipprompts, samenstellen in CapCut). Claude kan zelf geen beelden bewerken of video/audio genereren; dat gebeurt in externe tools.
+
+### Nog open
+- Gebruiker kiest taal (NL/EN) en eventueel andere stijl; daarna eventueel een Engelse versie schrijven.
+
 ## 2026-10-03 (deel 62) — Vraag: AI-liedjes/animatievideo's voor Heartcore (Discord) en Heartopedia (app)
 
 **Aanleiding**: gebruiker heeft een Discord-groep "Heartcore" en de app "Heartopedia" (deze repo), beide rond het spel Heartopia, en vroeg of AI liedjes en geanimeerde video's kan maken over/voor dit. Geen codewijzigingen, alleen advies.
