@@ -97,8 +97,12 @@ en laat het laatste woord op het eindbeeld vallen.
 
 Rollen (door gebruiker aangegeven): de fee leidt elke zondag de bubbeltour; het hoofdpersonage
 (blond, blauwe cowboyhoed) onderhoudt de app; het derde personage houdt iedereen dagelijks op de
-hoogte van nieuws in Heartopia. Samen houden ze het gezellig. Foto's van de twee vriendinnen
-volgen nog (nog niet ontvangen bij het schrijven van deze tekst).
+hoogte van nieuws in Heartopia. Samen houden ze het gezellig. Foto's ontvangen:
+- Fee: turkooisgroen haar in knotje, spitse oren, vlinder-/libellevleugels in paars-blauw, lange
+  blauw-paarse baljurk met strik, parelketting en hartvormige hanger op haar tiara.
+- Nieuwsmeisje (derde): donkerbruine vlechten met pony, bloemenkrans met groene parels, groene
+  bladjurk met wit rokje, sandalen met veters, vlinders, lantaarn met licht, bloemen.
+- Hoofdpersonage: blond, blauwe cowboyhoed (zonder boek in de video).
 
 **Suno-stijlprompt**: vrolijke pop, opgewekte synths, klappende handen, stuiterende bas,
 meerstemmig refrein met meezingkoor, 112 bpm, zomers en feestelijk, Nederlandse zang.
@@ -108,9 +112,9 @@ Hé, kom erbij, het gaat beginnen!
 
 [Couplet 1: de fee]
 Elke zondag, zonnestralen,
-ze neemt je mee op bubbeltour.
-Ze zwaait met haar toverstafje,
-en iedereen loopt vrolijk mee de tour.
+de fee neemt je mee op bubbeltour.
+Turkoois haar, vleugels van glas,
+in haar blauwe baljurk zweeft ze voorop.
 Met glitters in de lucht en een lach op haar gezicht,
 ze brengt ons samen in het licht.
 
@@ -134,6 +138,8 @@ Een tikje, een lijstje, alles op zijn plek,
 zij maakt het makkelijk, klaar voor elke trek.
 
 [Couplet 3: het derde personage, het nieuws]
+Een bloemenkrans in bruine lokken,
+een lantaarn vol licht en vlinders om haar heen.
 En elke dag, met een fris bericht,
 weet zij precies wat er nieuw is hier.
 Een event, een schat, een verrassing op de kaart,
@@ -156,3 +162,20 @@ Oh-oh-oh, Heartcore, hier hoor je erbij!
 
 [Outro]
 Heartcore! Kom erbij!
+
+### Videoprompts met alle drie (Versie 2)
+
+Gebruik per personage een eigen startbeeld (de foto's) en maak per clip één personage; plak ze
+daarna in CapCut aan elkaar op de maat van de muziek.
+
+1. **Fee** (turkoois haar, vleugels): "She hovers slightly, wings flutter softly with a shimmer,
+   waves one hand with a wink, soft glitter and bubbles drift around her, pastel purple-blue light."
+2. **Hoofdpersonage** (zonder boek): "She tips her blue cowboy hat, smiles and waves, fireflies
+   float softly, warm cozy light, static camera."
+3. **Nieuwsmeisje** (bloemenkrans): "She lifts the glowing lantern, butterflies circle around her,
+   she smiles and opens her arms in joy, flower petals drift in the breeze."
+4. **Samen (laatste clip)**: gebruik een beeldbewerker om de drie op één plaatje te zetten (of
+   plak ze naast elkaar in CapCut) met de tekst "WIJ ZIJN HEARTCORE" en je Discord-link.
+
+Tip: laat per personage de beste take uitkiezen, houd clips 3-5 sec en zet het refrein op de
+samenscène.
