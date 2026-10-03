@@ -8,8 +8,8 @@ export interface TipItem {
   title: string;
   body: string;
   emoji: string;
-  /** Optionele afbeelding (bv. een community-kweekgids) i.p.v. alleen tekst. */
-  image?: number;
+  /** Optionele afbeelding(en) (bv. een community-kweekgids) i.p.v. alleen tekst. Meer dan 1 wordt een swipebare "boek"-strip. */
+  images?: number[];
 }
 
 export interface TipCategory {
@@ -28,7 +28,7 @@ interface TipRaw {
   bodyEs: string;
   bodyPt: string;
   emoji: string;
-  image?: number;
+  images?: number[];
 }
 
 interface TipCategoryRaw {
@@ -228,7 +228,7 @@ const TIP_CATEGORIES_RAW: TipCategoryRaw[] = [
         bodyEs: 'Una infografía de la comunidad sobre cruces de flores y cómo subir el nivel de estrellas.',
         bodyPt: 'Um infográfico feito pela comunidade sobre cruzamento de flores e como subir o nível de estrelas.',
         emoji: '🌸',
-        image: BLOEMEN_KWEEKGIDS,
+        images: [BLOEMEN_KWEEKGIDS],
       },
     ],
   },
@@ -245,7 +245,7 @@ export function useTips(): TipCategory[] {
           title: language === 'es' ? t.titleEs : language === 'pt' ? t.titlePt : language === 'fr' ? t.titleEn : language === 'de' ? t.titleEn : language === 'en' ? t.titleEn : t.titleNl,
           body: language === 'es' ? t.bodyEs : language === 'pt' ? t.bodyPt : language === 'fr' ? t.bodyEn : language === 'de' ? t.bodyEn : language === 'en' ? t.bodyEn : t.bodyNl,
           emoji: t.emoji,
-          image: t.image,
+          images: t.images,
         })),
       })),
     [language]
