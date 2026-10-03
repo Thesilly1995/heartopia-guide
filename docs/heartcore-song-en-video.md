@@ -75,3 +75,20 @@ ondertitels in beeld, logo/uitnodigingslink aan het einde. Gebruik refrein als h
 
 **Tip voor consistentie**: AI-video kan het gezicht per clip licht laten afwijken. Houd clips kort,
 gebruik steeds hetzelfde startbeeld en kies de beste take per clip.
+
+## Korte versie voor 10-seconden video (Gemini-filmpje)
+
+Past in ±10 sec (ca. 20 lettergrepen, 2 regels):
+
+    Heartcore, hier hoor ik thuis,
+    een hart vol licht, kom mee naar huis!
+
+Alternatief (iets speelser):
+
+    Hoed op, hart open, kom erbij,
+    Heartcore, jij hoort bij mij!
+
+**Suno-stijlprompt**: cozy indie-pop, vrolijke akoestische gitaar, zachte belletjes, vrouwelijke zang,
+100 bpm, kort jingle-achtig, eindigt met een heldere slotakkoord. Lengte: ±10 seconden.
+Tip: zet in Suno "[Short jingle]" bovenaan de tekst, knip het resultaat in CapCut op precies 10 sec
+en laat het laatste woord op het eindbeeld vallen.

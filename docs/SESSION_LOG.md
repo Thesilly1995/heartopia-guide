@@ -2,6 +2,10 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-10-03 (deel 64) — Nederlandse volledige tekst + korte 10-seconden jingle
+
+Gebruiker vroeg de volledige songtekst in het Nederlands (in chat gegeven) en daarna een korte tekst voor een 10-seconden Gemini-video. Korte jingle toegevoegd onderaan `docs/heartcore-song-en-video.md` ("Heartcore, hier hoor ik thuis, een hart vol licht, kom mee naar huis!" + alternatief).
+
 ## 2026-10-03 (deel 63) — Songtekst Heartcore + videoplan met eigen personage
 
 **Aanleiding**: gebruiker leverde een afbeelding van een eigen personage aan (blond meisje, blauwe cowboyhoed, hartoorbellen) dat een boek "Heartopedia" vasthoudt, en vroeg om een Heartcore-songtekst en een video met dit personage **zonder het boek** (de app staat buiten Heartcore).
