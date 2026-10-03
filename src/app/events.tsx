@@ -124,10 +124,12 @@ type EventItem = {
 };
 
 function mapSighting(item: RemoteEventSighting, language: Language): EventItem {
-  const note = language === 'nl' ? item.noteNl : language === 'es' ? item.noteEs ?? item.noteEn : language === 'pt' ? item.notePt ?? item.noteEn : language === 'de' ? item.noteDe ?? item.noteEn : language === 'fr' ? item.noteFr ?? item.noteEn : item.noteEn;
+  const name = language === 'es' ? item.nameEs ?? item.nameEn : language === 'pt' ? item.namePt ?? item.nameEn : language === 'fr' ? item.nameFr ?? item.nameEn : language === 'de' ? item.nameDe ?? item.nameEn : language === 'en' ? item.nameEn : item.nameNl;
+  const spot = language === 'es' ? item.spotEs ?? item.spotEn : language === 'pt' ? item.spotPt ?? item.spotEn : language === 'fr' ? item.spotFr ?? item.spotEn : language === 'de' ? item.spotDe ?? item.spotEn : language === 'en' ? item.spotEn : item.spotNl;
+  const note = language === 'es' ? item.noteEs ?? item.noteEn : language === 'pt' ? item.notePt ?? item.noteEn : language === 'fr' ? item.noteFr ?? item.noteEn : language === 'de' ? item.noteDe ?? item.noteEn : language === 'en' ? item.noteEn : item.noteNl;
   return {
-    name: item.nameEn,
-    spot: item.spotEn,
+    name,
+    spot,
     note,
     emoji: item.emoji,
     gold: item.gold,
@@ -136,9 +138,10 @@ function mapSighting(item: RemoteEventSighting, language: Language): EventItem {
 }
 
 function mapRecipe(item: RemoteEventRecipe, language: Language): EventItem {
-  const ingredients = language === 'es' ? item.ingredientsEs ?? item.ingredientsEn : language === 'pt' ? item.ingredientsPt ?? item.ingredientsEn : language === 'de' ? item.ingredientsDe ?? item.ingredientsEn : language === 'fr' ? item.ingredientsFr ?? item.ingredientsEn : item.ingredientsEn;
+  const name = language === 'es' ? item.nameEs ?? item.nameEn : language === 'pt' ? item.namePt ?? item.nameEn : language === 'fr' ? item.nameFr ?? item.nameEn : language === 'de' ? item.nameDe ?? item.nameEn : language === 'en' ? item.nameEn : item.nameNl;
+  const ingredients = language === 'es' ? item.ingredientsEs ?? item.ingredientsEn : language === 'pt' ? item.ingredientsPt ?? item.ingredientsEn : language === 'fr' ? item.ingredientsFr ?? item.ingredientsEn : language === 'de' ? item.ingredientsDe ?? item.ingredientsEn : language === 'en' ? item.ingredientsEn : item.ingredientsNl;
   return {
-    name: item.nameEn,
+    name,
     ingredients,
     emoji: item.emoji,
     gold: item.gold,

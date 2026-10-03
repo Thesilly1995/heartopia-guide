@@ -2,6 +2,20 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-10-03 (deel 62) — Nieuw Premium-tabblad "Volgend Event" (recepten-vooraankondiging)
+
+**Aanleiding**: gebruiker wilde een pagina waar spelers vooruit kunnen kijken naar aankomende Heartopia-events om zich voor te bereiden. Diverse fansites (theheartopia.com, heartopia.life, heartopia.town, heartopia.web.id) bleken bij navraag verouderd/onbetrouwbaar (afgezet tegen de eigen in-game Echo of Ancients-datum van de gebruiker) — geen enkele toont betrouwbaar een "nog niet begonnen"-sectie, dus automatisch scrapen was geen optie.
+
+**Gekozen aanpak**: in plaats van een generieke "aankomende events"-pagina, specifiek een Premium-tabblad **"Volgend Event"** dat laat zien welke **recepten** in het volgende (nog niet gestarte) event komen, zodat spelers de benodigde crops/ingrediënten alvast kunnen verzamelen — geen handmatige checklist, puur een preview van de receptenlijst (net als het bestaande "Huidig Event"-scherm, maar dan voor wat nog moet komen). Gebruiker geeft de info zelf door (uit de officiële Heartopia Discord) zodra ze het weet, zelfde werkwijze als bij codes/events.
+
+**Implementatie**:
+- `src/lib/remote-content.ts`: nieuw optioneel veld `nextEventRecipes` (zelfde vorm als `event.recipes`, los van eventnaam/datum).
+- `src/data/next-event-recipes.ts`: nieuwe hook, puur remote content (geen gebundelde fallback — per definitie tijdelijke content).
+- `src/app/volgend-event.tsx`: nieuw Premium-gated scherm. Leeg → "Niks bekend"-melding i.p.v. verborgen tabblad (expliciete wens gebruiker, niet het hele tabblad verstoppen).
+- `src/app/(tabs)/index.tsx`: nieuwe entry onder de "Premium"-sectie.
+
+**Bijvangst-fix**: tijdens het bouwen bleek `mapSighting`/`mapRecipe` in `src/app/events.tsx` (het bestaande "Huidig Event"-scherm) exact dezelfde taalbug te hebben als de catalogus-zoekfunctie-fix van deel 61 — `name`/`ingredients`/`spot` vielen voor elke niet-es/pt/fr/de-taal terug op Engels i.p.v. het nl/en-onderscheid te maken. Gelijk meegefixt, want het was hetzelfde bestand dat al open stond.
+
 ## 2026-10-01 (deel 61) — Catalogus-zoekfunctie: Nederlandse naam werd genegeerd in nl-taalmodus (#200)
 
 **Aanleiding**: gebruiker kreeg feedback dat zoeken op "oranje" (NL) in de insecten-catalogus de oranje vlinder niet vond, terwijl "orange" (EN) wel werkte. Gevraagd om alle zoekfuncties in alle catalogi/talen te checken op dezelfde fout.

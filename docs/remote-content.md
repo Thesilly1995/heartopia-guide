@@ -81,6 +81,9 @@ dat specifieke onderdeel.
       { "nameNl": "IJskoud Oceaandrankje", "nameEn": "Ocean Iced Drink", "ingredientsNl": ["2x Spirulina Poeder", "2x Sterfruit"], "ingredientsEn": ["2x Spirulina Powder", "2x Starfruit"], "emoji": "🍽️" }
     ]
   },
+  "nextEventRecipes": [
+    { "nameNl": "Herfstpompoensoep", "nameEn": "Autumn Pumpkin Soup", "ingredientsNl": ["2x Pompoen", "1x Room"], "ingredientsEn": ["2x Pumpkin", "1x Cream"], "emoji": "🎃" }
+  ],
   "weather": {
     "kind": "rainbow",
     "labelNl": "Regenboog",
@@ -177,6 +180,14 @@ dat specifieke onderdeel.
   entry in `pastEvents` (in plaats van overschreven te worden), en
   wordt `event` vervangen door het nieuwe event. Vertaalvelden buiten
   nl/en zijn optioneel (vallen terug op Engels).
+- **`nextEventRecipes`**: vooraankondiging van recepten uit een event dat
+  nog niet gestart is (Premium-only "Volgend Event"-scherm), zodat
+  spelers de benodigde crops/ingrediënten alvast kunnen verzamelen.
+  Zelfde vorm als `event.recipes` (`RemoteEventRecipe`), maar los van
+  `event`/`pastEvents` — geen eventnaam/datum nodig, puur de
+  receptenlijst. Laat leeg/weg als er niks bekend is; het scherm toont
+  dan "Niks bekend" i.p.v. een lege lijst. Zodra het event echt begint,
+  verhuist de content naar `event.recipes` en leeg je dit veld weer.
 - **`weather`**: het spelweer van dit moment. `kind` is `"sunny"`,
   `"rain"` of `"rainbow"` (bepaalt het icoontje); `labelNl`/`labelEn`
   zijn de weergegeven teksten (`"Zonnig"`/`"Sunny"`,
@@ -238,6 +249,8 @@ dat specifieke onderdeel.
   `src/data/daily-plots.ts`, `src/data/current-weather.ts`,
   `src/data/week-forecast.ts`, `src/data/codes.ts` — combineren de
   remote data met een bundel-fallback en de huidige taal.
+- `src/data/next-event-recipes.ts` + `src/app/volgend-event.tsx` —
+  Premium-tab "Volgend Event", toont `nextEventRecipes` of "Niks bekend".
 - `src/data/event-meta.ts` — naam/data van het huidige event, gedeeld
   tussen het homescreen-kaartje en `src/app/events.tsx`.
 - `src/app/events.tsx` — combineert `payload.event` met de gebundelde
