@@ -2,6 +2,10 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-10-03 (deel 65) — Nieuwe grote songtekst "Wij zijn Heartcore" (3 personages, vrolijke pop)
+
+Gebruiker vroeg een nieuwe volledige tekst met haar personage plus twee vriendinnen (foto's volgen, nog niet ontvangen). Rollen: fee leidt elke zondag de bubbeltour, hoofdpersonage onderhoudt de app, derde personage houdt dagelijks nieuws bij; samen gezelligheid. Wij-vorm met een mix van "ze", Nederlands, vrolijke pop. Tekst en Suno-stijlprompt staan in `docs/heartcore-song-en-video.md` ("Versie 2"). Open: namen van de personages invullen zodra ze die doorgeeft, en eventueel video-prompts met de foto's.
+
 ## 2026-10-03 (deel 64) — Nederlandse volledige tekst + korte 10-seconden jingle
 
 Gebruiker vroeg de volledige songtekst in het Nederlands (in chat gegeven) en daarna een korte tekst voor een 10-seconden Gemini-video. Korte jingle toegevoegd onderaan `docs/heartcore-song-en-video.md` ("Heartcore, hier hoor ik thuis, een hart vol licht, kom mee naar huis!" + alternatief).

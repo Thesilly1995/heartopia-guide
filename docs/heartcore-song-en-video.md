@@ -92,3 +92,67 @@ Alternatief (iets speelser):
 100 bpm, kort jingle-achtig, eindigt met een heldere slotakkoord. Lengte: ±10 seconden.
 Tip: zet in Suno "[Short jingle]" bovenaan de tekst, knip het resultaat in CapCut op precies 10 sec
 en laat het laatste woord op het eindbeeld vallen.
+
+## Versie 2: "Wij zijn Heartcore" (3 personages, vrolijke pop)
+
+Rollen (door gebruiker aangegeven): de fee leidt elke zondag de bubbeltour; het hoofdpersonage
+(blond, blauwe cowboyhoed) onderhoudt de app; het derde personage houdt iedereen dagelijks op de
+hoogte van nieuws in Heartopia. Samen houden ze het gezellig. Foto's van de twee vriendinnen
+volgen nog (nog niet ontvangen bij het schrijven van deze tekst).
+
+**Suno-stijlprompt**: vrolijke pop, opgewekte synths, klappende handen, stuiterende bas,
+meerstemmig refrein met meezingkoor, 112 bpm, zomers en feestelijk, Nederlandse zang.
+
+[Intro, gesproken]
+Hé, kom erbij, het gaat beginnen!
+
+[Couplet 1: de fee]
+Elke zondag, zonnestralen,
+ze neemt je mee op bubbeltour.
+Ze zwaait met haar toverstafje,
+en iedereen loopt vrolijk mee de tour.
+Met glitters in de lucht en een lach op haar gezicht,
+ze brengt ons samen in het licht.
+
+[Pre-chorus]
+Eén, twee, drie, wie komt er mee?
+Het feest begint, dus doe maar mee!
+
+[Refrein]
+Wij zijn Heartcore, hart op hart,
+samen lachen, elke dag een start!
+Wij zijn Heartcore, handen omhoog,
+met z'n drieën, ja, het hele eiland hoort ons zingen!
+Oh-oh-oh, Heartcore, hier hoor je erbij!
+
+[Couplet 2: het hoofdpersonage, de app]
+Ze zet haar hoed op, blauw als de zee,
+en bouwt de app met een glimlach erbij.
+Elke vis en elke vlinder,
+staat er netjes in, voor jou en mij.
+Een tikje, een lijstje, alles op zijn plek,
+zij maakt het makkelijk, klaar voor elke trek.
+
+[Couplet 3: het derde personage, het nieuws]
+En elke dag, met een fris bericht,
+weet zij precies wat er nieuw is hier.
+Een event, een schat, een verrassing op de kaart,
+zij houdt ons bij, dus niemand mist wat hier gebeurt.
+Eerste in het nieuws, altijd bij de tijd,
+met een lach en een kop thee, ze staat altijd klaar.
+
+[Bridge, rustiger, dan opbouwend]
+Drie vriendinnen, drie verhalen,
+één eiland, één familie.
+Als het regent, dan dansen we,
+als het schijnt, dan zingen we.
+
+[Refrein, dubbel, met koor]
+Wij zijn Heartcore, hart op hart,
+samen lachen, elke dag een start!
+Wij zijn Heartcore, handen omhoog,
+met z'n drieën, ja, het hele eiland hoort ons zingen!
+Oh-oh-oh, Heartcore, hier hoor je erbij!
+
+[Outro]
+Heartcore! Kom erbij!
