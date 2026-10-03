@@ -2,6 +2,19 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-10-03 (deel 62) — Vraag: AI-liedjes/animatievideo's voor Heartcore (Discord) en Heartopedia (app)
+
+**Aanleiding**: gebruiker heeft een Discord-groep "Heartcore" en de app "Heartopedia" (deze repo), beide rond het spel Heartopia, en vroeg of AI liedjes en geanimeerde video's kan maken over/voor dit. Geen codewijzigingen, alleen advies.
+
+**Antwoord (samengevat)**: ja, haalbaar.
+- **Liedjes**: tools als Suno of Udio maken uit een tekstprompt een compleet nummer met zang. Voor Heartopia: eigen tekst (bijv. over vissen, insecten vangen, Doris, het eiland) + stijl (cozy/lo-fi/J-pop). Let op: gebruik voor commercieel gebruik (Play Store/App Store, promo) een betaald abonnement en lees de licentievoorwaarden.
+- **Video's**: AI-videotools (Runway, Kling, Luma, Pika, Veo e.d.) maken korte clips uit tekst of een beeld; langere filmpjes bouw je door clips te combineren (bijv. in CapCut) met eigen gameplay-opnames of screenshots als bron, plus een AI-nummer als muziek.
+- **Voor Discord**: huisliedje, serverintro, event-aankondigingen, Doris-/bubbel-/regenboogmemes. **Voor de app**: promovideo voor de store, korte social clips (TikTok/Shorts), eventueel muziek in de app.
+- **Let op**: Heartopia-beeldmateriaal, naam en karakters zijn van de uitgever; gebruik als fan-project/niet-commercieel is meestal geduld, maar check de fan-content-regels van de uitgever voordat je er geld mee verdient. Eigen Heartcore-/Heartopedia-logo en eigen verzonnen personages zijn veiliger.
+
+### Nog open
+- Gebruiker kan aangeven of ze een songtekst, een videoscript of een promoplan willen; dan kan dat verder worden uitgewerkt.
+
 ## 2026-10-01 (deel 61) — Catalogus-zoekfunctie: Nederlandse naam werd genegeerd in nl-taalmodus (#200)
 
 **Aanleiding**: gebruiker kreeg feedback dat zoeken op "oranje" (NL) in de insecten-catalogus de oranje vlinder niet vond, terwijl "orange" (EN) wel werkte. Gevraagd om alle zoekfuncties in alle catalogi/talen te checken op dezelfde fout.
