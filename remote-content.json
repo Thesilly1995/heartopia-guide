@@ -323,5 +323,12 @@
   ],
   "codes": [
     {"code": "moonlike2609", "rewardNl": "50x Maanlicht Kristal, 10x Tarwezaadjes, 10x Melk", "rewardEn": "50x Moonlight Crystals, 10x Wheat Seeds, 10x Milk", "expiresNl": "7 okt 2026", "expiresEn": "Oct 7, 2026", "rewardEs": "50x Cristal de Luz de Luna, 10x Semillas de Trigo, 10x Leche", "rewardPt": "50x Cristal do Luar, 10x Sementes de Trigo, 10x Leite", "expiresEs": "7 oct 2026", "expiresPt": "7 de out de 2026"}
+  ],
+  "nextEventRecipes": [
+    {"nameNl": "Gekonfijt Fruit", "nameEn": "Candied Fruit", "ingredientsNl": ["Pompoen", "Melk", "Fruit (willekeurig)", "Cacaopoeder"], "ingredientsEn": ["Pumpkin", "Milk", "Any Fruit", "Cocoa Powder"], "emoji": "🍬"},
+    {"nameNl": "Pompoen-Melkpudding", "nameEn": "Pumpkin Milk Pudding", "ingredientsNl": ["Gloeiende Paddenstoel", "Pompoen", "Melk", "Zeekraal"], "ingredientsEn": ["Glowing Mushroom", "Pumpkin", "Milk", "Samphire"], "emoji": "🍮"},
+    {"nameNl": "Haardlicht-Noedels", "nameEn": "Hearthlight Noodles", "ingredientsNl": ["Vla", "Pompoen", "Inktvis"], "ingredientsEn": ["Custard", "Pumpkin", "Squid"], "emoji": "🍜"},
+    {"nameNl": "Winter Bosui-Pannenkoek", "nameEn": "Winter Scallion Pancake", "ingredientsNl": ["Vla", "Pompoen", "Inktvis"], "ingredientsEn": ["Custard", "Pumpkin", "Squid"], "emoji": "🥞"},
+    {"nameNl": "Paddenstoelenroom-Pasta", "nameEn": "Mushroom Cream Pasta", "ingredientsNl": ["2x Gekonfijt Fruit", "1x Pompoen-Melkpudding", "1x Haardlicht-Noedels"], "ingredientsEn": ["2x Candied Fruit", "1x Pumpkin Milk Pudding", "1x Hearthlight Noodles"], "emoji": "🍝"}
   ]
 }
