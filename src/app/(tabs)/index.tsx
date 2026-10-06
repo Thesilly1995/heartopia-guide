@@ -292,7 +292,7 @@ export default function HomeScreen() {
           </View>
           <ZoomableImage
             source={{ uri: PLOT_CALENDAR_IMAGE_URL }}
-            aspectRatio={1}
+            aspectRatio={928 / 1152}
             trigger={
               <View style={styles.plotsRow}>
                 <Text style={styles.plotsRowIcon}>📅</Text>
