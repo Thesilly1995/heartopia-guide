@@ -1,6 +1,6 @@
 import { Image } from 'expo-image';
 import { useEffect, useMemo, useState } from 'react';
-import { Dimensions, ImageSourcePropType, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, ImageSourcePropType, Modal, NativeScrollEvent, NativeSyntheticEvent, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
@@ -20,32 +20,65 @@ const STRINGS = {
   de: { hint: '🔍 Tippen zum Vergrößern', reset: 'Zoom zurücksetzen' },
 } as const;
 
-/** Afbeelding die volledig (niet uitgesneden) in de kaart past, met tik-om-te-vergroten pinch/pan-modal. */
-export function ZoomableImage({ source, aspectRatio }: { source: ImageSourcePropType; aspectRatio: number }) {
+/**
+ * Afbeelding(en) die volledig (niet uitgesneden) in de kaart passen, met
+ * tik-om-te-vergroten pinch/pan-modal. Bij meer dan 1 afbeelding wordt de
+ * preview een swipebare "boek"-strip met paginabolletjes — elke pagina
+ * opent los de zoom-modal voor precies die afbeelding.
+ */
+export function ZoomableImageCarousel({ images, aspectRatio }: { images: ImageSourcePropType[]; aspectRatio: number }) {
   const colors = useHeartopiaColors();
   const styles = useMemo(() => makeStyles(colors), [colors]);
   const { language } = useLanguage();
   const s = STRINGS[language];
-  const [zoomed, setZoomed] = useState(false);
+  const [page, setPage] = useState(0);
+  const [zoomedIndex, setZoomedIndex] = useState<number | null>(null);
+  const width = Dimensions.get('window').width - 24 - 2; // kaart-padding + rand, zelfde als voorheen
+
+  const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const next = Math.round(e.nativeEvent.contentOffset.x / width);
+    if (next !== page) setPage(next);
+  };
 
   return (
     <>
-      <Pressable style={[styles.thumbnail, { aspectRatio }]} onPress={() => setZoomed(true)}>
-        <Image source={source} style={StyleSheet.absoluteFill} contentFit="contain" />
+      <View style={[styles.thumbnail, { aspectRatio }]}>
+        <ScrollView
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          onScroll={onScroll}
+          scrollEventThrottle={32}
+        >
+          {images.map((source, i) => (
+            <Pressable key={i} style={[styles.page, { width, aspectRatio }]} onPress={() => setZoomedIndex(i)}>
+              <Image source={source} style={StyleSheet.absoluteFill} contentFit="contain" />
+            </Pressable>
+          ))}
+        </ScrollView>
         <View style={styles.hintBadge}>
           <Text style={styles.hintText}>{s.hint}</Text>
         </View>
-      </Pressable>
+        {images.length > 1 && (
+          <View style={styles.dotsRow}>
+            {images.map((_, i) => (
+              <View key={i} style={[styles.dot, i === page && styles.dotActive]} />
+            ))}
+          </View>
+        )}
+      </View>
 
-      <Modal visible={zoomed} animationType="fade" onRequestClose={() => setZoomed(false)}>
+      <Modal visible={zoomedIndex !== null} animationType="fade" onRequestClose={() => setZoomedIndex(null)}>
         <GestureHandlerRootView style={styles.modalSafeArea}>
           <SafeAreaView style={styles.modalSafeArea} edges={['top', 'bottom']}>
-            <Pressable style={styles.closeButton} onPress={() => setZoomed(false)}>
+            <Pressable style={styles.closeButton} onPress={() => setZoomedIndex(null)}>
               <Text style={styles.closeButtonText}>✕</Text>
             </Pressable>
-            <ZoomableContent aspectRatio={aspectRatio} active={zoomed} resetLabel={s.reset} styles={styles}>
-              <Image source={source} style={StyleSheet.absoluteFill} contentFit="contain" />
-            </ZoomableContent>
+            {zoomedIndex !== null && (
+              <ZoomableContent aspectRatio={aspectRatio} active resetLabel={s.reset} styles={styles}>
+                <Image source={images[zoomedIndex]} style={StyleSheet.absoluteFill} contentFit="contain" />
+              </ZoomableContent>
+            )}
           </SafeAreaView>
         </GestureHandlerRootView>
       </Modal>
@@ -162,8 +195,12 @@ function ZoomableContent({
 function makeStyles(c: ThemeColors) {
   return StyleSheet.create({
     thumbnail: { width: '100%', borderRadius: 10, overflow: 'hidden', borderWidth: 1, borderColor: c.line, backgroundColor: c.bg, marginTop: 4 },
+    page: { position: 'relative' },
     hintBadge: { position: 'absolute', right: 8, bottom: 8, backgroundColor: '#000000AA', borderRadius: 999, paddingHorizontal: 8, paddingVertical: 4 },
     hintText: { fontSize: 10, fontWeight: '700', color: '#FFFFFF' },
+    dotsRow: { position: 'absolute', bottom: 8, left: 0, right: 0, flexDirection: 'row', justifyContent: 'center', gap: 5 },
+    dot: { width: 6, height: 6, borderRadius: 3, backgroundColor: '#FFFFFF66' },
+    dotActive: { backgroundColor: '#FFFFFF' },
     modalSafeArea: { flex: 1, backgroundColor: '#000000' },
     closeButton: {
       position: 'absolute',

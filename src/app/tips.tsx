@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { PremiumLockedView } from '@/components/heartopia/premium-locked';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
-import { ZoomableImage } from '@/components/heartopia/zoomable-image';
+import { ZoomableImageCarousel } from '@/components/heartopia/zoomable-image';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { useTips } from '@/data/tips';
 import { useLanguage } from '@/hooks/use-language';
@@ -75,7 +75,7 @@ export default function TipsScreen() {
                           <Text style={styles.cardTitle}>{tip.title}</Text>
                         </View>
                         <Text style={styles.cardBody}>{tip.body}</Text>
-                        {tip.image && <ZoomableImage source={tip.image} aspectRatio={1} />}
+                        {tip.images && tip.images.length > 0 && <ZoomableImageCarousel images={tip.images} aspectRatio={1} />}
                       </View>
                     ))}
                   </View>
