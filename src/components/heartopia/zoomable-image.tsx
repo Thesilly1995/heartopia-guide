@@ -20,8 +20,12 @@ const STRINGS = {
   de: { hint: '🔍 Tippen zum Vergrößern', reset: 'Zoom zurücksetzen' },
 } as const;
 
-/** Afbeelding die volledig (niet uitgesneden) in de kaart past, met tik-om-te-vergroten pinch/pan-modal. */
-export function ZoomableImage({ source, aspectRatio }: { source: ImageSourcePropType; aspectRatio: number }) {
+/**
+ * Afbeelding die volledig (niet uitgesneden) in de kaart past, met tik-om-te-vergroten
+ * pinch/pan-modal. Geef `trigger` mee om i.p.v. de standaard-thumbnail een eigen
+ * knop te tonen (bv. een kalender-icoon) die dezelfde zoom-modal opent.
+ */
+export function ZoomableImage({ source, aspectRatio, trigger }: { source: ImageSourcePropType; aspectRatio: number; trigger?: React.ReactNode }) {
   const colors = useHeartopiaColors();
   const styles = useMemo(() => makeStyles(colors), [colors]);
   const { language } = useLanguage();
@@ -30,12 +34,16 @@ export function ZoomableImage({ source, aspectRatio }: { source: ImageSourceProp
 
   return (
     <>
-      <Pressable style={[styles.thumbnail, { aspectRatio }]} onPress={() => setZoomed(true)}>
-        <Image source={source} style={StyleSheet.absoluteFill} contentFit="contain" />
-        <View style={styles.hintBadge}>
-          <Text style={styles.hintText}>{s.hint}</Text>
-        </View>
-      </Pressable>
+      {trigger ? (
+        <Pressable onPress={() => setZoomed(true)}>{trigger}</Pressable>
+      ) : (
+        <Pressable style={[styles.thumbnail, { aspectRatio }]} onPress={() => setZoomed(true)}>
+          <Image source={source} style={StyleSheet.absoluteFill} contentFit="contain" />
+          <View style={styles.hintBadge}>
+            <Text style={styles.hintText}>{s.hint}</Text>
+          </View>
+        </Pressable>
+      )}
 
       <Modal visible={zoomed} animationType="fade" onRequestClose={() => setZoomed(false)}>
         <GestureHandlerRootView style={styles.modalSafeArea}>

@@ -10,3 +10,12 @@
  */
 export const REMOTE_CONTENT_URL: string | null =
   'https://raw.githubusercontent.com/thesilly1995/heartopia-guide/main/remote-content.json';
+
+/**
+ * Kalenderafbeelding met de Zwervende Eik/Fluoriet-plots van de hele huidige
+ * maand (homescherm → kalender-knop). Zelfde bestandsnaam blijft altijd
+ * gelijk — vervang 'm gewoon elke maand door een nieuwe afbeelding op dit
+ * pad in de repo, dan is de update instant live (geen eas update nodig).
+ */
+export const PLOT_CALENDAR_IMAGE_URL =
+  'https://raw.githubusercontent.com/thesilly1995/heartopia-guide/main/remote-images/plot-calendar.jpg';

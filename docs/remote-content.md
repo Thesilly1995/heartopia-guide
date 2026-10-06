@@ -267,3 +267,14 @@ dat specifieke onderdeel.
   subtab; zoek/filter-chips worden dan verborgen.
   Vooralsnog alleen live op `src/app/vissen.tsx` (pilot) — de andere
   catalogi (Insecten/Vogels/Koken) volgen na goedkeuring.
+
+## Kalenderafbeelding (Zwervende Eik/Fluoriet-plots per maand)
+
+Los van het JSON-schema hierboven: de "📅 Kalender"-knop op het
+homescherm (tussen de Zwervende Eik- en Fluoriet-plot) toont een
+afbeelding die rechtstreeks van een vast pad in de repo wordt
+opgehaald: `remote-images/plot-calendar.jpg`
+(`PLOT_CALENDAR_IMAGE_URL` in `src/constants/remote.ts`). Zelfde
+principe als `remote-content.json` — vervang het bestand op datzelfde
+pad (altijd dezelfde bestandsnaam) door de nieuwe maand-kalender, en de
+update is instant live, geen `eas update` nodig.

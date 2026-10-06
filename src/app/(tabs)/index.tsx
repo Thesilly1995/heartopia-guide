@@ -5,7 +5,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { MembershipCard } from '@/components/heartopia/membership-card';
 import { ProfileCard } from '@/components/heartopia/profile-card';
+import { ZoomableImage } from '@/components/heartopia/zoomable-image';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
+import { PLOT_CALENDAR_IMAGE_URL } from '@/constants/remote';
 import { useBubblesProgress } from '@/data/bubbles-progress';
 import { useDailyPlots } from '@/data/daily-plots';
 import { useCurrentEventMeta } from '@/data/event-meta';
@@ -87,6 +89,7 @@ const STRINGS = {
     dailyResetNote: 'Daily reset 06:00',
     serverModalTitle: 'Kies je server',
     langModalTitle: 'Kies je taal',
+    calendarLabel: 'Kalender',
   },
   en: {
     welcome: 'Welcome to',
@@ -103,6 +106,7 @@ const STRINGS = {
     dailyResetNote: 'Daily reset 06:00',
     serverModalTitle: 'Choose your server',
     langModalTitle: 'Choose your language',
+    calendarLabel: 'Calendar',
   },
   es: {
     welcome: 'Bienvenido a',
@@ -119,6 +123,7 @@ const STRINGS = {
     dailyResetNote: 'Reinicio diario 06:00',
     serverModalTitle: 'Elige tu servidor',
     langModalTitle: 'Elige tu idioma',
+    calendarLabel: 'Calendario',
   },
   pt: {
     welcome: 'Bem-vindo(a) ao',
@@ -135,6 +140,7 @@ const STRINGS = {
     dailyResetNote: 'Reinício diário 06:00',
     serverModalTitle: 'Escolha seu servidor',
     langModalTitle: 'Escolha seu idioma',
+    calendarLabel: 'Calendário',
   },
   fr: {
     welcome: 'Bienvenue sur',
@@ -151,6 +157,7 @@ const STRINGS = {
     dailyResetNote: 'Réinitialisation quotidienne 06:00',
     serverModalTitle: 'Choisissez votre serveur',
     langModalTitle: 'Choisissez votre langue',
+    calendarLabel: 'Calendrier',
   },
   de: {
     welcome: 'Willkommen bei',
@@ -167,6 +174,7 @@ const STRINGS = {
     dailyResetNote: 'Tägliches Reset 06:00',
     serverModalTitle: 'Wähle deinen Server',
     langModalTitle: 'Wähle deine Sprache',
+    calendarLabel: 'Kalender',
   },
 } as const;
 
@@ -282,6 +290,16 @@ export default function HomeScreen() {
             <Text style={styles.plotsRowIcon}>🌳</Text>
             <Text style={styles.plotsRowText}>{dailyPlots.oakPlot ?? s.unknown}</Text>
           </View>
+          <ZoomableImage
+            source={{ uri: PLOT_CALENDAR_IMAGE_URL }}
+            aspectRatio={1}
+            trigger={
+              <View style={styles.plotsRow}>
+                <Text style={styles.plotsRowIcon}>📅</Text>
+                <Text style={styles.plotsRowText}>{s.calendarLabel}</Text>
+              </View>
+            }
+          />
           <View style={styles.plotsRow}>
             <Text style={styles.plotsRowIcon}>💎</Text>
             <Text style={styles.plotsRowText}>{dailyPlots.fluoritePlot ?? s.unknown}</Text>
