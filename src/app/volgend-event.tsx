@@ -5,10 +5,13 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { DisclaimerBox } from '@/components/heartopia/disclaimer-box';
 import { PremiumLockedView } from '@/components/heartopia/premium-locked';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
+import { ZoomableImage } from '@/components/heartopia/zoomable-image';
 import { COLORS, ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { useNextEventRecipes } from '@/data/next-event-recipes';
 import { useLanguage } from '@/hooks/use-language';
 import { usePremium } from '@/hooks/use-premium';
+
+const NIGHT_OF_DIVINATION_PREP = require('@/assets/images/events/night-of-divination-prep.jpg');
 
 const STRINGS = {
   nl: {
@@ -75,6 +78,7 @@ export default function NextEventScreen() {
           ListHeaderComponent={
             <View style={styles.disclaimerWrap}>
               <DisclaimerBox text={s.disclaimer} />
+              {recipes.length > 0 && <ZoomableImage source={NIGHT_OF_DIVINATION_PREP} aspectRatio={928 / 1152} />}
             </View>
           }
           ListEmptyComponent={<Text style={styles.emptyText}>{s.empty}</Text>}
@@ -109,7 +113,7 @@ function makeStyles(c: ThemeColors) {
   return StyleSheet.create({
     safeArea: { flex: 1, backgroundColor: c.bg },
     listContent: { padding: 16, gap: 10, flexGrow: 1 },
-    disclaimerWrap: { marginBottom: 4 },
+    disclaimerWrap: { marginBottom: 4, gap: 10 },
     emptyText: { fontSize: 13, color: c.forestSoft, textAlign: 'center', padding: 24, lineHeight: 19 },
     card: { backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.line, padding: 14, gap: 10 },
     topRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
