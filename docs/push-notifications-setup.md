@@ -209,6 +209,36 @@ daadwerkelijke geselecteerde server opgeslagen, zie `src/hooks/use-notifications
 Wijzigt die lijst ooit (nieuwe server, ander offset), dan moet dat op alle drie
 de plekken bijgewerkt worden.
 
+### Migratie: `notified_windows`-tabel (7 okt 2026)
+
+**Aanleiding**: gebruiker kreeg op 7 okt 2026 geen Rainbow-melding, terwijl het
+venster (12-18 servertijd) die dag écht actief was. Oorzaak: GitHub Actions'
+`schedule`-trigger draait in de praktijk niet betrouwbaar elke 15 minuten —
+tussen opeenvolgende runs van deze workflow zaten soms 6-8 uur (GitHub
+vertraagt/skipt cron-runs, vooral bij een repo met weinig activiteit). Het
+oude smalle venster (`FIRE_WINDOW_MINUTES = 10`, alleen de eerste 10 minuten
+na blok-start) werd daardoor bijna altijd gemist. Opgelost door het hele
+6-uursblok als venster te gebruiken i.p.v. alleen de eerste 10 minuten — dat
+vereist wel een manier om te voorkomen dat dezelfde melding 2x verstuurd
+wordt als de cron toevallig meerdere keren binnen hetzelfde blok draait,
+vandaar deze tabel.
+
+In het Supabase-dashboard → SQL Editor → dit uitvoeren:
+
+```sql
+create table notified_windows (
+  key text primary key,
+  notified_at timestamptz not null default now()
+);
+
+alter table notified_windows enable row level security;
+-- Geen policies nodig: alleen de GitHub Action (met de service_role key,
+-- die RLS omzeilt) schrijft/leest hier, nooit de app zelf.
+```
+
+Geen app-update nodig (puur server-side, raakt geen app-code). Werkt direct
+na deze migratie bij de volgende cron-run.
+
 ### 3. GitHub Actions-secrets instellen
 
 Repo → **Settings → Secrets and variables → Actions → New repository
@@ -237,10 +267,11 @@ scherm openen (als Premium-lid), een categorie aanzetten, toestemming geven.
   `main` en de Actions-tab checken of de "Notify content changes"-workflow
   draait en je toestel een melding krijgt.
 - Voor Rainbow/meteorenregen: `workflow_dispatch` op "Notify server-timed
-  weather" handmatig draaien via de Actions-tab (i.p.v. 15 min wachten) —
-  vuurt alleen als er op dat moment voor minstens één server een venster
-  binnen de laatste `FIRE_WINDOW_MINUTES` is gestart én de bijbehorende
-  spots-lijst niet leeg is.
+  weather" handmatig draaien via de Actions-tab — vuurt alleen als er op dat
+  moment voor minstens één server een venster open staat (het hele
+  6-uursblok telt mee, zie migratie hierboven), de bijbehorende spots-lijst
+  niet leeg is, én dat venster nog niet eerder gemeld is (tabel
+  `notified_windows`).
 
 ## iOS
 

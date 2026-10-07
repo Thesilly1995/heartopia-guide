@@ -23,6 +23,32 @@ export async function fetchTokens(supabaseUrl, serviceRoleKey, { category, serve
   return rows.map((row) => row.token);
 }
 
+/**
+ * Probeert een venster-sleutel exclusief te claimen (insert, met "doe niets
+ * bij conflict"). Geeft `true` als dit de eerste keer is (dus: nu versturen),
+ * `false` als er al eerder geclaimd is (of de insert mislukte — fail-safe:
+ * liever een gemiste melding dan een dubbele). Zie `notified_windows`-tabel,
+ * migratie in docs/push-notifications-setup.md.
+ */
+export async function tryClaimNotifiedWindow(supabaseUrl, serviceRoleKey, key) {
+  const response = await fetch(`${supabaseUrl}/rest/v1/notified_windows`, {
+    method: 'POST',
+    headers: {
+      apikey: serviceRoleKey,
+      Authorization: `Bearer ${serviceRoleKey}`,
+      'Content-Type': 'application/json',
+      Prefer: 'resolution=ignore-duplicates,return=representation',
+    },
+    body: JSON.stringify({ key }),
+  });
+  if (!response.ok) {
+    console.error(`Supabase notified_windows-insert mislukt voor "${key}": HTTP ${response.status}`);
+    return false;
+  }
+  const rows = await response.json();
+  return rows.length > 0;
+}
+
 /** Expo's push-API accepteert max. 100 berichten per request. */
 export function chunk(array, size) {
   const chunks = [];
