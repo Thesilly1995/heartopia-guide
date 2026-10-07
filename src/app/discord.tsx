@@ -15,11 +15,13 @@ const STRINGS = {
     title: 'Discord',
     subtitle: 'Kom gezellig kletsen met de community',
     button: 'Join onze Discord',
+    note: 'Alleen voor Nederlandse/Belgische spelers',
   },
   en: {
     title: 'Discord',
     subtitle: 'Come hang out with the community',
     button: 'Join our Discord',
+    note: 'Dutch/Belgian players only',
   },
 } as const;
 
@@ -37,6 +39,7 @@ export default function DiscordScreen() {
         <TouchableOpacity style={styles.button} onPress={() => Linking.openURL(DISCORD_INVITE_URL)}>
           <Text style={styles.buttonText}>{s.button}</Text>
         </TouchableOpacity>
+        <Text style={styles.note}>{s.note}</Text>
       </ScrollView>
     </SafeAreaView>
   );
@@ -48,5 +51,6 @@ function makeStyles(c: ThemeColors) {
     content: { padding: 16, gap: 16, flexGrow: 1 },
     button: { backgroundColor: '#5865F2', borderRadius: 14, paddingVertical: 16, alignItems: 'center' },
     buttonText: { color: '#FFFFFF', fontSize: 16, fontWeight: '700' },
+    note: { fontSize: 12, color: c.forestSoft, textAlign: 'center', marginTop: -8 },
   });
 }
