@@ -2,6 +2,14 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-10-07 (deel 63) — Nieuwe gift code, vaste ontwikkelbranch gereset wegens drift, IARC-rating live
+
+**Nieuwe gift code** `r2q7a4m9k3n6` (3x Wensterren, 3x Meermin Vislokmiddel, 10x Mest, vervaldatum 3 dec 2026) toegevoegd aan zowel `CODES_RAW` (`src/data/codes.ts`) als de live `remote-content.json`, zelfde patroon als eerdere codes.
+
+**Workflow-probleem gevonden en opgelost**: de vaste ontwikkelbranch `claude/rewards-gift-code-vylbj0` bleek al een tijd niet meer na elke gemergede PR gereset te zijn vanaf `main` (de afgesproken routine, zie AGENTS.md) — hij liep 34 commits achter terwijl `main` intussen o.a. een notificatiescripts-refactor had gehad (`send-server-timed-notifications.mjs`, `event-window.ts`, `volgend-event.tsx`, `next-event-recipes.ts` daar bewust verwijderd/samengevoegd). Een PR vanaf die branch (#217) zou dat werk hebben teruggedraaid, dus **niet gemerged** — in plaats daarvan is de gift-code-wijziging via een losse kortstondige branch rechtstreeks vanaf verse `main` gemerged (#218, zelfde aanpak als eerder bij de meteorSpots-trigger-taak in deel 57). Daarna is `claude/rewards-gift-code-vylbj0` zelf hard gereset naar `main` (force-with-lease, geverifieerd dat er geen uniek/nog-niet-gemerged werk op stond — alles netto nul tegen `main` behalve verouderde/al-vervangen content). **Les**: bij twijfel of de vaste branch nog synchroon loopt met `main`, eerst `git log origin/main..HEAD` en een `--stat`-diff checken vóórdat een PR vanaf die branch gemerged wordt.
+
+**IARC-rating**: gebruiker ontving een "Live Rating Notice" van IARC (Google Play) voor Heartopedia, naar aanleiding van een vragenlijst ingevuld op 9 sep 2026. Dit is een routinematige bevestiging dat de content rating nu live staat — geen actie nodig, tenzij de uiteindelijke classificatie in de Play Console onverwacht blijkt.
+
 ## 2026-10-03 (deel 62) — Nieuw Premium-tabblad "Volgend Event" (recepten-vooraankondiging)
 
 **Aanleiding**: gebruiker wilde een pagina waar spelers vooruit kunnen kijken naar aankomende Heartopia-events om zich voor te bereiden. Diverse fansites (theheartopia.com, heartopia.life, heartopia.town, heartopia.web.id) bleken bij navraag verouderd/onbetrouwbaar (afgezet tegen de eigen in-game Echo of Ancients-datum van de gebruiker) — geen enkele toont betrouwbaar een "nog niet begonnen"-sectie, dus automatisch scrapen was geen optie.
