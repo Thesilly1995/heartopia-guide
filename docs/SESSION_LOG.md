@@ -10,6 +10,10 @@ Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wa
 
 **IARC-rating**: gebruiker ontving een "Live Rating Notice" van IARC (Google Play) voor Heartopedia, naar aanleiding van een vragenlijst ingevuld op 9 sep 2026. Dit is een routinematige bevestiging dat de content rating nu live staat — geen actie nodig, tenzij de uiteindelijke classificatie in de Play Console onverwacht blijkt.
 
+**Volgend Event-infographic gecorrigeerd**: `assets/images/events/night-of-divination-prep.jpg` vervangen door een door de gebruiker gecorrigeerde versie (zelfde afmetingen 928×1152, geen codewijziging nodig) (#221).
+
+**Discord-tabblad toegevoegd**: nieuw scherm `/discord` (community-afbeelding + knop "Join onze Discord" naar `https://discord.gg/Nj9HPEEyTG`), als menu-item in de "Overig"-sectie op het homescherm. Items in `SECTIONS` ondersteunen nu een optioneel `langs`-veld (`src/app/(tabs)/index.tsx`) om een item alleen voor bepaalde talen te tonen — hier gebruikt om de Discord-tegel alleen bij NL/EN te laten zien, voor de andere vier talen (es/pt/fr/de) blijft hij verborgen. Geverifieerd met Playwright dat de tegel bij taal=es volledig verdwijnt (#222).
+
 ## 2026-10-03 (deel 62) — Nieuw Premium-tabblad "Volgend Event" (recepten-vooraankondiging)
 
 **Aanleiding**: gebruiker wilde een pagina waar spelers vooruit kunnen kijken naar aankomende Heartopia-events om zich voor te bereiden. Diverse fansites (theheartopia.com, heartopia.life, heartopia.town, heartopia.web.id) bleken bij navraag verouderd/onbetrouwbaar (afgezet tegen de eigen in-game Echo of Ancients-datum van de gebruiker) — geen enkele toont betrouwbaar een "nog niet begonnen"-sectie, dus automatisch scrapen was geen optie.
