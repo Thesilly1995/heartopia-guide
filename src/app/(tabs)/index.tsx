@@ -24,7 +24,7 @@ type LocalizedText = { nl: string; en: string; es: string; pt: string; fr: strin
 
 const SECTIONS: {
   label: LocalizedText;
-  items: { href: string | null; icon: string; title: LocalizedText; desc: LocalizedText }[];
+  items: { href: string | null; icon: string; title: LocalizedText; desc: LocalizedText; langs?: ('nl' | 'en' | 'es' | 'pt' | 'fr' | 'de')[] }[];
 }[] = [
   {
     label: { nl: "Hobby's", en: 'Hobbies', es: 'Aficiones', pt: 'Hobbies', fr: 'Loisirs', de: 'Hobbys' },
@@ -69,6 +69,7 @@ const SECTIONS: {
     items: [
       { href: '/todo', icon: '📝', title: { nl: 'To-do', en: 'To-do', es: 'Tareas', pt: 'Tarefas', fr: 'À faire', de: 'To-do' }, desc: { nl: 'Wat wil je nog gaan doen?', en: 'What do you still want to do?', es: '¿Qué más quieres hacer?', pt: 'O que você ainda quer fazer?', fr: 'Que voulez-vous encore faire ?', de: 'Was möchtest du noch tun?' } },
       { href: '/feedback', icon: '💡', title: { nl: 'Feedback', en: 'Feedback', es: 'Comentarios', pt: 'Feedback', fr: 'Retour', de: 'Feedback' }, desc: { nl: 'Deel je ideeën voor de gids', en: 'Share your ideas for the guide', es: 'Comparte tus ideas para la guía', pt: 'Compartilhe suas ideias para o guia', fr: 'Partagez vos idées pour le guide', de: 'Teile deine Ideen für den Guide' } },
+      { href: '/discord', icon: '💬', title: { nl: 'Discord', en: 'Discord', es: 'Discord', pt: 'Discord', fr: 'Discord', de: 'Discord' }, desc: { nl: 'Kom gezellig kletsen met de community', en: 'Come hang out with the community', es: 'Discord', pt: 'Discord', fr: 'Discord', de: 'Discord' }, langs: ['nl', 'en'] },
     ],
   },
 ];
@@ -336,7 +337,7 @@ export default function HomeScreen() {
                   </Pressable>
                 )}
               </View>
-              {section.items.map((item) => {
+              {section.items.filter((item) => !item.langs || item.langs.includes(language)).map((item) => {
                 const itemKey = `${section.label.nl}:${item.title.nl}`;
                 if (item.href) {
                   return (
