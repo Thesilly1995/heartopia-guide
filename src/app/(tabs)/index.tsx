@@ -294,9 +294,8 @@ export default function HomeScreen() {
             source={{ uri: PLOT_CALENDAR_IMAGE_URL }}
             aspectRatio={928 / 1152}
             trigger={
-              <View style={styles.plotsRow}>
-                <Text style={styles.plotsRowIcon}>📅</Text>
-                <Text style={styles.plotsRowText}>{s.calendarLabel}</Text>
+              <View style={styles.calendarButton}>
+                <Text style={styles.calendarButtonText}>{s.calendarLabel}</Text>
               </View>
             }
           />
@@ -504,6 +503,8 @@ function makeStyles(c: ThemeColors) {
     plotsRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
     plotsRowIcon: { fontSize: 18 },
     plotsRowText: { color: c.forest, fontSize: 13, fontWeight: '700' },
+    calendarButton: { backgroundColor: c.coral, borderRadius: 999, paddingHorizontal: 14, paddingVertical: 7 },
+    calendarButtonText: { color: '#FFFFFF', fontSize: 13, fontWeight: '700' },
     dailyResetNote: { color: c.forestSoft, fontSize: 10, marginTop: 4, marginLeft: 4 },
     section: { marginTop: 16, gap: 10 },
     sectionHeaderRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 2 },
