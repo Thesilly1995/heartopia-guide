@@ -103,6 +103,7 @@ function AppContent() {
         <Stack.Screen name="cloud-save" />
         <Stack.Screen name="meldingen" />
         <Stack.Screen name="tips" />
+        <Stack.Screen name="discord" />
       </Stack>
       <AdBanner />
     </ThemeProvider>
