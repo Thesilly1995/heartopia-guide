@@ -13,11 +13,21 @@
  * Dit script moet dezelfde regels volgen, anders krijgen spelers de melding
  * (soms uren) te vroeg t.o.v. hun eigen servertijd.
  *
+ * LET OP (7 okt 2026): GitHub Actions' `schedule`-trigger draait NIET
+ * betrouwbaar elke 15 min — in de praktijk zaten er soms 6-8 uur tussen
+ * opeenvolgende runs (GitHub vertraagt/skipt cron-runs, vooral bij lage
+ * repo-activiteit). Een smal "net begonnen"-venster (de oude
+ * FIRE_WINDOW_MINUTES = 10) werd daardoor bijna altijd gemist. Daarom nu:
+ * check het hele blok (6 uur) i.p.v. alleen de eerste 10 minuten, met een
+ * `notified_windows`-tabel in Supabase om dubbele meldingen te voorkomen als
+ * de cron toch een keer wél op tijd draait (of meerdere keren binnen
+ * hetzelfde blok vuurt). Zie migratie in docs/push-notifications-setup.md.
+ *
  * Vereiste env vars: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY.
  */
 
 import { readFileSync } from 'node:fs';
-import { fetchTokens, sendPushBatch } from './push-helpers.mjs';
+import { fetchTokens, sendPushBatch, tryClaimNotifiedWindow } from './push-helpers.mjs';
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -39,10 +49,11 @@ const SERVERS = [
 // Moet in sync blijven met BLOCK_START_HOUR in src/lib/event-window.ts.
 const BLOCK_START_HOUR = { '00-06': 0, '06-12': 6, '12-18': 12, '18-00': 18 };
 
-// Moet <= het cron-interval (15 min) zijn, anders kan hetzelfde venster 2x
-// vuren (twee cron-runs die allebei binnen het venster vallen). Iets kleiner
-// gehouden voor marge tegen een trage/vertraagde cron-run.
-const FIRE_WINDOW_MINUTES = 10;
+// Blokken zijn altijd 6 uur (00-06/06-12/12-18/18-00). Het hele blok telt als
+// "venster" i.p.v. alleen de eerste minuten na de start — dubbele meldingen
+// binnen hetzelfde blok worden voorkomen via `notified_windows` (Supabase),
+// niet via een kort tijdvenster (zie uitleg bovenaan dit bestand).
+const BLOCK_LENGTH_MINUTES = 360;
 
 const MESSAGES = {
   rainbow: {
@@ -90,21 +101,28 @@ for (const server of SERVERS) {
 
     const blockHour = BLOCK_START_HOUR[slot.block];
     const minutesSinceStart = (hour - blockHour) * 60 + minute;
-    if (minutesSinceStart < 0 || minutesSinceStart >= FIRE_WINDOW_MINUTES) continue;
+    if (minutesSinceStart < 0 || minutesSinceStart >= BLOCK_LENGTH_MINUTES) continue;
 
     const spots = curr[SPOTS_FIELD[kind]];
     if (!Array.isArray(spots) || spots.length === 0) {
-      console.log(`${server.id}/${kind}: venster begint nu, maar ${SPOTS_FIELD[kind]} is nog leeg — geen melding.`);
+      console.log(`${server.id}/${kind}: venster is open, maar ${SPOTS_FIELD[kind]} is nog leeg — geen melding (wel opnieuw geprobeerd bij de volgende run).`);
+      continue;
+    }
+
+    const windowKey = `${dateKey}-${server.id}-${kind}`;
+    const claimed = await tryClaimNotifiedWindow(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, windowKey);
+    if (!claimed) {
+      console.log(`${server.id}/${kind}: al gemeld voor dit venster (${windowKey}), overslaan.`);
       continue;
     }
 
     firedAny = true;
     const tokens = await fetchTokens(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, { category: 'rainbow_meteor', server: server.id });
-    console.log(`${server.id}/${kind}: venster net begonnen, ${tokens.length} toestel(len) op deze server geabonneerd.`);
+    console.log(`${server.id}/${kind}: venster is open (${windowKey}), ${tokens.length} toestel(len) op deze server geabonneerd.`);
     await sendPushBatch(tokens, MESSAGES[kind]);
   }
 }
 
 if (!firedAny) {
-  console.log('Geen enkele server had precies nu een Rainbow/meteorenregen-venster starten.');
+  console.log('Geen nieuwe melding nodig: geen enkele server heeft nu een open Rainbow/meteorenregen-venster dat nog niet gemeld is.');
 }
