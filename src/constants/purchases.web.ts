@@ -14,15 +14,20 @@ export interface PremiumPackagePrices {
   annual: string | null;
 }
 
+export interface PremiumStatus {
+  active: boolean;
+  isLifetime: boolean;
+}
+
 export function initializePurchasesIfNeeded() {
   // Geen actie op web.
 }
 
-export async function getPremiumStatus(): Promise<boolean> {
-  return false;
+export async function getPremiumStatus(): Promise<PremiumStatus> {
+  return { active: false, isLifetime: false };
 }
 
-export function addPremiumStatusListener(_onChange: (active: boolean) => void): () => void {
+export function addPremiumStatusListener(_onChange: (status: PremiumStatus) => void): () => void {
   return () => {};
 }
 

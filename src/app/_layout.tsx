@@ -8,6 +8,7 @@ import 'react-native-url-polyfill/auto';
 
 import { AnimatedSplashOverlay } from '@/components/animated-icon';
 import { AdBanner } from '@/components/heartopia/ad-banner';
+import { PremiumLifetimeModal } from '@/components/heartopia/premium-lifetime-modal';
 import { PremiumPromoModal } from '@/components/heartopia/premium-promo-modal';
 import { UpdateBanner } from '@/components/heartopia/update-banner';
 import { initializeAdsIfNeeded } from '@/constants/ads';
@@ -18,6 +19,7 @@ import { LanguageProvider } from '@/hooks/use-language';
 import { NotificationsProvider } from '@/hooks/use-notifications';
 import { usePremium, PremiumProvider } from '@/hooks/use-premium';
 import { ServerProvider } from '@/hooks/use-server';
+import { markPremiumLifetimeNoticeShown, shouldShowPremiumLifetimeNotice } from '@/lib/premium-lifetime-notice';
 import { markPremiumPromoShown, shouldShowPremiumPromo } from '@/lib/premium-promo';
 import { maybeRequestReview } from '@/lib/store-review';
 
@@ -49,9 +51,11 @@ export default function RootLayout() {
 function AppContent() {
   const colorScheme = useColorScheme();
   const insets = useSafeAreaInsets();
-  const { premium } = usePremium();
+  const { premium, isLifetimePremium } = usePremium();
   const [showPremiumPromo, setShowPremiumPromo] = useState(false);
   const promoShownRef = useRef(false);
+  const [showLifetimeNotice, setShowLifetimeNotice] = useState(false);
+  const lifetimeNoticeShownRef = useRef(false);
 
   // Op alle schermen behalve (tabs) is er geen bottom-tab-balk die al ruimte
   // reserveert voor de los-zwevende AdBanner (zie ad-banner.tsx) — zonder deze
@@ -74,11 +78,28 @@ function AppContent() {
     return () => clearTimeout(timer);
   }, [premium]);
 
+  // Zelfde vertraging als bij de promo hierboven, en bewust pas ná die check
+  // (via dezelfde 2s-timer) zodat de twee popups elkaar nooit overlappen —
+  // een bestaand (vast) Premium-lid komt sowieso nooit in de promo-tak terecht.
+  useEffect(() => {
+    if (lifetimeNoticeShownRef.current) return;
+    const timer = setTimeout(async () => {
+      const show = await shouldShowPremiumLifetimeNotice(isLifetimePremium);
+      if (show) {
+        lifetimeNoticeShownRef.current = true;
+        setShowLifetimeNotice(true);
+        markPremiumLifetimeNoticeShown();
+      }
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [isLifetimePremium]);
+
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <AnimatedSplashOverlay />
       <UpdateBanner />
       <PremiumPromoModal visible={showPremiumPromo} onClose={() => setShowPremiumPromo(false)} />
+      <PremiumLifetimeModal visible={showLifetimeNotice} onClose={() => setShowLifetimeNotice(false)} />
       <Stack screenOptions={{ headerShown: false, contentStyle: { paddingBottom: contentPadding } }}>
         <Stack.Screen name="(tabs)" options={{ contentStyle: { paddingBottom: 0 } }} />
         <Stack.Screen name="vissen" />

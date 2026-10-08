@@ -13,6 +13,8 @@ const STORAGE_KEY = 'heartopia:premium:test';
 
 interface PremiumContextValue {
   premium: boolean;
+  /** True bij een niet-verlopende (eenmalige) aankoop i.p.v. een abonnement. */
+  isLifetimePremium: boolean;
   /** __DEV__-only lokale test-schakelaar, los van echte aankopen. */
   setPremium: (premium: boolean) => void;
   togglePremium: () => void;
@@ -24,6 +26,7 @@ interface PremiumContextValue {
 
 const PremiumContext = createContext<PremiumContextValue>({
   premium: false,
+  isLifetimePremium: false,
   setPremium: () => {},
   togglePremium: () => {},
   purchasing: false,
@@ -40,13 +43,18 @@ const PremiumContext = createContext<PremiumContextValue>({
  */
 export function PremiumProvider({ children }: { children: ReactNode }) {
   const [purchasedPremium, setPurchasedPremium] = useState(false);
+  const [isLifetimePremium, setIsLifetimePremium] = useState(false);
   const [testOverride, setTestOverride] = useState(false);
   const [purchasing, setPurchasing] = useState(false);
   const [purchaseError, setPurchaseError] = useState<string | null>(null);
 
   useEffect(() => {
-    getPremiumStatus().then(setPurchasedPremium);
-    return addPremiumStatusListener(setPurchasedPremium);
+    const applyStatus = (status: { active: boolean; isLifetime: boolean }) => {
+      setPurchasedPremium(status.active);
+      setIsLifetimePremium(status.isLifetime);
+    };
+    getPremiumStatus().then(applyStatus);
+    return addPremiumStatusListener(applyStatus);
   }, []);
 
   useEffect(() => {
@@ -90,7 +98,16 @@ export function PremiumProvider({ children }: { children: ReactNode }) {
 
   return (
     <PremiumContext.Provider
-      value={{ premium, setPremium, togglePremium, purchasing, purchaseError, purchasePremium: purchase, restorePurchases: restore }}>
+      value={{
+        premium,
+        isLifetimePremium,
+        setPremium,
+        togglePremium,
+        purchasing,
+        purchaseError,
+        purchasePremium: purchase,
+        restorePurchases: restore,
+      }}>
       {children}
     </PremiumContext.Provider>
   );
