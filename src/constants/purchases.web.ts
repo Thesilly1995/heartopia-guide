@@ -7,6 +7,13 @@
 export const PREMIUM_ENTITLEMENT_ID = 'premium';
 export const isPurchasesConfigured = false;
 
+export type PremiumPlan = 'monthly' | 'annual';
+
+export interface PremiumPackagePrices {
+  monthly: string | null;
+  annual: string | null;
+}
+
 export function initializePurchasesIfNeeded() {
   // Geen actie op web.
 }
@@ -19,11 +26,11 @@ export function addPremiumStatusListener(_onChange: (active: boolean) => void): 
   return () => {};
 }
 
-export async function getPremiumPrice(): Promise<string | null> {
-  return null;
+export async function getPremiumPackagePrices(): Promise<PremiumPackagePrices> {
+  return { monthly: null, annual: null };
 }
 
-export async function purchasePremium(): Promise<{ error: string | null; cancelled: boolean }> {
+export async function purchasePremium(_plan: PremiumPlan): Promise<{ error: string | null; cancelled: boolean }> {
   return { error: 'not_configured', cancelled: false };
 }
 
