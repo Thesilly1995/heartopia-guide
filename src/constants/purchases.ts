@@ -27,6 +27,12 @@ export interface PremiumPackagePrices {
   annual: string | null;
 }
 
+export interface PremiumStatus {
+  active: boolean;
+  /** True bij een niet-verlopende (eenmalige) aankoop — `expirationDate` is dan `null`. */
+  isLifetime: boolean;
+}
+
 export const isPurchasesConfigured = Boolean(Platform.OS === 'ios' ? REVENUECAT_API_KEY_IOS : REVENUECAT_API_KEY_ANDROID);
 
 /** Eenmalig aanroepen bij app-start (native only, zie _layout.tsx + purchases.web.ts). */
@@ -41,20 +47,28 @@ function isPremiumActive(info: CustomerInfo): boolean {
   return typeof info.entitlements.active[PREMIUM_ENTITLEMENT_ID] !== 'undefined';
 }
 
-export async function getPremiumStatus(): Promise<boolean> {
-  if (!isPurchasesConfigured) return false;
+function computePremiumStatus(info: CustomerInfo): PremiumStatus {
+  const entitlement = info.entitlements.active[PREMIUM_ENTITLEMENT_ID];
+  return {
+    active: Boolean(entitlement),
+    isLifetime: Boolean(entitlement) && entitlement.expirationDate === null,
+  };
+}
+
+export async function getPremiumStatus(): Promise<PremiumStatus> {
+  if (!isPurchasesConfigured) return { active: false, isLifetime: false };
   try {
     const info = await Purchases.getCustomerInfo();
-    return isPremiumActive(info);
+    return computePremiumStatus(info);
   } catch {
-    return false;
+    return { active: false, isLifetime: false };
   }
 }
 
 /** Roept `onChange` aan telkens als de aankoopstatus wijzigt. Geeft een unsubscribe-functie terug. */
-export function addPremiumStatusListener(onChange: (active: boolean) => void): () => void {
+export function addPremiumStatusListener(onChange: (status: PremiumStatus) => void): () => void {
   if (!isPurchasesConfigured) return () => {};
-  const listener = (info: CustomerInfo) => onChange(isPremiumActive(info));
+  const listener = (info: CustomerInfo) => onChange(computePremiumStatus(info));
   Purchases.addCustomerInfoUpdateListener(listener);
   return () => Purchases.removeCustomerInfoUpdateListener(listener);
 }
