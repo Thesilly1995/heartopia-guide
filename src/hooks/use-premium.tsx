@@ -4,6 +4,7 @@ import { createContext, type ReactNode, useContext, useEffect, useState } from '
 import {
   addPremiumStatusListener,
   getPremiumStatus,
+  type PremiumPlan,
   purchasePremium as purchasePremiumImpl,
   restorePurchases as restorePurchasesImpl,
 } from '@/constants/purchases';
@@ -17,7 +18,7 @@ interface PremiumContextValue {
   togglePremium: () => void;
   purchasing: boolean;
   purchaseError: string | null;
-  purchasePremium: () => Promise<void>;
+  purchasePremium: (plan: PremiumPlan) => Promise<void>;
   restorePurchases: () => Promise<void>;
 }
 
@@ -70,10 +71,10 @@ export function PremiumProvider({ children }: { children: ReactNode }) {
 
   const togglePremium = () => setPremium(!testOverride);
 
-  const purchase = async () => {
+  const purchase = async (plan: PremiumPlan) => {
     setPurchasing(true);
     setPurchaseError(null);
-    const { error } = await purchasePremiumImpl();
+    const { error } = await purchasePremiumImpl(plan);
     setPurchasing(false);
     if (error) setPurchaseError(error);
   };

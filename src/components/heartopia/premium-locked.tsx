@@ -2,14 +2,16 @@ import { useEffect, useMemo, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
-import { getPremiumPrice, isPurchasesConfigured } from '@/constants/purchases';
+import { getPremiumPackagePrices, isPurchasesConfigured, type PremiumPackagePrices } from '@/constants/purchases';
 import { useLanguage } from '@/hooks/use-language';
 import { usePremium } from '@/hooks/use-premium';
 
 const STRINGS = {
   nl: {
     lockedTitle: 'Alleen voor Premium-leden',
-    buyButton: (price: string | null) => (price ? `Koop Premium (${price}) 👑` : 'Koop Premium 👑'),
+    monthlyButton: (price: string | null) => (price ? `Maandelijks — ${price}/maand 👑` : 'Maandelijks 👑'),
+    annualButton: (price: string | null) => (price ? `Jaarlijks — ${price}/jaar 👑` : 'Jaarlijks 👑'),
+    annualBadge: '2 maanden gratis',
     working: 'Bezig...',
     restore: 'Aankopen herstellen',
     purchaseError: 'Aankoop mislukt — probeer het later opnieuw.',
@@ -19,7 +21,9 @@ const STRINGS = {
   },
   en: {
     lockedTitle: 'Premium members only',
-    buyButton: (price: string | null) => (price ? `Buy Premium (${price}) 👑` : 'Buy Premium 👑'),
+    monthlyButton: (price: string | null) => (price ? `Monthly — ${price}/month 👑` : 'Monthly 👑'),
+    annualButton: (price: string | null) => (price ? `Yearly — ${price}/year 👑` : 'Yearly 👑'),
+    annualBadge: '2 months free',
     working: 'Working...',
     restore: 'Restore purchases',
     purchaseError: 'Purchase failed — please try again later.',
@@ -29,7 +33,9 @@ const STRINGS = {
   },
   es: {
     lockedTitle: 'Solo para miembros Premium',
-    buyButton: (price: string | null) => (price ? `Comprar Premium (${price}) 👑` : 'Comprar Premium 👑'),
+    monthlyButton: (price: string | null) => (price ? `Mensual — ${price}/mes 👑` : 'Mensual 👑'),
+    annualButton: (price: string | null) => (price ? `Anual — ${price}/año 👑` : 'Anual 👑'),
+    annualBadge: '2 meses gratis',
     working: 'Cargando...',
     restore: 'Restaurar compras',
     purchaseError: 'La compra falló — inténtalo de nuevo más tarde.',
@@ -39,7 +45,9 @@ const STRINGS = {
   },
   pt: {
     lockedTitle: 'Somente para membros Premium',
-    buyButton: (price: string | null) => (price ? `Comprar Premium (${price}) 👑` : 'Comprar Premium 👑'),
+    monthlyButton: (price: string | null) => (price ? `Mensal — ${price}/mês 👑` : 'Mensal 👑'),
+    annualButton: (price: string | null) => (price ? `Anual — ${price}/ano 👑` : 'Anual 👑'),
+    annualBadge: '2 meses grátis',
     working: 'Processando...',
     restore: 'Restaurar compras',
     purchaseError: 'Falha na compra — tente novamente mais tarde.',
@@ -49,7 +57,9 @@ const STRINGS = {
   },
   fr: {
     lockedTitle: 'Réservé aux membres Premium',
-    buyButton: (price: string | null) => (price ? `Acheter Premium (${price}) 👑` : 'Acheter Premium 👑'),
+    monthlyButton: (price: string | null) => (price ? `Mensuel — ${price}/mois 👑` : 'Mensuel 👑'),
+    annualButton: (price: string | null) => (price ? `Annuel — ${price}/an 👑` : 'Annuel 👑'),
+    annualBadge: '2 mois gratuits',
     working: 'Chargement...',
     restore: 'Restaurer les achats',
     purchaseError: "L'achat a échoué — réessaie plus tard.",
@@ -59,7 +69,9 @@ const STRINGS = {
   },
   de: {
     lockedTitle: 'Nur für Premium-Mitglieder',
-    buyButton: (price: string | null) => (price ? `Premium kaufen (${price}) 👑` : 'Premium kaufen 👑'),
+    monthlyButton: (price: string | null) => (price ? `Monatlich — ${price}/Monat 👑` : 'Monatlich 👑'),
+    annualButton: (price: string | null) => (price ? `Jährlich — ${price}/Jahr 👑` : 'Jährlich 👑'),
+    annualBadge: '2 Monate gratis',
     working: 'Wird bearbeitet...',
     restore: 'Käufe wiederherstellen',
     purchaseError: 'Kauf fehlgeschlagen — versuch es später noch einmal.',
@@ -75,10 +87,10 @@ export function PremiumLockedView({ text }: { text: string }) {
   const { language } = useLanguage();
   const s = STRINGS[language];
   const { setPremium, purchasing, purchaseError, purchasePremium, restorePurchases } = usePremium();
-  const [price, setPrice] = useState<string | null>(null);
+  const [prices, setPrices] = useState<PremiumPackagePrices>({ monthly: null, annual: null });
 
   useEffect(() => {
-    getPremiumPrice().then(setPrice);
+    getPremiumPackagePrices().then(setPrices);
   }, []);
 
   return (
@@ -89,8 +101,12 @@ export function PremiumLockedView({ text }: { text: string }) {
 
       {isPurchasesConfigured ? (
         <>
-          <Pressable style={styles.upgradeButton} disabled={purchasing} onPress={purchasePremium}>
-            <Text style={styles.upgradeButtonText}>{purchasing ? s.working : s.buyButton(price)}</Text>
+          <Pressable style={styles.upgradeButton} disabled={purchasing} onPress={() => purchasePremium('monthly')}>
+            <Text style={styles.upgradeButtonText}>{purchasing ? s.working : s.monthlyButton(prices.monthly)}</Text>
+          </Pressable>
+          <Pressable style={styles.annualButton} disabled={purchasing} onPress={() => purchasePremium('annual')}>
+            <Text style={styles.annualBadge}>{s.annualBadge}</Text>
+            <Text style={styles.upgradeButtonText}>{purchasing ? s.working : s.annualButton(prices.annual)}</Text>
           </Pressable>
           <Pressable onPress={restorePurchases} disabled={purchasing} hitSlop={6}>
             <Text style={styles.restoreLink}>{s.restore}</Text>
@@ -119,7 +135,9 @@ function makeStyles(c: ThemeColors) {
     lockedIcon: { fontSize: 40 },
     lockedTitle: { fontSize: 18, fontWeight: '800', color: c.forest, textAlign: 'center' },
     lockedText: { fontSize: 13, color: c.forestSoft, textAlign: 'center', lineHeight: 19 },
-    upgradeButton: { backgroundColor: c.coral, borderRadius: 999, paddingHorizontal: 20, paddingVertical: 12, marginTop: 8 },
+    upgradeButton: { backgroundColor: c.coral, borderRadius: 999, paddingHorizontal: 20, paddingVertical: 12, marginTop: 8, alignItems: 'center' },
+    annualButton: { backgroundColor: c.coralDark, borderRadius: 999, paddingHorizontal: 20, paddingVertical: 12, marginTop: 8, alignItems: 'center' },
+    annualBadge: { color: '#FFFFFF', fontSize: 10, fontWeight: '800', opacity: 0.85, marginBottom: 2 },
     upgradeButtonText: { color: '#FFFFFF', fontSize: 14, fontWeight: '700' },
     restoreLink: { fontSize: 12, color: c.skyDark, textDecorationLine: 'underline', marginTop: 2 },
     errorText: { fontSize: 12, color: c.coralDark, textAlign: 'center' },

@@ -13,6 +13,20 @@ const REVENUECAT_API_KEY_IOS = '';
 /** Entitlement-identifier zoals aangemaakt in het RevenueCat-dashboard. */
 export const PREMIUM_ENTITLEMENT_ID = 'premium';
 
+/**
+ * Welk abonnement-package in de RevenueCat-offering gekozen wordt. Moet in de
+ * offering als "Monthly" resp. "Annual" package-type geconfigureerd zijn (zie
+ * docs/revenuecat-subscriptions-setup.md) — beide wijzen naar dezelfde
+ * `PREMIUM_ENTITLEMENT_ID`, dus bestaande (eenmalige) kopers blijven via hun
+ * oude aankoop gewoon premium, ongeacht welk plan hier gekozen wordt.
+ */
+export type PremiumPlan = 'monthly' | 'annual';
+
+export interface PremiumPackagePrices {
+  monthly: string | null;
+  annual: string | null;
+}
+
 export const isPurchasesConfigured = Boolean(Platform.OS === 'ios' ? REVENUECAT_API_KEY_IOS : REVENUECAT_API_KEY_ANDROID);
 
 /** Eenmalig aanroepen bij app-start (native only, zie _layout.tsx + purchases.web.ts). */
@@ -45,23 +59,26 @@ export function addPremiumStatusListener(onChange: (active: boolean) => void): (
   return () => Purchases.removeCustomerInfoUpdateListener(listener);
 }
 
-/** Haalt de echte, gelokaliseerde prijs op van de Play Store zelf (bv. "€4,99"). */
-export async function getPremiumPrice(): Promise<string | null> {
-  if (!isPurchasesConfigured) return null;
+/** Haalt de echte, gelokaliseerde prijzen op van de Play Store zelf (bv. "€3,00" / "€30,00"). */
+export async function getPremiumPackagePrices(): Promise<PremiumPackagePrices> {
+  if (!isPurchasesConfigured) return { monthly: null, annual: null };
   try {
     const offerings = await Purchases.getOfferings();
-    const pkg = offerings.current?.availablePackages[0];
-    return pkg?.product.priceString ?? null;
+    const offering = offerings.current;
+    return {
+      monthly: offering?.monthly?.product.priceString ?? null,
+      annual: offering?.annual?.product.priceString ?? null,
+    };
   } catch {
-    return null;
+    return { monthly: null, annual: null };
   }
 }
 
-export async function purchasePremium(): Promise<{ error: string | null; cancelled: boolean }> {
+export async function purchasePremium(plan: PremiumPlan): Promise<{ error: string | null; cancelled: boolean }> {
   if (!isPurchasesConfigured) return { error: 'not_configured', cancelled: false };
   try {
     const offerings = await Purchases.getOfferings();
-    const pkg = offerings.current?.availablePackages[0];
+    const pkg = plan === 'annual' ? offerings.current?.annual : offerings.current?.monthly;
     if (!pkg) return { error: 'no_package', cancelled: false };
     await Purchases.purchasePackage(pkg);
     return { error: null, cancelled: false };
