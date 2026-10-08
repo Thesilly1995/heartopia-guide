@@ -2,6 +2,28 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-10-08 (deel 64) — Premium omgezet naar abonnement (maand + jaar), naast bestaande eenmalige aankoop
+
+**Aanleiding**: gebruiker liep aan tegen de doorlopende onderhoudskosten van de app (servers, API's) t.o.v. een eenmalig Premium-bedrag, en wilde overstappen naar een abonnement — zonder bestaande eenmalige kopers ineens te laten betalen. Gekozen: €2,99/maand + €29,99/jaar ("2 maanden gratis" — 10 maanden voor de prijs van 12, makkelijk uit te leggen framing).
+
+**Technisch bleek dit opvallend eenvoudig**, omdat Premium al via RevenueCat's entitlement-systeem loopt (`PREMIUM_ENTITLEMENT_ID = 'premium'`, zie `docs/revenuecat-setup.md`): de app checkt alleen of die ene entitlement actief is (`isPremiumActive()` in `src/constants/purchases.ts`), niet welk product 'm geactiveerd heeft. Dat betekent dat je gewoon **meerdere producten (eenmalig + 2 abonnementen) aan dezelfde entitlement kunt hangen** — bestaande kopers van de oude eenmalige `premium.lifetime`-aankoop blijven zonder enige migratie voor altijd premium.
+
+**Codewijzigingen** (`src/constants/purchases.ts` + `.web.ts`, `src/hooks/use-premium.tsx`, `src/components/heartopia/premium-locked.tsx`): `purchasePremium()` accepteert nu `plan: 'monthly' | 'annual'` en pakt `offering.monthly`/`offering.annual` (RevenueCat's package-type-gebaseerde lookup) i.p.v. altijd `availablePackages[0]`. Nieuwe `getPremiumPackagePrices()` (vervangt `getPremiumPrice()`) haalt beide live Play Store-prijzen op. Het premium-slotscherm toont nu twee knoppen i.p.v. één, met een "2 maanden gratis"-badge op de jaarlijkse — getest met een tijdelijke `isPurchasesConfigured = true`-override op web (teruggedraaid na screenshot).
+
+**Play Console/RevenueCat-configuratie** (door de gebruiker zelf doorlopen, stap-voor-stap begeleid, nu ook vastgelegd in `docs/revenuecat-setup.md` als migratie-sectie):
+- Nieuw **abonnement-product** `heartopedia_premium_sub` (Play Console gebruikt sinds enige tijd een apart producttype "Abonnementen" i.p.v. "In-app-producten" voor terugkerende betalingen) met twee **basisplannen**: `monthly` (€2,99, Google rondde zelf af van de voorgestelde €3) en `annual` (€29,99). Beide op Actief gezet.
+- In RevenueCat: beide basisplannen gekoppeld aan de bestaande `premium`-entitlement (naast de oude `premium.lifetime`), en als Monthly/Annual-package toegevoegd aan de bestaande "default"-offering (die al op Current stond).
+- **Licentietests**: een mailinglijst "premium test" bleek al te bestaan van een eerdere sessie — gebruikers eigen hoofdaccount (dat al een eenmalige Premium-aankoop had) is daaraan toegevoegd zodat test-aankopen niet echt afgeschreven worden, ook al had dat account al premium (geen conflict: een tweede actief product naast de bestaande lifetime-aankoop onder dezelfde entitlement is normaal).
+- **Getest en bevestigd werkend**: na `eas update` toonde het slotscherm beide knoppen met de juiste live prijzen; een test-aankoop van het maandabonnement werd in RevenueCat's event-log bevestigd ("Started a subscription of heartopedia_premium_sub:monthly for EUR 2.99 from offering default") en activeerde premium in de app.
+
+**Les voor volgende keer**: Play Console's "Licentietests" zit op account-niveau (niet binnen een specifieke app) en verplaatst qua navigatie regelmatig — zoeken via het zoekicoon (indien aanwezig) of via Instellingen op het hoofdoverzicht is sneller dan een vast menupad aanhouden.
+
+### Overig (kleine losse punten, zelfde dag)
+- **Qiaoguo**-verkoopprijs (was `null`, niet online te vinden) alsnog ingevuld nadat de gebruiker een screenshot van heartodex.com aanleverde: `[830,1245,1660,3320,6640]` (#228).
+- **Fried Shrimp Sushi** en **Egg Rice Bowl** — de twee recepten uit de eerder aangeleverde lijst van 37 die online niet te vinden waren — alsnog toegevoegd nadat de gebruiker screenshots van heartodex.com aanleverde (#229).
+- **Rainbow/meteor-melding kwam niet door** (venster 8 okt 18:00 servertijd) — cron had sinds het begin van het venster nog niet gedraaid (zelfde onbetrouwbaarheid als in deel 63 gefixt, nu binnen het verbrede 6-uursvenster). Workflow handmatig getriggerd via `workflow_dispatch`, melding alsnog verstuurd naar alle 8 abonnees. Geen nieuwe code-actie nodig — de fix werkt, de cron was simpelweg nog niet gefeed.
+- **Patroon bevestigd in `rainbowSpots`/`meteorSpots`/`bubbleWeek`**: gebruiker merkte op dat deze vaak op dezelfde plekken zitten. Geverifieerd met coördinaten-vergelijking over meerdere losse vensters/weken — vastgelegd in `docs/remote-content.md`: Whalefall Canyon-helft van `rainbowSpots` is over 4 momenten steeds **exact identiek** (vaste set), hoofdeiland-boeketplekken wisselen tussen een klein aantal vaste clusters, `meteorSpots` deelt 70-90% overlap tussen losse vensters, `bubbleWeek` toont hetzelfde maar zwakker (~40-60%, grotere pool van 19 plekken). Wijst op een vaste, beperkte pool spawn-locaties in de game zelf, geen bug in onze data.
+
 ## 2026-10-07 (deel 63) — Nieuwe gift code, vaste ontwikkelbranch gereset wegens drift, IARC-rating live
 
 **Nieuwe gift code** `r2q7a4m9k3n6` (3x Wensterren, 3x Meermin Vislokmiddel, 10x Mest, vervaldatum 3 dec 2026) toegevoegd aan zowel `CODES_RAW` (`src/data/codes.ts`) als de live `remote-content.json`, zelfde patroon als eerdere codes.
