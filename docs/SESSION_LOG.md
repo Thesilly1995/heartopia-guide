@@ -2,6 +2,14 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-10-08 (deel 65) — Eenmalige bedank-popup voor bestaande (vaste) Premium-leden
+
+**Aanleiding**: na de omzetting van Premium naar een abonnement (deel 64) vond de gebruiker het netjes om bestaande eenmalige-aankoop-kopers hiervan op de hoogte te stellen, met een bedankje voor hun aankoop en de geruststelling dat hun eigen Premium voor altijd blijft werken zonder actie van hun kant.
+
+**Implementatie**: `getPremiumStatus()`/`addPremiumStatusListener()` in `src/constants/purchases.ts` + `.web.ts` geven nu een `PremiumStatus`-object (`{ active, isLifetime }`) terug i.p.v. een bare boolean — `isLifetime` is `true` zodra `entitlement.expirationDate === null` (dus de oude eenmalige aankoop, niet een abonnement). `src/hooks/use-premium.tsx` exposeert dit als `isLifetimePremium`. Nieuw `src/lib/premium-lifetime-notice.ts` (mirrort `premium-promo.ts`, maar "toon precies 1x ooit" i.p.v. wekelijks) en `src/components/heartopia/premium-lifetime-modal.tsx` (6 talen, zelfde stijl als `premium-promo-modal.tsx`). Wiring in `src/app/_layout.tsx` met dezelfde 2s-opstartvertraging als de bestaande promo-modal, zodat de twee popups elkaar nooit overlappen (een abonnee krijgt nooit deze, een vast lid nooit de wervingspromo). PR #235, gemerged.
+
+**Distributie**: pure JS/UI-wijziging, geen nieuwe native dependency — kan live via `eas update` (de app heeft EAS Update geconfigureerd, `channel production`), geen nieuwe `eas build`/Play Console-upload nodig.
+
 ## 2026-10-08 (deel 64) — Premium omgezet naar abonnement (maand + jaar), naast bestaande eenmalige aankoop
 
 **Aanleiding**: gebruiker liep aan tegen de doorlopende onderhoudskosten van de app (servers, API's) t.o.v. een eenmalig Premium-bedrag, en wilde overstappen naar een abonnement — zonder bestaande eenmalige kopers ineens te laten betalen. Gekozen: €2,99/maand + €29,99/jaar ("2 maanden gratis" — 10 maanden voor de prijs van 12, makkelijk uit te leggen framing).
