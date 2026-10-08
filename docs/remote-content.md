@@ -159,7 +159,14 @@ dat specifieke onderdeel.
   reden om aan een kopieer/verouderde-data-fout te denken — check wel
   altijd (zoals hierboven) of de gebruiker de coördinaten die ochtend/dag
   zelf opnieuw heeft aangeleverd, i.p.v. aan te nemen dat oude data nog
-  geldig is.
+  geldig is. **Zelfde observatie geldt nog sterker voor de
+  Whalefall Canyon-helft van `rainbowSpots`** (de 5 onderwater-boeketplekken):
+  over vier losse momenten (20 sep, 27 sep, 30 sep, 7 okt) waren die 5
+  coördinaten **elke keer exact identiek**, zonder uitzondering — een
+  volledig vaste set, geen variatie. De 3 hoofdeiland-boeketplekken
+  wisselen wel, maar tussen een klein aantal vaste clusters (20 sep en
+  7 okt hadden toevallig precies dezelfde 3 plekken; 27 sep en 30 sep
+  elk een andere, onderling verschillende set).
 - **`bubbleWeek`**: de 19 roze-bubbels-locaties van deze week (15 op de
   hoofdeiland-kaart `island-map.jpg`, 4 onderwater op de Whalefall
   Canyon-kaart `whalefall-map.jpg`, onderscheiden via `underwater`).
@@ -167,7 +174,13 @@ dat specifieke onderdeel.
   getoonde weekaanduiding (bv. `"Deze week (8-14 aug 2026)"`), `spots`
   gebruikt hetzelfde `num`/`x`/`y`-systeem als `rainbowSpots`/
   `meteorSpots`. Ontbreekt dit veld, dan valt de app terug op een
-  gebundelde (verouderde) standaardlijst.
+  gebundelde (verouderde) standaardlijst. **Zelfde soort hergebruik,
+  maar zwakker**: vergelijking van 3 opeenvolgende weken (19-25 sep,
+  26 sep-2 okt, 3-9 okt) laat op het hoofdeiland ~40-60% overlap zien
+  (6-9 van de 15 plekken binnen een paar kaart-eenheden van een plek uit
+  een vorige week) — nog altijd ver boven wat toeval zou geven, maar
+  minder uitgesproken dan bij `meteorSpots`/`rainbowSpots`, vermoedelijk
+  omdat de pool met 19 plekken per week simpelweg groter is.
 - **`dailyPlotsCalendar`**: één entry per kalenderdag (`date` als
   `"YYYY-MM-DD"`) met de Zwervende Eik-plot en Fluoriet-plot van die
   dag — meestal `"Plot <nummer>"` (vaak identiek in NL/EN omdat het
