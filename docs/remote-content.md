@@ -144,6 +144,22 @@ dat specifieke onderdeel.
   gewoon als losse pin tussen de andere fragment-plekken op de hoofdeilandkaart.
   Het exacte tijdsblok waarin dit gebeurt hoort in `weekForecast` (zie
   hieronder), niet hier.
+  **Observatie (okt 2026): `meteorSpots` hergebruikt grotendeels dezelfde
+  plekken bij elk venster.** Vergelijking van de coördinaten over vijf
+  losse meteorenregen-vensters (16 sep, 21 sep, 25 sep, 1 okt, 8 okt —
+  elke keer apart door de gebruiker aangeleverd, geen kopieer-fout) laat
+  zien dat telkens 70-90% van de 10 punten binnen een paar kaart-eenheden
+  (<5 van de 0-100-schaal) van een punt uit een ándere keer liggen. Het
+  lijkt er dus op dat Heartopia de ertsplekken trekt uit een vaste,
+  beperkte pool van onderliggende spawn-locaties op de kaart, niet uit
+  volledig vrije willekeur — de kleine afwijkingen zijn vermoedelijk
+  gewoon pin-plaatsingsverschillen rond dezelfde plek. Nuttig om te weten
+  bij het invullen van een nieuw venster: een nieuwe aanlevering die sterk
+  lijkt op een eerdere (zie git-historie van dit bestand) is dus geen
+  reden om aan een kopieer/verouderde-data-fout te denken — check wel
+  altijd (zoals hierboven) of de gebruiker de coördinaten die ochtend/dag
+  zelf opnieuw heeft aangeleverd, i.p.v. aan te nemen dat oude data nog
+  geldig is.
 - **`bubbleWeek`**: de 19 roze-bubbels-locaties van deze week (15 op de
   hoofdeiland-kaart `island-map.jpg`, 4 onderwater op de Whalefall
   Canyon-kaart `whalefall-map.jpg`, onderscheiden via `underwater`).
