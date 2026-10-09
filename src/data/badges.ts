@@ -9,6 +9,8 @@ export interface BadgeItem {
   iconKey: string | null;
   /** Hoe je deze badge behaalt — null als nog niet bevestigd. */
   howTo: string | null;
+  /** Sleutel naar een extra afbeelding (bv. titelslijst, easter-egg-gids) in BADGE_DETAIL_IMAGE_MAP — null als niet van toepassing. */
+  detailImageKey: string | null;
 }
 
 interface BadgeRaw {
@@ -25,6 +27,7 @@ interface BadgeRaw {
   howToEn?: string;
   howToEs?: string;
   howToPt?: string;
+  detailImageKey?: string;
 }
 
 const BADGES_RAW: BadgeRaw[] = [
@@ -154,22 +157,26 @@ const BADGES_RAW: BadgeRaw[] = [
     howToNl: "Bezit 10 gepubliceerde werken, elk met minstens 200 lezers.", howToEn: "Own 10 published works, each with at least 200 readers.", howToEs: "Ten 10 obras publicadas, cada una con al menos 200 lectores.", howToPt: "Tenha 10 obras publicadas, cada uma com pelo menos 200 leitores." },
   { nameNl: "Literaire Grootmeester", nameEn: "Great Literary Tycoon", nameEs: "Gran Magnate Literario", namePt: "Grande Magnata Literário", nameFr: "Grand maître littéraire", nameDe: "Literarischer Großmeister", emoji: "🔒", hidden: true, iconKey: null },
   { nameNl: "Zeevis Meester", nameEn: "Sea Fishing Master", nameEs: "Maestro de la Pesca Marina", namePt: "Mestre da Pesca no Mar", nameFr: "Maître des poissons de mer", nameDe: "Meister der Meeresfische", emoji: "🎣", hidden: true, iconKey: "sea-fishing-master",
-    howToNl: "Behaal alle 8 titels van zeevissen.", howToEn: "Obtain all 8 titles from sea fishing.", howToEs: "Consigue los 8 títulos de la pesca marina.", howToPt: "Consiga os 8 títulos da pesca no mar." },
+    howToNl: "Behaal alle 8 titels van zeevissen.", howToEn: "Obtain all 8 titles from sea fishing.", howToEs: "Consigue los 8 títulos de la pesca marina.", howToPt: "Consiga os 8 títulos da pesca no mar.",
+    detailImageKey: "sea-fishing-master-titles" },
   { nameNl: "Insectenvangfeest", nameEn: "Insect Catching Party", nameEs: "Fiesta de Caza de Insectos", namePt: "Festa de Captura de Insetos", nameFr: "Fête de la chasse aux insectes", nameDe: "Insektenfangfest", emoji: "🦋", hidden: true, iconKey: "insect-catching-party",
     howToNl: "Deel de Luchtbij-lokmiddel 100 keer.", howToEn: "Share the Air Bee Attractor 100 times.", howToEs: "Comparte el Atrayente de Abejas del Aire 100 veces.", howToPt: "Compartilhe o Atrativo de Abelhas do Ar 100 vezes." },
   { nameNl: "Regenboogbode", nameEn: "Rainbow Messenger", nameEs: "Mensajero del Arcoíris", namePt: "Mensageiro do Arco-Íris", nameFr: "Messager de l'arc-en-ciel", nameDe: "Regenbogenbote", emoji: "🌈", hidden: true, iconKey: "rainbow-messenger",
     howToNl: "Deel Regenboogboeketten 50 keer.", howToEn: "Share Rainbow Bouquets 50 times.", howToEs: "Comparte Ramos de Arcoíris 50 veces.", howToPt: "Compartilhe Buquês de Arco-Íris 50 vezes." },
   { nameNl: "Onsen Berg Insectenkoning", nameEn: "Onsen Mountain Insect King", nameEs: "Rey de los Insectos de la Montaña Onsen", namePt: "Rei dos Insetos da Montanha Onsen", nameFr: "Roi des insectes de la montagne Onsen", nameDe: "Onsen-Berg-Insektenkönig", emoji: "🦋", hidden: true, iconKey: "onsen-mountain-insect-king",
-    howToNl: "Behaal alle titels van insectenvangevents.", howToEn: "Obtain all titles from insect catching events.", howToEs: "Consigue todos los títulos de los eventos de caza de insectos.", howToPt: "Consiga todos os títulos dos eventos de captura de insetos." },
+    howToNl: "Behaal alle titels van insectenvangevents.", howToEn: "Obtain all titles from insect catching events.", howToEs: "Consigue todos los títulos de los eventos de caza de insectos.", howToPt: "Consiga todos os títulos dos eventos de captura de insetos.",
+    detailImageKey: "onsen-mountain-insect-king-titles" },
   { nameNl: "Boekenverzamelaar", nameEn: "Book Collector", nameEs: "Coleccionista de Libros", namePt: "Colecionador de Livros", nameFr: "Collectionneur de livres", nameDe: "Büchersammler", emoji: "🔒", hidden: true, iconKey: null,
     howToNl: "Bezit 500 verschillende boeken.", howToEn: "Own 500 different books.", howToEs: "Ten 500 libros diferentes.", howToPt: "Tenha 500 livros diferentes." },
   { nameNl: "Boekenlezer (Astralis)", nameEn: "Book Reader (Astralis)", nameEs: "Lector de Libros (Astralis)", namePt: "Leitor de Livros (Astralis)", nameFr: "Lecteur de livres (Astralis)", nameDe: "Leser (Astralis)", emoji: "🔒", hidden: true, iconKey: null },
   { nameNl: "Spook bij Jou Thuis", nameEn: "Ghost at Your House", nameEs: "Fantasma en tu Casa", namePt: "Fantasma na sua Casa", nameFr: "Fantôme chez toi", nameDe: "Geist bei dir zu Hause", emoji: "👻", hidden: true, iconKey: null,
     howToNl: "Krijg 200 likes bij jou thuis tijdens Verstoppertje Feest (inclusief jezelf).", howToEn: "Get 200 likes at your home during Hide-and-Seek Party (including your own).", howToEs: "Consigue 200 likes en tu casa durante la Fiesta del Escondite (incluyéndote a ti).", howToPt: "Consiga 200 curtidas na sua casa durante a Festa do Esconde-Esconde (incluindo você)." },
   { nameNl: "Hart Gezet op de Lucht", nameEn: "Heart Set on the Sky", nameEs: "Corazón Puesto en el Cielo", namePt: "Coração Voltado para o Céu", nameFr: "Le cœur tourné vers le ciel", nameDe: "Mit dem Herzen in der Luft", emoji: "🎈", hidden: true, iconKey: "heart-set-on-the-sky",
-    howToNl: "Behaal alle titels van het Luchtballon-event.", howToEn: "Earn all titles from the Hot Air Balloon event.", howToEs: "Consigue todos los títulos del evento del Globo Aerostático.", howToPt: "Consiga todos os títulos do evento do Balão de Ar Quente." },
+    howToNl: "Behaal alle titels van het Luchtballon-event.", howToEn: "Earn all titles from the Hot Air Balloon event.", howToEs: "Consigue todos los títulos del evento del Globo Aerostático.", howToPt: "Consiga todos os títulos do evento do Balão de Ar Quente.",
+    detailImageKey: "heart-set-on-the-sky-titles" },
   { nameNl: "Met de Wind Mee", nameEn: "Ride the Wind", nameEs: "Cabalgando el Viento", namePt: "Cavalgando o Vento", nameFr: "Chevaucher le vent", nameDe: "Mit dem Wind reiten", emoji: "🎈", hidden: true, iconKey: null,
-    howToNl: "Vind alle paaseieren tijdens het Luchtballon-event in de stad.", howToEn: "Find all the easter eggs during the town Hot Air Balloon event.", howToEs: "Encuentra todos los huevos de pascua durante el evento del Globo Aerostático en el pueblo.", howToPt: "Encontre todos os ovos de páscoa durante o evento do Balão de Ar Quente na cidade." },
+    howToNl: "Vind alle paaseieren tijdens het Luchtballon-event in de stad.", howToEn: "Find all the easter eggs during the town Hot Air Balloon event.", howToEs: "Encuentra todos los huevos de pascua durante el evento del Globo Aerostático en el pueblo.", howToPt: "Encontre todos os ovos de páscoa durante o evento do Balão de Ar Quente na cidade.",
+    detailImageKey: "ride-the-wind-easter-eggs" },
   { nameNl: "Opruimmeester", nameEn: "Cleanup Master", nameEs: "Maestro de la Limpieza", namePt: "Mestre da Limpeza", nameFr: "Maître du rangement", nameDe: "Aufräummeister", emoji: "🌊", hidden: true, iconKey: "cleanup-master" },
 ];
 
@@ -193,6 +200,7 @@ export function useBadges(): BadgeItem[] {
     hidden: r.hidden,
     iconKey: r.iconKey,
     howTo: howToByLang(r, language),
+    detailImageKey: r.detailImageKey ?? null,
       })),
     [language]
   );

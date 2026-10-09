@@ -6,6 +6,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { DisclaimerBox } from '@/components/heartopia/disclaimer-box';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
+import { ZoomableImage } from '@/components/heartopia/zoomable-image';
+import { BADGE_DETAIL_IMAGE_MAP } from '@/constants/badge-detail-images';
 import { BADGE_ICON_MAP } from '@/constants/badge-icons';
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { useBadges } from '@/data/badges';
@@ -22,6 +24,7 @@ const STRINGS = {
       '60+ badges, gebaseerd op een screenshot van jouw eigen Achievement-overzicht. Tik op het icoon om een badge als behaald te markeren, of gebruik de teller om voortgang bij te houden. Er zijn nog een aantal volledig verborgen badges die niet in deze lijst staan (nog geen naam bekend).',
     hiddenDivider: '🔒 Verborgen Prestaties',
     premiumOnly: 'Alleen voor Premium-leden',
+    viewDetails: '📷 Bekijk details',
   },
   en: {
     title: 'Badges',
@@ -30,6 +33,7 @@ const STRINGS = {
       "60+ badges, based on a screenshot of your own Achievement overview. Tap the icon to mark a badge as earned, or use the counter to track progress. There are still some fully hidden badges not in this list (name not yet known).",
     hiddenDivider: '🔒 Hidden Achievements',
     premiumOnly: 'Premium members only',
+    viewDetails: '📷 View details',
   },
   es: {
     title: 'Insignias',
@@ -38,6 +42,7 @@ const STRINGS = {
       '60+ insignias, basadas en una captura de pantalla de tu propio resumen de Logros. Toca el ícono para marcar una insignia como conseguida, o usa el contador para llevar el progreso. Todavía hay algunas insignias completamente ocultas que no están en esta lista (nombre aún desconocido).',
     hiddenDivider: '🔒 Logros Ocultos',
     premiumOnly: 'Solo para miembros Premium',
+    viewDetails: '📷 Ver detalles',
   },
   pt: {
     title: 'Emblemas',
@@ -46,6 +51,7 @@ const STRINGS = {
       '60+ emblemas, baseados em uma captura de tela do seu próprio resumo de Conquistas. Toque no ícone para marcar um emblema como conquistado, ou use o contador para acompanhar o progresso. Ainda existem alguns emblemas totalmente ocultos que não estão nesta lista (nome ainda desconhecido).',
     hiddenDivider: '🔒 Conquistas Ocultas',
     premiumOnly: 'Somente para membros Premium',
+    viewDetails: '📷 Ver detalhes',
   },
   fr: {
     title: 'Badges',
@@ -54,6 +60,7 @@ const STRINGS = {
       "60+ badges, basés sur une capture d'écran de ton propre aperçu des Succès. Touche l'icône pour marquer un badge comme obtenu, ou utilise le compteur pour suivre ta progression. Il reste encore quelques badges entièrement cachés qui ne sont pas dans cette liste (nom pas encore connu).",
     hiddenDivider: '🔒 Succès Cachés',
     premiumOnly: 'Réservé aux membres Premium',
+    viewDetails: '📷 Voir les détails',
   },
   de: {
     title: 'Badges',
@@ -62,6 +69,7 @@ const STRINGS = {
       '60+ Badges, basierend auf einem Screenshot deiner eigenen Erfolgs-Übersicht. Tippe auf das Icon, um ein Badge als erreicht zu markieren, oder nutze den Zähler, um deinen Fortschritt zu verfolgen. Es gibt noch ein paar komplett versteckte Badges, die nicht in dieser Liste stehen (Name noch unbekannt).',
     hiddenDivider: '🔒 Versteckte Erfolge',
     premiumOnly: 'Nur für Premium-Mitglieder',
+    viewDetails: '📷 Details ansehen',
   },
 } as const;
 
@@ -102,7 +110,7 @@ export default function BadgesScreen() {
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <ScreenHeader gradient={['#FFD166', '#E8A24F']} icon="🏅" title={s.title} subtitle={s.subtitle} />
       <FlatList
-        data={[...visible, { name: '__divider__', emoji: '', hidden: true, iconKey: null, howTo: null }, ...hidden]}
+        data={[...visible, { name: '__divider__', emoji: '', hidden: true, iconKey: null, howTo: null, detailImageKey: null }, ...hidden]}
         keyExtractor={(item, i) => `${item.name}-${i}`}
         contentContainerStyle={styles.listContent}
         ListHeaderComponent={
@@ -122,6 +130,7 @@ export default function BadgesScreen() {
           }
           const isEarned = earned[badge.name];
           const iconSource = badge.iconKey ? BADGE_ICON_MAP[badge.iconKey] : null;
+          const detailImage = badge.detailImageKey ? BADGE_DETAIL_IMAGE_MAP[badge.detailImageKey] : null;
           return (
             <Pressable
               style={[styles.card, badge.hidden && styles.cardHidden]}
@@ -150,6 +159,17 @@ export default function BadgesScreen() {
                   ) : (
                     <Text style={styles.howToLocked}>👑 {s.premiumOnly}</Text>
                   ))}
+                {premium && detailImage && (
+                  <ZoomableImage
+                    source={detailImage.source}
+                    aspectRatio={detailImage.aspectRatio}
+                    trigger={
+                      <View style={styles.detailButton}>
+                        <Text style={styles.detailButtonText}>{s.viewDetails}</Text>
+                      </View>
+                    }
+                  />
+                )}
               </View>
             </Pressable>
           );
@@ -176,6 +196,8 @@ function makeStyles(c: ThemeColors) {
     nameEarned: { textDecorationLine: 'line-through' },
     howTo: { fontSize: 11, color: c.forestSoft, lineHeight: 15 },
     howToLocked: { fontSize: 11, fontWeight: '700', color: c.forestSoft },
+    detailButton: { alignSelf: 'flex-start', marginTop: 4, backgroundColor: c.chipBg, borderRadius: 999, paddingHorizontal: 10, paddingVertical: 4 },
+    detailButtonText: { fontSize: 10, fontWeight: '700', color: c.skyDark },
     dividerRow: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingTop: 10, marginBottom: -2 },
     dividerLine: { flex: 1, height: 1, backgroundColor: c.line },
     dividerText: { fontSize: 12, fontWeight: '700', color: c.forestSoft },
