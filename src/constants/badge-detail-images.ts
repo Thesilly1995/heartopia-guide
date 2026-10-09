@@ -9,7 +9,22 @@ interface BadgeDetailImage {
 /**
  * Extra afbeelding per badge (bv. een titelslijst of easter-egg-gids),
  * getoond via een knopje onder de "hoe behaal je dit"-tekst (Premium-only).
- * Leeg totdat de bijbehorende afbeeldingen zijn aangeleverd — badges.tsx
- * toont het knopje alleen als er voor die detailImageKey een entry bestaat.
  */
-export const BADGE_DETAIL_IMAGE_MAP: Record<string, BadgeDetailImage> = {};
+export const BADGE_DETAIL_IMAGE_MAP: Record<string, BadgeDetailImage> = {
+  'sea-fishing-master-titles': {
+    source: require('@/assets/images/badge-details/sea-fishing-master-titles.jpg'),
+    aspectRatio: 896 / 1200,
+  },
+  'onsen-mountain-insect-king-titles': {
+    source: require('@/assets/images/badge-details/onsen-mountain-insect-king-titles.jpg'),
+    aspectRatio: 896 / 1200,
+  },
+  'heart-set-on-the-sky-titles': {
+    source: require('@/assets/images/badge-details/heart-set-on-the-sky-titles.jpg'),
+    aspectRatio: 896 / 1200,
+  },
+  'ride-the-wind-easter-eggs': {
+    source: require('@/assets/images/badge-details/ride-the-wind-easter-eggs.jpg'),
+    aspectRatio: 896 / 1200,
+  },
+};
