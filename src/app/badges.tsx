@@ -120,7 +120,7 @@ export default function BadgesScreen() {
               onPress={() => toggle(badge.name)}>
               <View style={styles.emojiBadge}>
                 {iconSource ? (
-                  <Image source={iconSource} style={[styles.icon, !isEarned && styles.iconDimmed]} />
+                  <Image source={iconSource} style={[styles.icon, !isEarned && styles.iconDimmed]} contentFit="contain" />
                 ) : (
                   <Text style={styles.emoji}>{badge.emoji}</Text>
                 )}
@@ -147,7 +147,7 @@ function makeStyles(c: ThemeColors) {
     listContent: { padding: 16, gap: 10 },
     card: { flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.line, padding: 12, marginBottom: 10 },
     cardHidden: { backgroundColor: c.disclaimerBg, borderColor: c.disclaimerBorder },
-    emojiBadge: { width: 56, height: 48, borderRadius: 10, backgroundColor: c.iconBg, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
+    emojiBadge: { width: 52, height: 60, borderRadius: 10, backgroundColor: c.iconBg, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
     emoji: { fontSize: 20 },
     icon: { width: '100%', height: '100%' },
     iconDimmed: { opacity: 0.55 },
