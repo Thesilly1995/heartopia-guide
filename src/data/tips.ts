@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import { useLanguage } from '@/hooks/use-language';
 
 const BLOEMEN_KWEEKGIDS = require('@/assets/images/tips/bloemen-kweekgids.jpg');
+const POMPOEN_BEELDHOUWEN_GIDS = require('@/assets/images/tips/pompoen-beeldhouwen-gids.jpg');
 
 export interface TipItem {
   title: string;
@@ -229,6 +230,27 @@ const TIP_CATEGORIES_RAW: TipCategoryRaw[] = [
         bodyPt: 'Um infográfico feito pela comunidade sobre cruzamento de flores e como subir o nível de estrelas.',
         emoji: '🌸',
         image: BLOEMEN_KWEEKGIDS,
+      },
+    ],
+  },
+  {
+    key: 'beeldhouwen',
+    labelNl: 'Pompoen beeldhouwen',
+    labelEn: 'Pumpkin carving',
+    labelEs: 'Talla de calabazas',
+    labelPt: 'Talha de abóboras',
+    tips: [
+      {
+        titleNl: 'Community-gids: Pompoen Kweken, Snijtafel & Pompoenpop',
+        titleEn: 'Community guide: Pumpkin Training, Carving Table & Doll',
+        titleEs: 'Guía de la comunidad: Entrenamiento, Mesa de Talla y Muñeco de Calabaza',
+        titlePt: 'Guia da comunidade: Treino, Mesa de Talha e Boneco de Abóbora',
+        bodyNl: 'Een aangeleverde infographic over de hele Pompoen Beeldhouwen-hobby: hoe je Magische Geest-Pompoenen kweekt in de trainingsbox (Normaal/Gigantisch), hoe de Snijtafel werkt in je tuin, en hoe de Pompoenpop-figuur werkt (uit elkaar vallend in 5 kleuren pompoenkoppen). Dit is een permanente hobby — je kunt ermee doorgaan na het Halloween-event.',
+        bodyEn: 'A community-made infographic about the whole Pumpkin Carving hobby: how to grow Magical Spirit Pumpkins in the training box (Normal/Giant), how the Carving Table works in your garden, and how the Pumpkin Doll figure works (breaking apart into 5 colors of pumpkin heads). This is a permanent hobby — you can keep doing it after the Halloween event.',
+        bodyEs: 'Una infografía de la comunidad sobre todo el hobby de Talla de Calabazas: cómo cultivar Calabazas de Espíritu Mágico en la caja de entrenamiento (Normal/Gigante), cómo funciona la Mesa de Talla en tu jardín, y cómo funciona la figura del Muñeco de Calabaza (se rompe en cabezas de calabaza de 5 colores). Es un hobby permanente — puedes seguir haciéndolo después del evento de Halloween.',
+        bodyPt: 'Um infográfico feito pela comunidade sobre todo o hobby de Talha de Abóboras: como cultivar Abóboras de Espírito Mágico na caixa de treino (Normal/Gigante), como funciona a Mesa de Talha no seu jardim, e como funciona a figura do Boneco de Abóbora (se quebra em cabeças de abóbora de 5 cores). É um hobby permanente — você pode continuar fazendo isso depois do evento de Halloween.',
+        emoji: '🎃',
+        image: POMPOEN_BEELDHOUWEN_GIDS,
       },
     ],
   },

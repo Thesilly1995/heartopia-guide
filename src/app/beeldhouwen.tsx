@@ -1,5 +1,6 @@
 import { HobbyListScreen } from '@/components/heartopia/hobby-list-screen';
 import { COLORS } from '@/constants/heartopia-colors';
+import { usePumpkinSculptures } from '@/data/pumpkin-sculptures';
 import { useSandSculptures } from '@/data/sand-sculptures';
 import { useSnowSculptures } from '@/data/snow-sculptures';
 import { useLanguage } from '@/hooks/use-language';
@@ -22,13 +23,24 @@ const SNOW_DISCLAIMER = {
   de: 'Schneeskulpturen waren Teil der Winter Frost Season (Event). Das Hobby kann weiterhin ausgeübt werden. Auch hier: Materialien sind kostenlos, nur der Levelaufstieg kostet Wunschsterne über Hobby Upgrade Tickets.',
 };
 
+const PUMPKIN_DISCLAIMER = {
+  nl: 'Pompoen beeldhouwen hoort bij het Halloween-event, maar blijft daarna een vaste hobby. Elke geslaagde carve levert per niveau een vast bedrag op (zie hieronder), in willekeurig 1 van 5 kleuren (oranje, bruin, geel, groen, wit) — groen ontgrendel je op niveau 3, wit op niveau 5. Mislukt de timing-minigame, dan krijg je alleen een waardeloze "kapotte" pompoen.',
+  en: "Pumpkin carving is part of the Halloween event, but stays a permanent hobby afterwards. Every successful carve gives a fixed amount per level (see below), in a random 1 of 5 colors (orange, brown, yellow, green, white) — green unlocks at level 3, white at level 5. Fail the timing minigame and you only get a worthless \"broken\" pumpkin.",
+  es: 'Tallar calabazas forma parte del evento de Halloween, pero sigue siendo un hobby permanente después. Cada talla exitosa da una cantidad fija por nivel (ver abajo), en 1 de 5 colores al azar (naranja, marrón, amarillo, verde, blanco) — el verde se desbloquea en el nivel 3, el blanco en el nivel 5. Si fallas el minijuego de tiempo, solo obtienes una calabaza "rota" sin valor.',
+  pt: 'Esculpir abóboras faz parte do evento de Halloween, mas continua sendo um hobby permanente depois. Cada talha bem-sucedida dá uma quantia fixa por nível (veja abaixo), em 1 de 5 cores aleatórias (laranja, marrom, amarelo, verde, branco) — o verde é desbloqueado no nível 3, o branco no nível 5. Se você falhar no minijogo de tempo, só recebe uma abóbora "quebrada" sem valor.',
+  fr: "Sculpter des citrouilles fait partie de l'événement Halloween, mais reste un hobby permanent ensuite. Chaque sculpture réussie rapporte un montant fixe par niveau (voir ci-dessous), dans 1 des 5 couleurs au hasard (orange, marron, jaune, vert, blanc) — le vert se débloque au niveau 3, le blanc au niveau 5. En cas d'échec au mini-jeu de timing, tu obtiens seulement une citrouille « cassée » sans valeur.",
+  de: 'Kürbisschnitzen gehört zum Halloween-Event, bleibt danach aber ein dauerhaftes Hobby. Jeder erfolgreiche Schnitt bringt pro Level einen festen Betrag (siehe unten), in 1 von 5 zufälligen Farben (orange, braun, gelb, grün, weiß) — grün wird auf Level 3 freigeschaltet, weiß auf Level 5. Scheitert das Timing-Minispiel, bekommst du nur einen wertlosen "kaputten" Kürbis.',
+};
+
 const TITLE = { nl: 'Beeldhouwen', en: 'Sculpting', es: 'Escultura', pt: 'Escultura', fr: 'Sculpture', de: 'Bildhauerei' };
 const SAND_LABEL = { nl: 'Zand', en: 'Sand', es: 'Arena', pt: 'Areia', fr: 'Sable', de: 'Sand' };
 const SNOW_LABEL = { nl: 'Sneeuw', en: 'Snow', es: 'Nieve', pt: 'Neve', fr: 'Neige', de: 'Schnee' };
+const PUMPKIN_LABEL = { nl: 'Pompoen', en: 'Pumpkin', es: 'Calabaza', pt: 'Abóbora', fr: 'Citrouille', de: 'Kürbis' };
 
 export default function BeeldhouwenScreen() {
   const sandSculptures = useSandSculptures();
   const snowSculptures = useSnowSculptures();
+  const pumpkinSculptures = usePumpkinSculptures();
   const { language } = useLanguage();
   return (
     <HobbyListScreen
@@ -39,6 +51,7 @@ export default function BeeldhouwenScreen() {
       subTabs={[
         { key: 'zand', label: SAND_LABEL[language], items: sandSculptures, disclaimer: SAND_DISCLAIMER[language] },
         { key: 'sneeuw', label: SNOW_LABEL[language], items: snowSculptures, disclaimer: SNOW_DISCLAIMER[language] },
+        { key: 'pompoen', label: PUMPKIN_LABEL[language], items: pumpkinSculptures, disclaimer: PUMPKIN_DISCLAIMER[language] },
       ]}
     />
   );
