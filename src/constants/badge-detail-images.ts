@@ -27,4 +27,8 @@ export const BADGE_DETAIL_IMAGE_MAP: Record<string, BadgeDetailImage> = {
     source: require('@/assets/images/badge-details/ride-the-wind-easter-eggs.jpg'),
     aspectRatio: 896 / 1200,
   },
+  'cleanup-master-titles': {
+    source: require('@/assets/images/badge-details/cleanup-master-titles.jpg'),
+    aspectRatio: 896 / 1200,
+  },
 };
