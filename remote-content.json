@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-10T04:00:00Z",
+  "updatedAt": "2026-10-10T08:30:00Z",
   "dailyPlotsCalendar": [
     {"date": "2026-08-09", "oakPlotNl": "Plot 6", "oakPlotEn": "Plot 6", "fluoritePlotNl": "Plot 11", "fluoritePlotEn": "Plot 11", "oakPlotEs": "Parcela 6", "oakPlotPt": "Lote 6", "fluoritePlotEs": "Parcela 11", "fluoritePlotPt": "Lote 11"},
     {"date": "2026-08-10", "oakPlotNl": "Plot 2", "oakPlotEn": "Plot 2", "fluoritePlotNl": "Plot 7", "fluoritePlotEn": "Plot 7", "oakPlotEs": "Parcela 2", "oakPlotPt": "Lote 2", "fluoritePlotEs": "Parcela 7", "fluoritePlotPt": "Lote 7"},
@@ -101,16 +101,45 @@
     "datesEn": "October 10 – November 21, 2026",
     "datesEs": "10 de octubre – 21 de noviembre de 2026",
     "datesPt": "10 de outubro – 21 de novembro de 2026",
-    "fish": [],
+    "fish": [
+      {"nameNl": "Blauwlicht Zee-engel", "nameEn": "Blue Light Sea Angel", "spotNl": "Onsen Berg (Oude Zee)", "spotEn": "Onsen Mountain (Old Sea)", "noteNl": null, "noteEn": null, "emoji": "🐟", "gold": [100, 150, 200, 400, 800], "tokens": [15, 22, 30, 60, 120]},
+      {"nameNl": "Tijgerinktvis", "nameEn": "Tiger Squid", "spotNl": "Onsen Berg (Oude Zee)", "spotEn": "Onsen Mountain (Old Sea)", "noteNl": null, "noteEn": null, "emoji": "🦑", "gold": [155, 232, 310, 620, 1240], "tokens": [25, 37, 50, 100, 200]},
+      {"nameNl": "Naaldloze Inktvis", "nameEn": "Needleless Squid", "spotNl": "Onsen Berg (Oude Zee)", "spotEn": "Onsen Mountain (Old Sea)", "noteNl": null, "noteEn": null, "emoji": "🦑", "gold": [155, 232, 310, 620, 1240], "tokens": [25, 37, 50, 100, 200]},
+      {"nameNl": "Gouden Inktvis", "nameEn": "Golden Squid", "spotNl": "Onsen Berg (Oude Zee)", "spotEn": "Onsen Mountain (Old Sea)", "noteNl": null, "noteEn": null, "emoji": "🦑", "gold": [155, 232, 310, 620, 1240], "tokens": [25, 37, 50, 100, 200]}
+    ],
     "birds": [],
     "recipes": [
       {"nameNl": "Gekonfijt Fruit", "nameEn": "Candied Fruit", "ingredientsNl": ["Pompoen", "Melk", "Fruit (willekeurig)", "Cacaopoeder"], "ingredientsEn": ["Pumpkin", "Milk", "Any Fruit", "Cocoa Powder"], "emoji": "🍬"},
       {"nameNl": "Pompoen-Melkpudding", "nameEn": "Pumpkin Milk Pudding", "ingredientsNl": ["Gloeiende Paddenstoel", "Pompoen", "Melk", "Zeekraal"], "ingredientsEn": ["Glowing Mushroom", "Pumpkin", "Milk", "Glasswort"], "emoji": "🍮"},
       {"nameNl": "Haardlicht-Noedels", "nameEn": "Hearthlight Noodles", "ingredientsNl": ["Vla", "Pompoen", "Inktvis"], "ingredientsEn": ["Custard", "Pumpkin", "Squid"], "emoji": "🍜"},
       {"nameNl": "Winter Bosui-Pannenkoek", "nameEn": "Winter Scallion Pancake", "ingredientsNl": ["Vla", "Pompoen", "Inktvis"], "ingredientsEn": ["Custard", "Pumpkin", "Squid"], "emoji": "🥞"},
-      {"nameNl": "Paddenstoelenroom-Pasta", "nameEn": "Mushroom Cream Pasta", "ingredientsNl": ["2x Gekonfijt Fruit", "1x Pompoen-Melkpudding", "1x Haardlicht-Noedels"], "ingredientsEn": ["2x Candied Fruit", "1x Pumpkin Milk Pudding", "1x Hearthlight Noodles"], "emoji": "🍝"}
+      {"nameNl": "Paddenstoelenroom-Pasta", "nameEn": "Mushroom Cream Pasta", "ingredientsNl": ["2x Gekonfijt Fruit", "1x Pompoen-Melkpudding", "1x Haardlicht-Noedels"], "ingredientsEn": ["2x Candied Fruit", "1x Pumpkin Milk Pudding", "1x Hearthlight Noodles"], "emoji": "🍝"},
+      {"nameNl": "Physalis Warme Chocomelk", "nameEn": "Physalis-Flavored Hot Cocoa", "ingredientsNl": ["Lantaarnvrucht", "Kaneel Cacaopoeder", "Melk", "Fruit (willekeurig)"], "ingredientsEn": ["Lantern Fruit", "Cinnamon Cocoa Powder", "Milk", "Any Fruit"], "emoji": "☕", "gold": [240, 360, 480, 960, 1920], "tokens": [35, 52, 70, 140, 280]},
+      {"nameNl": "Lantaarn Bosbessen Warme Chocomelk", "nameEn": "Lantern Blueberry Hot Cocoa", "ingredientsNl": ["Lantaarnvrucht", "Kaneel Cacaopoeder", "Melk", "Bosbes"], "ingredientsEn": ["Lantern Fruit", "Cinnamon Cocoa Powder", "Milk", "Blueberry"], "emoji": "☕", "gold": [240, 360, 480, 960, 1920], "tokens": [35, 52, 70, 140, 280]},
+      {"nameNl": "Lantaarn Framboos Warme Chocomelk", "nameEn": "Lantern Raspberry Hot Cocoa", "ingredientsNl": ["Lantaarnvrucht", "Kaneel Cacaopoeder", "Melk", "Framboos"], "ingredientsEn": ["Lantern Fruit", "Cinnamon Cocoa Powder", "Milk", "Raspberry"], "emoji": "☕", "gold": [260, 390, 520, 1040, 2080], "tokens": [40, 60, 80, 160, 320]},
+      {"nameNl": "Lantaarn Ananas Warme Chocomelk", "nameEn": "Lantern Pineapple Hot Cocoa", "ingredientsNl": ["Lantaarnvrucht", "Kaneel Cacaopoeder", "Melk", "Ananas"], "ingredientsEn": ["Lantern Fruit", "Cinnamon Cocoa Powder", "Milk", "Pineapple"], "emoji": "☕", "gold": [260, 390, 520, 1040, 2080], "tokens": [40, 60, 80, 160, 320]},
+      {"nameNl": "Lantaarn Appel Warme Chocomelk", "nameEn": "Lantern Apple Hot Cocoa", "ingredientsNl": ["Lantaarnvrucht", "Kaneel Cacaopoeder", "Melk", "Appel"], "ingredientsEn": ["Lantern Fruit", "Cinnamon Cocoa Powder", "Milk", "Apple"], "emoji": "☕", "gold": [260, 390, 520, 1040, 2080], "tokens": [40, 60, 80, 160, 320]},
+      {"nameNl": "Lantaarn Mandarijn Warme Chocomelk", "nameEn": "Lantern Orange Hot Cocoa", "ingredientsNl": ["Lantaarnvrucht", "Kaneel Cacaopoeder", "Melk", "Mandarijn"], "ingredientsEn": ["Lantern Fruit", "Cinnamon Cocoa Powder", "Milk", "Tangerine"], "emoji": "☕", "gold": [260, 390, 520, 1040, 2080], "tokens": [40, 60, 80, 160, 320]},
+      {"nameNl": "Lantaarn Aardbei Warme Chocomelk", "nameEn": "Lantern Strawberry Hot Cocoa", "ingredientsNl": ["Lantaarnvrucht", "Kaneel Cacaopoeder", "Melk", "Aardbei"], "ingredientsEn": ["Lantern Fruit", "Cinnamon Cocoa Powder", "Milk", "Strawberry"], "emoji": "☕", "gold": [580, 870, 1160, 2320, 4640], "tokens": [85, 127, 170, 340, 680]},
+      {"nameNl": "Lantaarn Druif Warme Chocomelk", "nameEn": "Lantern Grape Hot Cocoa", "ingredientsNl": ["Lantaarnvrucht", "Kaneel Cacaopoeder", "Melk", "Druif"], "ingredientsEn": ["Lantern Fruit", "Cinnamon Cocoa Powder", "Milk", "Grape"], "emoji": "☕", "gold": [690, 1035, 1380, 2760, 5520], "tokens": [100, 150, 200, 400, 800]},
+      {"nameNl": "Pompoen-Paddenstoelroom Soep", "nameEn": "Pumpkin Creamy Mushroom Bisque", "ingredientsNl": ["Honingzwam", "Pompoen", "Melk", "Groente"], "ingredientsEn": ["Honey Fungus", "Pumpkin", "Milk", "Vegetable"], "emoji": "🍲", "gold": [240, 360, 480, 960, 1920], "tokens": [35, 52, 70, 140, 280]},
+      {"nameNl": "Pompoen-Tomatenroom Soep", "nameEn": "Pumpkin Creamy Tomato Bisque", "ingredientsNl": ["Honingzwam", "Pompoen", "Melk", "Tomaat"], "ingredientsEn": ["Honey Fungus", "Pumpkin", "Milk", "Tomato"], "emoji": "🍲", "gold": [240, 360, 480, 960, 1920], "tokens": [35, 52, 70, 140, 280]},
+      {"nameNl": "Pompoen-Aardappelroom Soep", "nameEn": "Pumpkin Creamy Potato Soup", "ingredientsNl": ["Honingzwam", "Pompoen", "Melk", "Aardappel"], "ingredientsEn": ["Honey Fungus", "Pumpkin", "Milk", "Potato"], "emoji": "🍲", "gold": [300, 450, 600, 1200, 2400], "tokens": [45, 67, 90, 180, 360]},
+      {"nameNl": "Pompoen-Wortelroom Soep", "nameEn": "Pumpkin Creamy Carrot Soup", "ingredientsNl": ["Honingzwam", "Pompoen", "Melk", "Wortel"], "ingredientsEn": ["Honey Fungus", "Pumpkin", "Milk", "Carrot"], "emoji": "🍲", "gold": [370, 555, 740, 1480, 2960], "tokens": [55, 82, 110, 220, 440]},
+      {"nameNl": "Pompoen-Auberginesroom Soep", "nameEn": "Pumpkin Creamy Eggplant Soup", "ingredientsNl": ["Honingzwam", "Pompoen", "Melk", "Aubergine"], "ingredientsEn": ["Honey Fungus", "Pumpkin", "Milk", "Eggplant"], "emoji": "🍲", "gold": [620, 930, 1240, 2480, 4960], "tokens": [90, 135, 180, 360, 720]},
+      {"nameNl": "Pompoen-Maïsroom Soep", "nameEn": "Pumpkin Creamy Corn Chowder", "ingredientsNl": ["Honingzwam", "Pompoen", "Melk", "Maïs"], "ingredientsEn": ["Honey Fungus", "Pumpkin", "Milk", "Corn"], "emoji": "🍲", "gold": [730, 1095, 1460, 2920, 5840], "tokens": [105, 157, 210, 420, 840]},
+      {"nameNl": "Tom Yum Kung Inktvisnoedels", "nameEn": "Tom Yum Kung Squid Noodles", "ingredientsNl": ["Tom Yum Pasta", "Pompoen", "Inktvis"], "ingredientsEn": ["Tom Yum Paste", "Pumpkin", "Squid"], "emoji": "🍜", "gold": [290, 435, 580, 1160, 2320], "tokens": [45, 67, 90, 180, 360]},
+      {"nameNl": "Tom Yum Kung Naaldloze Inktvisnoedels", "nameEn": "Tom Yum Kung Needle-Free Cuttlefish Noodles", "ingredientsNl": ["Tom Yum Pasta", "Pompoen", "Naaldloze Inktvis"], "ingredientsEn": ["Tom Yum Paste", "Pumpkin", "Needleless Squid"], "emoji": "🍜", "gold": [290, 435, 580, 1160, 2320], "tokens": [45, 67, 90, 180, 360]},
+      {"nameNl": "Tom Yum Kung Tijgerinktvisnoedels", "nameEn": "Tom Yum Kung Tiger Squid Noodles", "ingredientsNl": ["Tom Yum Pasta", "Pompoen", "Tijgerinktvis"], "ingredientsEn": ["Tom Yum Paste", "Pumpkin", "Tiger Squid"], "emoji": "🍜", "gold": [290, 435, 580, 1160, 2320], "tokens": [45, 67, 90, 180, 360]},
+      {"nameNl": "Tom Yum Kung Gouden Inktvisnoedels", "nameEn": "Tom Yum Kung Golden Squid Noodles", "ingredientsNl": ["Tom Yum Pasta", "Pompoen", "Gouden Inktvis"], "ingredientsEn": ["Tom Yum Paste", "Pumpkin", "Golden Squid"], "emoji": "🍜", "gold": [290, 435, 580, 1160, 2320], "tokens": [45, 67, 90, 180, 360]},
+      {"nameNl": "Heerlijke Maaltijd in het Bos", "nameEn": "Wonderful Meal in the Forest", "ingredientsNl": ["2x Warme Chocomelk (willekeurig)", "Pompoenroom Soep (willekeurig)", "Tom Yum Noedels (willekeurig)"], "ingredientsEn": ["2x Any Hot Cocoa", "Any Pumpkin Creamy Soup", "Any Tom Yum Noodles"], "emoji": "🍽️", "gold": [1060, 1590, 2120, 4240, 8480], "tokens": [160, 240, 320, 640, 1280]}
     ],
-    "insects": []
+    "insects": [
+      {"nameNl": "Paddenstoelen Mestkever", "nameEn": "Mushroom Dung Beetle", "spotNl": "Bos (Bospuzzel)", "spotEn": "Forest (Forest Jump Puzzle)", "noteNl": null, "noteEn": null, "emoji": "🪲", "gold": [110, 165, 220, 440, 880], "tokens": [25, 37, 50, 100, 200]},
+      {"nameNl": "Aardbeien Mestkever", "nameEn": "Strawberry Dung Beetle", "spotNl": "Bos (Hertentoren)", "spotEn": "Forest (Deer Tower)", "noteNl": null, "noteEn": null, "emoji": "🪲", "gold": [110, 165, 220, 440, 880], "tokens": [25, 37, 50, 100, 200]},
+      {"nameNl": "Sinaasappel Mestkever", "nameEn": "Orange Dung Beetle", "spotNl": "Bos (Geest-Eik Dennenbos)", "spotEn": "Forest (Spirit-Oak Pine Forest)", "noteNl": null, "noteEn": null, "emoji": "🪲", "gold": [110, 165, 220, 440, 880], "tokens": [25, 37, 50, 100, 200]},
+      {"nameNl": "Pompoen Mestkever", "nameEn": "Pumpkin Dung Beetle", "spotNl": "Bos (Geest-Eik Dennenbos)", "spotEn": "Forest (Spirit-Oak Pine Forest)", "noteNl": null, "noteEn": null, "emoji": "🪲", "gold": [110, 165, 220, 440, 880], "tokens": [25, 37, 50, 100, 200]}
+    ]
   },
   "pastEvents": [
     {
