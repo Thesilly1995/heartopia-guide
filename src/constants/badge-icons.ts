@@ -71,4 +71,8 @@ export const BADGE_ICON_MAP: Record<string, ImageSourcePropType> = {
   'current-of-life': require('@/assets/images/badges/current-of-life.png'),
   'heart-set-on-the-sky': require('@/assets/images/badges/heart-set-on-the-sky.png'),
   'cleanup-master': require('@/assets/images/badges/cleanup-master.png'),
+  'persistent-quill-readers': require('@/assets/images/badges/persistent-quill-readers.png'),
+  'book-collector': require('@/assets/images/badges/book-collector.png'),
+  'ghost-at-your-house': require('@/assets/images/badges/ghost-at-your-house.png'),
+  'ride-the-wind': require('@/assets/images/badges/ride-the-wind.png'),
 };
