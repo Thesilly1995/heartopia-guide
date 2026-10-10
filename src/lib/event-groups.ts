@@ -7,6 +7,7 @@ const EVENT_EMOJI_BY_NAME_EN: Record<string, string> = {
   'Echo of Ancients': '🗿',
   'Mid-Autumn Festival': '🍂',
   'Call of Whales': '🐳',
+  'Night of Divination': '🎃',
 };
 
 export function eventEmoji(nameEn: string, fallback: string): string {

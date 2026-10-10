@@ -2,6 +2,26 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-10-10 (deel 66) — Halloween: pompoen-beeldhouwen, badge-omschrijvingen (Premium), mushroom-locaties, Night of Divination live
+
+**Lifetime Premium-bedankpopup** (vervolg op deel 65): `isLifetimePremium` alsnog toegevoegd aan de geëxposeerde `PremiumContextValue` in `use-premium.tsx` (stond al in de provider-waarde maar ontbrak in het type) — getest en bevestigd werkend op het device van de gebruiker.
+
+**Pompoen-beeldhouwen (Halloween-catalogus)**: nieuwe `usePumpkinSculptures()` hook (`src/data/pumpkin-sculptures.ts`, 19 items over 5 niveaus) + derde subtab "Pompoen" op `beeldhouwen.tsx`, plus een Tips & Tricks-gids met aangeleverde infographic (`tips.ts`, categorie `beeldhouwen`).
+
+**Mushroom-locaties (Premium-only carousel)**: nieuwe herbruikbare `ImageCarousel`-component (`src/components/heartopia/image-carousel.tsx`) — horizontaal scrollend met dot-indicator. **Let op**: gebruikt `onScroll` i.p.v. `onMomentumScrollEnd` om de index bij te houden, want dat laatste vuurt niet betrouwbaar bij wheel/trackpad-scrollen op web (gevonden en gefixt tijdens Playwright-testen). Ingebouwd als inklapbare, Premium-gated sectie onder Wilde Ingrediënten > Paddenstoelen, met 3 aangeleverde screenshots.
+
+**Badges — grote update**:
+- Alle 71 badge-iconen (`assets/images/badges/*.png`) omgezet van JPG naar transparante PNG (custom flood-fill script tegen baked-in zwarte hoekpixels in de originele screenshots) + container aangepast naar 52×60 met `contentFit="contain"` (was `cover`, croppte de iconen).
+- Elke badge heeft nu een "hoe behaal je dit"-omschrijving (`howTo`-veld, NL/EN/ES/PT met FR/DE-fallback naar EN) — **expliciet alleen zichtbaar voor Premium-leden** (niet-Premium ziet "👑 Alleen voor Premium-leden" i.p.v. de tekst), aangeleverd door de gebruiker in twee rondes (eerste grote lijst + een aantal losse aanvullingen later). Great Literary Tycoon en Book Reader (Astralis) hebben nog geen omschrijving ("nog aan te kondigen" volgens de gebruiker).
+- 3 nieuwe verborgen badges toegevoegd (Volhardende Veer (Lezers), Spook bij Jou Thuis, Met de Wind Mee) en "Quick Start" hernoemd naar "Snelle Schutter"/"Quick Draw Starter" (bleek dezelfde badge, geen duplicaat).
+- Nieuw: Premium-only "📷 Bekijk details"-knopje onder 5 badges (Zeevissen Meester, Insecten Meester, Ballonvaart Avontuur, Ontdekkingsgids/easter eggs, Opruimmeester) dat een losse titel-/easter-egg-afbeelding opent via `ZoomableImage` (`src/constants/badge-detail-images.ts`).
+- Geen van de badges bleek achteraf verkeerd gesorteerd tussen standaard/verborgen — expliciet geverifieerd op verzoek van de gebruiker.
+- Screenshot van het niet-Premium Badges-scherm gemaakt en naar de gebruiker gestuurd ter bevestiging dat de Premium-gating zichtbaar werkt.
+
+**Event-rotatie: Echo of Ancients → Night of Divination**: op verzoek precies om 06:00 Nederlandse tijd (10 okt) via een geplande trigger uitgevoerd. Echo of Ancients (29 aug – 10 okt) gearchiveerd naar `pastEvents` (verkorte vorm, geen gold/tokens/Es/Pt-velden). Night of Divination (10 okt – 21 nov) live gezet met 🎃-icoon (`EVENT_EMOJI_BY_NAME_EN` in `src/lib/event-groups.ts`); `fish`/`birds`/`insects` nog leeg (geen vangstdata bekend). De 5 pompoenrecepten die eerder onder "Volgend Event" stonden zijn verhuisd naar `event.recipes` (dus nu zichtbaar onder Recepten > Events + homescreen event-tegel) i.p.v. simpelweg leeggemaakt — expliciete correctie van de gebruiker op het oorspronkelijke plan. PR #244 (draft, wacht op bevestiging naam/datums/icoon/recepten voordat gemerged wordt).
+
+**GitHub Actions cron-onbetrouwbaarheid (notify-server-timed.yml)**: opnieuw meerdere gaten van meerdere uren geconstateerd in de eigen `schedule`-cron van de workflow (los van de per-server/weertype-vensterlogica, die bij controle steeds correct bleek). Op expliciet verzoek van de gebruiker ("Ja dat is goed zet dat maar op") een **permanente uurlijkse backup-trigger** ingesteld (self-bound Routine, cron `0 * * * *`) die de workflow handmatig via `workflow_dispatch` aanroept. Dubbele meldingen worden al voorkomen door de bestaande Supabase-dedup in het script, dus veilig om elk uur te doen. **Let op voor vervolgsessies**: de eerste poging gebruikte `create_new_session_on_fire: true`, wat niet werkt omdat verse sessies geen GitHub MCP-toegang erven — de trigger moest verwijderd en opnieuw aangemaakt worden als self-bound (standaard, zonder die flag).
+
 ## 2026-10-08 (deel 65) — Eenmalige bedank-popup voor bestaande (vaste) Premium-leden
 
 **Aanleiding**: na de omzetting van Premium naar een abonnement (deel 64) vond de gebruiker het netjes om bestaande eenmalige-aankoop-kopers hiervan op de hoogte te stellen, met een bedankje voor hun aankoop en de geruststelling dat hun eigen Premium voor altijd blijft werken zonder actie van hun kant.
