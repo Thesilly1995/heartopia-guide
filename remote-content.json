@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-11T20:04:00Z",
+  "updatedAt": "2026-10-11T20:06:00Z",
   "dailyPlotsCalendar": [
     {"date": "2026-08-09", "oakPlotNl": "Plot 6", "oakPlotEn": "Plot 6", "fluoritePlotNl": "Plot 11", "fluoritePlotEn": "Plot 11", "oakPlotEs": "Parcela 6", "oakPlotPt": "Lote 6", "fluoritePlotEs": "Parcela 11", "fluoritePlotPt": "Lote 11"},
     {"date": "2026-08-10", "oakPlotNl": "Plot 2", "oakPlotEn": "Plot 2", "fluoritePlotNl": "Plot 7", "fluoritePlotEn": "Plot 7", "oakPlotEs": "Parcela 2", "oakPlotPt": "Lote 2", "fluoritePlotEs": "Parcela 7", "fluoritePlotPt": "Lote 7"},
@@ -102,10 +102,10 @@
     "datesEs": "10 de octubre – 21 de noviembre de 2026",
     "datesPt": "10 de outubro – 21 de novembro de 2026",
     "fish": [
-      {"nameNl": "Blauwlicht Zee-engel", "nameEn": "Blue Light Sea Angel", "spotNl": "Onsen Berg (Oude Zee)", "spotEn": "Onsen Mountain (Old Sea)", "noteNl": null, "noteEn": null, "emoji": "🐟", "gold": [100, 150, 200, 400, 800], "tokens": [15, 22, 30, 60, 120]},
+      {"nameNl": "Blauwe Zee-engel", "nameEn": "Blue Sea Angel", "spotNl": "Onsen Berg (Oude Zee)", "spotEn": "Onsen Mountain (Old Sea)", "noteNl": null, "noteEn": null, "emoji": "🐟", "gold": [100, 150, 200, 400, 800], "tokens": [15, 22, 30, 60, 120]},
       {"nameNl": "Farao-Inktvis", "nameEn": "Pharaoh Cuttlefish", "spotNl": "Onsen Berg (Oude Zee)", "spotEn": "Onsen Mountain (Old Sea)", "noteNl": null, "noteEn": null, "emoji": "🦑", "gold": [155, 232, 310, 620, 1240], "tokens": [25, 37, 50, 100, 200]},
       {"nameNl": "Ruggengraatloze Inktvis", "nameEn": "Spineless Cuttlefish", "spotNl": "Onsen Berg (Oude Zee)", "spotEn": "Onsen Mountain (Old Sea)", "noteNl": null, "noteEn": null, "emoji": "🦑", "gold": [155, 232, 310, 620, 1240], "tokens": [25, 37, 50, 100, 200]},
-      {"nameNl": "Gouden Inktvis", "nameEn": "Golden Squid", "spotNl": "Onsen Berg (Oude Zee)", "spotEn": "Onsen Mountain (Old Sea)", "noteNl": null, "noteEn": null, "emoji": "🦑", "gold": [155, 232, 310, 620, 1240], "tokens": [25, 37, 50, 100, 200]}
+      {"nameNl": "Gouden Inktvis", "nameEn": "Golden Cuttlefish", "spotNl": "Onsen Berg (Oude Zee)", "spotEn": "Onsen Mountain (Old Sea)", "noteNl": null, "noteEn": null, "emoji": "🦑", "gold": [155, 232, 310, 620, 1240], "tokens": [25, 37, 50, 100, 200]}
     ],
     "birds": [],
     "recipes": [
@@ -131,7 +131,7 @@
       {"nameNl": "Tom Yum Kung Inktvisnoedels", "nameEn": "Tom Yum Kung Squid Noodles", "ingredientsNl": ["Tom Yum Pasta", "Pompoen", "Inktvis"], "ingredientsEn": ["Tom Yum Paste", "Pumpkin", "Squid"], "emoji": "🍜", "gold": [290, 435, 580, 1160, 2320], "tokens": [45, 67, 90, 180, 360]},
       {"nameNl": "Tom Yum Kung Ruggengraatloze Inktvisnoedels", "nameEn": "Tom Yum Kung Spineless Cuttlefish Noodles", "ingredientsNl": ["Tom Yum Pasta", "Pompoen", "Ruggengraatloze Inktvis"], "ingredientsEn": ["Tom Yum Paste", "Pumpkin", "Spineless Cuttlefish"], "emoji": "🍜", "gold": [290, 435, 580, 1160, 2320], "tokens": [45, 67, 90, 180, 360]},
       {"nameNl": "Tom Yum Kung Farao-Inktvisnoedels", "nameEn": "Tom Yum Kung Pharaoh Cuttlefish Noodles", "ingredientsNl": ["Tom Yum Pasta", "Pompoen", "Farao-Inktvis"], "ingredientsEn": ["Tom Yum Paste", "Pumpkin", "Pharaoh Cuttlefish"], "emoji": "🍜", "gold": [290, 435, 580, 1160, 2320], "tokens": [45, 67, 90, 180, 360]},
-      {"nameNl": "Tom Yum Kung Gouden Inktvisnoedels", "nameEn": "Tom Yum Kung Golden Squid Noodles", "ingredientsNl": ["Tom Yum Pasta", "Pompoen", "Gouden Inktvis"], "ingredientsEn": ["Tom Yum Paste", "Pumpkin", "Golden Squid"], "emoji": "🍜", "gold": [290, 435, 580, 1160, 2320], "tokens": [45, 67, 90, 180, 360]},
+      {"nameNl": "Tom Yum Kung Gouden Inktvisnoedels", "nameEn": "Tom Yum Kung Golden Cuttlefish Noodles", "ingredientsNl": ["Tom Yum Pasta", "Pompoen", "Gouden Inktvis"], "ingredientsEn": ["Tom Yum Paste", "Pumpkin", "Golden Cuttlefish"], "emoji": "🍜", "gold": [290, 435, 580, 1160, 2320], "tokens": [45, 67, 90, 180, 360]},
       {"nameNl": "Heerlijke Maaltijd in het Bos", "nameEn": "Wonderful Meal in the Forest", "ingredientsNl": ["2x Warme Chocomelk (willekeurig)", "Pompoenroom Soep (willekeurig)", "Tom Yum Noedels (willekeurig)"], "ingredientsEn": ["2x Any Hot Cocoa", "Any Pumpkin Creamy Soup", "Any Tom Yum Noodles"], "emoji": "🍽️", "gold": [1060, 1590, 2120, 4240, 8480], "tokens": [160, 240, 320, 640, 1280]}
     ],
     "insects": [
