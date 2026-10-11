@@ -19,7 +19,7 @@ const STORAGE_KEY = 'heartopia:badges:behaald';
 const STRINGS = {
   nl: {
     title: 'Badges',
-    subtitle: 'Prestaties & profieltitels (D.G. Level 15+)',
+    subtitle: 'Prestaties (D.G. Level 15+)',
     disclaimer:
       '60+ badges, gebaseerd op een screenshot van jouw eigen Achievement-overzicht. Tik op het icoon om een badge als behaald te markeren, of gebruik de teller om voortgang bij te houden. Er zijn nog een aantal volledig verborgen badges die niet in deze lijst staan (nog geen naam bekend).',
     hiddenDivider: '🔒 Verborgen Prestaties',
@@ -28,7 +28,7 @@ const STRINGS = {
   },
   en: {
     title: 'Badges',
-    subtitle: 'Achievements & profile titles (D.G. Level 15+)',
+    subtitle: 'Achievements (D.G. Level 15+)',
     disclaimer:
       "60+ badges, based on a screenshot of your own Achievement overview. Tap the icon to mark a badge as earned, or use the counter to track progress. There are still some fully hidden badges not in this list (name not yet known).",
     hiddenDivider: '🔒 Hidden Achievements',
@@ -37,7 +37,7 @@ const STRINGS = {
   },
   es: {
     title: 'Insignias',
-    subtitle: 'Logros y títulos de perfil (D.G. Nivel 15+)',
+    subtitle: 'Logros (D.G. Nivel 15+)',
     disclaimer:
       '60+ insignias, basadas en una captura de pantalla de tu propio resumen de Logros. Toca el ícono para marcar una insignia como conseguida, o usa el contador para llevar el progreso. Todavía hay algunas insignias completamente ocultas que no están en esta lista (nombre aún desconocido).',
     hiddenDivider: '🔒 Logros Ocultos',
@@ -46,7 +46,7 @@ const STRINGS = {
   },
   pt: {
     title: 'Emblemas',
-    subtitle: 'Conquistas e títulos de perfil (D.G. Nível 15+)',
+    subtitle: 'Conquistas (D.G. Nível 15+)',
     disclaimer:
       '60+ emblemas, baseados em uma captura de tela do seu próprio resumo de Conquistas. Toque no ícone para marcar um emblema como conquistado, ou use o contador para acompanhar o progresso. Ainda existem alguns emblemas totalmente ocultos que não estão nesta lista (nome ainda desconhecido).',
     hiddenDivider: '🔒 Conquistas Ocultas',
@@ -55,7 +55,7 @@ const STRINGS = {
   },
   fr: {
     title: 'Badges',
-    subtitle: 'Succès & titres de profil (D.G. Niveau 15+)',
+    subtitle: 'Succès (D.G. Niveau 15+)',
     disclaimer:
       "60+ badges, basés sur une capture d'écran de ton propre aperçu des Succès. Touche l'icône pour marquer un badge comme obtenu, ou utilise le compteur pour suivre ta progression. Il reste encore quelques badges entièrement cachés qui ne sont pas dans cette liste (nom pas encore connu).",
     hiddenDivider: '🔒 Succès Cachés',
@@ -64,7 +64,7 @@ const STRINGS = {
   },
   de: {
     title: 'Badges',
-    subtitle: 'Erfolge & Profiltitel (D.G. Level 15+)',
+    subtitle: 'Erfolge (D.G. Level 15+)',
     disclaimer:
       '60+ Badges, basierend auf einem Screenshot deiner eigenen Erfolgs-Übersicht. Tippe auf das Icon, um ein Badge als erreicht zu markieren, oder nutze den Zähler, um deinen Fortschritt zu verfolgen. Es gibt noch ein paar komplett versteckte Badges, die nicht in dieser Liste stehen (Name noch unbekannt).',
     hiddenDivider: '🔒 Versteckte Erfolge',
