@@ -13,7 +13,7 @@ import { useEventInsects } from '@/data/event-insects';
 import { useCurrentEventMeta } from '@/data/event-meta';
 import { useEventRecipes } from '@/data/event-recipes';
 import { Language, useLanguage } from '@/hooks/use-language';
-import { RemoteEventRecipe, RemoteEventSighting, useRemoteContent } from '@/lib/remote-content';
+import { RemoteEventIngredient, RemoteEventRecipe, RemoteEventSighting, useRemoteContent } from '@/lib/remote-content';
 
 // Zelfde sleutels als `storageKey` in vissen.tsx/vogels.tsx/koken.tsx/insecten.tsx
 // (zie `heartopia/hobby-list-screen.tsx`), zodat een score die je hier geeft
@@ -36,10 +36,12 @@ const STRINGS = {
     birds: 'Vogels',
     recipes: 'Recepten',
     insects: 'Insecten',
+    ingredients: 'Wilde ingrediënten',
     bestResult: 'Hoogste resultaat',
     empty: 'Geen actief event op dit moment — zodra een nieuw event begint, komt de content hier te staan.',
     goldLabel: 'Goud (verkocht aan Albert Jr.)',
     tokensLabel: 'Tokens (verkocht aan Azure)',
+    priceLabel: 'Verkoopprijs',
   },
   en: {
     title: 'Current Event',
@@ -50,10 +52,12 @@ const STRINGS = {
     birds: 'Birds',
     recipes: 'Recipes',
     insects: 'Insects',
+    ingredients: 'Wild Ingredients',
     bestResult: 'Best result',
     empty: 'No active event right now — once a new event starts, its content will appear here.',
     goldLabel: 'Gold (sold to Albert Jr.)',
     tokensLabel: 'Tokens (sold to Azure)',
+    priceLabel: 'Selling price',
   },
   es: {
     title: 'Evento Actual',
@@ -64,10 +68,12 @@ const STRINGS = {
     birds: 'Aves',
     recipes: 'Recetas',
     insects: 'Insectos',
+    ingredients: 'Ingredientes Silvestres',
     bestResult: 'Mejor resultado',
     empty: 'No hay ningún evento activo en este momento — en cuanto empiece un nuevo evento, su contenido aparecerá aquí.',
     goldLabel: 'Oro (vendido a Albert Jr.)',
     tokensLabel: 'Fichas (vendidas a Azure)',
+    priceLabel: 'Precio de venta',
   },
   pt: {
     title: 'Evento Atual',
@@ -78,10 +84,12 @@ const STRINGS = {
     birds: 'Pássaros',
     recipes: 'Receitas',
     insects: 'Insetos',
+    ingredients: 'Ingredientes Selvagens',
     bestResult: 'Melhor resultado',
     empty: 'Nenhum evento ativo no momento — assim que um novo evento começar, o conteúdo vai aparecer aqui.',
     goldLabel: 'Ouro (vendido a Albert Jr.)',
     tokensLabel: 'Fichas (vendidas a Azure)',
+    priceLabel: 'Preço de venda',
   },
   fr: {
     title: 'Événement Actuel',
@@ -92,10 +100,12 @@ const STRINGS = {
     birds: 'Oiseaux',
     recipes: 'Recettes',
     insects: 'Insectes',
+    ingredients: 'Ingrédients Sauvages',
     bestResult: 'Meilleur résultat',
     empty: "Aucun événement actif pour le moment — dès qu'un nouvel événement commence, son contenu apparaîtra ici.",
     goldLabel: 'Or (vendu à Albert Jr.)',
     tokensLabel: 'Jetons (vendus à Azure)',
+    priceLabel: 'Prix de vente',
   },
   de: {
     title: 'Aktuelles Event',
@@ -106,10 +116,12 @@ const STRINGS = {
     birds: 'Vögel',
     recipes: 'Rezepte',
     insects: 'Insekten',
+    ingredients: 'Wilde Zutaten',
     bestResult: 'Bestes Ergebnis',
     empty: 'Momentan kein aktives Event — sobald ein neues Event beginnt, erscheint der Inhalt hier.',
     goldLabel: 'Gold (verkauft an Albert Jr.)',
     tokensLabel: 'Token (verkauft an Azure)',
+    priceLabel: 'Verkaufspreis',
   },
 } as const;
 
@@ -121,6 +133,7 @@ type EventItem = {
   ingredients?: string[];
   gold?: (number | null)[] | null;
   tokens?: (number | null)[] | null;
+  price?: number | null;
 };
 
 function mapSighting(item: RemoteEventSighting, language: Language): EventItem {
@@ -134,6 +147,19 @@ function mapSighting(item: RemoteEventSighting, language: Language): EventItem {
     emoji: item.emoji,
     gold: item.gold,
     tokens: item.tokens,
+  };
+}
+
+function mapIngredient(item: RemoteEventIngredient, language: Language): EventItem {
+  const name = language === 'es' ? item.nameEs ?? item.nameEn : language === 'pt' ? item.namePt ?? item.nameEn : language === 'fr' ? item.nameFr ?? item.nameEn : language === 'de' ? item.nameDe ?? item.nameEn : language === 'en' ? item.nameEn : item.nameNl;
+  const spot = language === 'es' ? item.spotEs ?? item.spotEn : language === 'pt' ? item.spotPt ?? item.spotEn : language === 'fr' ? item.spotFr ?? item.spotEn : language === 'de' ? item.spotDe ?? item.spotEn : language === 'en' ? item.spotEn : item.spotNl;
+  const note = language === 'es' ? item.noteEs ?? item.noteEn : language === 'pt' ? item.notePt ?? item.noteEn : language === 'fr' ? item.noteFr ?? item.noteEn : language === 'de' ? item.noteDe ?? item.noteEn : language === 'en' ? item.noteEn : item.noteNl;
+  return {
+    name,
+    spot,
+    note,
+    emoji: item.emoji,
+    price: item.price,
   };
 }
 
@@ -167,6 +193,7 @@ export default function EventsScreen() {
   const eventBirds = remoteEvent ? remoteEvent.birds.map((item) => mapSighting(item, language)) : bundledEventBirds;
   const eventRecipes = remoteEvent ? remoteEvent.recipes.map((item) => mapRecipe(item, language)) : bundledEventRecipes;
   const eventInsects = remoteEvent ? remoteEvent.insects.map((item) => mapSighting(item, language)) : bundledEventInsects;
+  const eventIngredients = remoteEvent?.ingredients ? remoteEvent.ingredients.map((item) => mapIngredient(item, language)) : [];
   const eventMeta = useCurrentEventMeta();
   const subtitle = `${eventMeta.emoji} ${eventMeta.name} · ${eventMeta.dates}`;
 
@@ -175,12 +202,18 @@ export default function EventsScreen() {
     { key: 'birds', label: s.birds, items: eventBirds },
     { key: 'recipes', label: s.recipes, items: eventRecipes },
     { key: 'insects', label: s.insects, items: eventInsects },
+    { key: 'ingredients', label: s.ingredients, items: eventIngredients },
   ];
 
   useEffect(() => {
+    const storageKey = STORAGE_KEY_BY_TAB[tab];
+    if (!storageKey) {
+      setStars({});
+      return;
+    }
     (async () => {
       try {
-        const raw = await AsyncStorage.getItem(STORAGE_KEY_BY_TAB[tab]);
+        const raw = await AsyncStorage.getItem(storageKey);
         setStars(raw ? JSON.parse(raw) : {});
       } catch {
         setStars({});
@@ -222,12 +255,14 @@ export default function EventsScreen() {
   }, []);
 
   const setItemStar = async (name: string, value: number) => {
+    const storageKey = STORAGE_KEY_BY_TAB[tab];
+    if (!storageKey) return;
     const current = stars[name] ?? 0;
     const nextValue = value === current ? 0 : value;
     const updated = { ...stars, [name]: nextValue };
     setStars(updated);
     try {
-      await AsyncStorage.setItem(STORAGE_KEY_BY_TAB[tab], JSON.stringify(updated));
+      await AsyncStorage.setItem(storageKey, JSON.stringify(updated));
     } catch {
       // opslaan mislukt
     }
@@ -281,6 +316,12 @@ export default function EventsScreen() {
               </View>
             )}
             {item.note && <Text style={styles.note}>⚠️ {item.note}</Text>}
+            {item.price != null && (
+              <View style={styles.priceBox}>
+                <Text style={styles.priceLabel}>{s.priceLabel}</Text>
+                <Text style={styles.priceValue}>{item.price}🪙</Text>
+              </View>
+            )}
             {item.gold && (
               <View style={styles.priceBox}>
                 <Text style={styles.priceLabel}>{s.goldLabel}</Text>
@@ -293,10 +334,12 @@ export default function EventsScreen() {
                 <Text style={styles.priceValue}>{item.tokens.map((v, i) => `${i + 1}★ ${v != null ? `${v}🎫` : '—'}`).join('   ')}</Text>
               </View>
             )}
-            <View style={styles.starBox}>
-              <Text style={styles.starBoxLabel}>{s.bestResult}</Text>
-              <StarRow value={stars[item.name] || 0} onSet={(n) => setItemStar(item.name, n)} />
-            </View>
+            {STORAGE_KEY_BY_TAB[tab] && (
+              <View style={styles.starBox}>
+                <Text style={styles.starBoxLabel}>{s.bestResult}</Text>
+                <StarRow value={stars[item.name] || 0} onSet={(n) => setItemStar(item.name, n)} />
+              </View>
+            )}
           </View>
         )}
       />

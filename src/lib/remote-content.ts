@@ -95,6 +95,31 @@ export interface RemoteEventSighting {
   tokens?: (number | null)[] | null;
 }
 
+/** Tijdelijk verzamelbaar event-ingrediënt (bv. een paddenstoel of boom die je oppikt in de wereld) — verdwijnt zodra het event eindigt, in tegenstelling tot gewone wilde ingrediënten. */
+export interface RemoteEventIngredient {
+  nameNl: string;
+  nameEn: string;
+  nameEs?: string;
+  namePt?: string;
+  nameFr?: string;
+  nameDe?: string;
+  spotNl: string;
+  spotEn: string;
+  spotEs?: string;
+  spotPt?: string;
+  spotFr?: string;
+  spotDe?: string;
+  noteNl?: string | null;
+  noteEn?: string | null;
+  noteEs?: string | null;
+  notePt?: string | null;
+  noteFr?: string | null;
+  noteDe?: string | null;
+  emoji: string;
+  /** Verkoopprijs in goud — null als dit item niet verkocht wordt (bv. een verzamelpunt dat losse voorwerpen geeft). */
+  price?: number | null;
+}
+
 export interface RemoteEventRecipe {
   nameNl: string;
   nameEn: string;
@@ -126,6 +151,8 @@ export interface RemoteEventOverride {
   birds: RemoteEventSighting[];
   recipes: RemoteEventRecipe[];
   insects: RemoteEventSighting[];
+  /** Optioneel — tijdelijke verzamelbare event-ingrediënten (zie `RemoteEventIngredient`). */
+  ingredients?: RemoteEventIngredient[];
 }
 
 /**
@@ -151,6 +178,7 @@ export interface RemoteEventArchiveEntry {
   birds?: RemoteEventSighting[];
   insects?: RemoteEventSighting[];
   recipes?: RemoteEventRecipe[];
+  ingredients?: RemoteEventIngredient[];
 }
 
 export type WeatherKind = 'sunny' | 'rain' | 'rainbow';
