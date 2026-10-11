@@ -49,7 +49,7 @@ const SECTIONS: {
   {
     label: { nl: 'Spel', en: 'Game', es: 'Juego', pt: 'Jogo', fr: 'Jeu', de: 'Spiel' },
     items: [
-      { href: '/badges', icon: '🏅', title: { nl: 'Badges', en: 'Badges', es: 'Insignias', pt: 'Emblemas', fr: 'Badges', de: 'Abzeichen' }, desc: { nl: 'Prestaties & profieltitels', en: 'Achievements & profile titles', es: 'Logros y títulos de perfil', pt: 'Conquistas e títulos de perfil', fr: 'Succès et titres de profil', de: 'Erfolge & Profiltitel' } },
+      { href: '/badges', icon: '🏅', title: { nl: 'Badges', en: 'Badges', es: 'Insignias', pt: 'Emblemas', fr: 'Badges', de: 'Abzeichen' }, desc: { nl: 'Prestaties', en: 'Achievements', es: 'Logros', pt: 'Conquistas', fr: 'Succès', de: 'Erfolge' } },
       { href: '/puzzels-boeken', icon: '🧩', title: { nl: 'Puzzels & Boeken', en: 'Puzzles & Books', es: 'Puzzles y Libros', pt: 'Quebra-cabeças e Livros', fr: 'Puzzles et Livres', de: 'Rätsel & Bücher' }, desc: { nl: 'Other Collections: puzzels & boeken', en: 'Other Collections: puzzles & books', es: 'Other Collections: puzzles y libros', pt: 'Other Collections: quebra-cabeças e livros', fr: 'Other Collections : puzzles et livres', de: 'Other Collections: Rätsel & Bücher' } },
       { href: '/codes', icon: '🎁', title: { nl: 'Codes', en: 'Codes', es: 'Códigos', pt: 'Códigos', fr: 'Codes', de: 'Codes' }, desc: { nl: 'Actieve & verlopen codes', en: 'Active & expired codes', es: 'Códigos activos y caducados', pt: 'Códigos ativos e expirados', fr: 'Codes actifs et expirés', de: 'Aktive & abgelaufene Codes' } },
     ],
