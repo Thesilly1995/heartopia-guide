@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-11T20:25:00Z",
+  "updatedAt": "2026-10-11T20:41:00Z",
   "dailyPlotsCalendar": [
     {"date": "2026-08-09", "oakPlotNl": "Plot 6", "oakPlotEn": "Plot 6", "fluoritePlotNl": "Plot 11", "fluoritePlotEn": "Plot 11", "oakPlotEs": "Parcela 6", "oakPlotPt": "Lote 6", "fluoritePlotEs": "Parcela 11", "fluoritePlotPt": "Lote 11"},
     {"date": "2026-08-10", "oakPlotNl": "Plot 2", "oakPlotEn": "Plot 2", "fluoritePlotNl": "Plot 7", "fluoritePlotEn": "Plot 7", "oakPlotEs": "Parcela 2", "oakPlotPt": "Lote 2", "fluoritePlotEs": "Parcela 7", "fluoritePlotPt": "Lote 7"},
@@ -135,7 +135,7 @@
       {"nameNl": "Heerlijke Maaltijd in het Bos", "nameEn": "Wonderful Meal in the Forest", "ingredientsNl": ["2x Warme Chocomelk (willekeurig)", "Pompoenroom Soep (willekeurig)", "Tom Yum Noedels (willekeurig)"], "ingredientsEn": ["2x Any Hot Cocoa", "Any Pumpkin Creamy Soup", "Any Tom Yum Noodles"], "emoji": "🍽️", "gold": [1060, 1590, 2120, 4240, 8480], "tokens": [160, 240, 320, 640, 1280]}
     ],
     "insects": [
-      {"nameNl": "Paddenstoelen Mestkever", "nameEn": "Mushroom Dung Beetle", "spotNl": "Bos (Bospuzzel)", "spotEn": "Forest (Forest Jump Puzzle)", "noteNl": null, "noteEn": null, "emoji": "🪲", "gold": [110, 165, 220, 440, 880], "tokens": [25, 37, 50, 100, 200]},
+      {"nameNl": "Shiitake Mestkever", "nameEn": "Shiitake Dung Beetle", "spotNl": "Bos (Bospuzzel)", "spotEn": "Forest (Forest Jump Puzzle)", "noteNl": null, "noteEn": null, "emoji": "🪲", "gold": [110, 165, 220, 440, 880], "tokens": [25, 37, 50, 100, 200]},
       {"nameNl": "Aardbeien Mestkever", "nameEn": "Strawberry Dung Beetle", "spotNl": "Bos (Hertentoren)", "spotEn": "Forest (Deer Tower)", "noteNl": null, "noteEn": null, "emoji": "🪲", "gold": [110, 165, 220, 440, 880], "tokens": [25, 37, 50, 100, 200]},
       {"nameNl": "Sinaasappel Mestkever", "nameEn": "Orange Dung Beetle", "spotNl": "Bos (Geest-Eik Dennenbos)", "spotEn": "Forest (Spirit-Oak Pine Forest)", "noteNl": null, "noteEn": null, "emoji": "🪲", "gold": [110, 165, 220, 440, 880], "tokens": [25, 37, 50, 100, 200]},
       {"nameNl": "Pompoen Mestkever", "nameEn": "Pumpkin Dung Beetle", "spotNl": "Bos (Geest-Eik Dennenbos)", "spotEn": "Forest (Spirit-Oak Pine Forest)", "noteNl": null, "noteEn": null, "emoji": "🪲", "gold": [110, 165, 220, 440, 880], "tokens": [25, 37, 50, 100, 200]}
