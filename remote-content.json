@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-11T21:03:00Z",
+  "updatedAt": "2026-10-12T09:13:00Z",
   "dailyPlotsCalendar": [
     {"date": "2026-08-09", "oakPlotNl": "Plot 6", "oakPlotEn": "Plot 6", "fluoritePlotNl": "Plot 11", "fluoritePlotEn": "Plot 11", "oakPlotEs": "Parcela 6", "oakPlotPt": "Lote 6", "fluoritePlotEs": "Parcela 11", "fluoritePlotPt": "Lote 11"},
     {"date": "2026-08-10", "oakPlotNl": "Plot 2", "oakPlotEn": "Plot 2", "fluoritePlotNl": "Plot 7", "fluoritePlotEn": "Plot 7", "oakPlotEs": "Parcela 2", "oakPlotPt": "Lote 2", "fluoritePlotEs": "Parcela 7", "fluoritePlotPt": "Lote 7"},
@@ -370,7 +370,8 @@
   ],
   "codes": [
     {"code": "moonlike2609", "rewardNl": "50x Maanlicht Kristal, 10x Tarwezaadjes, 10x Melk", "rewardEn": "50x Moonlight Crystals, 10x Wheat Seeds, 10x Milk", "expiresNl": "7 okt 2026", "expiresEn": "Oct 7, 2026", "rewardEs": "50x Cristal de Luz de Luna, 10x Semillas de Trigo, 10x Leche", "rewardPt": "50x Cristal do Luar, 10x Sementes de Trigo, 10x Leite", "expiresEs": "7 oct 2026", "expiresPt": "7 de out de 2026"},
-    {"code": "r2q7a4m9k3n6", "rewardNl": "3x Wensterren, 3x Meermin Vislokmiddel, 10x Mest", "rewardEn": "3x Wishing Stars, 3x Mermaid Fish Attractor, 10x Fertilizer", "expiresNl": "3 dec 2026", "expiresEn": "Dec 3, 2026", "rewardEs": "3x Estrellas de los Deseos, 3x Atrayente de Peces Sirena, 10x Fertilizante", "rewardPt": "3x Estrelas dos Desejos, 3x Atrativo de Peixes Sereia, 10x Fertilizante", "expiresEs": "3 dic 2026", "expiresPt": "3 de dez de 2026"}
+    {"code": "r2q7a4m9k3n6", "rewardNl": "3x Wensterren, 3x Meermin Vislokmiddel, 10x Mest", "rewardEn": "3x Wishing Stars, 3x Mermaid Fish Attractor, 10x Fertilizer", "expiresNl": "3 dec 2026", "expiresEn": "Dec 3, 2026", "rewardEs": "3x Estrellas de los Deseos, 3x Atrayente de Peces Sirena, 10x Fertilizante", "rewardPt": "3x Estrelas dos Desejos, 3x Atrativo de Peixes Sereia, 10x Fertilizante", "expiresEs": "3 dic 2026", "expiresPt": "3 de dez de 2026"},
+    {"code": "k9n3m5q1a7r4", "rewardNl": "3x Wensterren, 3x Meermin Vislokmiddel, 10x Mest", "rewardEn": "3x Wishing Stars, 3x Mermaid Fish Attractor, 10x Fertilizer", "expiresNl": "3 dec 2026", "expiresEn": "Dec 3, 2026", "rewardEs": "3x Estrellas de los Deseos, 3x Atrayente de Peces Sirena, 10x Fertilizante", "rewardPt": "3x Estrelas dos Desejos, 3x Atrativo de Peixes Sereia, 10x Fertilizante", "expiresEs": "3 dic 2026", "expiresPt": "3 de dez de 2026"}
   ],
   "nextEventRecipes": []
 }
