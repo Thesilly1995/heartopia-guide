@@ -26,6 +26,50 @@ const STORAGE_KEY_BY_TAB: Record<string, string> = {
 };
 const LEGACY_STORAGE_KEY = 'heartopia:event:sterren';
 
+/**
+ * Elke keer dat een event-item in `remote-content.json` een naamscorrectie
+ * krijgt (bv. een verkeerd vertaalde in-game naam), verandert de sleutel
+ * waaronder de sterrenbeoordeling wordt opgeslagen (die is namelijk de
+ * weergavenaam zelf). Zonder migratie raakt een speler die al een score had
+ * gegeven die score kwijt. Voeg bij elke naamswijziging een { tab, from, to }
+ * entry toe — de migratie hieronder verhuist de opgeslagen score dan
+ * automatisch naar de nieuwe naam.
+ */
+const NAME_ALIASES: { tab: string; from: string; to: string }[] = [
+  { tab: 'fish', from: 'Naaldloze Inktvis', to: 'Ruggengraatloze Inktvis' },
+  { tab: 'fish', from: 'Needleless Squid', to: 'Spineless Cuttlefish' },
+  { tab: 'fish', from: 'Tijgerinktvis', to: 'Farao-Inktvis' },
+  { tab: 'fish', from: 'Tiger Squid', to: 'Pharaoh Cuttlefish' },
+  { tab: 'fish', from: 'Golden Squid', to: 'Golden Cuttlefish' },
+  { tab: 'fish', from: 'Blauwlicht Zee-engel', to: 'Blauwe Zee-engel' },
+  { tab: 'fish', from: 'Blue Light Sea Angel', to: 'Blue Sea Angel' },
+  { tab: 'insects', from: 'Paddenstoelen Mestkever', to: 'Shiitake Mestkever' },
+  { tab: 'insects', from: 'Mushroom Dung Beetle', to: 'Shiitake Dung Beetle' },
+  { tab: 'recipes', from: 'Tom Yum Kung Naaldloze Inktvisnoedels', to: 'Tom Yum Kung Ruggengraatloze Inktvisnoedels' },
+  { tab: 'recipes', from: 'Tom Yum Kung Needle-Free Cuttlefish Noodles', to: 'Tom Yum Kung Spineless Cuttlefish Noodles' },
+  { tab: 'recipes', from: 'Tom Yum Kung Tijgerinktvisnoedels', to: 'Tom Yum Kung Farao-Inktvisnoedels' },
+  { tab: 'recipes', from: 'Tom Yum Kung Tiger Squid Noodles', to: 'Tom Yum Kung Pharaoh Cuttlefish Noodles' },
+  { tab: 'recipes', from: 'Tom Yum Kung Golden Squid Noodles', to: 'Tom Yum Kung Golden Cuttlefish Noodles' },
+  { tab: 'recipes', from: 'Physalis-Flavored Hot Cocoa', to: 'Cape Gooseberry Hot Cocoa' },
+  { tab: 'recipes', from: 'Lantaarn Bosbessen Warme Chocomelk', to: 'Physalis & Bosbes Warme Chocomelk' },
+  { tab: 'recipes', from: 'Lantern Blueberry Hot Cocoa', to: 'Cape Gooseberry & Blueberry Hot Cocoa' },
+  { tab: 'recipes', from: 'Lantaarn Framboos Warme Chocomelk', to: 'Physalis & Framboos Warme Chocomelk' },
+  { tab: 'recipes', from: 'Lantern Raspberry Hot Cocoa', to: 'Cape Gooseberry & Raspberry Hot Cocoa' },
+  { tab: 'recipes', from: 'Lantaarn Ananas Warme Chocomelk', to: 'Physalis & Ananas Warme Chocomelk' },
+  { tab: 'recipes', from: 'Lantern Pineapple Hot Cocoa', to: 'Cape Gooseberry & Pineapple Hot Cocoa' },
+  { tab: 'recipes', from: 'Lantaarn Appel Warme Chocomelk', to: 'Physalis & Appel Warme Chocomelk' },
+  { tab: 'recipes', from: 'Lantern Apple Hot Cocoa', to: 'Cape Gooseberry & Apple Hot Cocoa' },
+  { tab: 'recipes', from: 'Lantaarn Mandarijn Warme Chocomelk', to: 'Physalis & Mandarijn Warme Chocomelk' },
+  { tab: 'recipes', from: 'Lantern Orange Hot Cocoa', to: 'Cape Gooseberry & Mandarin Hot Cocoa' },
+  { tab: 'recipes', from: 'Lantaarn Aardbei Warme Chocomelk', to: 'Physalis & Aardbei Warme Chocomelk' },
+  { tab: 'recipes', from: 'Lantern Strawberry Hot Cocoa', to: 'Cape Gooseberry & Strawberry Hot Cocoa' },
+  { tab: 'recipes', from: 'Lantaarn Druif Warme Chocomelk', to: 'Physalis & Druif Warme Chocomelk' },
+  { tab: 'recipes', from: 'Lantern Grape Hot Cocoa', to: 'Cape Gooseberry & Grape Hot Cocoa' },
+  { tab: 'recipes', from: 'Tom Yum Kung Squid Noodles', to: 'Tom Yum Kung Cuttlefish Noodles' },
+  { tab: 'recipes', from: 'Heerlijke Maaltijd in het Bos', to: 'Maaltijd in het Schemerwoud' },
+  { tab: 'recipes', from: 'Wonderful Meal in the Forest', to: 'Gloomwood Meal' },
+];
+
 const STRINGS = {
   nl: {
     title: 'Huidig Event',
@@ -214,7 +258,20 @@ export default function EventsScreen() {
     (async () => {
       try {
         const raw = await AsyncStorage.getItem(storageKey);
-        setStars(raw ? JSON.parse(raw) : {});
+        let parsed: Record<string, number> = raw ? JSON.parse(raw) : {};
+        let migrated = false;
+        for (const alias of NAME_ALIASES) {
+          if (alias.tab !== tab) continue;
+          if (parsed[alias.from] != null && parsed[alias.to] == null) {
+            parsed = { ...parsed, [alias.to]: parsed[alias.from] };
+            delete parsed[alias.from];
+            migrated = true;
+          }
+        }
+        if (migrated) {
+          await AsyncStorage.setItem(storageKey, JSON.stringify(parsed));
+        }
+        setStars(parsed);
       } catch {
         setStars({});
       }
