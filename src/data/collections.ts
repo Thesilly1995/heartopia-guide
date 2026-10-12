@@ -117,6 +117,23 @@ const PUZZLE_NAMES: string[] = [
   'Beach Time Puzzle',
   'Twilight Woods Puzzle',
   'Whale Ship Bow Puzzle',
+  'Puzzle (Adult & Young Alpaca)',
+  'Puzzle (Sea Otter Backstroking)',
+  'Puzzle (Fox Friends)',
+  'Puzzle (Capybara Kingdom)',
+  'Puzzle (Deer Deep in the Woods)',
+  "Puzzle (Bunny's Feast)",
+  "Puzzle (Ferret's Playtime)",
+  'Puzzle (Relaxed Alpaca)',
+  'Puzzle (Sea Otter Family)',
+  'Puzzle (Deer in Twilight)',
+  'Puzzle (Adult & Young Bunny)',
+  'Puzzle (Adult & Young Panda)',
+  'Puzzle (Ferret Friends)',
+  'Puzzle (Animal Party)',
+  'Puzzle (Napping Panda)',
+  'Puzzle (Foxes of Flower Field)',
+  'Puzzle (Fateful Encounter)',
 ];
 
 /** "Fascinating Psychological" lijkt afgekapt in de screenshot (kaartbreedte) — mogelijk niet de volledige titel, zo overgenomen tot betere info. */
