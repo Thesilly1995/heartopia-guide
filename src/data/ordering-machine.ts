@@ -26,13 +26,9 @@ const ITEMS: OrderingMachineItem[] = [
   { slug: 'pumpkin-top', name: 'Pumpkin Top', category: 'fashion', catalog: GRIMKIN_SEASON, ticketCost: 3, currency: 'hearts', currencyCost: 340 },
   { slug: 'pumpkin-shoes', name: 'Pumpkin Shoes', category: 'fashion', catalog: GRIMKIN_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 140 },
 
-  // --- Fashion (Grimkin Season): face decorations & companion accessories ---
+  // --- Fashion (Grimkin Season): face decorations ---
   { slug: 'bandage-face', name: 'Bandage Face', category: 'fashion', catalog: GRIMKIN_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 10 },
   { slug: 'cracked-face', name: 'Cracked Face', category: 'fashion', catalog: GRIMKIN_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 10 },
-  { slug: 'grimkin-pet', name: 'Grimkin Companion', category: 'fashion', catalog: GRIMKIN_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 310 },
-  { slug: 'ghost-charm', name: 'Ghost Charm', category: 'fashion', catalog: GRIMKIN_SEASON, ticketCost: 1, currency: 'hearts', currencyCost: 8 },
-  { slug: 'floral-guitar', name: 'Floral Guitar', category: 'fashion', catalog: GRIMKIN_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 80 },
-  { slug: 'cheer-pose-emote', name: 'Cheer Pose', category: 'fashion', catalog: GRIMKIN_SEASON, ticketCost: 1, currency: 'hearts', currencyCost: 20 },
 
   // --- Fashion (Grimkin Season): furniture & decor pieces ---
   { slug: 'ghost-plush', name: 'Ghost Plush', category: 'fashion', catalog: GRIMKIN_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 100 },
