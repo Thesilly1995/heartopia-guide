@@ -371,5 +371,11 @@
     {"code": "r2q7a4m9k3n6", "rewardNl": "3x Wensterren, 3x Meermin Vislokmiddel, 10x Mest", "rewardEn": "3x Wishing Stars, 3x Mermaid Fish Attractor, 10x Fertilizer", "expiresNl": "3 dec 2026", "expiresEn": "Dec 3, 2026", "rewardEs": "3x Estrellas de los Deseos, 3x Atrayente de Peces Sirena, 10x Fertilizante", "rewardPt": "3x Estrelas dos Desejos, 3x Atrativo de Peixes Sereia, 10x Fertilizante", "expiresEs": "3 dic 2026", "expiresPt": "3 de dez de 2026"},
     {"code": "k9n3m5q1a7r4", "rewardNl": "3x Wensterren, 3x Meermin Vislokmiddel, 10x Mest", "rewardEn": "3x Wishing Stars, 3x Mermaid Fish Attractor, 10x Fertilizer", "expiresNl": "3 dec 2026", "expiresEn": "Dec 3, 2026", "rewardEs": "3x Estrellas de los Deseos, 3x Atrayente de Peces Sirena, 10x Fertilizante", "rewardPt": "3x Estrelas dos Desejos, 3x Atrativo de Peixes Sereia, 10x Fertilizante", "expiresEs": "3 dic 2026", "expiresPt": "3 de dez de 2026"}
   ],
-  "nextEventRecipes": []
+  "nextEventRecipes": [
+    {"nameNl": "Pompoen Soep", "nameEn": "Pumpkin Soup", "ingredientsNl": ["Pompoen", "Melk", "Boter", "Tarwe"], "ingredientsEn": ["Pumpkin", "Milk", "Butter", "Wheat"], "emoji": "🍲"},
+    {"nameNl": "Spinnen Kom", "nameEn": "Spider Bowl", "ingredientsNl": ["2x Pompoen", "Kaas", "Olie"], "ingredientsEn": ["2x Pumpkin", "Cheese", "Oil"], "emoji": "🕷️"},
+    {"nameNl": "Spook Dessert", "nameEn": "Ghost Dessert", "ingredientsNl": ["Pompoen", "2x Melk", "Chocoladepasta"], "ingredientsEn": ["Pumpkin", "2x Milk", "Chocolate Jam"], "emoji": "👻"},
+    {"nameNl": "Spookachtige Koekjes", "nameEn": "Spooky Cookies", "ingredientsNl": ["Pompoen", "Kaas", "Boter", "Tarwe"], "ingredientsEn": ["Pumpkin", "Cheese", "Butter", "Wheat"], "emoji": "🍪"}
+  ],
+  "nextEventName": "Eerie Eve"
 }

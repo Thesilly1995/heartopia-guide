@@ -257,11 +257,12 @@ export interface RemoteContentPayload {
   /**
    * Vooraankondiging van recepten die in een volgend (nog niet gestart)
    * event beschikbaar komen, zodat spelers de benodigde crops/ingrediënten
-   * alvast kunnen verzamelen — zie "Volgend Event"-scherm. Niet gekoppeld
-   * aan een eventnaam/datum, puur de receptenlijst zelf. Leeg/weglaten
+   * alvast kunnen verzamelen — zie "Volgend Event"-scherm. Leeg/weglaten
    * zodra er niks bekend is (dan toont het scherm "Niks bekend").
    */
   nextEventRecipes?: RemoteEventRecipe[];
+  /** Naam van het event waar `nextEventRecipes` bij hoort (bv. "Eerie Eve") — blijft onvertaald, net als andere eventnamen. Optioneel: ontbreekt als er geen recepten zijn, of als het om het hoofdevent zelf gaat. */
+  nextEventName?: string;
   weather?: RemoteWeather;
   /** Actieve redemption-codes — ontbreekt dit veld, dan valt de app terug op de gebundelde (per definitie verouderde) standaardlijst. */
   codes?: RemoteCode[];
