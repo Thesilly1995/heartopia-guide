@@ -41,3 +41,9 @@ export function useNextEventRecipes(): NextEventRecipeItem[] {
     return raw.map((item) => localizeRecipe(item, language));
   }, [payload, language]);
 }
+
+/** Naam van het event waar `useNextEventRecipes()` bij hoort, zoals "Eerie Eve" — blijft onvertaald. */
+export function useNextEventName(): string | null {
+  const { payload } = useRemoteContent();
+  return payload?.nextEventName ?? null;
+}

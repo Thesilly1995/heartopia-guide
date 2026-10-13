@@ -7,7 +7,7 @@ import { PremiumLockedView } from '@/components/heartopia/premium-locked';
 import { ScreenHeader } from '@/components/heartopia/screen-header';
 import { ZoomableImage } from '@/components/heartopia/zoomable-image';
 import { COLORS, ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
-import { useNextEventRecipes } from '@/data/next-event-recipes';
+import { useNextEventName, useNextEventRecipes } from '@/data/next-event-recipes';
 import { useLanguage } from '@/hooks/use-language';
 import { usePremium } from '@/hooks/use-premium';
 
@@ -21,6 +21,7 @@ const STRINGS = {
       'Zodra bekend is welke gerechten in het volgende event komen, zie je hier vast welke crops en ingrediënten je kunt gaan verzamelen.',
     disclaimer: 'Dit is ter voorbereiding op nieuwe recepten die gaan komen bij een aankomend event — je kunt ze nog niet koken, maar de ingrediënten alvast verzamelen helpt om er klaar voor te zijn.',
     empty: 'Niks bekend — zodra we weten welke gerechten eraan komen, zie je ze hier.',
+    sideEventNote: 'Klein extra eventje naast het hoofdevent — vervangt dit niet.',
   },
   en: {
     title: 'Next Event',
@@ -28,6 +29,7 @@ const STRINGS = {
     lockedText: 'Once we know which recipes are coming in the next event, you will see here which crops and ingredients to start collecting.',
     disclaimer: 'This is to help you prepare for new recipes coming with an upcoming event — you cannot cook them yet, but collecting the ingredients in advance helps you be ready.',
     empty: 'Nothing known yet — once we know which recipes are coming, they will show up here.',
+    sideEventNote: "Small extra event alongside the main event — it doesn't replace it.",
   },
   es: {
     title: 'Próximo Evento',
@@ -35,6 +37,7 @@ const STRINGS = {
     lockedText: 'En cuanto sepamos qué recetas llegarán en el próximo evento, verás aquí qué cultivos e ingredientes puedes ir recolectando.',
     disclaimer: 'Esto sirve para prepararte para nuevas recetas que llegarán con un próximo evento — todavía no puedes cocinarlas, pero recolectar los ingredientes de antemano te ayuda a estar preparado.',
     empty: 'Nada conocido todavía — en cuanto sepamos qué recetas llegarán, aparecerán aquí.',
+    sideEventNote: 'Pequeño evento extra junto al evento principal — no lo sustituye.',
   },
   pt: {
     title: 'Próximo Evento',
@@ -42,6 +45,7 @@ const STRINGS = {
     lockedText: 'Assim que soubermos quais receitas vêm no próximo evento, você verá aqui quais plantações e ingredientes pode começar a coletar.',
     disclaimer: 'Isso serve para você se preparar para novas receitas que virão com um próximo evento — você ainda não pode cozinhá-las, mas coletar os ingredientes com antecedência ajuda a ficar preparado.',
     empty: 'Nada conhecido ainda — assim que soubermos quais receitas vêm, elas aparecerão aqui.',
+    sideEventNote: 'Pequeno evento extra ao lado do evento principal — não o substitui.',
   },
   fr: {
     title: 'Prochain Événement',
@@ -49,6 +53,7 @@ const STRINGS = {
     lockedText: "Dès que l'on saura quelles recettes arrivent dans le prochain événement, tu verras ici quelles cultures et quels ingrédients commencer à collecter.",
     disclaimer: "Ceci sert à te préparer pour de nouvelles recettes qui arriveront avec un prochain événement — tu ne peux pas encore les cuisiner, mais collecter les ingrédients à l'avance t'aide à être prêt.",
     empty: "Rien de connu pour l'instant — dès que l'on saura quelles recettes arrivent, elles apparaîtront ici.",
+    sideEventNote: "Petit événement supplémentaire à côté de l'événement principal — il ne le remplace pas.",
   },
   de: {
     title: 'Nächstes Event',
@@ -56,6 +61,7 @@ const STRINGS = {
     lockedText: 'Sobald bekannt ist, welche Rezepte im nächsten Event kommen, siehst du hier, welche Feldfrüchte und Zutaten du schon sammeln kannst.',
     disclaimer: 'Das dient zur Vorbereitung auf neue Rezepte, die mit einem kommenden Event dazukommen — du kannst sie noch nicht kochen, aber die Zutaten vorab zu sammeln hilft dir, bereit zu sein.',
     empty: 'Noch nichts bekannt — sobald wir wissen, welche Rezepte kommen, erscheinen sie hier.',
+    sideEventNote: 'Kleines Extra-Event neben dem Hauptevent — ersetzt es nicht.',
   },
 } as const;
 
@@ -66,6 +72,7 @@ export default function NextEventScreen() {
   const { premium } = usePremium();
   const s = STRINGS[language];
   const recipes = useNextEventRecipes();
+  const eventName = useNextEventName();
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -77,8 +84,14 @@ export default function NextEventScreen() {
           contentContainerStyle={styles.listContent}
           ListHeaderComponent={
             <View style={styles.disclaimerWrap}>
+              {eventName && (
+                <View style={styles.sideEventBadge}>
+                  <Text style={styles.sideEventName}>🎃 {eventName}</Text>
+                  <Text style={styles.sideEventNote}>{s.sideEventNote}</Text>
+                </View>
+              )}
               <DisclaimerBox text={s.disclaimer} />
-              {recipes.length > 0 && <ZoomableImage source={NIGHT_OF_DIVINATION_PREP} aspectRatio={928 / 1152} />}
+              {recipes.length > 0 && !eventName && <ZoomableImage source={NIGHT_OF_DIVINATION_PREP} aspectRatio={928 / 1152} />}
             </View>
           }
           ListEmptyComponent={<Text style={styles.emptyText}>{s.empty}</Text>}
@@ -114,6 +127,9 @@ function makeStyles(c: ThemeColors) {
     safeArea: { flex: 1, backgroundColor: c.bg },
     listContent: { padding: 16, gap: 10, flexGrow: 1 },
     disclaimerWrap: { marginBottom: 4, gap: 10 },
+    sideEventBadge: { backgroundColor: c.card, borderWidth: 1, borderColor: c.line, borderRadius: 14, padding: 12, gap: 4 },
+    sideEventName: { fontSize: 16, fontWeight: '800', color: c.forest },
+    sideEventNote: { fontSize: 11, color: c.forestSoft },
     emptyText: { fontSize: 13, color: c.forestSoft, textAlign: 'center', padding: 24, lineHeight: 19 },
     card: { backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.line, padding: 14, gap: 10 },
     topRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
