@@ -31,6 +31,7 @@ const STRINGS = {
     fashion: 'Fashion',
     ticketLabel: 'tickets',
     priceUnknown: 'Prijs nog niet bekend',
+    emptyCategory: 'Hier komen binnenkort de algemene spullen uit het spel.',
     disclaimer:
       'Tickets om te bestellen + de betaling bij aflevering (roze hartjes, Coins of paarse sterren), gebaseerd op eigen screenshots uit de Ordering Machine. Tik op een catalogus om die te openen of sluiten.',
   },
@@ -42,6 +43,7 @@ const STRINGS = {
     fashion: 'Fashion',
     ticketLabel: 'tickets',
     priceUnknown: 'Price not known yet',
+    emptyCategory: 'General in-game items are coming here soon.',
     disclaimer:
       'Tickets to order + the payment due on arrival (pink hearts, Coins or purple stars), based on own screenshots from the Ordering Machine. Tap a catalog to open or close it.',
   },
@@ -53,6 +55,7 @@ const STRINGS = {
     fashion: 'Fashion',
     ticketLabel: 'tickets',
     priceUnknown: 'Precio aún desconocido',
+    emptyCategory: 'Aquí llegarán pronto los artículos generales del juego.',
     disclaimer:
       'Tickets para pedir + el pago al recibir (corazones rosas, Coins o estrellas moradas), basado en capturas propias de la Ordering Machine. Toca un catálogo para abrirlo o cerrarlo.',
   },
@@ -64,6 +67,7 @@ const STRINGS = {
     fashion: 'Fashion',
     ticketLabel: 'tickets',
     priceUnknown: 'Preço ainda desconhecido',
+    emptyCategory: 'Os itens gerais do jogo chegarão aqui em breve.',
     disclaimer:
       'Tickets para pedir + o pagamento na entrega (corações rosa, Coins ou estrelas roxas), com base em capturas de tela próprias da Ordering Machine. Toque em um catálogo para abri-lo ou fechá-lo.',
   },
@@ -75,6 +79,7 @@ const STRINGS = {
     fashion: 'Fashion',
     ticketLabel: 'tickets',
     priceUnknown: 'Prix pas encore connu',
+    emptyCategory: "Les objets généraux du jeu arriveront bientôt ici.",
     disclaimer:
       "Tickets pour commander + le paiement à la livraison (cœurs roses, Coins ou étoiles violettes), basé sur des captures d'écran personnelles de l'Ordering Machine. Appuie sur un catalogue pour l'ouvrir ou le fermer.",
   },
@@ -86,6 +91,7 @@ const STRINGS = {
     fashion: 'Fashion',
     ticketLabel: 'Tickets',
     priceUnknown: 'Preis noch nicht bekannt',
+    emptyCategory: 'Die allgemeinen Items aus dem Spiel kommen hier bald dazu.',
     disclaimer:
       'Tickets zum Bestellen + die Bezahlung bei Lieferung (rosa Herzen, Coins oder lila Sterne), basierend auf eigenen Screenshots aus der Ordering Machine. Tippe auf einen Katalog, um ihn zu öffnen oder zu schließen.',
   },
@@ -103,7 +109,7 @@ export default function OrderingMachineScreen() {
   const { language } = useLanguage();
   const s = STRINGS[language];
   const { premium } = usePremium();
-  const [category, setCategory] = useState<OrderingMachineCategory>('furniture');
+  const [category, setCategory] = useState<OrderingMachineCategory>('fashion');
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
 
   const catalogs = useOrderingMachineCatalogs(category);
@@ -122,6 +128,7 @@ export default function OrderingMachineScreen() {
       {premium ? (
         <ScrollView contentContainerStyle={styles.scrollContent}>
           <DisclaimerBox text={s.disclaimer} />
+          {catalogs.length === 0 && <Text style={styles.emptyText}>{s.emptyCategory}</Text>}
           {catalogs.map((catalog) => {
             const catalogItems = items.filter((item) => item.catalog === catalog);
             const isOpen = expanded[catalog] ?? true;
@@ -212,5 +219,6 @@ function makeStyles(c: ThemeColors) {
     costRow: { flexDirection: 'row', alignItems: 'center' },
     costText: { fontSize: 11, fontWeight: '700', color: c.forestSoft },
     costUnknown: { fontSize: 9, fontStyle: 'italic', color: c.forestSoft, textAlign: 'center' },
+    emptyText: { fontSize: 13, color: c.forestSoft, textAlign: 'center', marginTop: 24 },
   });
 }
