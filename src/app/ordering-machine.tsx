@@ -139,14 +139,15 @@ export default function OrderingMachineScreen() {
                       const image = ORDERING_MACHINE_IMAGE_MAP[item.slug];
                       return (
                         <View key={item.slug} style={styles.card}>
-                          {image ? (
-                            <Image source={image} style={styles.cardImage} resizeMode="contain" />
-                          ) : (
-                            <View style={[styles.cardImage, styles.cardImagePlaceholder]}>
-                              <Text style={styles.cardImagePlaceholderText}>🎁</Text>
-                            </View>
-                          )}
-                          <Text style={styles.cardName} numberOfLines={2}>{item.name}</Text>
+                          <View style={styles.cardImageWrap}>
+                            {image ? (
+                              <Image source={image} style={styles.cardImage} resizeMode="contain" />
+                            ) : (
+                              <View style={[styles.cardImage, styles.cardImagePlaceholder]}>
+                                <Text style={styles.cardImagePlaceholderText}>🎁</Text>
+                              </View>
+                            )}
+                          </View>
                           <View style={styles.costRow}>
                             <Text style={styles.costText}>🎫 {item.ticketCost}</Text>
                           </View>
@@ -204,10 +205,10 @@ function makeStyles(c: ThemeColors) {
       alignItems: 'center',
       gap: 4,
     },
-    cardImage: { width: '100%', aspectRatio: 1, borderRadius: 10 },
+    cardImageWrap: { width: '100%', aspectRatio: 1, borderRadius: 10, overflow: 'hidden' },
+    cardImage: { width: '100%', height: '100%' },
     cardImagePlaceholder: { backgroundColor: c.surfaceSoft, alignItems: 'center', justifyContent: 'center' },
     cardImagePlaceholderText: { fontSize: 28 },
-    cardName: { fontSize: 11, fontWeight: '700', color: c.forest, textAlign: 'center', minHeight: 28 },
     costRow: { flexDirection: 'row', alignItems: 'center' },
     costText: { fontSize: 11, fontWeight: '700', color: c.forestSoft },
     costUnknown: { fontSize: 9, fontStyle: 'italic', color: c.forestSoft, textAlign: 'center' },
