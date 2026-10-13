@@ -18,17 +18,17 @@ const GRIMKIN_SEASON = 'Grimkin Season';
 
 /** Bron: eigen screenshots van de Ordering Machine + fan-gemaakte prijzenlijst-infographic ("奇灵夜返场手册+全新价格"). */
 const ITEMS: OrderingMachineItem[] = [
-  // --- Fashion (Grimkin Season): clothing set pieces (prijzen nog niet aangeleverd) ---
-  { slug: 'batzy-hood', name: 'Batzy Hood', category: 'fashion', catalog: GRIMKIN_SEASON, ticketCost: 3 },
-  { slug: 'batzy-top', name: 'Batzy Top', category: 'fashion', catalog: GRIMKIN_SEASON, ticketCost: 3 },
-  { slug: 'batzy-shoes', name: 'Batzy Shoes', category: 'fashion', catalog: GRIMKIN_SEASON, ticketCost: 2 },
-  { slug: 'pumpkin-hood', name: 'Pumpkin Hood', category: 'fashion', catalog: GRIMKIN_SEASON, ticketCost: 3 },
-  { slug: 'pumpkin-top', name: 'Pumpkin Top', category: 'fashion', catalog: GRIMKIN_SEASON, ticketCost: 3 },
-  { slug: 'pumpkin-shoes', name: 'Pumpkin Shoes', category: 'fashion', catalog: GRIMKIN_SEASON, ticketCost: 2 },
+  // --- Fashion (Grimkin Season): clothing set pieces ---
+  { slug: 'batzy-hood', name: 'Batzy Hood', category: 'fashion', catalog: GRIMKIN_SEASON, ticketCost: 3, currency: 'hearts', currencyCost: 210 },
+  { slug: 'batzy-top', name: 'Batzy Top', category: 'fashion', catalog: GRIMKIN_SEASON, ticketCost: 3, currency: 'hearts', currencyCost: 340 },
+  { slug: 'batzy-shoes', name: 'Batzy Shoes', category: 'fashion', catalog: GRIMKIN_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 140 },
+  { slug: 'pumpkin-hood', name: 'Pumpkin Hood', category: 'fashion', catalog: GRIMKIN_SEASON, ticketCost: 3, currency: 'hearts', currencyCost: 210 },
+  { slug: 'pumpkin-top', name: 'Pumpkin Top', category: 'fashion', catalog: GRIMKIN_SEASON, ticketCost: 3, currency: 'hearts', currencyCost: 340 },
+  { slug: 'pumpkin-shoes', name: 'Pumpkin Shoes', category: 'fashion', catalog: GRIMKIN_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 140 },
 
   // --- Fashion (Grimkin Season): face decorations & companion accessories ---
-  { slug: 'bandage-face', name: 'Bandage Face', category: 'fashion', catalog: GRIMKIN_SEASON, ticketCost: 2 },
-  { slug: 'cracked-face', name: 'Cracked Face', category: 'fashion', catalog: GRIMKIN_SEASON, ticketCost: 2 },
+  { slug: 'bandage-face', name: 'Bandage Face', category: 'fashion', catalog: GRIMKIN_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 10 },
+  { slug: 'cracked-face', name: 'Cracked Face', category: 'fashion', catalog: GRIMKIN_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 10 },
   { slug: 'grimkin-pet', name: 'Grimkin Companion', category: 'fashion', catalog: GRIMKIN_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 310 },
   { slug: 'ghost-charm', name: 'Ghost Charm', category: 'fashion', catalog: GRIMKIN_SEASON, ticketCost: 1, currency: 'hearts', currencyCost: 8 },
   { slug: 'floral-guitar', name: 'Floral Guitar', category: 'fashion', catalog: GRIMKIN_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 80 },
