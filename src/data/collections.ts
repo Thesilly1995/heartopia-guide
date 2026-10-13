@@ -134,6 +134,13 @@ const PUZZLE_NAMES: string[] = [
   'Puzzle (Napping Panda)',
   'Puzzle (Foxes of Flower Field)',
   'Puzzle (Fateful Encounter)',
+  'Puzzle (Flower Field)',
+  'Puzzle (Rainbow Florist)',
+  'Puzzle (Dreamy Fish Tank)',
+  'Puzzle (Rumble Turkey)',
+  'Puzzle (Naniwa & Dung Beetle)',
+  'Puzzle (Harvest Meal)',
+  'Puzzle (Tomato Farm)',
 ];
 
 /** "Fascinating Psychological" lijkt afgekapt in de screenshot (kaartbreedte) — mogelijk niet de volledige titel, zo overgenomen tot betere info. */
