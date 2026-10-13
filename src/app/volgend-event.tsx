@@ -12,6 +12,7 @@ import { useLanguage } from '@/hooks/use-language';
 import { usePremium } from '@/hooks/use-premium';
 
 const NIGHT_OF_DIVINATION_PREP = require('@/assets/images/events/night-of-divination-prep.jpg');
+const EERIE_EVE_RECIPES = require('@/assets/images/events/eerie-eve-recipes.jpg');
 
 const STRINGS = {
   nl: {
@@ -92,6 +93,7 @@ export default function NextEventScreen() {
               )}
               <DisclaimerBox text={s.disclaimer} />
               {recipes.length > 0 && !eventName && <ZoomableImage source={NIGHT_OF_DIVINATION_PREP} aspectRatio={928 / 1152} />}
+              {recipes.length > 0 && eventName && <ZoomableImage source={EERIE_EVE_RECIPES} aspectRatio={896 / 1200} />}
             </View>
           }
           ListEmptyComponent={<Text style={styles.emptyText}>{s.empty}</Text>}
