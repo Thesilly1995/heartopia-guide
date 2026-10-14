@@ -10,6 +10,14 @@ const ACTIVATED_KEY: Record<MembershipType, string> = {
   full: 'heartopia:membership:full:geactiveerd',
 };
 
+/** Aantal keer achter elkaar gekocht (stapelt de looptijd) — bv. 4x Junior = 28 dagen i.p.v. 7. */
+const COUNT_KEY: Record<MembershipType, string> = {
+  junior: 'heartopia:membership:junior:aantal',
+  full: 'heartopia:membership:full:aantal',
+};
+const MIN_COUNT = 1;
+const MAX_COUNT = 24;
+
 /** Oude opslag vóór junior+full tegelijk kon — eenmalig migreren naar de nieuwe per-tier keys. */
 const LEGACY_TYPE_KEY = 'heartopia:membership:type';
 const LEGACY_ACTIVATED_KEY = 'heartopia:membership:geactiveerd';
@@ -54,6 +62,7 @@ const STRINGS = {
     perksLabel: 'Extra voordelen',
     activatedLabel: 'Geactiveerd op',
     day: 'Dag', month: 'Maand', year: 'Jaar', hour: 'Uur', minute: 'Min',
+    timesPurchased: 'Aantal keer gekocht',
     nowButton: 'Nu',
     saveButton: 'Opslaan',
     removeButton: 'Verwijderen',
@@ -72,6 +81,7 @@ const STRINGS = {
     perksLabel: 'Extra perks',
     activatedLabel: 'Activated on',
     day: 'Day', month: 'Month', year: 'Year', hour: 'Hour', minute: 'Min',
+    timesPurchased: 'Times purchased',
     nowButton: 'Now',
     saveButton: 'Save',
     removeButton: 'Remove',
@@ -90,6 +100,7 @@ const STRINGS = {
     perksLabel: 'Ventajas extra',
     activatedLabel: 'Activado el',
     day: 'Día', month: 'Mes', year: 'Año', hour: 'Hora', minute: 'Min',
+    timesPurchased: 'Veces comprado',
     nowButton: 'Ahora',
     saveButton: 'Guardar',
     removeButton: 'Eliminar',
@@ -108,6 +119,7 @@ const STRINGS = {
     perksLabel: 'Benefícios extras',
     activatedLabel: 'Ativado em',
     day: 'Dia', month: 'Mês', year: 'Ano', hour: 'Hora', minute: 'Min',
+    timesPurchased: 'Vezes comprado',
     nowButton: 'Agora',
     saveButton: 'Salvar',
     removeButton: 'Remover',
@@ -126,6 +138,7 @@ const STRINGS = {
     perksLabel: 'Avantages supplémentaires',
     activatedLabel: 'Activé le',
     day: 'Jour', month: 'Mois', year: 'Année', hour: 'Heure', minute: 'Min',
+    timesPurchased: "Nombre d'achats",
     nowButton: 'Maintenant',
     saveButton: 'Enregistrer',
     removeButton: 'Supprimer',
@@ -144,6 +157,7 @@ const STRINGS = {
     perksLabel: 'Zusätzliche Vorteile',
     activatedLabel: 'Aktiviert am',
     day: 'Tag', month: 'Monat', year: 'Jahr', hour: 'Std', minute: 'Min',
+    timesPurchased: 'Anzahl gekauft',
     nowButton: 'Jetzt',
     saveButton: 'Speichern',
     removeButton: 'Entfernen',
@@ -153,6 +167,10 @@ const STRINGS = {
 
 function pad2(n: number): string {
   return String(n).padStart(2, '0');
+}
+
+function clampCount(n: number): number {
+  return Math.min(MAX_COUNT, Math.max(MIN_COUNT, Math.round(n) || MIN_COUNT));
 }
 
 /**
@@ -167,6 +185,8 @@ export function MembershipCard() {
   const { language } = useLanguage();
   const s = STRINGS[language];
   const [activatedAt, setActivatedAtState] = useState<Record<MembershipType, string | null>>({ junior: null, full: null });
+  const [count, setCount] = useState<Record<MembershipType, number>>({ junior: 1, full: 1 });
+  const [countDraft, setCountDraft] = useState(1);
   const [modalType, setModalType] = useState<MembershipType | null>(null);
   const [day, setDay] = useState('');
   const [month, setMonth] = useState('');
@@ -178,11 +198,13 @@ export function MembershipCard() {
   useEffect(() => {
     (async () => {
       try {
-        const [storedJunior, storedFull, legacyType, legacyActivatedAt] = await Promise.all([
+        const [storedJunior, storedFull, legacyType, legacyActivatedAt, storedCountJunior, storedCountFull] = await Promise.all([
           AsyncStorage.getItem(ACTIVATED_KEY.junior),
           AsyncStorage.getItem(ACTIVATED_KEY.full),
           AsyncStorage.getItem(LEGACY_TYPE_KEY),
           AsyncStorage.getItem(LEGACY_ACTIVATED_KEY),
+          AsyncStorage.getItem(COUNT_KEY.junior),
+          AsyncStorage.getItem(COUNT_KEY.full),
         ]);
         const next: Record<MembershipType, string | null> = { junior: storedJunior, full: storedFull };
         if ((legacyType === 'junior' || legacyType === 'full') && legacyActivatedAt && !next[legacyType]) {
@@ -193,6 +215,10 @@ export function MembershipCard() {
           await Promise.all([AsyncStorage.removeItem(LEGACY_TYPE_KEY), AsyncStorage.removeItem(LEGACY_ACTIVATED_KEY)]);
         }
         setActivatedAtState(next);
+        setCount({
+          junior: clampCount(Number(storedCountJunior) || 1),
+          full: clampCount(Number(storedCountFull) || 1),
+        });
       } catch {
         // opslag niet beschikbaar, blijft leeg
       }
@@ -207,8 +233,18 @@ export function MembershipCard() {
   const remainingMsFor = (type: MembershipType): number | null => {
     const iso = activatedAt[type];
     if (!iso) return null;
-    const expiresAt = new Date(iso).getTime() + TIERS[type].days * 24 * 3600000;
+    const totalDays = TIERS[type].days * count[type];
+    const expiresAt = new Date(iso).getTime() + totalDays * 24 * 3600000;
     return expiresAt - now;
+  };
+
+  /** Snelle "+" op het icoontje op het homescherm — stapelt er meteen 1 aankoop bij, zonder de modal te openen. */
+  const incrementQuick = (type: MembershipType) => {
+    const next = clampCount((count[type] ?? 1) + 1);
+    setCount((prev) => ({ ...prev, [type]: next }));
+    AsyncStorage.setItem(COUNT_KEY[type], String(next)).catch(() => {
+      // opslaan mislukt
+    });
   };
 
   const fillNow = () => {
@@ -232,6 +268,7 @@ export function MembershipCard() {
     } else {
       fillNow();
     }
+    setCountDraft(count[type] ?? 1);
     setModalType(type);
   };
 
@@ -240,9 +277,14 @@ export function MembershipCard() {
     const parsed = new Date(Number(year), Number(month) - 1, Number(day), Number(hour), Number(minute));
     if (isNaN(parsed.getTime())) return;
     const iso = parsed.toISOString();
+    const clampedCount = clampCount(countDraft);
     setActivatedAtState((prev) => ({ ...prev, [modalType]: iso }));
+    setCount((prev) => ({ ...prev, [modalType]: clampedCount }));
     try {
-      await AsyncStorage.setItem(ACTIVATED_KEY[modalType], iso);
+      await Promise.all([
+        AsyncStorage.setItem(ACTIVATED_KEY[modalType], iso),
+        AsyncStorage.setItem(COUNT_KEY[modalType], String(clampedCount)),
+      ]);
     } catch {
       // opslaan mislukt
     }
@@ -253,8 +295,12 @@ export function MembershipCard() {
     if (!modalType) return;
     const type = modalType;
     setActivatedAtState((prev) => ({ ...prev, [type]: null }));
+    setCount((prev) => ({ ...prev, [type]: 1 }));
     try {
-      await AsyncStorage.removeItem(ACTIVATED_KEY[type]);
+      await Promise.all([
+        AsyncStorage.removeItem(ACTIVATED_KEY[type]),
+        AsyncStorage.removeItem(COUNT_KEY[type]),
+      ]);
     } catch {
       // verwijderen mislukt
     }
@@ -268,23 +314,39 @@ export function MembershipCard() {
     const days = isSet ? Math.max(0, Math.floor(remainingMs / (24 * 3600000))) : 0;
     const hours = isSet ? Math.max(0, Math.floor((remainingMs % (24 * 3600000)) / 3600000)) : 0;
     const tierLabel = type === 'junior' ? s.juniorLabel : s.fullLabel;
+    const stack = count[type] ?? 1;
 
     return (
       <Pressable key={type} style={styles.row} onPress={() => openModal(type)}>
-        <View style={[styles.membershipBadge, { backgroundColor: TIER_BADGE_COLORS[type].bg, borderColor: TIER_BADGE_COLORS[type].border }]}>
-          <Text style={styles.membershipBadgeIcon}>🌰</Text>
+        <View style={styles.badgeWrap}>
+          <View style={[styles.membershipBadge, { backgroundColor: TIER_BADGE_COLORS[type].bg, borderColor: TIER_BADGE_COLORS[type].border }]}>
+            <Text style={styles.membershipBadgeIcon}>🌰</Text>
+          </View>
+          <Pressable
+            style={styles.plusBadge}
+            hitSlop={8}
+            onPress={(e) => {
+              e.stopPropagation();
+              incrementQuick(type);
+            }}
+          >
+            <Text style={styles.plusBadgeText}>+</Text>
+          </Pressable>
         </View>
         <View style={styles.infoSection}>
-          <Text style={styles.typeText}>{tierLabel}</Text>
+          <Text style={styles.typeText}>
+            {tierLabel}
+            {stack > 1 ? ` ×${stack}` : ''}
+          </Text>
           <Text style={[styles.remainingText, isExpired && styles.expiredText, !isSet && styles.notSetText]}>
             {isSet ? (isExpired ? s.expired : s.remaining(days, hours)) : s.notSetLabel}
           </Text>
         </View>
         {isSet && (
           <View style={styles.rewardsRow}>
-            {TIERS[type].totalMedals > 0 && <Text style={styles.rewardText}>🏅{TIERS[type].totalMedals}</Text>}
-            <Text style={styles.rewardText}>💙{TIERS[type].totalBlueHearts}</Text>
-            <Text style={styles.rewardText}>💗{TIERS[type].activationHearts}</Text>
+            {TIERS[type].totalMedals > 0 && <Text style={styles.rewardText}>🏅{TIERS[type].totalMedals * stack}</Text>}
+            <Text style={styles.rewardText}>💙{TIERS[type].totalBlueHearts * stack}</Text>
+            <Text style={styles.rewardText}>💗{TIERS[type].activationHearts * stack}</Text>
           </View>
         )}
       </Pressable>
@@ -308,17 +370,30 @@ export function MembershipCard() {
               <>
                 <Text style={styles.modalTitle}>{s.modalTitle(modalType)}</Text>
 
+                <View style={styles.countRow}>
+                  <Text style={styles.countLabel}>{s.timesPurchased}</Text>
+                  <View style={styles.stepper}>
+                    <Pressable style={styles.stepperBtn} onPress={() => setCountDraft((c) => clampCount(c - 1))}>
+                      <Text style={styles.stepperBtnText}>−</Text>
+                    </Pressable>
+                    <Text style={styles.stepperValue}>×{countDraft}</Text>
+                    <Pressable style={styles.stepperBtn} onPress={() => setCountDraft((c) => clampCount(c + 1))}>
+                      <Text style={styles.stepperBtnText}>+</Text>
+                    </Pressable>
+                  </View>
+                </View>
+
                 <View style={styles.rewardsPreview}>
                   <Text style={styles.rewardsPreviewLabel}>{s.dailyRewards}</Text>
                   <Text style={styles.rewardsPreviewValue}>
                     {tier.dailyMedals > 0 ? `🏅${tier.dailyMedals} ` : ''}💙{tier.dailyBlueHearts}
                   </Text>
-                  <Text style={styles.rewardsPreviewLabel}>{s.totalRewards(tier.days)}</Text>
+                  <Text style={styles.rewardsPreviewLabel}>{s.totalRewards(tier.days * countDraft)}</Text>
                   <Text style={styles.rewardsPreviewValue}>
-                    {tier.totalMedals > 0 ? `🏅${tier.totalMedals} ` : ''}💙{tier.totalBlueHearts}
+                    {tier.totalMedals > 0 ? `🏅${tier.totalMedals * countDraft} ` : ''}💙{tier.totalBlueHearts * countDraft}
                   </Text>
                   <Text style={styles.rewardsPreviewLabel}>{s.activationRewards}</Text>
-                  <Text style={styles.rewardsPreviewValue}>💗{tier.activationHearts}</Text>
+                  <Text style={styles.rewardsPreviewValue}>💗{tier.activationHearts * countDraft}</Text>
                   {modalType === 'full' && (
                     <>
                       <Text style={[styles.rewardsPreviewLabel, styles.perksLabel]}>{s.perksLabel}</Text>
@@ -384,8 +459,14 @@ function makeStyles(c: ThemeColors) {
     rowsWrap: { gap: 8 },
     rowDivider: { height: StyleSheet.hairlineWidth, backgroundColor: c.line },
     row: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+    badgeWrap: { position: 'relative' },
     membershipBadge: { width: 32, height: 24, borderRadius: 6, borderWidth: 1.5, alignItems: 'center', justifyContent: 'center' },
     membershipBadgeIcon: { fontSize: 13 },
+    plusBadge: {
+      position: 'absolute', right: -6, bottom: -6, width: 17, height: 17, borderRadius: 9,
+      backgroundColor: c.coral, borderWidth: 1.5, borderColor: c.card, alignItems: 'center', justifyContent: 'center',
+    },
+    plusBadgeText: { fontSize: 11, fontWeight: '800', color: '#FFFFFF', lineHeight: 12 },
     infoSection: { flex: 1 },
     typeText: { fontSize: 13, fontWeight: '700', color: c.forest },
     remainingText: { fontSize: 12, color: c.forestSoft, marginTop: 1 },
@@ -397,6 +478,12 @@ function makeStyles(c: ThemeColors) {
     modalBackdrop: { flex: 1, backgroundColor: 'rgba(0,0,0,0.4)', alignItems: 'center', justifyContent: 'center', padding: 24 },
     modalCard: { width: '100%', maxWidth: 340, maxHeight: '85%', backgroundColor: c.card, borderRadius: 18, padding: 16, gap: 10 },
     modalTitle: { fontSize: 15, fontWeight: '700', color: c.forest },
+    countRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+    countLabel: { fontSize: 12, fontWeight: '700', color: c.forestSoft },
+    stepper: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+    stepperBtn: { width: 28, height: 28, borderRadius: 14, backgroundColor: c.surfaceSoft, borderWidth: 1, borderColor: c.line, alignItems: 'center', justifyContent: 'center' },
+    stepperBtnText: { fontSize: 16, fontWeight: '800', color: c.forest, lineHeight: 18 },
+    stepperValue: { fontSize: 14, fontWeight: '700', color: c.forest, minWidth: 28, textAlign: 'center' },
     rewardsPreview: { backgroundColor: c.surfaceSoft, borderRadius: 12, padding: 10, gap: 2 },
     rewardsPreviewLabel: { fontSize: 10, fontWeight: '700', color: c.forestSoft, marginTop: 4 },
     rewardsPreviewValue: { fontSize: 13, fontWeight: '600', color: c.forest },
