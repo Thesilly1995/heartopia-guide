@@ -2,6 +2,20 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-10-14 (vervolg 2) — Recepten-fixes, Midsummer Rhyme-archief, membership-stapeling, volgende Ordering Machine-catalogi genoteerd
+
+**Recepten (`src/data/recipes.ts`)**: Blue European Crayfish Sashimi en Crayfish Sashimi gebruikten allebei het generieke "Schelpdier"-ingrediënt — gecorrigeerd naar resp. "European Crayfish ×3" en "Any Crayfish ×3". Orange Milkshake verwijderd (bestond niet/klopte niet volgens gebruiker). Zongzi-recepten (6x) en Sea Grape & Shiitake Chawanmushi stonden al in de normale lijst van een eerdere sessie.
+
+**`remote-content.json` — "Midsummer Rhyme" toegevoegd aan `pastEvents`** (19 juni – 6 juli 2026) met de 6 zongzi-recepten, zodat ze zichtbaar zijn onder de 🎉 Events-tab bij Koken (dit tabblad draait sinds een eerdere sessie ook op Insecten/Vogels/Koken, niet meer alleen de Vissen-pilot — `docs/remote-content.md` regel ~297 is op dat punt verouderd). **Belangrijke herontdekking**: `remote-content.json` wordt altijd van de `main`-branch gelezen (raw GitHub-link in `src/constants/remote.ts`), ook als er een lopende feature-branch is — dus contentwijzigingen in dit bestand moeten los naar `main` gepusht worden (cherry-pick vanaf de feature-branch) om live te komen, onafhankelijk van of de rest van die branch al gemerged is.
+
+**Nieuwe feature — membership-stapeling** (`src/components/heartopia/membership-card.tsx`): spelers kunnen dezelfde membership-tier meerdere keren achter elkaar kopen (bv. 4x Junior = 28 dagen i.p.v. 7). Een "aantal"-veld per tier (`COUNT_KEY`, AsyncStorage, 1-24) vermenigvuldigt de looptijd én de totaalbeloningen. Een klein rood "+"-badge rechtsonder op het 🌰-icoontje op het homescherm stapelt direct 1 keer bij zonder de modal te openen; in de modal zelf staat een nette stepper ("− ×N +") om het aantal in te stellen/corrigeren. Reset naar 1 bij "Verwijderen".
+
+**Bugfix in dezelfde modal**: de dag/maand/jaar/uur/min-velden werden vooraf ingevuld met de huidige datum, maar selecteerden de tekst niet bij focus — met `maxLength` al bereikt deed typen dus niets totdat je eerst handmatig wiste. Spelers konden hierdoor geen datum in het verleden invoeren (bv. "10 oktober" terwijl het veld al "14" toonde). Gefixt met `selectTextOnFocus` op alle 5 velden; gereproduceerd én geverifieerd met Playwright (`pressSequentially` zonder voorafgaande selectie).
+
+**Werkwijze bevestigd**: beide bovenstaande fixes + de membership-feature zijn **los van de Ordering Machine-draftbranch** (`claude/rewards-gift-code-vylbj0`) naar `main` gecherrypickt en gepusht, met expliciete toestemming van de gebruiker per wijziging — dit soort losstaande app-code-fixes hoeft niet te wachten tot de hele Ordering Machine-branch klaar is. Gebruiker heeft hierna zelf `eas update --channel production` gedraaid en bevestigd dat het voltooid is.
+
+**Ordering Machine — volgende catalogi (nog niet gestart, wacht op screenshots van de gebruiker)**: Spring Camping Season, Beach Utopia, Spring Festival. Zelfde werkwijze als de vorige 5 catalogi: eerst prijs-screenshots → `src/data/ordering-machine.ts`, dan losse item-screenshots → crop volgens de vaste stijl (zie sectie hieronder) → `src/constants/ordering-machine-images.ts` regenereren. Alles blijft in draft PR #273 tot de gebruiker aangeeft dat echt alle catalogi klaar zijn.
+
 ## 2026-10-14 (vervolg) — Ordering Machine: New Animal Neighbours + Under the Galaxy catalogi, definitieve afbeelding-uitsnede-stijl
 
 **Twee nieuwe catalogi toegevoegd** aan `src/data/ordering-machine.ts` (nog ongemerged, draft PR #273, wacht op "alles tegelijk mergen"-signaal van de gebruiker): **New Animal Neighbours** (193 items, prijzen + bijna alle afbeeldingen compleet, ~20 meubel-items uit de grote prijslijst missen nog een eigen foto) en **Under the Galaxy** (79 items, volledig compleet — prijzen én afbeeldingen).
