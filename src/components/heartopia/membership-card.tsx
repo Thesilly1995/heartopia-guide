@@ -413,25 +413,25 @@ export function MembershipCard() {
                 <View style={styles.dateRow}>
                   <View style={styles.dateField}>
                     <Text style={styles.dateFieldLabel}>{s.day}</Text>
-                    <TextInput value={day} onChangeText={setDay} keyboardType="number-pad" maxLength={2} style={styles.dateInput} />
+                    <TextInput value={day} onChangeText={setDay} keyboardType="number-pad" maxLength={2} selectTextOnFocus style={styles.dateInput} />
                   </View>
                   <View style={styles.dateField}>
                     <Text style={styles.dateFieldLabel}>{s.month}</Text>
-                    <TextInput value={month} onChangeText={setMonth} keyboardType="number-pad" maxLength={2} style={styles.dateInput} />
+                    <TextInput value={month} onChangeText={setMonth} keyboardType="number-pad" maxLength={2} selectTextOnFocus style={styles.dateInput} />
                   </View>
                   <View style={[styles.dateField, styles.dateFieldWide]}>
                     <Text style={styles.dateFieldLabel}>{s.year}</Text>
-                    <TextInput value={year} onChangeText={setYear} keyboardType="number-pad" maxLength={4} style={styles.dateInput} />
+                    <TextInput value={year} onChangeText={setYear} keyboardType="number-pad" maxLength={4} selectTextOnFocus style={styles.dateInput} />
                   </View>
                 </View>
                 <View style={styles.dateRow}>
                   <View style={styles.dateField}>
                     <Text style={styles.dateFieldLabel}>{s.hour}</Text>
-                    <TextInput value={hour} onChangeText={setHour} keyboardType="number-pad" maxLength={2} style={styles.dateInput} />
+                    <TextInput value={hour} onChangeText={setHour} keyboardType="number-pad" maxLength={2} selectTextOnFocus style={styles.dateInput} />
                   </View>
                   <View style={styles.dateField}>
                     <Text style={styles.dateFieldLabel}>{s.minute}</Text>
-                    <TextInput value={minute} onChangeText={setMinute} keyboardType="number-pad" maxLength={2} style={styles.dateInput} />
+                    <TextInput value={minute} onChangeText={setMinute} keyboardType="number-pad" maxLength={2} selectTextOnFocus style={styles.dateInput} />
                   </View>
                 </View>
 
