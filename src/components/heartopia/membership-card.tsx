@@ -5,8 +5,14 @@ import { Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-nativ
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { useLanguage } from '@/hooks/use-language';
 
-const TYPE_KEY = 'heartopia:membership:type';
-const ACTIVATED_KEY = 'heartopia:membership:geactiveerd';
+const ACTIVATED_KEY: Record<MembershipType, string> = {
+  junior: 'heartopia:membership:junior:geactiveerd',
+  full: 'heartopia:membership:full:geactiveerd',
+};
+
+/** Oude opslag vóór junior+full tegelijk kon — eenmalig migreren naar de nieuwe per-tier keys. */
+const LEGACY_TYPE_KEY = 'heartopia:membership:type';
+const LEGACY_ACTIVATED_KEY = 'heartopia:membership:geactiveerd';
 
 type MembershipType = 'junior' | 'full';
 
@@ -36,13 +42,12 @@ const FULL_PERKS = {
 
 const STRINGS = {
   nl: {
-    notSetLabel: '+ Membership toevoegen',
-    typeLabel: (t: MembershipType) => (t === 'junior' ? 'Junior Membership' : 'Full Membership'),
+    juniorLabel: 'Junior Membership',
+    fullLabel: 'Full Membership',
+    notSetLabel: 'Niet actief — tik om in te stellen',
     remaining: (d: number, h: number) => `Nog ${d}d ${h}u`,
-    expired: 'Verlopen — vernieuw je Membership',
-    modalTitle: 'Membership instellen',
-    typeJunior: 'Junior (7d)',
-    typeFull: 'Full (30d)',
+    expired: 'Verlopen — vernieuw',
+    modalTitle: (t: MembershipType) => (t === 'junior' ? 'Junior Membership instellen' : 'Full Membership instellen'),
     dailyRewards: 'Dagelijks (max. 7d opsparen)',
     totalRewards: (d: number) => `${d}d totaal`,
     activationRewards: 'Bij activeren',
@@ -55,13 +60,12 @@ const STRINGS = {
     cancelButton: 'Annuleren',
   },
   en: {
-    notSetLabel: '+ Add Membership',
-    typeLabel: (t: MembershipType) => (t === 'junior' ? 'Junior Membership' : 'Full Membership'),
+    juniorLabel: 'Junior Membership',
+    fullLabel: 'Full Membership',
+    notSetLabel: 'Not active — tap to set up',
     remaining: (d: number, h: number) => `${d}d ${h}h left`,
-    expired: 'Expired — renew your Membership',
-    modalTitle: 'Set up Membership',
-    typeJunior: 'Junior (7d)',
-    typeFull: 'Full (30d)',
+    expired: 'Expired — renew',
+    modalTitle: (t: MembershipType) => (t === 'junior' ? 'Set up Junior Membership' : 'Set up Full Membership'),
     dailyRewards: 'Daily (accumulates up to 7d)',
     totalRewards: (d: number) => `${d}d total`,
     activationRewards: 'On activation',
@@ -74,13 +78,12 @@ const STRINGS = {
     cancelButton: 'Cancel',
   },
   es: {
-    notSetLabel: '+ Añadir Membership',
-    typeLabel: (t: MembershipType) => (t === 'junior' ? 'Junior Membership' : 'Full Membership'),
+    juniorLabel: 'Junior Membership',
+    fullLabel: 'Full Membership',
+    notSetLabel: 'No activo — toca para configurar',
     remaining: (d: number, h: number) => `${d}d ${h}h restantes`,
-    expired: 'Caducado — renueva tu Membership',
-    modalTitle: 'Configurar Membership',
-    typeJunior: 'Junior (7d)',
-    typeFull: 'Full (30d)',
+    expired: 'Caducado — renueva',
+    modalTitle: (t: MembershipType) => (t === 'junior' ? 'Configurar Junior Membership' : 'Configurar Full Membership'),
     dailyRewards: 'Diario (acumula hasta 7d)',
     totalRewards: (d: number) => `Total ${d}d`,
     activationRewards: 'Al activar',
@@ -93,13 +96,12 @@ const STRINGS = {
     cancelButton: 'Cancelar',
   },
   pt: {
-    notSetLabel: '+ Adicionar Membership',
-    typeLabel: (t: MembershipType) => (t === 'junior' ? 'Junior Membership' : 'Full Membership'),
+    juniorLabel: 'Junior Membership',
+    fullLabel: 'Full Membership',
+    notSetLabel: 'Não ativo — toque para configurar',
     remaining: (d: number, h: number) => `Faltam ${d}d ${h}h`,
-    expired: 'Expirado — renove sua Membership',
-    modalTitle: 'Configurar Membership',
-    typeJunior: 'Junior (7d)',
-    typeFull: 'Full (30d)',
+    expired: 'Expirado — renove',
+    modalTitle: (t: MembershipType) => (t === 'junior' ? 'Configurar Junior Membership' : 'Configurar Full Membership'),
     dailyRewards: 'Diário (acumula até 7d)',
     totalRewards: (d: number) => `Total ${d}d`,
     activationRewards: 'Ao ativar',
@@ -112,13 +114,12 @@ const STRINGS = {
     cancelButton: 'Cancelar',
   },
   fr: {
-    notSetLabel: '+ Ajouter Membership',
-    typeLabel: (t: MembershipType) => (t === 'junior' ? 'Junior Membership' : 'Full Membership'),
+    juniorLabel: 'Junior Membership',
+    fullLabel: 'Full Membership',
+    notSetLabel: 'Non actif — appuie pour configurer',
     remaining: (d: number, h: number) => `${d}j ${h}h restant`,
-    expired: 'Expiré — renouvelle ton Membership',
-    modalTitle: 'Configurer Membership',
-    typeJunior: 'Junior (7j)',
-    typeFull: 'Full (30j)',
+    expired: 'Expiré — renouvelle',
+    modalTitle: (t: MembershipType) => (t === 'junior' ? 'Configurer Junior Membership' : 'Configurer Full Membership'),
     dailyRewards: 'Quotidien (cumul jusqu\'à 7j)',
     totalRewards: (d: number) => `Total ${d}j`,
     activationRewards: "À l'activation",
@@ -131,13 +132,12 @@ const STRINGS = {
     cancelButton: 'Annuler',
   },
   de: {
-    notSetLabel: '+ Membership hinzufügen',
-    typeLabel: (t: MembershipType) => (t === 'junior' ? 'Junior Membership' : 'Full Membership'),
+    juniorLabel: 'Junior Membership',
+    fullLabel: 'Full Membership',
+    notSetLabel: 'Nicht aktiv — zum Einrichten tippen',
     remaining: (d: number, h: number) => `Noch ${d}T ${h}Std`,
-    expired: 'Abgelaufen — erneuere deine Membership',
-    modalTitle: 'Membership einrichten',
-    typeJunior: 'Junior (7T)',
-    typeFull: 'Full (30T)',
+    expired: 'Abgelaufen — erneuern',
+    modalTitle: (t: MembershipType) => (t === 'junior' ? 'Junior Membership einrichten' : 'Full Membership einrichten'),
     dailyRewards: 'Täglich (sammelt bis zu 7T)',
     totalRewards: (d: number) => `${d}T gesamt`,
     activationRewards: 'Bei Aktivierung',
@@ -156,19 +156,18 @@ function pad2(n: number): string {
 }
 
 /**
- * Countdown voor het in-game "Membership"-abonnement (Acorn Store). De app kent de
- * echte resterende tijd niet (geen API) — de speler vult zelf in wanneer ze het
- * geactiveerd hebben, wij rekenen daarna zelf de vervaldatum/countdown uit.
+ * Countdowns voor de twee in-game "Membership"-abonnementen (Acorn Store) — Junior
+ * (zilver) en Full (goud) kunnen tegelijk actief zijn, dus elke tier heeft zijn eigen
+ * onafhankelijke activatie-datum/countdown. De app kent de echte resterende tijd niet
+ * (geen API) — de speler vult zelf in wanneer ze het geactiveerd hebben.
  */
 export function MembershipCard() {
   const colors = useHeartopiaColors();
   const styles = useMemo(() => makeStyles(colors), [colors]);
   const { language } = useLanguage();
   const s = STRINGS[language];
-  const [type, setType] = useState<MembershipType | null>(null);
-  const [activatedAt, setActivatedAt] = useState<string | null>(null);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [draftType, setDraftType] = useState<MembershipType>('full');
+  const [activatedAt, setActivatedAtState] = useState<Record<MembershipType, string | null>>({ junior: null, full: null });
+  const [modalType, setModalType] = useState<MembershipType | null>(null);
   const [day, setDay] = useState('');
   const [month, setMonth] = useState('');
   const [year, setYear] = useState('');
@@ -179,12 +178,21 @@ export function MembershipCard() {
   useEffect(() => {
     (async () => {
       try {
-        const [storedType, storedActivatedAt] = await Promise.all([
-          AsyncStorage.getItem(TYPE_KEY),
-          AsyncStorage.getItem(ACTIVATED_KEY),
+        const [storedJunior, storedFull, legacyType, legacyActivatedAt] = await Promise.all([
+          AsyncStorage.getItem(ACTIVATED_KEY.junior),
+          AsyncStorage.getItem(ACTIVATED_KEY.full),
+          AsyncStorage.getItem(LEGACY_TYPE_KEY),
+          AsyncStorage.getItem(LEGACY_ACTIVATED_KEY),
         ]);
-        if (storedType === 'junior' || storedType === 'full') setType(storedType);
-        if (storedActivatedAt) setActivatedAt(storedActivatedAt);
+        const next: Record<MembershipType, string | null> = { junior: storedJunior, full: storedFull };
+        if ((legacyType === 'junior' || legacyType === 'full') && legacyActivatedAt && !next[legacyType]) {
+          next[legacyType] = legacyActivatedAt;
+          await AsyncStorage.setItem(ACTIVATED_KEY[legacyType], legacyActivatedAt);
+        }
+        if (legacyType || legacyActivatedAt) {
+          await Promise.all([AsyncStorage.removeItem(LEGACY_TYPE_KEY), AsyncStorage.removeItem(LEGACY_ACTIVATED_KEY)]);
+        }
+        setActivatedAtState(next);
       } catch {
         // opslag niet beschikbaar, blijft leeg
       }
@@ -196,11 +204,12 @@ export function MembershipCard() {
     return () => clearInterval(interval);
   }, []);
 
-  const remainingMs = useMemo(() => {
-    if (!type || !activatedAt) return null;
-    const expiresAt = new Date(activatedAt).getTime() + TIERS[type].days * 24 * 3600000;
+  const remainingMsFor = (type: MembershipType): number | null => {
+    const iso = activatedAt[type];
+    if (!iso) return null;
+    const expiresAt = new Date(iso).getTime() + TIERS[type].days * 24 * 3600000;
     return expiresAt - now;
-  }, [type, activatedAt, now]);
+  };
 
   const fillNow = () => {
     const d = new Date();
@@ -211,10 +220,10 @@ export function MembershipCard() {
     setMinute(pad2(d.getMinutes()));
   };
 
-  const openModal = () => {
-    setDraftType(type ?? 'full');
-    if (activatedAt) {
-      const d = new Date(activatedAt);
+  const openModal = (type: MembershipType) => {
+    const iso = activatedAt[type];
+    if (iso) {
+      const d = new Date(iso);
       setDay(pad2(d.getDate()));
       setMonth(pad2(d.getMonth() + 1));
       setYear(String(d.getFullYear()));
@@ -223,146 +232,146 @@ export function MembershipCard() {
     } else {
       fillNow();
     }
-    setModalOpen(true);
+    setModalType(type);
   };
 
   const save = async () => {
+    if (!modalType) return;
     const parsed = new Date(Number(year), Number(month) - 1, Number(day), Number(hour), Number(minute));
     if (isNaN(parsed.getTime())) return;
     const iso = parsed.toISOString();
-    setType(draftType);
-    setActivatedAt(iso);
+    setActivatedAtState((prev) => ({ ...prev, [modalType]: iso }));
     try {
-      await Promise.all([AsyncStorage.setItem(TYPE_KEY, draftType), AsyncStorage.setItem(ACTIVATED_KEY, iso)]);
+      await AsyncStorage.setItem(ACTIVATED_KEY[modalType], iso);
     } catch {
       // opslaan mislukt
     }
-    setModalOpen(false);
+    setModalType(null);
   };
 
   const remove = async () => {
-    setType(null);
-    setActivatedAt(null);
+    if (!modalType) return;
+    const type = modalType;
+    setActivatedAtState((prev) => ({ ...prev, [type]: null }));
     try {
-      await Promise.all([AsyncStorage.removeItem(TYPE_KEY), AsyncStorage.removeItem(ACTIVATED_KEY)]);
+      await AsyncStorage.removeItem(ACTIVATED_KEY[type]);
     } catch {
       // verwijderen mislukt
     }
-    setModalOpen(false);
+    setModalType(null);
   };
 
-  const tier = TIERS[draftType];
-  const days = remainingMs !== null ? Math.max(0, Math.floor(remainingMs / (24 * 3600000))) : 0;
-  const hours = remainingMs !== null ? Math.max(0, Math.floor((remainingMs % (24 * 3600000)) / 3600000)) : 0;
-  const isExpired = remainingMs !== null && remainingMs <= 0;
+  const renderRow = (type: MembershipType) => {
+    const remainingMs = remainingMsFor(type);
+    const isSet = remainingMs !== null;
+    const isExpired = isSet && remainingMs <= 0;
+    const days = isSet ? Math.max(0, Math.floor(remainingMs / (24 * 3600000))) : 0;
+    const hours = isSet ? Math.max(0, Math.floor((remainingMs % (24 * 3600000)) / 3600000)) : 0;
+    const tierLabel = type === 'junior' ? s.juniorLabel : s.fullLabel;
+
+    return (
+      <Pressable key={type} style={styles.row} onPress={() => openModal(type)}>
+        <View style={[styles.membershipBadge, { backgroundColor: TIER_BADGE_COLORS[type].bg, borderColor: TIER_BADGE_COLORS[type].border }]}>
+          <Text style={styles.membershipBadgeIcon}>🌰</Text>
+        </View>
+        <View style={styles.infoSection}>
+          <Text style={styles.typeText}>{tierLabel}</Text>
+          <Text style={[styles.remainingText, isExpired && styles.expiredText, !isSet && styles.notSetText]}>
+            {isSet ? (isExpired ? s.expired : s.remaining(days, hours)) : s.notSetLabel}
+          </Text>
+        </View>
+        {isSet && (
+          <View style={styles.rewardsRow}>
+            {TIERS[type].totalMedals > 0 && <Text style={styles.rewardText}>🏅{TIERS[type].totalMedals}</Text>}
+            <Text style={styles.rewardText}>💙{TIERS[type].totalBlueHearts}</Text>
+            <Text style={styles.rewardText}>💗{TIERS[type].activationHearts}</Text>
+          </View>
+        )}
+      </Pressable>
+    );
+  };
+
+  const tier = modalType ? TIERS[modalType] : null;
 
   return (
     <>
-      <Pressable style={styles.row} onPress={openModal}>
-        {type && activatedAt ? (
-          <>
-            <View style={[styles.membershipBadge, { backgroundColor: TIER_BADGE_COLORS[type].bg, borderColor: TIER_BADGE_COLORS[type].border }]}>
-              <Text style={styles.membershipBadgeIcon}>🌰</Text>
-            </View>
-            <View style={styles.infoSection}>
-              <Text style={styles.typeText}>{s.typeLabel(type)}</Text>
-              <Text style={[styles.remainingText, isExpired && styles.expiredText]}>
-                {isExpired ? s.expired : s.remaining(days, hours)}
-              </Text>
-            </View>
-            <View style={styles.rewardsRow}>
-              {TIERS[type].totalMedals > 0 && <Text style={styles.rewardText}>🏅{TIERS[type].totalMedals}</Text>}
-              <Text style={styles.rewardText}>💙{TIERS[type].totalBlueHearts}</Text>
-              <Text style={styles.rewardText}>💗{TIERS[type].activationHearts}</Text>
-            </View>
-          </>
-        ) : (
-          <Text style={styles.notSetText}>{s.notSetLabel}</Text>
-        )}
-      </Pressable>
+      <View style={styles.rowsWrap}>
+        {renderRow('junior')}
+        <View style={styles.rowDivider} />
+        {renderRow('full')}
+      </View>
 
-      <Modal visible={modalOpen} transparent animationType="fade" onRequestClose={() => setModalOpen(false)}>
-        <Pressable style={styles.modalBackdrop} onPress={() => setModalOpen(false)}>
+      <Modal visible={modalType !== null} transparent animationType="fade" onRequestClose={() => setModalType(null)}>
+        <Pressable style={styles.modalBackdrop} onPress={() => setModalType(null)}>
           <Pressable style={styles.modalCard} onPress={(e) => e.stopPropagation()}>
-            <Text style={styles.modalTitle}>{s.modalTitle}</Text>
+            {modalType && tier && (
+              <>
+                <Text style={styles.modalTitle}>{s.modalTitle(modalType)}</Text>
 
-            <View style={styles.typeToggleRow}>
-              <Pressable style={[styles.typeOption, draftType === 'junior' && styles.typeOptionActive]} onPress={() => setDraftType('junior')}>
-                <View style={[styles.membershipBadge, { backgroundColor: TIER_BADGE_COLORS.junior.bg, borderColor: TIER_BADGE_COLORS.junior.border }]}>
-                  <Text style={styles.membershipBadgeIcon}>🌰</Text>
+                <View style={styles.rewardsPreview}>
+                  <Text style={styles.rewardsPreviewLabel}>{s.dailyRewards}</Text>
+                  <Text style={styles.rewardsPreviewValue}>
+                    {tier.dailyMedals > 0 ? `🏅${tier.dailyMedals} ` : ''}💙{tier.dailyBlueHearts}
+                  </Text>
+                  <Text style={styles.rewardsPreviewLabel}>{s.totalRewards(tier.days)}</Text>
+                  <Text style={styles.rewardsPreviewValue}>
+                    {tier.totalMedals > 0 ? `🏅${tier.totalMedals} ` : ''}💙{tier.totalBlueHearts}
+                  </Text>
+                  <Text style={styles.rewardsPreviewLabel}>{s.activationRewards}</Text>
+                  <Text style={styles.rewardsPreviewValue}>💗{tier.activationHearts}</Text>
+                  {modalType === 'full' && (
+                    <>
+                      <Text style={[styles.rewardsPreviewLabel, styles.perksLabel]}>{s.perksLabel}</Text>
+                      {FULL_PERKS[language].map((perk) => (
+                        <Text key={perk} style={styles.perkText}>• {perk}</Text>
+                      ))}
+                    </>
+                  )}
                 </View>
-                <Text style={[styles.typeOptionText, draftType === 'junior' && styles.typeOptionTextActive]}>{s.typeJunior}</Text>
-              </Pressable>
-              <Pressable style={[styles.typeOption, draftType === 'full' && styles.typeOptionActive]} onPress={() => setDraftType('full')}>
-                <View style={[styles.membershipBadge, { backgroundColor: TIER_BADGE_COLORS.full.bg, borderColor: TIER_BADGE_COLORS.full.border }]}>
-                  <Text style={styles.membershipBadgeIcon}>🌰</Text>
+
+                <View style={styles.activatedHeaderRow}>
+                  <Text style={styles.activatedLabel}>{s.activatedLabel}</Text>
+                  <Pressable style={styles.nowButton} onPress={fillNow}>
+                    <Text style={styles.nowButtonText}>{s.nowButton}</Text>
+                  </Pressable>
                 </View>
-                <Text style={[styles.typeOptionText, draftType === 'full' && styles.typeOptionTextActive]}>{s.typeFull}</Text>
-              </Pressable>
-            </View>
+                <View style={styles.dateRow}>
+                  <View style={styles.dateField}>
+                    <Text style={styles.dateFieldLabel}>{s.day}</Text>
+                    <TextInput value={day} onChangeText={setDay} keyboardType="number-pad" maxLength={2} style={styles.dateInput} />
+                  </View>
+                  <View style={styles.dateField}>
+                    <Text style={styles.dateFieldLabel}>{s.month}</Text>
+                    <TextInput value={month} onChangeText={setMonth} keyboardType="number-pad" maxLength={2} style={styles.dateInput} />
+                  </View>
+                  <View style={[styles.dateField, styles.dateFieldWide]}>
+                    <Text style={styles.dateFieldLabel}>{s.year}</Text>
+                    <TextInput value={year} onChangeText={setYear} keyboardType="number-pad" maxLength={4} style={styles.dateInput} />
+                  </View>
+                </View>
+                <View style={styles.dateRow}>
+                  <View style={styles.dateField}>
+                    <Text style={styles.dateFieldLabel}>{s.hour}</Text>
+                    <TextInput value={hour} onChangeText={setHour} keyboardType="number-pad" maxLength={2} style={styles.dateInput} />
+                  </View>
+                  <View style={styles.dateField}>
+                    <Text style={styles.dateFieldLabel}>{s.minute}</Text>
+                    <TextInput value={minute} onChangeText={setMinute} keyboardType="number-pad" maxLength={2} style={styles.dateInput} />
+                  </View>
+                </View>
 
-            <View style={styles.rewardsPreview}>
-              <Text style={styles.rewardsPreviewLabel}>{s.dailyRewards}</Text>
-              <Text style={styles.rewardsPreviewValue}>
-                {tier.dailyMedals > 0 ? `🏅${tier.dailyMedals} ` : ''}💙{tier.dailyBlueHearts}
-              </Text>
-              <Text style={styles.rewardsPreviewLabel}>{s.totalRewards(tier.days)}</Text>
-              <Text style={styles.rewardsPreviewValue}>
-                {tier.totalMedals > 0 ? `🏅${tier.totalMedals} ` : ''}💙{tier.totalBlueHearts}
-              </Text>
-              <Text style={styles.rewardsPreviewLabel}>{s.activationRewards}</Text>
-              <Text style={styles.rewardsPreviewValue}>💗{tier.activationHearts}</Text>
-              {draftType === 'full' && (
-                <>
-                  <Text style={[styles.rewardsPreviewLabel, styles.perksLabel]}>{s.perksLabel}</Text>
-                  {FULL_PERKS[language].map((perk) => (
-                    <Text key={perk} style={styles.perkText}>• {perk}</Text>
-                  ))}
-                </>
-              )}
-            </View>
-
-            <View style={styles.activatedHeaderRow}>
-              <Text style={styles.activatedLabel}>{s.activatedLabel}</Text>
-              <Pressable style={styles.nowButton} onPress={fillNow}>
-                <Text style={styles.nowButtonText}>{s.nowButton}</Text>
-              </Pressable>
-            </View>
-            <View style={styles.dateRow}>
-              <View style={styles.dateField}>
-                <Text style={styles.dateFieldLabel}>{s.day}</Text>
-                <TextInput value={day} onChangeText={setDay} keyboardType="number-pad" maxLength={2} style={styles.dateInput} />
-              </View>
-              <View style={styles.dateField}>
-                <Text style={styles.dateFieldLabel}>{s.month}</Text>
-                <TextInput value={month} onChangeText={setMonth} keyboardType="number-pad" maxLength={2} style={styles.dateInput} />
-              </View>
-              <View style={[styles.dateField, styles.dateFieldWide]}>
-                <Text style={styles.dateFieldLabel}>{s.year}</Text>
-                <TextInput value={year} onChangeText={setYear} keyboardType="number-pad" maxLength={4} style={styles.dateInput} />
-              </View>
-            </View>
-            <View style={styles.dateRow}>
-              <View style={styles.dateField}>
-                <Text style={styles.dateFieldLabel}>{s.hour}</Text>
-                <TextInput value={hour} onChangeText={setHour} keyboardType="number-pad" maxLength={2} style={styles.dateInput} />
-              </View>
-              <View style={styles.dateField}>
-                <Text style={styles.dateFieldLabel}>{s.minute}</Text>
-                <TextInput value={minute} onChangeText={setMinute} keyboardType="number-pad" maxLength={2} style={styles.dateInput} />
-              </View>
-            </View>
-
-            <View style={styles.actionsRow}>
-              {type && (
-                <Pressable style={styles.removeButton} onPress={remove}>
-                  <Text style={styles.removeButtonText}>{s.removeButton}</Text>
-                </Pressable>
-              )}
-              <Pressable style={styles.saveButton} onPress={save}>
-                <Text style={styles.saveButtonText}>{s.saveButton}</Text>
-              </Pressable>
-            </View>
+                <View style={styles.actionsRow}>
+                  {activatedAt[modalType] && (
+                    <Pressable style={styles.removeButton} onPress={remove}>
+                      <Text style={styles.removeButtonText}>{s.removeButton}</Text>
+                    </Pressable>
+                  )}
+                  <Pressable style={styles.saveButton} onPress={save}>
+                    <Text style={styles.saveButtonText}>{s.saveButton}</Text>
+                  </Pressable>
+                </View>
+              </>
+            )}
           </Pressable>
         </Pressable>
       </Modal>
@@ -372,6 +381,8 @@ export function MembershipCard() {
 
 function makeStyles(c: ThemeColors) {
   return StyleSheet.create({
+    rowsWrap: { gap: 8 },
+    rowDivider: { height: StyleSheet.hairlineWidth, backgroundColor: c.line },
     row: { flexDirection: 'row', alignItems: 'center', gap: 10 },
     membershipBadge: { width: 32, height: 24, borderRadius: 6, borderWidth: 1.5, alignItems: 'center', justifyContent: 'center' },
     membershipBadgeIcon: { fontSize: 13 },
@@ -381,16 +392,11 @@ function makeStyles(c: ThemeColors) {
     expiredText: { color: c.coralDark, fontWeight: '700' },
     rewardsRow: { flexDirection: 'row', gap: 8 },
     rewardText: { fontSize: 12, fontWeight: '600', color: c.forestSoft },
-    notSetText: { fontSize: 13, fontWeight: '700', color: c.coral },
+    notSetText: { color: c.coral, fontWeight: '700' },
 
     modalBackdrop: { flex: 1, backgroundColor: 'rgba(0,0,0,0.4)', alignItems: 'center', justifyContent: 'center', padding: 24 },
     modalCard: { width: '100%', maxWidth: 340, maxHeight: '85%', backgroundColor: c.card, borderRadius: 18, padding: 16, gap: 10 },
     modalTitle: { fontSize: 15, fontWeight: '700', color: c.forest },
-    typeToggleRow: { flexDirection: 'row', gap: 8 },
-    typeOption: { flex: 1, paddingVertical: 10, borderRadius: 12, backgroundColor: c.surfaceSoft, borderWidth: 1, borderColor: c.line, alignItems: 'center', gap: 6 },
-    typeOptionActive: { backgroundColor: c.coral, borderColor: c.coral },
-    typeOptionText: { fontSize: 13, fontWeight: '700', color: c.forest },
-    typeOptionTextActive: { color: '#FFFFFF' },
     rewardsPreview: { backgroundColor: c.surfaceSoft, borderRadius: 12, padding: 10, gap: 2 },
     rewardsPreviewLabel: { fontSize: 10, fontWeight: '700', color: c.forestSoft, marginTop: 4 },
     rewardsPreviewValue: { fontSize: 13, fontWeight: '600', color: c.forest },
