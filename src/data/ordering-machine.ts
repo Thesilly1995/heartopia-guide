@@ -374,6 +374,20 @@ const ITEMS: OrderingMachineItem[] = [
   { slug: 'an-plush-fox-orange', name: 'Small Plush (Fox Orange)', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 2, currency: 'stars', currencyCost: 30 },
   { slug: 'an-plush-bear-brown', name: 'Small Plush (Bear Brown)', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 2, currency: 'stars', currencyCost: 30 },
   { slug: 'an-plush-bunny-cream', name: 'Small Plush (Bunny Cream)', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'an-sailor-cap-blue', name: 'Sailor Cap (Blue)', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'an-sailor-jacket-gray', name: 'Sailor Jacket (Gray)', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'an-sailor-skirt-navy', name: 'Sailor Skirt (Navy)', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+  { slug: 'an-outfit-shirt-yellow-floral', name: 'Floral Shirt (Yellow)', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+  { slug: 'an-outfit-shorts-yellow-floral', name: 'Floral Shorts (Yellow)', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+  { slug: 'an-outfit-vest-panda', name: 'Panda Vest', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+  { slug: 'an-outfit-beret-yellow', name: 'Beret (Yellow)', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+  { slug: 'an-outfit-top-pink-floral', name: 'Floral Top (Pink)', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+  { slug: 'an-outfit-skirt-yellow-pleated', name: 'Pleated Skirt (Yellow)', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+  { slug: 'an-outfit-bow-pink', name: 'Hair Bow (Pink)', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+  { slug: 'an-outfit-dress-pink-floral', name: 'Floral Dress (Pink)', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+  { slug: 'an-outfit-shorts-pink-floral', name: 'Floral Shorts (Pink)', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+  { slug: 'an-boots-yellow-rain', name: 'Rain Boots (Yellow)', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 1, currency: 'coins', currencyCost: 1600 },
+  { slug: 'an-boots-avocado', name: 'Avocado Print Boots', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 1, currency: 'coins', currencyCost: 1600 },
 ];
 
 export function useOrderingMachineItems(category: OrderingMachineCategory): OrderingMachineItem[] {
