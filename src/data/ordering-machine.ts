@@ -882,6 +882,14 @@ const ITEMS: OrderingMachineItem[] = [
   { slug: 'beach-souvenir-fire-hydrant', name: 'Fire Hydrant (Red)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 215 },
   { slug: 'beach-souvenir-alarm-clock', name: 'Retro Alarm Clock (Red)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'coins', currencyCost: 110 },
   { slug: 'beach-souvenir-arcade-machine', name: 'Arcade Claw Machine (Blue)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'coins', currencyCost: 110 },
+
+  // --- Fashion (Beach Utopia Season): Items ---
+  { slug: 'beach-tool-pickaxe', name: 'Pickaxe (Tool)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 80 },
+  { slug: 'beach-pinwheel-clothing', name: 'Pinwheel (Clothing)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 1, currency: 'hearts', currencyCost: 2 },
+  { slug: 'beach-tool-insect-net', name: 'Insect Net (Tool)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 80 },
+
+  // --- Fashion (Beach Utopia Season): Actions ---
+  { slug: 'beach-dance-pose-1', name: 'Dance Pose 1', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 1, currency: 'hearts', currencyCost: 10 },
   { slug: 'spring-souvenir-furn-kettle-standing', name: 'Standing Kettle (Red)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 3500 },
   { slug: 'spring-souvenir-furn-cooking-set', name: 'Espresso Machine Set', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 3500 },
   { slug: 'spring-souvenir-furn-wok', name: 'Waffle Maker (Red)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'stars', currencyCost: 30 },
