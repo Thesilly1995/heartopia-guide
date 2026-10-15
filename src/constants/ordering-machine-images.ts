@@ -250,6 +250,7 @@ export const ORDERING_MACHINE_IMAGE_MAP: Record<string, ImageSourcePropType> = {
   'camp-sign-wreath-oval': require('@/assets/images/ordering-machine/fashion/camp-sign-wreath-oval.png'),
   'camp-sleeping-bag': require('@/assets/images/ordering-machine/fashion/camp-sleeping-bag.png'),
   'camp-table-plant': require('@/assets/images/ordering-machine/fashion/camp-table-plant.png'),
+  'camp-table-supplies': require('@/assets/images/ordering-machine/fashion/camp-table-supplies.png'),
   'camp-tent-small': require('@/assets/images/ordering-machine/fashion/camp-tent-small.png'),
   'camp-tent-souvenir': require('@/assets/images/ordering-machine/fashion/camp-tent-souvenir.png'),
   'camp-workbench-tools': require('@/assets/images/ordering-machine/fashion/camp-workbench-tools.png'),
