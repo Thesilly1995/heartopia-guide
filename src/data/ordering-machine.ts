@@ -572,6 +572,16 @@ const ITEMS: OrderingMachineItem[] = [
   { slug: 'camp-pet-hood-bear-teal', name: 'Bear Hood (Teal)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
   { slug: 'camp-pet-hood-bear-green-leaves', name: 'Bear Hood (Green, Leaves)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
 
+  // Mountain Mist clothing sets
+  { slug: 'camp-mountain-mist-deep-forest-hood', name: 'Mountain Mist Hood (Deep Forest)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 65 },
+  { slug: 'camp-mountain-mist-deep-forest-top', name: 'Mountain Mist Top (Deep Forest)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 3, currency: 'hearts', currencyCost: 170 },
+  { slug: 'camp-mountain-mist-deep-forest-shoes', name: 'Mountain Mist Shoes (Deep Forest)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 65 },
+  { slug: 'camp-mountain-mist-lucid-shadow-hood', name: 'Mountain Mist Hood (Lucid Shadow)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 65 },
+  { slug: 'camp-mountain-mist-lucid-shadow-top', name: 'Mountain Mist Top (Lucid Shadow)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 3, currency: 'hearts', currencyCost: 170 },
+  { slug: 'camp-mountain-mist-lucid-shadow-backpack', name: 'Mountain Mist Backpack (Lucid Shadow)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 125 },
+  { slug: 'camp-face-1', name: 'Face (1)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 5 },
+  { slug: 'camp-face-2', name: 'Face (2)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 5 },
+
   // Wispwood Song
   { slug: 'wispwood-tree', name: 'Potted Tree', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 380 },
   { slug: 'wispwood-blanket-beige', name: 'Folded Blanket', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 25 },
