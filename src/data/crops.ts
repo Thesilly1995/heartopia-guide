@@ -51,6 +51,7 @@ const CROPS_RAW: CropRaw[] = [
   { nameNl: "Theeblad", nameEn: "Tea Leaf", nameEs: "Hoja de té", namePt: "Folhas de Chá", nameFr: "Feuille de thé", nameDe: "Teeblatt", rarityNl: "Legendarisch", rarityEn: "Legendary", growTimeNl: "45 min", growTimeEn: "45 min", growTimeEs: "45 min", growTimePt: "45 min", level: 11, rarityColorKey: "yellow", seedPrice: 25, emoji: "🍵", sellPriceByStar: [75,100,125,150,225] },
   { nameNl: "Cacao", nameEn: "Cocoa", nameEs: "Granos de cacao", namePt: "Grãos de Cacau", nameFr: "Cacao", nameDe: "Kakao", rarityNl: "Legendarisch", rarityEn: "Legendary", growTimeNl: "5 uur", growTimeEn: "5 hours", growTimeEs: "5 horas", growTimePt: "5 horas", level: 12, rarityColorKey: "yellow", seedPrice: 110, emoji: "🍫", sellPriceByStar: [330,442,551,660,990] },
   { nameNl: "Avocado", nameEn: "Avocado", nameEs: "Aguacate", namePt: "Abacate", nameFr: "Avocat", nameDe: "Avocado", rarityNl: "Legendarisch", rarityEn: "Legendary", growTimeNl: "13 uur", growTimeEn: "13 hours", growTimeEs: "13 horas", growTimePt: "13 horas", level: 13, rarityColorKey: "yellow", seedPrice: 180, emoji: "🥑", sellPriceByStar: [540,735,916,1098,1647] },
+  { nameNl: "Pompoen", nameEn: "Pumpkin", nameEs: "Calabaza", namePt: "Abóbora", nameFr: "Citrouille", nameDe: "Kürbis", rarityNl: "Gewoon", rarityEn: "Common", growTimeNl: "15 min", growTimeEn: "15 min", growTimeEs: "15 min", growTimePt: "15 min", level: 1, rarityColorKey: "forestSoft", seedPrice: 10, emoji: "🎃", sellPriceByStar: [30,40,50,60,90] },
 ];
 
 const GROW_TIME_BY_LANG = (r: CropRaw, language: Language) =>
