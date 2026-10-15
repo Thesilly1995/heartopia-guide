@@ -19,6 +19,7 @@ const GOLDEN_RIDGE = 'Ode to Golden Ridge';
 const NEW_ANIMAL_NEIGHBOURS = 'New Animal Neighbours';
 const UNDER_THE_GALAXY = 'Under the Galaxy';
 const YOUTHFULL_KINGDOM = 'Youthfull Kingdom';
+const SPRING_CAMPING_SEASON = 'Spring Camping Season';
 
 /** Bron: eigen screenshots van de Ordering Machine + fan-gemaakte prijzenlijst-infographic ("奇灵夜返场手册+全新价格"). */
 const ITEMS: OrderingMachineItem[] = [
@@ -554,6 +555,102 @@ const ITEMS: OrderingMachineItem[] = [
   { slug: 'dance-pose-kingdom-arms-cross', name: 'Dance Pose (Arms Cross)', category: 'fashion', catalog: YOUTHFULL_KINGDOM, ticketCost: 1, currency: 'coins', currencyCost: 18000 },
   { slug: 'dance-pose-kingdom-bow', name: 'Dance Pose (Bow)', category: 'fashion', catalog: YOUTHFULL_KINGDOM, ticketCost: 1, currency: 'coins', currencyCost: 18000 },
   { slug: 'dance-pose-kingdom-crouch', name: 'Dance Pose (Crouch)', category: 'fashion', catalog: YOUTHFULL_KINGDOM, ticketCost: 1, currency: 'coins', currencyCost: 18000 },
+
+  // --- Spring Camping Season ---
+  // Pet hoods (group 1, 50 hearts)
+  { slug: 'camp-pet-hood-bee-yellow', name: 'Bee Hood (Yellow)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 50 },
+  { slug: 'camp-pet-hood-bee-black', name: 'Bee Hood (Black & Yellow)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 50 },
+  { slug: 'camp-pet-hood-bear-brown-green', name: 'Bear Hood (Brown, Green Collar)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 50 },
+  { slug: 'camp-pet-hood-bear-orange-scarf', name: 'Bear Hood (Orange, Scarf)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 50 },
+  // Pet hoods (group 2, 30 stars)
+  { slug: 'camp-pet-hood-bee-pink', name: 'Bee Hood (Pink)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'camp-pet-hood-bunny-pink', name: 'Bunny Hood (Pink Stripes)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'camp-pet-hood-bear-pink-ears', name: 'Bear Hood (Pink, Ears)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'camp-pet-hood-bear-yellow-wings', name: 'Bear Hood (Yellow, Wings)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'camp-pet-hood-bear-brown-open', name: 'Bear Hood (Brown, Open Mouth)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'camp-pet-hood-bee-white', name: 'Bee Hood (White)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'camp-pet-hood-bear-teal', name: 'Bear Hood (Teal)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'camp-pet-hood-bear-green-leaves', name: 'Bear Hood (Green, Leaves)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+
+  // Wispwood Song
+  { slug: 'wispwood-tree', name: 'Potted Tree', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 380 },
+  { slug: 'wispwood-blanket-beige', name: 'Folded Blanket', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 25 },
+  { slug: 'wispwood-fern', name: 'Potted Fern', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'wispwood-towel-rod', name: 'Towel on Rod', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'wispwood-fence-gate', name: 'Fence Gate', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'wispwood-tent', name: 'Canvas Tent', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'wispwood-ladder-frame', name: 'Wooden Ladder Frame', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 25 },
+  { slug: 'wispwood-basin-stand', name: 'Wash Basin Stand', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'wispwood-curtain', name: 'Cream Curtain', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 55 },
+  { slug: 'wispwood-mattress-pad', name: 'Cream Mattress Pad', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'wispwood-rock-flat', name: 'Flat Gray Rock', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 45 },
+  { slug: 'wispwood-rock-curved', name: 'Curved Gray Rock', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 45 },
+  { slug: 'wispwood-rocks-small', name: 'Small Rock Cluster', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'wispwood-rocks-pile', name: 'Rock Pile', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'wispwood-fence-rail', name: 'Wooden Fence (Rail)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 10 },
+  { slug: 'wispwood-steps-double', name: 'Wooden Steps (Double Rail)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'wispwood-fence-single', name: 'Wooden Fence (Single)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 10 },
+  { slug: 'wispwood-ladder-diagonal', name: 'Diagonal Wooden Ladder', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'wispwood-mat-rolled', name: 'Rolled Cream Mat', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 25 },
+  { slug: 'wispwood-reeds', name: 'Reeds / Cattails', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'wispwood-pole', name: 'Wooden Pole', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 30 },
+
+  // Wilderness Camping
+  { slug: 'camp-bunting-flags', name: 'String of Bunting Flags', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'camp-lamp-post', name: 'Camping Lamp Post', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'camp-chair-beige', name: 'Folding Camp Chair (Beige)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'camp-chair-brown', name: 'Folding Camp Chair (Brown)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 10 },
+  { slug: 'camp-crate', name: 'Wooden Crate', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 5 },
+  { slug: 'camp-cart', name: 'Camping Cart', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 5 },
+  { slug: 'camp-table-plant', name: 'Small Table with Plant', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 5 },
+  { slug: 'camp-table-supplies', name: 'Folding Table with Supplies', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 5 },
+  { slug: 'camp-cooler-box', name: 'Cooler Box', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 5 },
+  { slug: 'camp-workbench-tools', name: 'Workbench with Tools', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 5 },
+  { slug: 'camp-sleeping-bag', name: 'Rolled Sleeping Bag', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 5 },
+  { slug: 'camp-map-board', name: 'Map Board', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 5 },
+
+  // Other Souvenirs
+  { slug: 'camp-tent-souvenir', name: 'Camping Tent', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 60 },
+  { slug: 'camp-picture-frame-forest', name: 'Forest Picture Frame', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 70 },
+  { slug: 'camp-easel-wheeled', name: 'Wheeled Easel Frame', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 70 },
+  { slug: 'camp-sign-wreath-oval', name: 'Oval Wreath Sign', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 70 },
+  { slug: 'camp-cabinet-gnome', name: 'Wooden Cabinet (Gnome)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 70 },
+
+  // Animal hoods (4000 coins)
+  { slug: 'camp-pet-hood-pink', name: 'Animal Hood (Pink)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+  { slug: 'camp-pet-hood-black', name: 'Animal Hood (Black)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+  { slug: 'camp-pet-hood-brown', name: 'Animal Hood (Brown)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+  { slug: 'camp-pet-hood-tan', name: 'Animal Hood (Tan)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+  { slug: 'camp-pet-hood-cream', name: 'Animal Hood (Cream)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+  { slug: 'camp-pet-hood-blue', name: 'Animal Hood (Blue)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+  { slug: 'camp-pet-hood-red', name: 'Animal Hood (Red)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+  { slug: 'camp-pet-hood-camo', name: 'Animal Hood (Camo)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+
+  // Flower wreaths
+  { slug: 'camp-wreath-green', name: 'Flower Wreath (Green)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'camp-wreath-pink', name: 'Flower Wreath (Pink)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'camp-wreath-orange', name: 'Flower Wreath (Orange)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'camp-wreath-blue', name: 'Flower Wreath (Blue)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+
+  // Party cones + small tent
+  { slug: 'camp-cone-green-dots', name: 'Party Cone (Green Dots)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 20 },
+  { slug: 'camp-cone-cream-leaves', name: 'Party Cone (Cream, Leaves)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 20 },
+  { slug: 'camp-cone-cream-orange', name: 'Party Cone (Cream, Orange)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 20 },
+  { slug: 'camp-cone-blue-plain', name: 'Party Cone (Blue)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 20 },
+  { slug: 'camp-cone-blue-dots', name: 'Party Cone (Blue Dots)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 20 },
+  { slug: 'camp-cone-orange-swirl', name: 'Party Cone (Orange Swirl)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 20 },
+  { slug: 'camp-cone-orange-dots', name: 'Party Cone (Orange Dots)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 20 },
+  { slug: 'camp-cone-green-plain', name: 'Party Cone (Green)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 20 },
+  { slug: 'camp-tent-small', name: 'Small Tent', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 20 },
+
+  // Items + Actions
+  { slug: 'camp-fishing-rod', name: 'Fishing Rod', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 155 },
+  { slug: 'camp-flower-bundle', name: 'Flower Bundle', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 65 },
+  { slug: 'camp-dance-pose-1', name: 'Dance Pose 1', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 1, currency: 'hearts', currencyCost: 10 },
+  { slug: 'camp-dance-pose-2', name: 'Dance Pose 2', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 1, currency: 'coins', currencyCost: 18000 },
+  { slug: 'camp-dance-pose-3', name: 'Dance Pose 3', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 1, currency: 'coins', currencyCost: 18000 },
+  { slug: 'camp-dance-pose-4', name: 'Dance Pose 4', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 1, currency: 'coins', currencyCost: 18000 },
+  { slug: 'camp-dance-pose-5', name: 'Dance Pose 5', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 1, currency: 'coins', currencyCost: 18000 },
 ];
 
 export function useOrderingMachineItems(category: OrderingMachineCategory): OrderingMachineItem[] {
