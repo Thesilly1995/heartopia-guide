@@ -20,6 +20,7 @@ const NEW_ANIMAL_NEIGHBOURS = 'New Animal Neighbours';
 const UNDER_THE_GALAXY = 'Under the Galaxy';
 const YOUTHFULL_KINGDOM = 'Youthfull Kingdom';
 const SPRING_CAMPING_SEASON = 'Spring Camping Season';
+const SPRING_FESTIVAL = 'Spring Festival';
 
 /** Bron: eigen screenshots van de Ordering Machine + fan-gemaakte prijzenlijst-infographic ("奇灵夜返场手册+全新价格"). */
 const ITEMS: OrderingMachineItem[] = [
@@ -662,6 +663,106 @@ const ITEMS: OrderingMachineItem[] = [
   { slug: 'camp-dance-pose-3', name: 'Dance Pose 3', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 1, currency: 'coins', currencyCost: 18000 },
   { slug: 'camp-dance-pose-4', name: 'Dance Pose 4', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 1, currency: 'coins', currencyCost: 18000 },
   { slug: 'camp-dance-pose-5', name: 'Dance Pose 5', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 1, currency: 'coins', currencyCost: 18000 },
+
+  // --- Fashion (Spring Festival): Spring Swallow (Cloud Wing) ---
+  { slug: 'spring-swallow-cloud-wing-top', name: 'Spring Swallow Jacket (Cloud Wing)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 3, currency: 'hearts', currencyCost: 95 },
+  { slug: 'spring-swallow-cloud-wing-pants', name: 'Spring Swallow Pants (Cloud Wing)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 65 },
+  { slug: 'spring-swallow-cloud-wing-shoes', name: 'Spring Swallow Shoes (Cloud Wing)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 65 },
+
+  // --- Fashion (Spring Festival): Spring Swallow (Flower Kite) ---
+  { slug: 'spring-swallow-flower-kite-headdress', name: 'Spring Swallow Headdress (Flower Kite)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 3, currency: 'hearts', currencyCost: 95 },
+  { slug: 'spring-swallow-flower-kite-boots', name: 'Spring Swallow Boots (Flower Kite)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 65 },
+  { slug: 'spring-swallow-flower-kite-robe', name: 'Spring Swallow Robe (Flower Kite)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 170 },
+
+  // --- Fashion (Spring Festival): Other Souvenirs (face paint) ---
+  { slug: 'spring-festival-face-1', name: 'Face Paint (Orange Cheeks)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 5 },
+  { slug: 'spring-festival-face-2', name: 'Face Paint (Pink Pattern)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 5 },
+
+  // --- Fashion (Spring Festival): Pet ---
+  { slug: 'spring-festival-pet-hat-red', name: 'Mouse Ear Hat (Red)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'stars', currencyCost: 75 },
+  { slug: 'spring-festival-pet-hat-pink', name: 'Mouse Ear Hat (Pink)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'stars', currencyCost: 75 },
+  { slug: 'spring-festival-fruit-orange-1', name: 'Persimmon Decoration (Orange)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'stars', currencyCost: 50 },
+  { slug: 'spring-festival-fruit-orange-2', name: 'Persimmon Decoration (Orange, Leaf)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'stars', currencyCost: 50 },
+  { slug: 'spring-festival-fruit-green', name: 'Persimmon Decoration (Green)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'stars', currencyCost: 50 },
+
+  // --- Fashion (Spring Festival): Other Souvenirs (clothing, coins) ---
+  { slug: 'spring-souvenir-hat-red', name: 'Festival Cap (Red)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 3500 },
+  { slug: 'spring-souvenir-hat-gold', name: 'Festival Cap (Gold Emblem)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 3500 },
+  { slug: 'spring-souvenir-hat-gray', name: 'Festival Cap (Gray)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 3500 },
+  { slug: 'spring-souvenir-hat-cream', name: 'Festival Cap (Cream)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 3500 },
+  { slug: 'spring-souvenir-robe-gray', name: 'Festival Robe (Gray)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 3500 },
+  { slug: 'spring-souvenir-skirt-red', name: 'Festival Skirt (Red)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 3500 },
+  { slug: 'spring-souvenir-skirt-cream', name: 'Festival Skirt (Cream)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 3500 },
+  { slug: 'spring-souvenir-skirt-white', name: 'Festival Skirt (White Pattern)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 3500 },
+  { slug: 'spring-souvenir-socks-1', name: 'Festival Socks (Striped)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 3500 },
+  { slug: 'spring-souvenir-socks-2', name: 'Festival Socks (Red)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 3500 },
+  { slug: 'spring-souvenir-shoes-1', name: 'Festival Shoes (Pattern 1)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 3500 },
+  { slug: 'spring-souvenir-shoes-2', name: 'Festival Shoes (Pattern 2)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 3500 },
+  { slug: 'spring-souvenir-shoes-3', name: 'Festival Shoes (Pattern 3)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 3500 },
+  { slug: 'spring-souvenir-shoes-4', name: 'Festival Shoes (Teal/White)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 3500 },
+  { slug: 'spring-souvenir-sandals-1', name: 'Festival Sandals (Pattern 1)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 3500 },
+  { slug: 'spring-souvenir-sandals-2', name: 'Festival Sandals (Pattern 2)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 3500 },
+  { slug: 'spring-souvenir-sandals-3', name: 'Festival Sandals (Pattern 3)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 3500 },
+
+  { slug: 'spring-souvenir-shirt-red-logo', name: 'Festival T-Shirt (Red, Logo)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+  { slug: 'spring-souvenir-shirt-white', name: 'Festival T-Shirt (White)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+  { slug: 'spring-souvenir-shirt-gray-patch', name: 'Festival T-Shirt (Gray, Patch)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+  { slug: 'spring-souvenir-shirt-white-red', name: 'Festival T-Shirt (White, Red Sleeve)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+  { slug: 'spring-souvenir-jacket-red', name: 'Festival Jacket (Red)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+  { slug: 'spring-souvenir-jacket-white-red', name: 'Festival Jacket (White/Red)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+  { slug: 'spring-souvenir-jacket-gray-patch', name: 'Festival Jacket (Gray, Patch)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+  { slug: 'spring-souvenir-jacket-maroon', name: 'Festival Jacket (Maroon)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+
+  { slug: 'spring-souvenir-dress-red', name: 'Festival Dress (Red)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 6300 },
+  { slug: 'spring-souvenir-bag-navy', name: 'Festival Bag (Navy)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 8000 },
+  { slug: 'spring-souvenir-bag-red', name: 'Festival Bag (Red)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 8000 },
+
+  // --- Fashion (Spring Festival): Spring Festival Furniture ---
+  { slug: 'spring-furniture-kettle', name: 'Patterned Kettle', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'stars', currencyCost: 10 },
+  { slug: 'spring-furniture-teapot-set', name: 'Teapot Set', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'stars', currencyCost: 10 },
+  { slug: 'spring-furniture-vase-flowers', name: 'Flower Vase', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'stars', currencyCost: 10 },
+  { slug: 'spring-furniture-plate-round', name: 'Round Patterned Rug', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'stars', currencyCost: 10 },
+  { slug: 'spring-furniture-chair', name: 'Festival Chair', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'stars', currencyCost: 10 },
+  { slug: 'spring-furniture-side-table', name: 'Festival Side Table', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'stars', currencyCost: 10 },
+  { slug: 'spring-furniture-lantern-hanging', name: 'Hanging Red Lantern', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'stars', currencyCost: 10 },
+  { slug: 'spring-furniture-screen', name: 'Folding Screen (Red)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'spring-furniture-round-table', name: 'Round Red Table', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'spring-furniture-cabinet-glass', name: 'Wooden Display Cabinet', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+
+  // --- Fashion (Spring Festival): Radiant Fortune ---
+  { slug: 'radiant-fortune-tile-red', name: 'Wall Panel (Red Pattern)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'radiant-fortune-tile-wood', name: 'Wall Panel (Light Wood)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'radiant-fortune-tile-stone', name: 'Wall Panel (Gray Stone)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'radiant-fortune-tile-door', name: 'Wall Panel (Red Door)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+
+  { slug: 'radiant-fortune-fence-left', name: 'Diagonal Fence (Left)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 10 },
+  { slug: 'radiant-fortune-fence-right', name: 'Diagonal Fence (Right)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 10 },
+
+  { slug: 'radiant-fortune-pillar', name: 'Red Pillar', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 30 },
+  { slug: 'radiant-fortune-lamp-post', name: 'Lantern Post', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 30 },
+  { slug: 'radiant-fortune-doors', name: 'Red Double Doors', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 30 },
+  { slug: 'radiant-fortune-railing', name: 'Red Fence Railing', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 30 },
+  { slug: 'radiant-fortune-roof-tile', name: 'Black Roof Tile', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 30 },
+  { slug: 'radiant-fortune-bonsai', name: 'Bonsai Tree', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 30 },
+  { slug: 'radiant-fortune-bush', name: 'Flowering Bush (Red)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 30 },
+  { slug: 'radiant-fortune-bench', name: 'Red Bench Railing', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 30 },
+  { slug: 'radiant-fortune-mat', name: 'Red Woven Daybed', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 30 },
+  { slug: 'radiant-fortune-screen-mat', name: 'Red Bamboo Screen', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 30 },
+  { slug: 'radiant-fortune-table', name: 'Round Red Table (Small)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 30 },
+  { slug: 'radiant-fortune-lamp-single', name: 'Ornate Lamp Post', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 30 },
+  { slug: 'radiant-fortune-lamp-pair', name: 'Lamp Post Pair', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 30 },
+
+  // --- Fashion (Spring Festival): Spring Festival Market (Ruyi) ---
+  { slug: 'spring-market-table-bench', name: 'Round Table with Bench', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 80 },
+  { slug: 'spring-market-gate', name: 'Festival Gate', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 100 },
+  { slug: 'spring-market-flower-stand', name: 'Flower Arrangement Stand', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 100 },
+  { slug: 'spring-market-banner', name: 'Hanging Red Banner', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 100 },
+  { slug: 'spring-market-lantern-string', name: 'String of Red Lanterns', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 100 },
+  { slug: 'spring-market-rug-round', name: 'Round Market Rug', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 130 },
+  { slug: 'spring-market-gate-small', name: 'Small Shrine Gate', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 130 },
+  { slug: 'spring-market-food-cart', name: 'Festival Food Cart', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 130 },
+  { slug: 'spring-market-stall-canopy', name: 'Market Stall Canopy', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 130 },
+  { slug: 'spring-market-fox-cart', name: 'Fox Cart (Ruyi)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 3, currency: 'hearts', currencyCost: 130 },
 ];
 
 export function useOrderingMachineItems(category: OrderingMachineCategory): OrderingMachineItem[] {
