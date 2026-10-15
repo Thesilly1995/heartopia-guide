@@ -131,7 +131,7 @@ export default function OrderingMachineScreen() {
           {catalogs.length === 0 && <Text style={styles.emptyText}>{s.emptyCategory}</Text>}
           {catalogs.map((catalog) => {
             const catalogItems = items.filter((item) => item.catalog === catalog);
-            const isOpen = expanded[catalog] ?? true;
+            const isOpen = expanded[catalog] ?? false;
             return (
               <View key={catalog} style={styles.catalogSection}>
                 <Pressable
