@@ -560,16 +560,16 @@ const ITEMS: OrderingMachineItem[] = [
   // Pet hoods (group 1, 50 hearts)
   { slug: 'camp-pet-hood-bee-yellow', name: 'Bee Hood (Yellow)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 50 },
   { slug: 'camp-pet-hood-bee-black', name: 'Bee Hood (Black & Yellow)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 50 },
-  { slug: 'camp-pet-hood-bear-brown-green', name: 'Bear Hood (Brown, Green Collar)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 50 },
-  { slug: 'camp-pet-hood-bear-orange-scarf', name: 'Bear Hood (Orange, Scarf)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 50 },
+  { slug: 'camp-pet-hood-bear-brown-green', name: 'Bear Hood (Brown, Teal Cap)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 50 },
+  { slug: 'camp-pet-hood-bear-orange-back', name: 'Bear Hood (Orange, Back View)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 50 },
   // Pet hoods (group 2, 30 stars)
   { slug: 'camp-pet-hood-bee-pink', name: 'Bee Hood (Pink)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
   { slug: 'camp-pet-hood-bunny-pink', name: 'Bunny Hood (Pink Stripes)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
-  { slug: 'camp-pet-hood-bear-pink-ears', name: 'Bear Hood (Pink, Ears)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
-  { slug: 'camp-pet-hood-bear-yellow-wings', name: 'Bear Hood (Yellow, Wings)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'camp-pet-hood-bear-pink', name: 'Bear Hood (Pink)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'camp-pet-hood-bear-pink-yellow-back', name: 'Bear Hood (Pink/Yellow, Back View)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
   { slug: 'camp-pet-hood-bear-brown-open', name: 'Bear Hood (Brown, Open Mouth)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
-  { slug: 'camp-pet-hood-bee-white', name: 'Bee Hood (White)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
-  { slug: 'camp-pet-hood-bear-teal', name: 'Bear Hood (Teal)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'camp-pet-hood-bee-yellow-black', name: 'Bee Hood (Yellow & Black)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'camp-pet-hood-bear-cream-green-cap', name: 'Bear Hood (Cream, Green Cap)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
   { slug: 'camp-pet-hood-bear-green-leaves', name: 'Bear Hood (Green, Leaves)', category: 'fashion', catalog: SPRING_CAMPING_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 30 },
 
   // Mountain Mist clothing sets
