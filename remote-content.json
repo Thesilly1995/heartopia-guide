@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-14T22:34:05Z",
+  "updatedAt": "2026-10-15T01:13:21Z",
   "dailyPlotsCalendar": [
     {"date": "2026-08-09", "oakPlotNl": "Plot 6", "oakPlotEn": "Plot 6", "fluoritePlotNl": "Plot 11", "fluoritePlotEn": "Plot 11", "oakPlotEs": "Parcela 6", "oakPlotPt": "Lote 6", "fluoritePlotEs": "Parcela 11", "fluoritePlotPt": "Lote 11"},
     {"date": "2026-08-10", "oakPlotNl": "Plot 2", "oakPlotEn": "Plot 2", "fluoritePlotNl": "Plot 7", "fluoritePlotEn": "Plot 7", "oakPlotEs": "Parcela 2", "oakPlotPt": "Lote 2", "fluoritePlotEs": "Parcela 7", "fluoritePlotPt": "Lote 7"},
@@ -191,11 +191,13 @@
       "datesNl": "25 sep – 12 okt 2026", "datesEn": "Sep 25 – Oct 12, 2026",
       "recipes": [
         {"nameNl": "Maankoek", "nameEn": "Mooncake", "ingredientsNl": ["Tarwe ×2", "Ei ×2"], "ingredientsEn": ["Wheat x2", "Egg x2"], "emoji": "🥮"},
-        {"nameNl": "Custard Lava Maankoek", "nameEn": "Custard Lava Mooncake", "ingredientsNl": ["Maankoek ×3", "Melk"], "ingredientsEn": ["Mooncake x3", "Milk"], "emoji": "🥮"},
+        {"nameNl": "Grote Maankoek", "nameEn": "Large Moon Cake", "ingredientsNl": ["Maankoek ×3", "Melk"], "ingredientsEn": ["Mooncake x3", "Milk"], "emoji": "🥮"},
         {"nameNl": "Chocolade Maankoek", "nameEn": "Chocolate Mooncake", "ingredientsNl": ["Tarwe ×2", "Ei", "Cacao"], "ingredientsEn": ["Wheat x2", "Egg", "Cocoa"], "emoji": "🥮"},
         {"nameNl": "Grote Chocolade Maankoek", "nameEn": "Large Chocolate Mooncake", "ingredientsNl": ["Chocolade Maankoek ×3", "Melk"], "ingredientsEn": ["Chocolate Mooncake x3", "Milk"], "emoji": "🥮"},
         {"nameNl": "IJshuid-Maankoek (Konijntje)", "nameEn": "Bunny Ice-Skin Mooncake", "ingredientsNl": ["Rijstmeelzak ×2", "Melk", "Rode Bonenpasta"], "ingredientsEn": ["Rice Flour Bag x2", "Milk", "Red Bean Paste"], "emoji": "🥮"},
-        {"nameNl": "Grote IJshuid-Maankoek (Konijntje)", "nameEn": "Large Bunny Ice-Skin Mooncake", "ingredientsNl": ["IJshuid-Maankoek (Konijntje) ×4"], "ingredientsEn": ["Bunny Ice-Skin Mooncake x4"], "emoji": "🥮"}
+        {"nameNl": "Grote IJshuid-Maankoek (Konijntje)", "nameEn": "Large Bunny Ice-Skin Mooncake", "ingredientsNl": ["IJshuid-Maankoek (Konijntje) ×4"], "ingredientsEn": ["Bunny Ice-Skin Mooncake x4"], "emoji": "🥮"},
+        {"nameNl": "Maankonijn Lava-Maancake", "nameEn": "Moon Rabbit Lava Mooncake", "ingredientsNl": ["Rijstmeel ×2", "Gepasteuriseerd Ei", "Osmanthusjam"], "ingredientsEn": ["Rice Flour x2", "Pasteurized Egg", "Osmanthus Jam"], "emoji": "🥮"},
+        {"nameNl": "Geroosterde Osmanthus-Melkthee", "nameEn": "Osmanthus Roasted Milk Tea", "ingredientsNl": ["Theeblad", "Melk ×2", "Osmanthusjam"], "ingredientsEn": ["Tea Leaf", "Milk x2", "Osmanthus Jam"], "emoji": "🍵"}
       ]
     },
     {
