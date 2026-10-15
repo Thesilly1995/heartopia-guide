@@ -21,6 +21,7 @@ const UNDER_THE_GALAXY = 'Under the Galaxy';
 const YOUTHFULL_KINGDOM = 'Youthfull Kingdom';
 const SPRING_CAMPING_SEASON = 'Spring Camping Season';
 const SPRING_FESTIVAL = 'Spring Festival';
+const BEACH_UTOPIA_SEASON = 'Beach Utopia Season';
 
 /** Bron: eigen screenshots van de Ordering Machine + fan-gemaakte prijzenlijst-infographic ("奇灵夜返场手册+全新价格"). */
 const ITEMS: OrderingMachineItem[] = [
@@ -798,6 +799,89 @@ const ITEMS: OrderingMachineItem[] = [
   { slug: 'spring-souvenir-furn-lantern-standing', name: 'Portable Lantern (Red, Ring Handle)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 1200 },
   { slug: 'spring-souvenir-furn-lantern-pair', name: 'Standing Lanterns (Orange, Pair)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 1800 },
   { slug: 'spring-souvenir-furn-toaster', name: 'Toaster (Red)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 2400 },
+
+  // --- Fashion (Beach Utopia Season): Yellow Duck Set ---
+  { slug: 'beach-duck-earrings', name: 'Duck Earrings', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 65 },
+  { slug: 'beach-duck-bracelet-rattle', name: 'Duck Rattle Bracelet', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 45 },
+  { slug: 'beach-duck-boots', name: 'Duck Boots (Yellow)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 65 },
+  { slug: 'beach-duck-dress', name: 'Duck Princess Dress (Yellow)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 3, currency: 'hearts', currencyCost: 170 },
+  { slug: 'beach-duck-overalls', name: 'Duck Overalls (Yellow)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 3, currency: 'hearts', currencyCost: 170 },
+  { slug: 'beach-duck-pacifier-necklace', name: 'Duck Pacifier Necklace', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 125 },
+
+  // --- Fashion (Beach Utopia Season): Other Souvenirs (face paint) ---
+  { slug: 'beach-face-1', name: 'Face Paint (Beach Pattern 1)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 5 },
+  { slug: 'beach-face-2', name: 'Face Paint (Beach Pattern 2)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 5 },
+
+  // --- Fashion (Beach Utopia Season): Bouncy Castle ---
+  { slug: 'bouncy-wall-block-1', name: 'Yellow Brick Wall Panel', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 25 },
+  { slug: 'bouncy-wall-block-2', name: 'Yellow Brick Wall Panel (Variant)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 25 },
+  { slug: 'bouncy-ring-orange', name: 'Orange Ring Tube', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 30 },
+  { slug: 'bouncy-oval-frame', name: 'Yellow Oval Arch Frame', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 30 },
+  { slug: 'bouncy-slide', name: 'Yellow Slide', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 5 },
+  { slug: 'bouncy-ladder-zigzag-1', name: 'Yellow Zigzag Ladder', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 5 },
+  { slug: 'bouncy-plank', name: 'Yellow Plank', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 30 },
+  { slug: 'bouncy-ladder-zigzag-2', name: 'Yellow Zigzag Ladder (Angled)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 10 },
+  { slug: 'bouncy-wedge', name: 'Yellow Striped Wedge', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 10 },
+  { slug: 'bouncy-steps-small', name: 'Yellow Small Steps', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 30 },
+  { slug: 'bouncy-arch-door', name: 'Yellow Arch Doorway', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 30 },
+  { slug: 'bouncy-oval-ring-flat', name: 'Yellow Oval Ring (Flat)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 30 },
+  { slug: 'bouncy-square-frame', name: 'Yellow Square Frame', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 30 },
+  { slug: 'bouncy-pillar-solid', name: 'Yellow Solid Pillar', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 30 },
+  { slug: 'bouncy-mat-roll-cream', name: 'Cream Rolled Mat', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 30 },
+  { slug: 'bouncy-beads-chain', name: 'Yellow Bead Chain Decoration', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 55 },
+  { slug: 'bouncy-log-roll', name: 'Yellow Rolled Log', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 30 },
+  { slug: 'bouncy-panel-striped', name: 'Cream Striped Panel', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 30 },
+  { slug: 'bouncy-arch-small', name: 'Yellow Small Archway', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 55 },
+  { slug: 'bouncy-crenellation', name: 'Yellow Castle Crenellation', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 55 },
+  { slug: 'bouncy-bed-frame', name: 'Yellow Castle Bed Frame', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 30 },
+  { slug: 'bouncy-block-solid', name: 'Yellow Solid Block', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 30 },
+  { slug: 'bouncy-pillar-post', name: 'Yellow Post', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 10 },
+  { slug: 'bouncy-bar-flat', name: 'Yellow Flat Bar', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 10 },
+  { slug: 'bouncy-flag-pole', name: 'Yellow Flag on Pole', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 10 },
+
+  // --- Fashion (Beach Utopia Season): Ducky Castle ---
+  { slug: 'ducky-chair', name: 'Ducky Chair (Yellow)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 100 },
+  { slug: 'ducky-bench-cushions', name: 'Bench with Duck Cushions', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 110 },
+  { slug: 'ducky-table-bench', name: 'Wooden Bench/Table (Yellow)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 100 },
+  { slug: 'ducky-flower-pot', name: 'Potted Flower (Yellow)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 110 },
+  { slug: 'ducky-retro-tv', name: 'Retro TV Set (Cream)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 120 },
+  { slug: 'ducky-picnic-basket', name: 'Picnic Basket (Duck Motif)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 90 },
+  { slug: 'ducky-lollipop-stand', name: 'Lollipop Stand', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 130 },
+  { slug: 'ducky-stool', name: 'Round Stool (Wood)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 60 },
+  { slug: 'ducky-moon-plush', name: 'Sleeping Duck Moon Plush', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 70 },
+  { slug: 'ducky-ring-stack', name: 'Ring Stack Toy (Yellow)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 70 },
+  { slug: 'ducky-balloon-animal', name: 'Balloon Animal (Yellow)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 70 },
+
+  // --- Fashion (Beach Utopia Season): Summerday Minimalist Set ---
+  { slug: 'summerday-armchair-blue', name: 'Blue Armchair (Yellow Pillow)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 10 },
+  { slug: 'summerday-nesting-tables', name: 'Nesting Side Tables (White)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 10 },
+  { slug: 'summerday-basket-chair', name: 'Basket Chair (Blue Cushion)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 10 },
+  { slug: 'summerday-lantern-single', name: 'White Standing Lantern', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 10 },
+  { slug: 'summerday-lantern-pair', name: 'White Lantern Pair', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 10 },
+  { slug: 'summerday-chaise-lounge', name: 'Chaise Lounge (Blue, Yellow Pillow)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 10 },
+  { slug: 'summerday-chaise-duck', name: 'Duck-Shaped Daybed (Blue)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 10 },
+  { slug: 'summerday-armchair-duck-1', name: 'Blue Armchair (Duck Pillow)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 10 },
+  { slug: 'summerday-armchair-duck-2', name: 'Blue Round Armchair (Duck Pillow)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 10 },
+  { slug: 'summerday-light-string', name: 'Lemon Light String', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 10 },
+  { slug: 'summerday-bunting', name: 'Pastel Bunting Flags (Lemon Pattern)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 35 },
+  { slug: 'summerday-umbrella', name: 'Beach Umbrella (Yellow)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 35 },
+
+  // --- Fashion (Beach Utopia Season): Other Souvenirs (furniture) ---
+  { slug: 'beach-souvenir-palm-tree', name: 'Palm Tree', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 380 },
+  { slug: 'beach-souvenir-block-tower', name: 'Yellow Block Tower', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'coins', currencyCost: 25 },
+  { slug: 'beach-souvenir-book', name: 'Beach Novel (Blue)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'coins', currencyCost: 55 },
+  { slug: 'beach-souvenir-frame-tan', name: 'Picture Frame (Tan)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 70 },
+  { slug: 'beach-souvenir-frame-pink', name: 'Picture Frame (Pink)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 70 },
+  { slug: 'beach-souvenir-blocks-vertical', name: 'Yellow Stacked Blocks (Vertical)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 25 },
+  { slug: 'beach-souvenir-mat-yellow-1', name: 'Yellow Solid Mat', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 10 },
+  { slug: 'beach-souvenir-mat-yellow-2', name: 'Yellow Solid Mat (Variant)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'stars', currencyCost: 10 },
+  { slug: 'beach-souvenir-lifeguard-statue', name: 'Lifeguard Statuette', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 35 },
+  { slug: 'beach-souvenir-float-banana', name: 'Banana Pool Float', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'coins', currencyCost: 20 },
+  { slug: 'beach-souvenir-float-duck-hat', name: 'Duck Pool Float (Sailor Hat)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'coins', currencyCost: 70 },
+  { slug: 'beach-souvenir-float-duck-plain', name: 'Duck Pool Float (Plain)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'coins', currencyCost: 20 },
+  { slug: 'beach-souvenir-fire-hydrant', name: 'Fire Hydrant (Red)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'hearts', currencyCost: 215 },
+  { slug: 'beach-souvenir-alarm-clock', name: 'Retro Alarm Clock (Red)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'coins', currencyCost: 110 },
+  { slug: 'beach-souvenir-arcade-machine', name: 'Arcade Claw Machine (Blue)', category: 'fashion', catalog: BEACH_UTOPIA_SEASON, ticketCost: 2, currency: 'coins', currencyCost: 110 },
   { slug: 'spring-souvenir-furn-kettle-standing', name: 'Standing Kettle (Red)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 3500 },
   { slug: 'spring-souvenir-furn-cooking-set', name: 'Espresso Machine Set', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 3500 },
   { slug: 'spring-souvenir-furn-wok', name: 'Waffle Maker (Red)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'stars', currencyCost: 30 },
