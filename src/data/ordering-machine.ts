@@ -787,7 +787,6 @@ const ITEMS: OrderingMachineItem[] = [
 
   // --- Fashion (Spring Festival): Other Souvenirs (furniture, batch 3) ---
   { slug: 'spring-souvenir-furn-grill', name: 'Low Table with Drawers (Red)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
-  { slug: 'spring-souvenir-furn-lion-dance', name: 'Lion Dance Costume Stand', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 1800 },
   { slug: 'spring-souvenir-furn-lantern-standing', name: 'Portable Lantern (Red, Ring Handle)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 1200 },
   { slug: 'spring-souvenir-furn-lantern-pair', name: 'Standing Lanterns (Orange, Pair)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 1800 },
   { slug: 'spring-souvenir-furn-toaster', name: 'Toaster (Red)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 2400 },
