@@ -906,12 +906,8 @@ const ITEMS: OrderingMachineItem[] = [
   { slug: 'spring-souvenir-furn-knot-purple', name: 'Chinese Knot Ornament (Purple)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'stars', currencyCost: 30 },
   { slug: 'spring-souvenir-furn-knot-pink', name: 'Chinese Knot Ornament (Pink)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'stars', currencyCost: 30 },
   { slug: 'spring-souvenir-furn-knot-orange', name: 'Chinese Knot Ornament (Orange)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'stars', currencyCost: 30 },
-  { slug: 'spring-souvenir-furn-fu-1', name: 'Fu Decoration (Pot & Sprout)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 5000 },
   { slug: 'spring-souvenir-furn-fu-2', name: 'Fu Decoration (Pot & Sprout, Small)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 5000 },
-  { slug: 'spring-souvenir-furn-fu-3', name: 'Fu Decoration (Pot & Sprout, Mini)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 5000 },
-  { slug: 'spring-souvenir-furn-fu-4', name: 'Fu Decoration (Gingerbread Couple)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 5000 },
   { slug: 'spring-souvenir-furn-fu-5', name: 'Fu Decoration (Gingerbread Couple, Large)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 5000 },
-  { slug: 'spring-souvenir-furn-fu-6', name: 'Fu Decoration (Gingerbread Couple, Small)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 5000 },
   { slug: 'spring-souvenir-furn-tree-stump', name: 'Tree Stump Stool (Red Cloth)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 3500 },
 
   // --- Fashion (Spring Festival): Items ---
@@ -924,7 +920,6 @@ const ITEMS: OrderingMachineItem[] = [
   { slug: 'spring-festival-bamboo-charm', name: 'Bamboo Charm (Green)', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 40 },
 
   // --- Fashion (Spring Festival): Actions ---
-  { slug: 'spring-festival-dance-pose-1', name: 'Dance Pose 1', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 2, currency: 'hearts', currencyCost: 10 },
   { slug: 'spring-festival-dance-pose-2', name: 'Dance Pose 2', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 8000 },
   { slug: 'spring-festival-dance-pose-3', name: 'Dance Pose 3', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 8000 },
   { slug: 'spring-festival-dance-pose-4', name: 'Dance Pose 4', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 6000 },
