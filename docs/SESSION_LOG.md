@@ -2,6 +2,12 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-10-16 (vervolg) — Ordering Machine: items afvinken als "besteld"
+
+**Nieuwe feature** (`src/app/ordering-machine.tsx`), op verzoek: "Is het ook mogelijk om de afbeeldingen af te kunnen vinken zoals met de badges?" Zelfde patroon als `badges.tsx`: tik op een item-kaart om 'm aan/uit te vinken, state persisteert via AsyncStorage (`heartopia:ordering-machine:besteld`). Afgevinkte items krijgen een gedimde afbeelding + een ✓-overlay; elke catalogus-header toont nu een voortgang zoals "2/68 besteld" (vertaald in alle 6 talen, incl. een nieuwe disclaimer-zin). Geverifieerd met Playwright: toggle werkt visueel en blijft staan na een page-reload. Gepusht direct naar `main` (commit `3a082e0`).
+
+**Bleed-artefact-cleanup (voorgaande sessie) blijft van kracht**: zie de les hieronder over de "opgerolde hoekje"-herkenning — de uiteindelijke regel was: als gap-detectie meerdere transparante segmenten vindt, altijd bijsnijden naar het grootste segment, ook als het op het eerste gezicht op een normale hoek-curl lijkt (de app's eigen `cardImageWrap`-stijl rondt sowieso af, dus bijsnijden heeft geen nadeel).
+
 ## 2026-10-15/16 — Ordering Machine Fashion tab compleet + gemerged, diverse bugfixes
 
 **Vaste afspraak (belangrijk voor elke sessie)**: zodra er na een code-wijziging een `eas update`-commando relevant is, stuur dat commando **meteen zelf** door zonder dat de gebruiker erom hoeft te vragen. De gebruiker draait `eas update` altijd zelf lokaal (geen Expo-login in deze cloud-omgeving); wij leveren alleen de exacte commandoregel.
