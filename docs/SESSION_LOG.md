@@ -2,6 +2,33 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-10-17 — Ruwe data genoteerd: "Nearby Gathering" limited vogels (nog niet verwerkt in de app)
+
+Gebruiker heeft 2 screenshots (bron: Xiaohongshu @tomatotomatojuice) gestuurd met event-vogeldata. **Nog NIET in code verwerkt** — alleen hier genoteerd zodat het niet kwijtraakt, in afwachting van de ster-prijzen die de gebruiker nog nastuurt. Vermoedelijk bedoeld voor `src/data/event-birds.ts` (momenteel een lege `EVENT_BIRDS_RAW: EventSightingRaw[] = []`, met fallback-only rol — `events.tsx` gebruikt normaal `remote-content.json`'s `event.birds`, dus deze data moet uiteindelijk naar dat JSON-bestand op `main`, niet naar deze lokale bundle).
+
+**Gekleurde kraaien** (te fotograferen via het vogelevent, Birdwatching hobby level 1 unlock nodig, 5-sterren pas vanaf Birdwatching enthusiast level 6):
+| Naam | Tijd/weer | Plek | 1-ster item | 1★ goud | 1★ token |
+|---|---|---|---|---|---|
+| Apple Raven | full time, alle weer | hot spring mountain — Shi'an Cliff | Apple +1 | 10 | 2 |
+| Orange Raven | full time, alle weer | hot spring mountain — hot spring | Orange +1 | 10 | 2 |
+| Strawberry Raven | full time, alle weer | hot spring mountain — crater lake | Strawberry Seed +1 | 10 | 2 |
+| Pumpkin Raven | full time, alle weer | hot spring mountain — remains | Pumpkin seeds +1 | 10 | 2 |
+| Truffle Raven | full time, alle weer | "Raven hiding food" incident, random trigger, 2e fase | Black truffle +1 | 15 | 5 |
+
+Verkoopprijs-multiplier voor hogere sterren (geldt voor alle items hierboven): 2★ = 1★×4, 3★ = 1★×8, 4★ = 1★×16, 5★ = 1★×32.
+
+**Uilen en vleermuizen** (bij de holle boom op Forest Island — uilen overdag, vleermuizen 's nachts):
+| Naam | Weer | Tijd | Plek | 1★ goud | 1★ token |
+|---|---|---|---|---|---|
+| Eastern Scops Owl | alle weer | 6:00–18:00 | Forest Island | 2 | 1 |
+| White-faced Screech Owl | alle weer | 6:00–18:00 | Forest Island | 2 | 1 |
+| Palau Scops Owl | alle weer | 6:00–18:00 | Forest Island | 2 | 1 |
+| Downy Bat | alle weer | 0:00–6:00 en 18:00–24:00 | Forest Island | 2 | 1 |
+| Honduran White Bat | alle weer | 0:00–6:00 en 18:00–24:00 | Forest Island | 2 | 1 |
+| Sharp-toothed Flying Fox | alle weer | 0:00–6:00 en 18:00–24:00 | Forest Island | 2 | 1 |
+
+**Nog openstaand**: sterprijzen boven 1★ voor de uilen/vleermuizen-tabel (de kraaien-tabel heeft al de multiplier-formule), en bevestiging of dit een apart "Limited"-event is naast de normale vogelcatalogus of een toevoeging daaraan. Verwerken in `remote-content.json` zodra de gebruiker de rest stuurt.
+
 ## 2026-10-16 (vervolg) — Ordering Machine: items afvinken als "besteld"
 
 **Nieuwe feature** (`src/app/ordering-machine.tsx`), op verzoek: "Is het ook mogelijk om de afbeeldingen af te kunnen vinken zoals met de badges?" Zelfde patroon als `badges.tsx`: tik op een item-kaart om 'm aan/uit te vinken, state persisteert via AsyncStorage (`heartopia:ordering-machine:besteld`). Afgevinkte items krijgen een gedimde afbeelding + een ✓-overlay; elke catalogus-header toont nu een voortgang zoals "2/68 besteld" (vertaald in alle 6 talen, incl. een nieuwe disclaimer-zin). Geverifieerd met Playwright: toggle werkt visueel en blijft staan na een page-reload. Gepusht direct naar `main` (commit `3a082e0`).
