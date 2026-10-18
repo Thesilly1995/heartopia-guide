@@ -151,7 +151,7 @@ export default function WildeDierenScreen() {
           ListHeaderComponent={viewToggle}
           renderItem={({ item: animal, index }) => {
             const isOpen = openName === animal.name;
-            const maxBond = WILD_ANIMAL_MAX_BOND[animal.name] ?? 10;
+            const maxBond = WILD_ANIMAL_MAX_BOND[animal.name] ?? 20;
             const showEventHeading = animal.isEvent && (index === 0 || !wildAnimals[index - 1].isEvent);
             return (
               <>
