@@ -187,10 +187,38 @@ const BOOK_NAMES: string[] = [
   'Hypothesis on Externalized Spirit',
 ];
 
+/** Namen blijven Engels, zoals de puzzels en boeken hierboven — gebaseerd op eigen screenshots van de "Other Collections"-tab in het Collection Book. */
+const RECORD_NAMES: string[] = [
+  'Beach Utopia',
+  'Descent of the Grimkin Night',
+  'Red New Spring',
+  'Paws & Pals',
+  'Springfield Vistas',
+  'Playful Echoes',
+  'Little Companions',
+  'Magic of Friendship',
+  'Under the Same Stars',
+  'Rainbow Isle',
+  'Ode to Golden Ridge',
+  'Pyrofrost Bathhouse',
+  'Whale Shadow',
+  'Dimensional Dash',
+  'Modular Streets',
+  'Hammer Beat',
+  'Dreamlight Capture',
+  'Blazing Sky',
+  'Whisper of Snow',
+  'Palace Intrigue',
+];
+
 export function usePuzzles(): CollectionItem[] {
   return useMemo(() => PUZZLE_NAMES.map((name) => ({ name, emoji: '🧩' })), []);
 }
 
 export function useBooks(): CollectionItem[] {
   return useMemo(() => BOOK_NAMES.map((name) => ({ name, emoji: '📖' })), []);
+}
+
+export function useRecords(): CollectionItem[] {
+  return useMemo(() => RECORD_NAMES.map((name) => ({ name, emoji: '💿' })), []);
 }
