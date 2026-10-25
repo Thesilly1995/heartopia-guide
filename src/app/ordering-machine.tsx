@@ -11,6 +11,7 @@ import { ORDERING_MACHINE_IMAGE_MAP } from '@/constants/ordering-machine-images'
 import {
   OrderingMachineCategory,
   OrderingMachineCurrency,
+  OrderingMachineItem,
   useOrderingMachineCatalogs,
   useOrderingMachineItems,
 } from '@/data/ordering-machine';
@@ -25,6 +26,7 @@ const CURRENCY_ICON: Record<OrderingMachineCurrency, string> = {
 
 const STORAGE_KEY = 'heartopia:ordering-machine:besteld';
 const WISHLIST_STORAGE_KEY = 'heartopia:ordering-machine:wenslijst';
+const FAVORITES_STORAGE_KEY = 'heartopia:ordering-machine:favorieten';
 
 const STRINGS = {
   nl: {
@@ -37,13 +39,16 @@ const STRINGS = {
     priceUnknown: 'Prijs nog niet bekend',
     emptyCategory: 'Hier komen binnenkort de algemene spullen uit het spel.',
     disclaimer:
-      'Tickets om te bestellen + de betaling bij aflevering (roze hartjes, Coins of paarse sterren), gebaseerd op eigen screenshots uit de Ordering Machine. Tik op een catalogus om die te openen of sluiten. Tik op een item om het af te vinken zodra je het besteld hebt.',
+      'Tickets om te bestellen + de betaling bij aflevering (roze hartjes, Coins of paarse sterren), gebaseerd op eigen screenshots uit de Ordering Machine. Tik op een catalogus om die te openen of sluiten. Tik op een item om het af te vinken zodra je het besteld hebt, of op het hartje om het als favoriet te markeren.',
     progressLabel: (done: number, total: number) => `${done}/${total} besteld`,
     wishlistTitle: 'Wenslijstje',
     wishlistCount: (n: number) => `${n} item${n === 1 ? '' : 's'}`,
     wishlistPlaceholder: 'Wat wil je nog bestellen?',
     wishlistAdd: 'Toevoegen',
     wishlistEmpty: 'Nog niks op je wenslijstje — voeg iets toe!',
+    favoritesTitle: 'Favorieten',
+    favoritesCount: (n: number) => `${n} item${n === 1 ? '' : 's'}`,
+    favoritesEmpty: 'Nog geen favorieten — tik op het hartje bij een item om het hier te laten verschijnen.',
   },
   en: {
     title: 'Ordering Machine',
@@ -55,13 +60,16 @@ const STRINGS = {
     priceUnknown: 'Price not known yet',
     emptyCategory: 'General in-game items are coming here soon.',
     disclaimer:
-      'Tickets to order + the payment due on arrival (pink hearts, Coins or purple stars), based on own screenshots from the Ordering Machine. Tap a catalog to open or close it. Tap an item to check it off once you\'ve ordered it.',
+      'Tickets to order + the payment due on arrival (pink hearts, Coins or purple stars), based on own screenshots from the Ordering Machine. Tap a catalog to open or close it. Tap an item to check it off once you\'ve ordered it, or tap the heart to mark it as a favorite.',
     progressLabel: (done: number, total: number) => `${done}/${total} ordered`,
     wishlistTitle: 'Wishlist',
     wishlistCount: (n: number) => `${n} item${n === 1 ? '' : 's'}`,
     wishlistPlaceholder: 'What do you still want to order?',
     wishlistAdd: 'Add',
     wishlistEmpty: 'Nothing on your wishlist yet — add something!',
+    favoritesTitle: 'Favorites',
+    favoritesCount: (n: number) => `${n} item${n === 1 ? '' : 's'}`,
+    favoritesEmpty: 'No favorites yet — tap the heart on an item to make it show up here.',
   },
   es: {
     title: 'Ordering Machine',
@@ -73,13 +81,16 @@ const STRINGS = {
     priceUnknown: 'Precio aún desconocido',
     emptyCategory: 'Aquí llegarán pronto los artículos generales del juego.',
     disclaimer:
-      'Tickets para pedir + el pago al recibir (corazones rosas, Coins o estrellas moradas), basado en capturas propias de la Ordering Machine. Toca un catálogo para abrirlo o cerrarlo. Toca un artículo para marcarlo una vez que lo hayas pedido.',
+      'Tickets para pedir + el pago al recibir (corazones rosas, Coins o estrellas moradas), basado en capturas propias de la Ordering Machine. Toca un catálogo para abrirlo o cerrarlo. Toca un artículo para marcarlo una vez que lo hayas pedido, o toca el corazón para marcarlo como favorito.',
     progressLabel: (done: number, total: number) => `${done}/${total} pedidos`,
     wishlistTitle: 'Lista de deseos',
     wishlistCount: (n: number) => `${n} artículo${n === 1 ? '' : 's'}`,
     wishlistPlaceholder: '¿Qué más quieres pedir?',
     wishlistAdd: 'Agregar',
     wishlistEmpty: 'Aún no hay nada en tu lista de deseos — ¡agrega algo!',
+    favoritesTitle: 'Favoritos',
+    favoritesCount: (n: number) => `${n} artículo${n === 1 ? '' : 's'}`,
+    favoritesEmpty: 'Aún no hay favoritos — toca el corazón de un artículo para que aparezca aquí.',
   },
   pt: {
     title: 'Ordering Machine',
@@ -91,13 +102,16 @@ const STRINGS = {
     priceUnknown: 'Preço ainda desconhecido',
     emptyCategory: 'Os itens gerais do jogo chegarão aqui em breve.',
     disclaimer:
-      'Tickets para pedir + o pagamento na entrega (corações rosa, Coins ou estrelas roxas), com base em capturas de tela próprias da Ordering Machine. Toque em um catálogo para abri-lo ou fechá-lo. Toque em um item para marcá-lo assim que você o tiver pedido.',
+      'Tickets para pedir + o pagamento na entrega (corações rosa, Coins ou estrelas roxas), com base em capturas de tela próprias da Ordering Machine. Toque em um catálogo para abri-lo ou fechá-lo. Toque em um item para marcá-lo assim que você o tiver pedido, ou toque no coração para marcá-lo como favorito.',
     progressLabel: (done: number, total: number) => `${done}/${total} pedidos`,
     wishlistTitle: 'Lista de desejos',
     wishlistCount: (n: number) => `${n} ${n === 1 ? 'item' : 'itens'}`,
     wishlistPlaceholder: 'O que você ainda quer pedir?',
     wishlistAdd: 'Adicionar',
     wishlistEmpty: 'Ainda não tem nada na sua lista de desejos — adicione algo!',
+    favoritesTitle: 'Favoritos',
+    favoritesCount: (n: number) => `${n} ${n === 1 ? 'item' : 'itens'}`,
+    favoritesEmpty: 'Ainda não há favoritos — toque no coração de um item para ele aparecer aqui.',
   },
   fr: {
     title: 'Ordering Machine',
@@ -109,13 +123,16 @@ const STRINGS = {
     priceUnknown: 'Prix pas encore connu',
     emptyCategory: "Les objets généraux du jeu arriveront bientôt ici.",
     disclaimer:
-      "Tickets pour commander + le paiement à la livraison (cœurs roses, Coins ou étoiles violettes), basé sur des captures d'écran personnelles de l'Ordering Machine. Appuie sur un catalogue pour l'ouvrir ou le fermer. Appuie sur un article pour le cocher une fois commandé.",
+      "Tickets pour commander + le paiement à la livraison (cœurs roses, Coins ou étoiles violettes), basé sur des captures d'écran personnelles de l'Ordering Machine. Appuie sur un catalogue pour l'ouvrir ou le fermer. Appuie sur un article pour le cocher une fois commandé, ou sur le cœur pour le marquer comme favori.",
     progressLabel: (done: number, total: number) => `${done}/${total} commandés`,
     wishlistTitle: 'Liste de souhaits',
     wishlistCount: (n: number) => `${n} article${n === 1 ? '' : 's'}`,
     wishlistPlaceholder: 'Que veux-tu encore commander ?',
     wishlistAdd: 'Ajouter',
     wishlistEmpty: 'Rien sur ta liste de souhaits pour l\'instant — ajoute quelque chose !',
+    favoritesTitle: 'Favoris',
+    favoritesCount: (n: number) => `${n} article${n === 1 ? '' : 's'}`,
+    favoritesEmpty: "Pas encore de favoris — appuie sur le cœur d'un article pour le voir apparaître ici.",
   },
   de: {
     title: 'Ordering Machine',
@@ -127,13 +144,16 @@ const STRINGS = {
     priceUnknown: 'Preis noch nicht bekannt',
     emptyCategory: 'Die allgemeinen Items aus dem Spiel kommen hier bald dazu.',
     disclaimer:
-      'Tickets zum Bestellen + die Bezahlung bei Lieferung (rosa Herzen, Coins oder lila Sterne), basierend auf eigenen Screenshots aus der Ordering Machine. Tippe auf einen Katalog, um ihn zu öffnen oder zu schließen. Tippe auf ein Item, um es abzuhaken, sobald du es bestellt hast.',
+      'Tickets zum Bestellen + die Bezahlung bei Lieferung (rosa Herzen, Coins oder lila Sterne), basierend auf eigenen Screenshots aus der Ordering Machine. Tippe auf einen Katalog, um ihn zu öffnen oder zu schließen. Tippe auf ein Item, um es abzuhaken, sobald du es bestellt hast, oder auf das Herz, um es als Favorit zu markieren.',
     progressLabel: (done: number, total: number) => `${done}/${total} bestellt`,
     wishlistTitle: 'Wunschliste',
     wishlistCount: (n: number) => `${n} Artikel`,
     wishlistPlaceholder: 'Was möchtest du noch bestellen?',
     wishlistAdd: 'Hinzufügen',
     wishlistEmpty: 'Noch nichts auf deiner Wunschliste — füg etwas hinzu!',
+    favoritesTitle: 'Favoriten',
+    favoritesCount: (n: number) => `${n} Artikel`,
+    favoritesEmpty: 'Noch keine Favoriten — tippe auf das Herz bei einem Item, damit es hier erscheint.',
   },
 } as const;
 
@@ -159,6 +179,8 @@ export default function OrderingMachineScreen() {
   const [category, setCategory] = useState<OrderingMachineCategory>('fashion');
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const [ordered, setOrdered] = useState<Record<string, boolean>>({});
+  const [favorites, setFavorites] = useState<Record<string, boolean>>({});
+  const [favoritesOpen, setFavoritesOpen] = useState<Record<string, boolean>>({});
   const [wishlists, setWishlists] = useState<WishlistByCategory>({});
   const [wishlistOpen, setWishlistOpen] = useState<Record<string, boolean>>({});
   const [wishlistDraft, setWishlistDraft] = useState('');
@@ -183,6 +205,14 @@ export default function OrderingMachineScreen() {
         setWishlists({});
       }
     })();
+    (async () => {
+      try {
+        const raw = await AsyncStorage.getItem(FAVORITES_STORAGE_KEY);
+        setFavorites(raw ? JSON.parse(raw) : {});
+      } catch {
+        setFavorites({});
+      }
+    })();
   }, []);
 
   const toggleOrdered = async (slug: string) => {
@@ -190,6 +220,16 @@ export default function OrderingMachineScreen() {
     setOrdered(updated);
     try {
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+    } catch {
+      // opslaan mislukt
+    }
+  };
+
+  const toggleFavorite = async (slug: string) => {
+    const updated = { ...favorites, [slug]: !favorites[slug] };
+    setFavorites(updated);
+    try {
+      await AsyncStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(updated));
     } catch {
       // opslaan mislukt
     }
@@ -225,6 +265,54 @@ export default function OrderingMachineScreen() {
   };
 
   const isWishlistOpen = wishlistOpen[category] ?? false;
+  const isFavoritesOpen = favoritesOpen[category] ?? false;
+  const favoritedItems = items.filter((item) => favorites[item.slug]);
+
+  const renderItemCard = (item: OrderingMachineItem) => {
+    const image = ORDERING_MACHINE_IMAGE_MAP[item.slug];
+    const isOrdered = !!ordered[item.slug];
+    const isFavorite = !!favorites[item.slug];
+    return (
+      <Pressable key={item.slug} style={styles.card} onPress={() => toggleOrdered(item.slug)}>
+        <View style={styles.cardImageWrap}>
+          {image ? (
+            <Image
+              source={image}
+              style={[styles.cardImage, isOrdered && styles.cardImageDimmed]}
+              resizeMode="contain"
+            />
+          ) : (
+            <View style={[styles.cardImage, styles.cardImagePlaceholder]}>
+              <Text style={styles.cardImagePlaceholderText}>🎁</Text>
+            </View>
+          )}
+          {isOrdered && (
+            <View style={styles.earnedOverlay}>
+              <Text style={styles.earnedCheck}>✓</Text>
+            </View>
+          )}
+          <Pressable
+            style={styles.favoriteButton}
+            hitSlop={6}
+            onPress={() => toggleFavorite(item.slug)}>
+            <Text style={styles.favoriteIcon}>{isFavorite ? '❤️' : '🤍'}</Text>
+          </Pressable>
+        </View>
+        <View style={styles.costRow}>
+          <Text style={styles.costText}>🎫 {item.ticketCost}</Text>
+        </View>
+        <View style={styles.costRow}>
+          {item.currency && item.currencyCost != null ? (
+            <Text style={styles.costText}>
+              {CURRENCY_ICON[item.currency]} {item.currencyCost}
+            </Text>
+          ) : (
+            <Text style={styles.costUnknown}>{s.priceUnknown}</Text>
+          )}
+        </View>
+      </Pressable>
+    );
+  };
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -286,6 +374,26 @@ export default function OrderingMachineScreen() {
               </View>
             )}
           </View>
+          <View style={styles.wishlistSection}>
+            <Pressable
+              style={styles.catalogHeader}
+              onPress={() => setFavoritesOpen((prev) => ({ ...prev, [category]: !isFavoritesOpen }))}>
+              <Text style={styles.catalogTitle}>❤️ {s.favoritesTitle}</Text>
+              <View style={styles.catalogHeaderRight}>
+                <Text style={styles.progressText}>{s.favoritesCount(favoritedItems.length)}</Text>
+                <Text style={styles.chevron}>{isFavoritesOpen ? '▾' : '▸'}</Text>
+              </View>
+            </Pressable>
+            {isFavoritesOpen && (
+              <View style={styles.wishlistBody}>
+                {favoritedItems.length === 0 ? (
+                  <Text style={styles.emptyText}>{s.favoritesEmpty}</Text>
+                ) : (
+                  <View style={styles.grid}>{favoritedItems.map((item) => renderItemCard(item))}</View>
+                )}
+              </View>
+            )}
+          </View>
           {catalogs.length === 0 && <Text style={styles.emptyText}>{s.emptyCategory}</Text>}
           {catalogs.map((catalog) => {
             const catalogItems = items.filter((item) => item.catalog === catalog);
@@ -306,51 +414,7 @@ export default function OrderingMachineScreen() {
                     <Text style={styles.chevron}>{isOpen ? '▾' : '▸'}</Text>
                   </View>
                 </Pressable>
-                {isOpen && (
-                  <View style={styles.grid}>
-                    {catalogItems.map((item) => {
-                      const image = ORDERING_MACHINE_IMAGE_MAP[item.slug];
-                      const isOrdered = !!ordered[item.slug];
-                      return (
-                        <Pressable
-                          key={item.slug}
-                          style={styles.card}
-                          onPress={() => toggleOrdered(item.slug)}>
-                          <View style={styles.cardImageWrap}>
-                            {image ? (
-                              <Image
-                                source={image}
-                                style={[styles.cardImage, isOrdered && styles.cardImageDimmed]}
-                                resizeMode="contain"
-                              />
-                            ) : (
-                              <View style={[styles.cardImage, styles.cardImagePlaceholder]}>
-                                <Text style={styles.cardImagePlaceholderText}>🎁</Text>
-                              </View>
-                            )}
-                            {isOrdered && (
-                              <View style={styles.earnedOverlay}>
-                                <Text style={styles.earnedCheck}>✓</Text>
-                              </View>
-                            )}
-                          </View>
-                          <View style={styles.costRow}>
-                            <Text style={styles.costText}>🎫 {item.ticketCost}</Text>
-                          </View>
-                          <View style={styles.costRow}>
-                            {item.currency && item.currencyCost != null ? (
-                              <Text style={styles.costText}>
-                                {CURRENCY_ICON[item.currency]} {item.currencyCost}
-                              </Text>
-                            ) : (
-                              <Text style={styles.costUnknown}>{s.priceUnknown}</Text>
-                            )}
-                          </View>
-                        </Pressable>
-                      );
-                    })}
-                  </View>
-                )}
+                {isOpen && <View style={styles.grid}>{catalogItems.map((item) => renderItemCard(item))}</View>}
               </View>
             );
           })}
@@ -445,6 +509,19 @@ function makeStyles(c: ThemeColors) {
       fontWeight: '900',
       color: '#ffffff',
     },
+    favoriteButton: {
+      position: 'absolute',
+      top: 4,
+      right: 4,
+      width: 22,
+      height: 22,
+      borderRadius: 11,
+      backgroundColor: 'rgba(255,255,255,0.85)',
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 2,
+    },
+    favoriteIcon: { fontSize: 12 },
     costRow: { flexDirection: 'row', alignItems: 'center' },
     costText: { fontSize: 11, fontWeight: '700', color: c.forestSoft },
     costUnknown: { fontSize: 9, fontStyle: 'italic', color: c.forestSoft, textAlign: 'center' },
