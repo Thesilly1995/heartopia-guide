@@ -1,7 +1,7 @@
 import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useRef, useState } from 'react';
-import { useColorScheme } from 'react-native';
+import { Platform, StyleSheet, View, useColorScheme } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import 'react-native-url-polyfill/auto';
@@ -96,37 +96,50 @@ function AppContent() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AnimatedSplashOverlay />
-      <UpdateBanner />
-      <PremiumPromoModal visible={showPremiumPromo} onClose={() => setShowPremiumPromo(false)} />
-      <PremiumLifetimeModal visible={showLifetimeNotice} onClose={() => setShowLifetimeNotice(false)} />
-      <Stack screenOptions={{ headerShown: false, contentStyle: { paddingBottom: contentPadding } }}>
-        <Stack.Screen name="(tabs)" options={{ contentStyle: { paddingBottom: 0 } }} />
-        <Stack.Screen name="vissen" />
-        <Stack.Screen name="koken" />
-        <Stack.Screen name="insecten" />
-        <Stack.Screen name="vogels" />
-        <Stack.Screen name="tuinieren" />
-        <Stack.Screen name="beeldhouwen" />
-        <Stack.Screen name="wilde-dieren" />
-        <Stack.Screen name="wilde-ingredienten" />
-        <Stack.Screen name="huisdieren" />
-        <Stack.Screen name="badges" />
-        <Stack.Screen name="codes" />
-        <Stack.Screen name="events" />
-        <Stack.Screen name="missies" />
-        <Stack.Screen name="bubbels" />
-        <Stack.Screen name="rainbow-meteor" />
-        <Stack.Screen name="feedback" />
-        <Stack.Screen name="todo" />
-        <Stack.Screen name="ocean-cleanup" />
-        <Stack.Screen name="dashboard" />
-        <Stack.Screen name="cloud-save" />
-        <Stack.Screen name="meldingen" />
-        <Stack.Screen name="tips" />
-        <Stack.Screen name="discord" />
-      </Stack>
-      <AdBanner />
+      <View style={styles.webContentWrapper}>
+        <AnimatedSplashOverlay />
+        <UpdateBanner />
+        <PremiumPromoModal visible={showPremiumPromo} onClose={() => setShowPremiumPromo(false)} />
+        <PremiumLifetimeModal visible={showLifetimeNotice} onClose={() => setShowLifetimeNotice(false)} />
+        <Stack screenOptions={{ headerShown: false, contentStyle: { paddingBottom: contentPadding } }}>
+          <Stack.Screen name="(tabs)" options={{ contentStyle: { paddingBottom: 0 } }} />
+          <Stack.Screen name="vissen" />
+          <Stack.Screen name="koken" />
+          <Stack.Screen name="insecten" />
+          <Stack.Screen name="vogels" />
+          <Stack.Screen name="tuinieren" />
+          <Stack.Screen name="beeldhouwen" />
+          <Stack.Screen name="wilde-dieren" />
+          <Stack.Screen name="wilde-ingredienten" />
+          <Stack.Screen name="huisdieren" />
+          <Stack.Screen name="badges" />
+          <Stack.Screen name="codes" />
+          <Stack.Screen name="events" />
+          <Stack.Screen name="missies" />
+          <Stack.Screen name="bubbels" />
+          <Stack.Screen name="rainbow-meteor" />
+          <Stack.Screen name="feedback" />
+          <Stack.Screen name="todo" />
+          <Stack.Screen name="ocean-cleanup" />
+          <Stack.Screen name="dashboard" />
+          <Stack.Screen name="cloud-save" />
+          <Stack.Screen name="meldingen" />
+          <Stack.Screen name="tips" />
+          <Stack.Screen name="discord" />
+        </Stack>
+        <AdBanner />
+      </View>
     </ThemeProvider>
   );
 }
+
+/**
+ * Op web rekt de app anders uit over het volle, brede browservenster — dat
+ * breekt de mobiel-ontworpen layout (bv. kaart-/kalenderafbeeldingen met
+ * `aspectRatio` worden dan lelijk uitgesneden/uitgerekt). Native blijft
+ * gewoon de volle (telefoon)breedte gebruiken.
+ */
+const styles = StyleSheet.create({
+  webContentWrapper:
+    Platform.OS === 'web' ? { flex: 1, width: '100%', maxWidth: 480, alignSelf: 'center' } : { flex: 1 },
+});
