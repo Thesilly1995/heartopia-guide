@@ -293,7 +293,7 @@ export default function HomeScreen() {
           </View>
           <ZoomableImage
             source={{ uri: PLOT_CALENDAR_IMAGE_URL }}
-            aspectRatio={1792 / 2400}
+            aspectRatio={928 / 1152}
             trigger={
               <View style={styles.calendarButton}>
                 <Text style={styles.calendarButtonText}>{s.calendarLabel}</Text>
