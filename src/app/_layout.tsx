@@ -60,7 +60,8 @@ function AppContent() {
   // Op alle schermen behalve (tabs) is er geen bottom-tab-balk die al ruimte
   // reserveert voor de los-zwevende AdBanner (zie ad-banner.tsx) — zonder deze
   // padding tekent de banner over het onderste stuk scrollbare inhoud heen.
-  const contentPadding = premium ? 0 : insets.bottom + AdBannerHeight;
+  // Op web is er geen AdBanner (zie ad-banner.web.tsx), dus ook geen padding nodig.
+  const contentPadding = premium || Platform.OS === 'web' ? 0 : insets.bottom + AdBannerHeight;
 
   // Kleine vertraging zodat de echte (RevenueCat-)premiumstatus tijd heeft om op
   // te halen voordat we beslissen of de promo getoond wordt — anders zou een
