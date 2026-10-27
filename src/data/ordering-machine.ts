@@ -207,6 +207,7 @@ const ITEMS: OrderingMachineItem[] = [
   { slug: 'ship-picture-frame', name: 'Ship Picture Frame', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 2, currency: 'hearts', currencyCost: 12 },
   { slug: 'parasol-umbrella', name: 'Parasol Umbrella', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 2, currency: 'hearts', currencyCost: 28 },
   { slug: 'cat-basket-bed', name: 'Cat Basket Bed', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 2, currency: 'hearts', currencyCost: 28 },
+  { slug: 'artfull-rattan-double-bed', name: 'Artfull Rattan Double Bed', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 2, currency: 'stars', currencyCost: 30 },
   { slug: 'folding-screen-divider', name: 'Folding Screen Divider', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 2, currency: 'hearts', currencyCost: 28 },
   { slug: 'panda-cabinet', name: 'Panda Cabinet', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 2, currency: 'hearts', currencyCost: 28 },
   { slug: 'teddy-bear-picture', name: 'Teddy Bear Picture', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 2, currency: 'hearts', currencyCost: 55 },

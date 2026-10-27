@@ -260,6 +260,7 @@ export const ORDERING_MACHINE_IMAGE_MAP: Record<string, ImageSourcePropType> = {
   'camp-wreath-pink': require('@/assets/images/ordering-machine/fashion/camp-wreath-pink.png'),
   'candle-stand': require('@/assets/images/ordering-machine/fashion/candle-stand.png'),
   'candy-corn-pile': require('@/assets/images/ordering-machine/fashion/candy-corn-pile.png'),
+  'artfull-rattan-double-bed': require('@/assets/images/ordering-machine/fashion/artfull-rattan-double-bed.png'),
   'cat-basket-bed': require('@/assets/images/ordering-machine/fashion/cat-basket-bed.png'),
   'cat-cushion-sofa': require('@/assets/images/ordering-machine/fashion/cat-cushion-sofa.png'),
   'cat-face-side-table': require('@/assets/images/ordering-machine/fashion/cat-face-side-table.png'),
