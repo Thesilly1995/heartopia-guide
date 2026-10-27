@@ -1,6 +1,6 @@
 import { Image } from 'expo-image';
 import { useEffect, useMemo, useState } from 'react';
-import { Dimensions, ImageSourcePropType, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, ImageSourcePropType, Modal, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
@@ -10,6 +10,8 @@ import { useLanguage } from '@/hooks/use-language';
 
 const MIN_SCALE = 1;
 const MAX_SCALE = 4;
+/** De `Modal` rendert op web buiten de breedte-beperkte app-wrapper, dus hier zelf clampen. */
+const MAX_WEB_MODAL_WIDTH = 480;
 
 const STRINGS = {
   nl: { hint: '🔍 Tik om te vergroten', reset: 'Zoom resetten' },
@@ -74,7 +76,7 @@ function ZoomableContent({
   styles: ReturnType<typeof makeStyles>;
   children: React.ReactNode;
 }) {
-  const width = Dimensions.get('window').width;
+  const width = Platform.OS === 'web' ? Math.min(Dimensions.get('window').width, MAX_WEB_MODAL_WIDTH) : Dimensions.get('window').width;
   const height = width / aspectRatio;
 
   const scale = useSharedValue(1);
