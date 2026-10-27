@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { getPremiumPackagePrices, isPurchasesConfigured, type PremiumPackagePrices } from '@/constants/purchases';
@@ -16,6 +16,7 @@ const STRINGS = {
     restore: 'Aankopen herstellen',
     purchaseError: 'Aankoop mislukt — probeer het later opnieuw.',
     notConfigured: 'Aankopen zijn nog niet beschikbaar — dit wordt binnenkort geactiveerd.',
+    webNotice: 'Premium is alleen te koop in de Heartopedia Android-app. Deze webversie is gratis, met iets minder functies.',
     testButton: 'Test-premium aanzetten (alleen dev)',
     testNote: 'Alleen zichtbaar in development — testers zien dit niet.',
   },
@@ -28,6 +29,7 @@ const STRINGS = {
     restore: 'Restore purchases',
     purchaseError: 'Purchase failed — please try again later.',
     notConfigured: 'Purchases are not available yet — this will be enabled soon.',
+    webNotice: 'Premium can only be purchased in the Heartopedia Android app. This web version is free, with slightly fewer features.',
     testButton: 'Enable test premium (dev only)',
     testNote: 'Only visible in development — testers do not see this.',
   },
@@ -40,6 +42,7 @@ const STRINGS = {
     restore: 'Restaurar compras',
     purchaseError: 'La compra falló — inténtalo de nuevo más tarde.',
     notConfigured: 'Las compras aún no están disponibles — se activarán pronto.',
+    webNotice: 'Premium solo se puede comprar en la app de Android de Heartopedia. Esta versión web es gratuita, con algunas funciones menos.',
     testButton: 'Activar premium de prueba (solo dev)',
     testNote: 'Solo visible en desarrollo — los testers no ven esto.',
   },
@@ -52,6 +55,7 @@ const STRINGS = {
     restore: 'Restaurar compras',
     purchaseError: 'Falha na compra — tente novamente mais tarde.',
     notConfigured: 'As compras ainda não estão disponíveis — isso será ativado em breve.',
+    webNotice: 'O Premium só pode ser comprado no app Android do Heartopedia. Esta versão web é gratuita, com um pouco menos de funções.',
     testButton: 'Ativar premium de teste (somente dev)',
     testNote: 'Visível apenas em desenvolvimento — testers não veem isso.',
   },
@@ -64,6 +68,7 @@ const STRINGS = {
     restore: 'Restaurer les achats',
     purchaseError: "L'achat a échoué — réessaie plus tard.",
     notConfigured: "Les achats ne sont pas encore disponibles — ce sera bientôt activé.",
+    webNotice: "Premium ne peut être acheté que dans l'application Android Heartopedia. Cette version web est gratuite, avec un peu moins de fonctionnalités.",
     testButton: 'Activer le premium de test (dev uniquement)',
     testNote: 'Visible uniquement en développement — les testeurs ne voient pas ceci.',
   },
@@ -76,6 +81,7 @@ const STRINGS = {
     restore: 'Käufe wiederherstellen',
     purchaseError: 'Kauf fehlgeschlagen — versuch es später noch einmal.',
     notConfigured: 'Käufe sind noch nicht verfügbar — das wird bald freigeschaltet.',
+    webNotice: 'Premium kann nur in der Heartopedia-Android-App gekauft werden. Diese Webversion ist kostenlos, mit etwas weniger Funktionen.',
     testButton: 'Test-Premium aktivieren (nur Dev)',
     testNote: 'Nur in der Entwicklung sichtbar — Tester sehen das nicht.',
   },
@@ -114,10 +120,10 @@ export function PremiumLockedView({ text }: { text: string }) {
           {purchaseError && <Text style={styles.errorText}>{s.purchaseError}</Text>}
         </>
       ) : (
-        <Text style={styles.notConfiguredText}>{s.notConfigured}</Text>
+        <Text style={styles.notConfiguredText}>{Platform.OS === 'web' ? s.webNotice : s.notConfigured}</Text>
       )}
 
-      {__DEV__ && (
+      {__DEV__ && Platform.OS !== 'web' && (
         <>
           <Pressable style={styles.testButton} onPress={() => setPremium(true)}>
             <Text style={styles.testButtonText}>{s.testButton}</Text>
