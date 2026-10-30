@@ -187,10 +187,13 @@
       "nameNl": "Eerie Eve", "nameEn": "Eerie Eve",
       "datesNl": "30 oktober – 15 november 2026", "datesEn": "October 30 – November 15, 2026",
       "recipes": [
-        {"nameNl": "Pompoen Soep", "nameEn": "Pumpkin Soup", "ingredientsNl": ["Pompoen", "Melk", "Boter", "Tarwe"], "ingredientsEn": ["Pumpkin", "Milk", "Butter", "Wheat"], "emoji": "🍲"},
-        {"nameNl": "Spinnen Kom", "nameEn": "Spider Bowl", "ingredientsNl": ["2x Pompoen", "Kaas", "Olie"], "ingredientsEn": ["2x Pumpkin", "Cheese", "Oil"], "emoji": "🕷️"},
-        {"nameNl": "Spook Dessert", "nameEn": "Ghost Dessert", "ingredientsNl": ["Pompoen", "2x Melk", "Chocoladepasta"], "ingredientsEn": ["Pumpkin", "2x Milk", "Chocolate Jam"], "emoji": "👻"},
-        {"nameNl": "Spookachtige Koekjes", "nameEn": "Spooky Cookies", "ingredientsNl": ["Pompoen", "Kaas", "Boter", "Tarwe"], "ingredientsEn": ["Pumpkin", "Cheese", "Butter", "Wheat"], "emoji": "🍪"}
+        {"nameNl": "Yoyo Kaas Pompoennoedels", "nameEn": "Yoyo Cheese Pumpkin Noodles", "ingredientsNl": ["Pompoen ×2", "Kaas", "Eetbare Olie"], "ingredientsEn": ["Pumpkin x2", "Cheese", "Edible Oil"], "emoji": "🍜"},
+        {"nameNl": "Pompoen Miauw Koekjes", "nameEn": "Pumpkin Meow Cookies", "ingredientsNl": ["Pompoen", "Boter", "Tarwe", "Kaas"], "ingredientsEn": ["Pumpkin", "Butter", "Wheat", "Cheese"], "emoji": "🍪"},
+        {"nameNl": "Lachende Pompoentaart", "nameEn": "Laughing Pumpkin Tart", "ingredientsNl": ["Pompoen", "Melk", "Boter", "Tarwe"], "ingredientsEn": ["Pumpkin", "Milk", "Butter", "Wheat"], "emoji": "🥧"},
+        {"nameNl": "Pompoenchocolade", "nameEn": "Pumpkin Chocolate", "ingredientsNl": ["Pompoen", "Melk ×2", "Chocoladesaus"], "ingredientsEn": ["Pumpkin", "Milk x2", "Chocolate Sauce"], "emoji": "🍫"},
+        {"nameNl": "Wit Verband Qiling-drankje", "nameEn": "White Bandage Qiling Drink", "ingredientsNl": ["Melk", "Suiker (willekeurig)"], "ingredientsEn": ["Milk", "Any Sugar"], "emoji": "🥛"},
+        {"nameNl": "Zwart Verband Qiling-drankje", "nameEn": "Black Bandage Qiling Drink", "ingredientsNl": ["Melk", "Paarse Suiker"], "ingredientsEn": ["Milk", "Purple Sugar"], "emoji": "🧋"},
+        {"nameNl": "Mummiekat Drankje", "nameEn": "Mummy Cat Drink", "ingredientsNl": ["Melk", "Gele Suiker"], "ingredientsEn": ["Milk", "Yellow Sugar"], "emoji": "🐱"}
       ]
     },
     {
