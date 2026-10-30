@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-15T01:13:21Z",
+  "updatedAt": "2026-10-24T16:05:00Z",
   "dailyPlotsCalendar": [
     {"date": "2026-08-09", "oakPlotNl": "Plot 6", "oakPlotEn": "Plot 6", "fluoritePlotNl": "Plot 11", "fluoritePlotEn": "Plot 11", "oakPlotEs": "Parcela 6", "oakPlotPt": "Lote 6", "fluoritePlotEs": "Parcela 11", "fluoritePlotPt": "Lote 11"},
     {"date": "2026-08-10", "oakPlotNl": "Plot 2", "oakPlotEn": "Plot 2", "fluoritePlotNl": "Plot 7", "fluoritePlotEn": "Plot 7", "oakPlotEs": "Parcela 2", "oakPlotPt": "Lote 2", "fluoritePlotEs": "Parcela 7", "fluoritePlotPt": "Lote 7"},
@@ -84,7 +84,37 @@
     {"date": "2026-10-28", "oakPlotNl": "🌲 Bos", "oakPlotEn": "🌲 Forest", "fluoritePlotNl": "Plot 2", "fluoritePlotEn": "Plot 2", "oakPlotEs": "🌲 Bosque", "oakPlotPt": "🌲 Floresta", "fluoritePlotEs": "Parcela 2", "fluoritePlotPt": "Lote 2"},
     {"date": "2026-10-29", "oakPlotNl": "Plot 3", "oakPlotEn": "Plot 3", "fluoritePlotNl": "Plot 1", "fluoritePlotEn": "Plot 1", "oakPlotEs": "Parcela 3", "oakPlotPt": "Lote 3", "fluoritePlotEs": "Parcela 1", "fluoritePlotPt": "Lote 1"},
     {"date": "2026-10-30", "oakPlotNl": "Plot 5", "oakPlotEn": "Plot 5", "fluoritePlotNl": "Plot 1", "fluoritePlotEn": "Plot 1", "oakPlotEs": "Parcela 5", "oakPlotPt": "Lote 5", "fluoritePlotEs": "Parcela 1", "fluoritePlotPt": "Lote 1"},
-    {"date": "2026-10-31", "oakPlotNl": "Plot 12", "oakPlotEn": "Plot 12", "fluoritePlotNl": "Plot 4", "fluoritePlotEn": "Plot 4", "oakPlotEs": "Parcela 12", "oakPlotPt": "Lote 12", "fluoritePlotEs": "Parcela 4", "fluoritePlotPt": "Lote 4"}
+    {"date": "2026-10-31", "oakPlotNl": "Plot 12", "oakPlotEn": "Plot 12", "fluoritePlotNl": "Plot 4", "fluoritePlotEn": "Plot 4", "oakPlotEs": "Parcela 12", "oakPlotPt": "Lote 12", "fluoritePlotEs": "Parcela 4", "fluoritePlotPt": "Lote 4"},
+    {"date": "2026-11-01", "oakPlotNl": "Plot 2", "oakPlotEn": "Plot 2", "fluoritePlotNl": "Plot 8", "fluoritePlotEn": "Plot 8", "oakPlotEs": "Parcela 2", "oakPlotPt": "Lote 2", "fluoritePlotEs": "Parcela 8", "fluoritePlotPt": "Lote 8"},
+    {"date": "2026-11-02", "oakPlotNl": "Plot 8", "oakPlotEn": "Plot 8", "fluoritePlotNl": "Plot 4", "fluoritePlotEn": "Plot 4", "oakPlotEs": "Parcela 8", "oakPlotPt": "Lote 8", "fluoritePlotEs": "Parcela 4", "fluoritePlotPt": "Lote 4"},
+    {"date": "2026-11-03", "oakPlotNl": "Plot 4", "oakPlotEn": "Plot 4", "fluoritePlotNl": "Plot 1", "fluoritePlotEn": "Plot 1", "oakPlotEs": "Parcela 4", "oakPlotPt": "Lote 4", "fluoritePlotEs": "Parcela 1", "fluoritePlotPt": "Lote 1"},
+    {"date": "2026-11-04", "oakPlotNl": "Plot 8", "oakPlotEn": "Plot 8", "fluoritePlotNl": "🏛️ Ruïne", "fluoritePlotEn": "🏛️ Ruins", "oakPlotEs": "Parcela 8", "oakPlotPt": "Lote 8", "fluoritePlotEs": "🏛️ Ruinas", "fluoritePlotPt": "🏛️ Ruínas"},
+    {"date": "2026-11-05", "oakPlotNl": "Plot 6", "oakPlotEn": "Plot 6", "fluoritePlotNl": "Plot 8", "fluoritePlotEn": "Plot 8", "oakPlotEs": "Parcela 6", "oakPlotPt": "Lote 6", "fluoritePlotEs": "Parcela 8", "fluoritePlotPt": "Lote 8"},
+    {"date": "2026-11-06", "oakPlotNl": "Plot 8", "oakPlotEn": "Plot 8", "fluoritePlotNl": "Plot 8", "fluoritePlotEn": "Plot 8", "oakPlotEs": "Parcela 8", "oakPlotPt": "Lote 8", "fluoritePlotEs": "Parcela 8", "fluoritePlotPt": "Lote 8"},
+    {"date": "2026-11-07", "oakPlotNl": "Plot 12", "oakPlotEn": "Plot 12", "fluoritePlotNl": "Plot 6", "fluoritePlotEn": "Plot 6", "oakPlotEs": "Parcela 12", "oakPlotPt": "Lote 12", "fluoritePlotEs": "Parcela 6", "fluoritePlotPt": "Lote 6"},
+    {"date": "2026-11-08", "oakPlotNl": "Plot 10", "oakPlotEn": "Plot 10", "fluoritePlotNl": "Plot 2", "fluoritePlotEn": "Plot 2", "oakPlotEs": "Parcela 10", "oakPlotPt": "Lote 10", "fluoritePlotEs": "Parcela 2", "fluoritePlotPt": "Lote 2"},
+    {"date": "2026-11-09", "oakPlotNl": "Plot 7", "oakPlotEn": "Plot 7", "fluoritePlotNl": "Plot 2", "fluoritePlotEn": "Plot 2", "oakPlotEs": "Parcela 7", "oakPlotPt": "Lote 7", "fluoritePlotEs": "Parcela 2", "fluoritePlotPt": "Lote 2"},
+    {"date": "2026-11-10", "oakPlotNl": "Plot 12", "oakPlotEn": "Plot 12", "fluoritePlotNl": "🏛️ Ruïne", "fluoritePlotEn": "🏛️ Ruins", "oakPlotEs": "Parcela 12", "oakPlotPt": "Lote 12", "fluoritePlotEs": "🏛️ Ruinas", "fluoritePlotPt": "🏛️ Ruínas"},
+    {"date": "2026-11-11", "oakPlotNl": "Plot 8", "oakPlotEn": "Plot 8", "fluoritePlotNl": "Plot 5", "fluoritePlotEn": "Plot 5", "oakPlotEs": "Parcela 8", "oakPlotPt": "Lote 8", "fluoritePlotEs": "Parcela 5", "fluoritePlotPt": "Lote 5"},
+    {"date": "2026-11-12", "oakPlotNl": "Plot 6", "oakPlotEn": "Plot 6", "fluoritePlotNl": "Plot 11", "fluoritePlotEn": "Plot 11", "oakPlotEs": "Parcela 6", "oakPlotPt": "Lote 6", "fluoritePlotEs": "Parcela 11", "fluoritePlotPt": "Lote 11"},
+    {"date": "2026-11-13", "oakPlotNl": "Plot 11", "oakPlotEn": "Plot 11", "fluoritePlotNl": "Plot 11", "fluoritePlotEn": "Plot 11", "oakPlotEs": "Parcela 11", "oakPlotPt": "Lote 11", "fluoritePlotEs": "Parcela 11", "fluoritePlotPt": "Lote 11"},
+    {"date": "2026-11-14", "oakPlotNl": "Plot 2", "oakPlotEn": "Plot 2", "fluoritePlotNl": "Plot 2", "fluoritePlotEn": "Plot 2", "oakPlotEs": "Parcela 2", "oakPlotPt": "Lote 2", "fluoritePlotEs": "Parcela 2", "fluoritePlotPt": "Lote 2"},
+    {"date": "2026-11-15", "oakPlotNl": "Plot 9", "oakPlotEn": "Plot 9", "fluoritePlotNl": "Plot 12", "fluoritePlotEn": "Plot 12", "oakPlotEs": "Parcela 9", "oakPlotPt": "Lote 9", "fluoritePlotEs": "Parcela 12", "fluoritePlotPt": "Lote 12"},
+    {"date": "2026-11-16", "oakPlotNl": "Plot 3", "oakPlotEn": "Plot 3", "fluoritePlotNl": "Plot 4", "fluoritePlotEn": "Plot 4", "oakPlotEs": "Parcela 3", "oakPlotPt": "Lote 3", "fluoritePlotEs": "Parcela 4", "fluoritePlotPt": "Lote 4"},
+    {"date": "2026-11-17", "oakPlotNl": "Plot 6", "oakPlotEn": "Plot 6", "fluoritePlotNl": "Plot 11", "fluoritePlotEn": "Plot 11", "oakPlotEs": "Parcela 6", "oakPlotPt": "Lote 6", "fluoritePlotEs": "Parcela 11", "fluoritePlotPt": "Lote 11"},
+    {"date": "2026-11-18", "oakPlotNl": "Plot 2", "oakPlotEn": "Plot 2", "fluoritePlotNl": "Plot 7", "fluoritePlotEn": "Plot 7", "oakPlotEs": "Parcela 2", "oakPlotPt": "Lote 2", "fluoritePlotEs": "Parcela 7", "fluoritePlotPt": "Lote 7"},
+    {"date": "2026-11-19", "oakPlotNl": "Plot 11", "oakPlotEn": "Plot 11", "fluoritePlotNl": "Plot 9", "fluoritePlotEn": "Plot 9", "oakPlotEs": "Parcela 11", "oakPlotPt": "Lote 11", "fluoritePlotEs": "Parcela 9", "fluoritePlotPt": "Lote 9"},
+    {"date": "2026-11-20", "oakPlotNl": "🌲 Bos", "oakPlotEn": "🌲 Forest", "fluoritePlotNl": "Plot 4", "fluoritePlotEn": "Plot 4", "oakPlotEs": "🌲 Bosque", "oakPlotPt": "🌲 Floresta", "fluoritePlotEs": "Parcela 4", "fluoritePlotPt": "Lote 4"},
+    {"date": "2026-11-21", "oakPlotNl": "🌲 Bos", "oakPlotEn": "🌲 Forest", "fluoritePlotNl": "Plot 4", "fluoritePlotEn": "Plot 4", "oakPlotEs": "🌲 Bosque", "oakPlotPt": "🌲 Floresta", "fluoritePlotEs": "Parcela 4", "fluoritePlotPt": "Lote 4"},
+    {"date": "2026-11-22", "oakPlotNl": "Plot 11", "oakPlotEn": "Plot 11", "fluoritePlotNl": "Plot 7", "fluoritePlotEn": "Plot 7", "oakPlotEs": "Parcela 11", "oakPlotPt": "Lote 11", "fluoritePlotEs": "Parcela 7", "fluoritePlotPt": "Lote 7"},
+    {"date": "2026-11-23", "oakPlotNl": "Plot 9", "oakPlotEn": "Plot 9", "fluoritePlotNl": "Plot 5", "fluoritePlotEn": "Plot 5", "oakPlotEs": "Parcela 9", "oakPlotPt": "Lote 9", "fluoritePlotEs": "Parcela 5", "fluoritePlotPt": "Lote 5"},
+    {"date": "2026-11-24", "oakPlotNl": "Plot 10", "oakPlotEn": "Plot 10", "fluoritePlotNl": "Plot 3", "fluoritePlotEn": "Plot 3", "oakPlotEs": "Parcela 10", "oakPlotPt": "Lote 10", "fluoritePlotEs": "Parcela 3", "fluoritePlotPt": "Lote 3"},
+    {"date": "2026-11-25", "oakPlotNl": "Plot 3", "oakPlotEn": "Plot 3", "fluoritePlotNl": "Plot 7", "fluoritePlotEn": "Plot 7", "oakPlotEs": "Parcela 3", "oakPlotPt": "Lote 3", "fluoritePlotEs": "Parcela 7", "fluoritePlotPt": "Lote 7"},
+    {"date": "2026-11-26", "oakPlotNl": "Plot 6", "oakPlotEn": "Plot 6", "fluoritePlotNl": "Plot 7", "fluoritePlotEn": "Plot 7", "oakPlotEs": "Parcela 6", "oakPlotPt": "Lote 6", "fluoritePlotEs": "Parcela 7", "fluoritePlotPt": "Lote 7"},
+    {"date": "2026-11-27", "oakPlotNl": "Plot 9", "oakPlotEn": "Plot 9", "fluoritePlotNl": "Plot 1", "fluoritePlotEn": "Plot 1", "oakPlotEs": "Parcela 9", "oakPlotPt": "Lote 9", "fluoritePlotEs": "Parcela 1", "fluoritePlotPt": "Lote 1"},
+    {"date": "2026-11-28", "oakPlotNl": "Plot 4", "oakPlotEn": "Plot 4", "fluoritePlotNl": "Plot 5", "fluoritePlotEn": "Plot 5", "oakPlotEs": "Parcela 4", "oakPlotPt": "Lote 4", "fluoritePlotEs": "Parcela 5", "fluoritePlotPt": "Lote 5"},
+    {"date": "2026-11-29", "oakPlotNl": "Plot 10", "oakPlotEn": "Plot 10", "fluoritePlotNl": "Plot 9", "fluoritePlotEn": "Plot 9", "oakPlotEs": "Parcela 10", "oakPlotPt": "Lote 10", "fluoritePlotEs": "Parcela 9", "fluoritePlotPt": "Lote 9"},
+    {"date": "2026-11-30", "oakPlotNl": "🌲 Bos", "oakPlotEn": "🌲 Forest", "fluoritePlotNl": "Plot 11", "fluoritePlotEn": "Plot 11", "oakPlotEs": "🌲 Bosque", "oakPlotPt": "🌲 Floresta", "fluoritePlotEs": "Parcela 11", "fluoritePlotPt": "Lote 11"}
   ],
   "weather": {
     "kind": "sunny",
@@ -105,9 +135,23 @@
       {"nameNl": "Blauwe Zee-engel", "nameEn": "Blue Sea Angel", "spotNl": "Onsen Berg (Oude Zee)", "spotEn": "Onsen Mountain (Old Sea)", "noteNl": null, "noteEn": null, "emoji": "🐟", "gold": [100, 150, 200, 400, 800], "tokens": [15, 22, 30, 60, 120]},
       {"nameNl": "Farao-Inktvis", "nameEn": "Pharaoh Cuttlefish", "spotNl": "Onsen Berg (Oude Zee)", "spotEn": "Onsen Mountain (Old Sea)", "noteNl": null, "noteEn": null, "emoji": "🦑", "gold": [155, 232, 310, 620, 1240], "tokens": [25, 37, 50, 100, 200]},
       {"nameNl": "Ruggengraatloze Inktvis", "nameEn": "Spineless Cuttlefish", "spotNl": "Onsen Berg (Oude Zee)", "spotEn": "Onsen Mountain (Old Sea)", "noteNl": null, "noteEn": null, "emoji": "🦑", "gold": [155, 232, 310, 620, 1240], "tokens": [25, 37, 50, 100, 200]},
-      {"nameNl": "Gouden Inktvis", "nameEn": "Golden Cuttlefish", "spotNl": "Onsen Berg (Oude Zee)", "spotEn": "Onsen Mountain (Old Sea)", "noteNl": null, "noteEn": null, "emoji": "🦑", "gold": [155, 232, 310, 620, 1240], "tokens": [25, 37, 50, 100, 200]}
+      {"nameNl": "Gouden Inktvis", "nameEn": "Golden Cuttlefish", "spotNl": "Onsen Berg (Oude Zee)", "spotEn": "Onsen Mountain (Old Sea)", "noteNl": null, "noteEn": null, "emoji": "🦑", "gold": [155, 232, 310, 620, 1240], "tokens": [25, 37, 50, 100, 200]},
+      {"nameNl": "Groenlicht Zee-engel", "nameEn": "Green Light Sea Angel", "spotNl": "Onsen Berg (Oude Zee)", "spotEn": "Onsen Mountain (Old Sea)", "noteNl": "Ontgrendeld via het 'Glowing Fish Swarm'-incident (level 150), willekeurige extra fase", "noteEn": "Unlocked via the 'Glowing Fish Swarm' incident (level 150), random extra phase", "emoji": "🐟", "gold": [150, 225, 300, 600, 1200], "tokens": [25, 37, 50, 100, 200]},
+      {"nameNl": "Paarse Zee-engel", "nameEn": "Purple Sea Angel", "spotNl": "Onsen Berg (Oude Zee)", "spotEn": "Onsen Mountain (Old Sea)", "noteNl": "Ontgrendeld via het 'Glowing Fish Swarm'-incident (level 150), willekeurige extra fase", "noteEn": "Unlocked via the 'Glowing Fish Swarm' incident (level 150), random extra phase", "emoji": "🐟", "gold": [150, 225, 300, 600, 1200], "tokens": [25, 37, 50, 100, 200]}
     ],
-    "birds": [],
+    "birds": [
+      {"nameNl": "Appelraaf", "nameEn": "Apple Raven", "spotNl": "Onsen Berg (Shi'an Klif)", "spotEn": "Onsen Mountain (Shi'an Cliff)", "noteNl": null, "noteEn": null, "emoji": "🐦‍⬛", "gold": [10, 40, 80, 160, 320], "tokens": [2, 8, 16, 32, 64]},
+      {"nameNl": "Sinaasappelraaf", "nameEn": "Orange Raven", "spotNl": "Onsen Berg (Warmwaterbron)", "spotEn": "Onsen Mountain (Hot Spring)", "noteNl": null, "noteEn": null, "emoji": "🐦‍⬛", "gold": [10, 40, 80, 160, 320], "tokens": [2, 8, 16, 32, 64]},
+      {"nameNl": "Aardbeienraaf", "nameEn": "Strawberry Raven", "spotNl": "Onsen Berg (Kratermeer)", "spotEn": "Onsen Mountain (Crater Lake)", "noteNl": null, "noteEn": null, "emoji": "🐦‍⬛", "gold": [10, 40, 80, 160, 320], "tokens": [2, 8, 16, 32, 64]},
+      {"nameNl": "Pompoenraaf", "nameEn": "Pumpkin Raven", "spotNl": "Onsen Berg (Overblijfselen)", "spotEn": "Onsen Mountain (Remains)", "noteNl": null, "noteEn": null, "emoji": "🐦‍⬛", "gold": [10, 40, 80, 160, 320], "tokens": [2, 8, 16, 32, 64]},
+      {"nameNl": "Truffelraaf", "nameEn": "Truffle Raven", "spotNl": "Onsen Berg (willekeurig)", "spotEn": "Onsen Mountain (random)", "noteNl": "Verschijnt via het 'Kraai verstopt eten'-incident, 2e fase — willekeurige trigger", "noteEn": "Appears via the 'Raven hiding food' incident, 2nd phase — random trigger", "emoji": "🐦‍⬛", "gold": [15, 60, 120, 240, 480], "tokens": [5, 20, 40, 80, 160]},
+      {"nameNl": "Oosterse Dwergooruil", "nameEn": "Eastern Scops Owl", "spotNl": "Boseiland (Holle Boom)", "spotEn": "Forest Island (Hollow Tree)", "noteNl": "Alleen overdag, 6:00–18:00 — 5★ vereist Birdwatching level 6 en afstand ≤4m", "noteEn": "Daytime only, 6am–6pm — 5★ requires Birdwatching level 6 and distance ≤4m", "emoji": "🦉", "gold": [2, 8, 16, 32, 64], "tokens": [1, 4, 8, 16, 32]},
+      {"nameNl": "Witwang-dwergooruil", "nameEn": "White-faced Screech Owl", "spotNl": "Boseiland (Holle Boom)", "spotEn": "Forest Island (Hollow Tree)", "noteNl": "Alleen overdag, 6:00–18:00 — 5★ vereist Birdwatching level 6 en afstand ≤4m", "noteEn": "Daytime only, 6am–6pm — 5★ requires Birdwatching level 6 and distance ≤4m", "emoji": "🦉", "gold": [2, 8, 16, 32, 64], "tokens": [1, 4, 8, 16, 32]},
+      {"nameNl": "Palau-dwergooruil", "nameEn": "Palau Scops Owl", "spotNl": "Boseiland (Holle Boom)", "spotEn": "Forest Island (Hollow Tree)", "noteNl": "Alleen overdag, 6:00–18:00 — 5★ vereist Birdwatching level 6 en afstand ≤4m", "noteEn": "Daytime only, 6am–6pm — 5★ requires Birdwatching level 6 and distance ≤4m", "emoji": "🦉", "gold": [2, 8, 16, 32, 64], "tokens": [1, 4, 8, 16, 32]},
+      {"nameNl": "Donzige Vleermuis", "nameEn": "Downy Bat", "spotNl": "Boseiland (Holle Boom)", "spotEn": "Forest Island (Hollow Tree)", "noteNl": "Alleen 's nachts, 0:00–6:00 en 18:00–24:00", "noteEn": "Night only, 12am–6am and 6pm–12am", "emoji": "🦇", "gold": [2, 8, 16, 48, 144], "tokens": [1, 4, 8, 16, 32]},
+      {"nameNl": "Hondurese Witte Vleermuis", "nameEn": "Honduran White Bat", "spotNl": "Boseiland (Holle Boom)", "spotEn": "Forest Island (Hollow Tree)", "noteNl": "Alleen 's nachts, 0:00–6:00 en 18:00–24:00", "noteEn": "Night only, 12am–6am and 6pm–12am", "emoji": "🦇", "gold": [2, 8, 16, 48, 144], "tokens": [1, 4, 8, 16, 32]},
+      {"nameNl": "Scherptand-vleerhond", "nameEn": "Sharp-toothed Flying Fox", "spotNl": "Boseiland (Holle Boom)", "spotEn": "Forest Island (Hollow Tree)", "noteNl": "Alleen 's nachts, 0:00–6:00 en 18:00–24:00", "noteEn": "Night only, 12am–6am and 6pm–12am", "emoji": "🦇", "gold": [2, 8, 16, 48, 144], "tokens": [1, 4, 8, 16, 32]}
+    ],
     "recipes": [
       {"nameNl": "Physalis Warme Chocomelk", "nameEn": "Cape Gooseberry Hot Cocoa", "ingredientsNl": ["Physalis", "Kaneel Cacaopoeder", "Melk", "Fruit (willekeurig)"], "ingredientsEn": ["Cape Gooseberry", "Cinnamon Cocoa Powder", "Milk", "Any Fruit"], "emoji": "☕", "gold": [240, 360, 480, 960, 1920], "tokens": [35, 52, 70, 140, 280]},
       {"nameNl": "Physalis & Bosbes Warme Chocomelk", "nameEn": "Cape Gooseberry & Blueberry Hot Cocoa", "ingredientsNl": ["Physalis", "Kaneel Cacaopoeder", "Melk", "Bosbes"], "ingredientsEn": ["Cape Gooseberry", "Cinnamon Cocoa Powder", "Milk", "Blueberry"], "emoji": "☕", "gold": [240, 360, 480, 960, 1920], "tokens": [35, 52, 70, 140, 280]},
@@ -130,7 +174,8 @@
       {"nameNl": "Shiitake Mestkever", "nameEn": "Shiitake Dung Beetle", "spotNl": "Bos (Bospuzzel)", "spotEn": "Forest (Forest Jump Puzzle)", "noteNl": null, "noteEn": null, "emoji": "🪲", "gold": [110, 165, 220, 440, 880], "tokens": [25, 37, 50, 100, 200]},
       {"nameNl": "Aardbeien Mestkever", "nameEn": "Strawberry Dung Beetle", "spotNl": "Bos (Hertentoren)", "spotEn": "Forest (Deer Tower)", "noteNl": null, "noteEn": null, "emoji": "🪲", "gold": [110, 165, 220, 440, 880], "tokens": [25, 37, 50, 100, 200]},
       {"nameNl": "Sinaasappel Mestkever", "nameEn": "Orange Dung Beetle", "spotNl": "Bos (Geest-Eik Dennenbos)", "spotEn": "Forest (Spirit-Oak Pine Forest)", "noteNl": null, "noteEn": null, "emoji": "🪲", "gold": [110, 165, 220, 440, 880], "tokens": [25, 37, 50, 100, 200]},
-      {"nameNl": "Pompoen Mestkever", "nameEn": "Pumpkin Dung Beetle", "spotNl": "Bos (Geest-Eik Dennenbos)", "spotEn": "Forest (Spirit-Oak Pine Forest)", "noteNl": null, "noteEn": null, "emoji": "🪲", "gold": [110, 165, 220, 440, 880], "tokens": [25, 37, 50, 100, 200]}
+      {"nameNl": "Pompoen Mestkever", "nameEn": "Pumpkin Dung Beetle", "spotNl": "Bos (Geest-Eik Dennenbos)", "spotEn": "Forest (Spirit-Oak Pine Forest)", "noteNl": null, "noteEn": null, "emoji": "🪲", "gold": [110, 165, 220, 440, 880], "tokens": [25, 37, 50, 100, 200]},
+      {"nameNl": "Truffel Mestkever", "nameEn": "Truffle Dung Beetle", "spotNl": "Bos (willekeurig)", "spotEn": "Forest (random)", "noteNl": "Verschijnt via het 'Mestkever-mutatie'-incident, willekeurige verkenningsfase", "noteEn": "Appears via the 'Dung Beetle Mutation' incident, random exploration phase", "emoji": "🪲", "gold": [165, 247, 330, 660, 1320], "tokens": [35, 52, 70, 140, 280]}
     ],
     "ingredients": [
       {"nameNl": "Honingzwam", "nameEn": "Honey Mushroom", "spotNl": "Vissersdorp Plein", "spotEn": "Fishing Village Square", "noteNl": "14 plekken, ververst elke 1 minuut 30 seconden. Bruikbaar als ingrediënt in limited recepten (o.a. de Pompoenroom Soepen), eetbaar en neer te zetten in huis.", "noteEn": "14 spots, refreshes every 1 minute 30 seconds. Usable as an ingredient in limited recipes (incl. the Pumpkin Creamy Soups), edible and can be placed at home.", "emoji": "🍄", "price": 16},
@@ -138,6 +183,16 @@
     ]
   },
   "pastEvents": [
+    {
+      "nameNl": "Eerie Eve", "nameEn": "Eerie Eve",
+      "datesNl": "30 oktober – 15 november 2026", "datesEn": "October 30 – November 15, 2026",
+      "recipes": [
+        {"nameNl": "Pompoen Soep", "nameEn": "Pumpkin Soup", "ingredientsNl": ["Pompoen", "Melk", "Boter", "Tarwe"], "ingredientsEn": ["Pumpkin", "Milk", "Butter", "Wheat"], "emoji": "🍲"},
+        {"nameNl": "Spinnen Kom", "nameEn": "Spider Bowl", "ingredientsNl": ["2x Pompoen", "Kaas", "Olie"], "ingredientsEn": ["2x Pumpkin", "Cheese", "Oil"], "emoji": "🕷️"},
+        {"nameNl": "Spook Dessert", "nameEn": "Ghost Dessert", "ingredientsNl": ["Pompoen", "2x Melk", "Chocoladepasta"], "ingredientsEn": ["Pumpkin", "2x Milk", "Chocolate Jam"], "emoji": "👻"},
+        {"nameNl": "Spookachtige Koekjes", "nameEn": "Spooky Cookies", "ingredientsNl": ["Pompoen", "Kaas", "Boter", "Tarwe"], "ingredientsEn": ["Pumpkin", "Cheese", "Butter", "Wheat"], "emoji": "🍪"}
+      ]
+    },
     {
       "nameNl": "Echo of Ancients", "nameEn": "Echo of Ancients",
       "datesNl": "29 augustus – 10 oktober 2026", "datesEn": "August 29 – October 10, 2026",
@@ -260,52 +315,52 @@
     }
   ],
   "rainbowSpots": [
-    {"num": 1, "x": 43.9, "y": 62.3, "underwater": false, "descriptionNl": "Hoofdeiland, centraal gebied", "descriptionEn": "Main island, central area", "descriptionEs": "Isla principal, zona central", "descriptionPt": "Ilha principal, área central"},
-    {"num": 2, "x": 44.9, "y": 59.3, "underwater": false, "descriptionNl": "Hoofdeiland, centraal gebied, bij locatie 1", "descriptionEn": "Main island, central area, near spot 1", "descriptionEs": "Isla principal, zona central, cerca del punto 1", "descriptionPt": "Ilha principal, área central, perto do ponto 1"},
-    {"num": 3, "x": 41.9, "y": 60.4, "underwater": false, "isDoris": true, "descriptionNl": "Hoofdeiland, centraal gebied, bij locatie 2", "descriptionEn": "Main island, central area, near spot 2", "descriptionEs": "Isla principal, zona central, cerca del punto 2", "descriptionPt": "Ilha principal, área central, perto do ponto 2"},
-    {"num": 4, "x": 63.1, "y": 78, "underwater": true, "descriptionNl": "Whalefall Canyon, zuidelijk gebied", "descriptionEn": "Whalefall Canyon, south area", "descriptionEs": "Whalefall Canyon, zona sur", "descriptionPt": "Whalefall Canyon, área sul"},
-    {"num": 5, "x": 68.4, "y": 49.1, "underwater": true, "descriptionNl": "Whalefall Canyon, oostelijk gebied", "descriptionEn": "Whalefall Canyon, east area", "descriptionEs": "Whalefall Canyon, zona este", "descriptionPt": "Whalefall Canyon, área leste"},
-    {"num": 6, "x": 45.5, "y": 47.1, "underwater": true, "descriptionNl": "Whalefall Canyon, centraal gebied", "descriptionEn": "Whalefall Canyon, central area", "descriptionEs": "Whalefall Canyon, zona central", "descriptionPt": "Whalefall Canyon, área central"},
-    {"num": 7, "x": 21.5, "y": 48.2, "underwater": true, "descriptionNl": "Whalefall Canyon, westelijk gebied", "descriptionEn": "Whalefall Canyon, west area", "descriptionEs": "Whalefall Canyon, zona oeste", "descriptionPt": "Whalefall Canyon, área oeste"},
-    {"num": 8, "x": 34.6, "y": 43.8, "underwater": true, "isDoris": true, "descriptionNl": "Whalefall Canyon, centraal gebied, bij locatie 6", "descriptionEn": "Whalefall Canyon, central area, near spot 6", "descriptionEs": "Whalefall Canyon, zona central, cerca del punto 6", "descriptionPt": "Whalefall Canyon, área central, perto do ponto 6"}
+    {"num": 1, "x": 94.3, "y": 39.2, "underwater": false, "descriptionNl": "Hoofdeiland, oostelijk gebied", "descriptionEn": "Main island, east area", "descriptionEs": "Isla principal, zona este", "descriptionPt": "Ilha principal, área leste"},
+    {"num": 2, "x": 85.4, "y": 52.7, "underwater": false, "isDoris": true, "descriptionNl": "Hoofdeiland, oostelijk gebied", "descriptionEn": "Main island, east area", "descriptionEs": "Isla principal, zona este", "descriptionPt": "Ilha principal, área leste"},
+    {"num": 3, "x": 79, "y": 58.4, "underwater": false, "descriptionNl": "Hoofdeiland, oostelijk gebied, bij locatie 2", "descriptionEn": "Main island, east area, near spot 2", "descriptionEs": "Isla principal, zona este, cerca del punto 2", "descriptionPt": "Ilha principal, área leste, perto do ponto 2"},
+    {"num": 4, "x": 64.4, "y": 74.5, "underwater": true, "descriptionNl": "Whalefall Canyon, zuidelijk gebied", "descriptionEn": "Whalefall Canyon, south area", "descriptionEs": "Whalefall Canyon, zona sur", "descriptionPt": "Whalefall Canyon, área sul"},
+    {"num": 5, "x": 69.7, "y": 42.5, "underwater": true, "descriptionNl": "Whalefall Canyon, oostelijk gebied", "descriptionEn": "Whalefall Canyon, east area", "descriptionEs": "Whalefall Canyon, zona este", "descriptionPt": "Whalefall Canyon, área leste"},
+    {"num": 6, "x": 45.6, "y": 47.5, "underwater": true, "descriptionNl": "Whalefall Canyon, centraal gebied", "descriptionEn": "Whalefall Canyon, central area", "descriptionEs": "Whalefall Canyon, zona central", "descriptionPt": "Whalefall Canyon, área central"},
+    {"num": 7, "x": 21, "y": 48.3, "underwater": true, "descriptionNl": "Whalefall Canyon, westelijk gebied", "descriptionEn": "Whalefall Canyon, west area", "descriptionEs": "Whalefall Canyon, zona oeste", "descriptionPt": "Whalefall Canyon, área oeste"},
+    {"num": 8, "x": 35.3, "y": 43.4, "underwater": true, "isDoris": true, "descriptionNl": "Whalefall Canyon, centraal gebied, bij locatie 6", "descriptionEn": "Whalefall Canyon, central area, near spot 6", "descriptionEs": "Whalefall Canyon, zona central, cerca del punto 6", "descriptionPt": "Whalefall Canyon, área central, perto do ponto 6"}
   ],
   "meteorSpots": [
-    {"num": 1, "x": 7.7, "y": 40.3, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied", "descriptionEn": "Main island, west area", "descriptionEs": "Isla principal, zona oeste", "descriptionPt": "Ilha principal, área oeste"},
-    {"num": 2, "x": 16.4, "y": 43.6, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied, bij locatie 1", "descriptionEn": "Main island, west area, near spot 1", "descriptionEs": "Isla principal, zona oeste, cerca del punto 1", "descriptionPt": "Ilha principal, área oeste, perto do ponto 1"},
-    {"num": 3, "x": 9.3, "y": 49.1, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied, bij locatie 2", "descriptionEn": "Main island, west area, near spot 2", "descriptionEs": "Isla principal, zona oeste, cerca del punto 2", "descriptionPt": "Ilha principal, área oeste, perto do ponto 2"},
-    {"num": 4, "x": 6.5, "y": 58.9, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied, bij locatie 3", "descriptionEn": "Main island, west area, near spot 3", "descriptionEs": "Isla principal, zona oeste, cerca del punto 3", "descriptionPt": "Ilha principal, área oeste, perto do ponto 3"},
-    {"num": 5, "x": 12.8, "y": 55.3, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied, bij locatie 4", "descriptionEn": "Main island, west area, near spot 4", "descriptionEs": "Isla principal, zona oeste, cerca del punto 4", "descriptionPt": "Ilha principal, área oeste, perto do ponto 4"},
-    {"num": 6, "x": 11.4, "y": 64, "underwater": false, "isDoris": true, "descriptionNl": "Hoofdeiland, westelijk gebied, bij locatie 5", "descriptionEn": "Main island, west area, near spot 5", "descriptionEs": "Isla principal, zona oeste, cerca del punto 5", "descriptionPt": "Ilha principal, área oeste, perto do ponto 5"},
-    {"num": 7, "x": 14.6, "y": 66.9, "underwater": false, "descriptionNl": "Hoofdeiland, zuidwestelijk gebied", "descriptionEn": "Main island, southwest area", "descriptionEs": "Isla principal, zona suroeste", "descriptionPt": "Ilha principal, área sudoeste"},
-    {"num": 8, "x": 7.5, "y": 70.9, "underwater": false, "descriptionNl": "Hoofdeiland, zuidwestelijk gebied, bij locatie 7", "descriptionEn": "Main island, southwest area, near spot 7", "descriptionEs": "Isla principal, zona suroeste, cerca del punto 7", "descriptionPt": "Ilha principal, área sudoeste, perto do ponto 7"},
-    {"num": 9, "x": 20.3, "y": 79.7, "underwater": false, "descriptionNl": "Hoofdeiland, zuidwestelijk gebied", "descriptionEn": "Main island, southwest area", "descriptionEs": "Isla principal, zona suroeste", "descriptionPt": "Ilha principal, área sudoeste"},
-    {"num": 10, "x": 24.7, "y": 84.9, "underwater": false, "descriptionNl": "Hoofdeiland, zuidwestelijk gebied, bij locatie 9", "descriptionEn": "Main island, southwest area, near spot 9", "descriptionEs": "Isla principal, zona suroeste, cerca del punto 9", "descriptionPt": "Ilha principal, área sudoeste, perto do ponto 9"}
+    {"num": 1, "x": 20.5, "y": 40.1, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied", "descriptionEn": "Main island, west area", "descriptionEs": "Isla principal, zona oeste", "descriptionPt": "Ilha principal, área oeste"},
+    {"num": 2, "x": 14.4, "y": 39.7, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied, bij locatie 1", "descriptionEn": "Main island, west area, near spot 1", "descriptionEs": "Isla principal, zona oeste, cerca del punto 1", "descriptionPt": "Ilha principal, área oeste, perto do ponto 1"},
+    {"num": 3, "x": 13.2, "y": 46.2, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied, bij locatie 2", "descriptionEn": "Main island, west area, near spot 2", "descriptionEs": "Isla principal, zona oeste, cerca del punto 2", "descriptionPt": "Ilha principal, área oeste, perto do ponto 2"},
+    {"num": 4, "x": 8.9, "y": 49.5, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied, bij locatie 3", "descriptionEn": "Main island, west area, near spot 3", "descriptionEs": "Isla principal, zona oeste, cerca del punto 3", "descriptionPt": "Ilha principal, área oeste, perto do ponto 3"},
+    {"num": 5, "x": 10.4, "y": 58.9, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied, bij locatie 4", "descriptionEn": "Main island, west area, near spot 4", "descriptionEs": "Isla principal, zona oeste, cerca del punto 4", "descriptionPt": "Ilha principal, área oeste, perto do ponto 4"},
+    {"num": 6, "x": 10.6, "y": 65.2, "underwater": false, "isDoris": true, "descriptionNl": "Hoofdeiland, westelijk gebied, bij locatie 5", "descriptionEn": "Main island, west area, near spot 5", "descriptionEs": "Isla principal, zona oeste, cerca del punto 5", "descriptionPt": "Ilha principal, área oeste, perto do ponto 5"},
+    {"num": 7, "x": 14.2, "y": 66.5, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied, bij locatie 6", "descriptionEn": "Main island, west area, near spot 6", "descriptionEs": "Isla principal, zona oeste, cerca del punto 6", "descriptionPt": "Ilha principal, área oeste, perto do ponto 6"},
+    {"num": 8, "x": 16.6, "y": 72.3, "underwater": false, "descriptionNl": "Hoofdeiland, zuidwestelijk gebied", "descriptionEn": "Main island, southwest area", "descriptionEs": "Isla principal, zona suroeste", "descriptionPt": "Ilha principal, área sudoeste"},
+    {"num": 9, "x": 19.8, "y": 80.7, "underwater": false, "descriptionNl": "Hoofdeiland, zuidwestelijk gebied, bij locatie 8", "descriptionEn": "Main island, southwest area, near spot 8", "descriptionEs": "Isla principal, zona suroeste, cerca del punto 8", "descriptionPt": "Ilha principal, área sudoeste, perto do ponto 8"},
+    {"num": 10, "x": 24.9, "y": 85.3, "underwater": false, "descriptionNl": "Hoofdeiland, zuidwestelijk gebied, bij locatie 9", "descriptionEn": "Main island, southwest area, near spot 9", "descriptionEs": "Isla principal, zona suroeste, cerca del punto 9", "descriptionPt": "Ilha principal, área sudoeste, perto do ponto 9"}
   ],
   "bubbleWeek": {
-    "weekLabelNl": "Deze week (10-16 okt 2026)",
-    "weekLabelEn": "This week (Oct 10-16, 2026)",
-    "weekLabelEs": "Esta semana (Oct 10-16, 2026)",
-    "weekLabelPt": "Esta semana (Oct 10-16, 2026)",
+    "weekLabelNl": "Deze week (24-30 okt 2026)",
+    "weekLabelEn": "This week (Oct 24-30, 2026)",
+    "weekLabelEs": "Esta semana (Oct 24-30, 2026)",
+    "weekLabelPt": "Esta semana (Oct 24-30, 2026)",
     "spots": [
-      {"num": 1, "x": 53.6, "y": 26.2, "underwater": false, "descriptionNl": "Hoofdeiland, noordelijk gebied", "descriptionEn": "Main island, north area", "descriptionEs": "Isla principal, zona norte", "descriptionPt": "Ilha principal, área norte"},
-      {"num": 2, "x": 31.2, "y": 17, "underwater": false, "descriptionNl": "Hoofdeiland, noordwestelijk gebied", "descriptionEn": "Main island, northwest area", "descriptionEs": "Isla principal, zona noroeste", "descriptionPt": "Ilha principal, área noroeste"},
-      {"num": 3, "x": 25.3, "y": 14.9, "underwater": false, "descriptionNl": "Hoofdeiland, noordwestelijk gebied, bij locatie 2", "descriptionEn": "Main island, northwest area, near spot 2", "descriptionEs": "Isla principal, zona noroeste, cerca del punto 2", "descriptionPt": "Ilha principal, área noroeste, perto do ponto 2"},
-      {"num": 4, "x": 22.3, "y": 7.8, "underwater": false, "descriptionNl": "Hoofdeiland, noordwestelijk gebied, bij locatie 3", "descriptionEn": "Main island, northwest area, near spot 3", "descriptionEs": "Isla principal, zona noroeste, cerca del punto 3", "descriptionPt": "Ilha principal, área noroeste, perto do ponto 3"},
-      {"num": 5, "x": 23.3, "y": 39.4, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied", "descriptionEn": "Main island, west area", "descriptionEs": "Isla principal, zona oeste", "descriptionPt": "Ilha principal, área oeste"},
-      {"num": 6, "x": 29.7, "y": 56.7, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied", "descriptionEn": "Main island, west area", "descriptionEs": "Isla principal, zona oeste", "descriptionPt": "Ilha principal, área oeste"},
-      {"num": 7, "x": 37.8, "y": 50.5, "underwater": false, "descriptionNl": "Hoofdeiland, centraal gebied", "descriptionEn": "Main island, central area", "descriptionEs": "Isla principal, zona central", "descriptionPt": "Ilha principal, área central"},
-      {"num": 8, "x": 44.1, "y": 46.3, "underwater": false, "descriptionNl": "Hoofdeiland, centraal gebied, bij locatie 7", "descriptionEn": "Main island, central area, near spot 7", "descriptionEs": "Isla principal, zona central, cerca del punto 7", "descriptionPt": "Ilha principal, área central, perto do ponto 7"},
-      {"num": 9, "x": 46.5, "y": 51.3, "underwater": false, "descriptionNl": "Hoofdeiland, centraal gebied, bij locatie 8", "descriptionEn": "Main island, central area, near spot 8", "descriptionEs": "Isla principal, zona central, cerca del punto 8", "descriptionPt": "Ilha principal, área central, perto do ponto 8"},
-      {"num": 10, "x": 58.4, "y": 56.1, "underwater": false, "descriptionNl": "Hoofdeiland, centraal gebied", "descriptionEn": "Main island, central area", "descriptionEs": "Isla principal, zona central", "descriptionPt": "Ilha principal, área central"},
-      {"num": 11, "x": 44.3, "y": 63.2, "underwater": false, "descriptionNl": "Hoofdeiland, centraal gebied", "descriptionEn": "Main island, central area", "descriptionEs": "Isla principal, zona central", "descriptionPt": "Ilha principal, área central"},
-      {"num": 12, "x": 39.6, "y": 61.8, "underwater": false, "descriptionNl": "Hoofdeiland, centraal gebied, bij locatie 11", "descriptionEn": "Main island, central area, near spot 11", "descriptionEs": "Isla principal, zona central, cerca del punto 11", "descriptionPt": "Ilha principal, área central, perto do ponto 11"},
-      {"num": 13, "x": 31.2, "y": 92.1, "underwater": false, "descriptionNl": "Hoofdeiland, zuidwestelijk gebied", "descriptionEn": "Main island, southwest area", "descriptionEs": "Isla principal, zona suroeste", "descriptionPt": "Ilha principal, área sudoeste"},
-      {"num": 14, "x": 23.9, "y": 79.1, "underwater": false, "descriptionNl": "Hoofdeiland, zuidwestelijk gebied", "descriptionEn": "Main island, southwest area", "descriptionEs": "Isla principal, zona suroeste", "descriptionPt": "Ilha principal, área sudoeste"},
-      {"num": 15, "x": 9.5, "y": 86, "underwater": false, "descriptionNl": "Hoofdeiland, zuidwestelijk gebied", "descriptionEn": "Main island, southwest area", "descriptionEs": "Isla principal, zona suroeste", "descriptionPt": "Ilha principal, área sudoeste"},
-      {"num": 16, "x": 44.9, "y": 52, "underwater": true, "descriptionNl": "Whalefall Canyon, centraal gebied", "descriptionEn": "Whalefall Canyon, central area", "descriptionEs": "Whalefall Canyon, zona central", "descriptionPt": "Whalefall Canyon, área central"},
-      {"num": 17, "x": 36.2, "y": 28.8, "underwater": true, "descriptionNl": "Whalefall Canyon, noordelijk gebied", "descriptionEn": "Whalefall Canyon, north area", "descriptionEs": "Whalefall Canyon, zona norte", "descriptionPt": "Whalefall Canyon, área norte"},
-      {"num": 18, "x": 21.7, "y": 71.3, "underwater": true, "descriptionNl": "Whalefall Canyon, zuidwestelijk gebied", "descriptionEn": "Whalefall Canyon, southwest area", "descriptionEs": "Whalefall Canyon, zona suroeste", "descriptionPt": "Whalefall Canyon, área sudoeste"},
-      {"num": 19, "x": 31.6, "y": 64.6, "underwater": true, "descriptionNl": "Whalefall Canyon, westelijk gebied", "descriptionEn": "Whalefall Canyon, west area", "descriptionEs": "Whalefall Canyon, zona oeste", "descriptionPt": "Whalefall Canyon, área oeste"}
+      {"num": 1, "x": 22.7, "y": 7.2, "underwater": false, "descriptionNl": "Hoofdeiland, noordwestelijk gebied", "descriptionEn": "Main island, northwest area", "descriptionEs": "Isla principal, zona noroeste", "descriptionPt": "Ilha principal, área noroeste"},
+      {"num": 2, "x": 24.5, "y": 15.2, "underwater": false, "descriptionNl": "Hoofdeiland, noordwestelijk gebied, bij locatie 1", "descriptionEn": "Main island, northwest area, near spot 1", "descriptionEs": "Isla principal, zona noroeste, cerca del punto 1", "descriptionPt": "Ilha principal, área noroeste, perto do ponto 1"},
+      {"num": 3, "x": 16.6, "y": 23.5, "underwater": false, "descriptionNl": "Hoofdeiland, noordwestelijk gebied, bij locatie 2", "descriptionEn": "Main island, northwest area, near spot 2", "descriptionEs": "Isla principal, zona noroeste, cerca del punto 2", "descriptionPt": "Ilha principal, área noroeste, perto do ponto 2"},
+      {"num": 4, "x": 6.9, "y": 55.3, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied", "descriptionEn": "Main island, west area", "descriptionEs": "Isla principal, zona oeste", "descriptionPt": "Ilha principal, área oeste"},
+      {"num": 5, "x": 5.1, "y": 58.6, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied, bij locatie 4", "descriptionEn": "Main island, west area, near spot 4", "descriptionEs": "Isla principal, zona oeste, cerca del punto 4", "descriptionPt": "Ilha principal, área oeste, perto do ponto 4"},
+      {"num": 6, "x": 13.6, "y": 60.7, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied, bij locatie 5", "descriptionEn": "Main island, west area, near spot 5", "descriptionEs": "Isla principal, zona oeste, cerca del punto 5", "descriptionPt": "Ilha principal, área oeste, perto do ponto 5"},
+      {"num": 7, "x": 13.4, "y": 70.6, "underwater": false, "descriptionNl": "Hoofdeiland, zuidwestelijk gebied", "descriptionEn": "Main island, southwest area", "descriptionEs": "Isla principal, zona suroeste", "descriptionPt": "Ilha principal, área sudoeste"},
+      {"num": 8, "x": 29.7, "y": 56.4, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied", "descriptionEn": "Main island, west area", "descriptionEs": "Isla principal, zona oeste", "descriptionPt": "Ilha principal, área oeste"},
+      {"num": 9, "x": 54.2, "y": 52.2, "underwater": false, "descriptionNl": "Hoofdeiland, centraal gebied", "descriptionEn": "Main island, central area", "descriptionEs": "Isla principal, zona central", "descriptionPt": "Ilha principal, área central"},
+      {"num": 10, "x": 44.5, "y": 63.7, "underwater": false, "descriptionNl": "Hoofdeiland, centraal gebied", "descriptionEn": "Main island, central area", "descriptionEs": "Isla principal, zona central", "descriptionPt": "Ilha principal, área central"},
+      {"num": 11, "x": 29.3, "y": 84.6, "underwater": false, "descriptionNl": "Hoofdeiland, zuidwestelijk gebied", "descriptionEn": "Main island, southwest area", "descriptionEs": "Isla principal, zona suroeste", "descriptionPt": "Ilha principal, área sudoeste"},
+      {"num": 12, "x": 30.2, "y": 91.5, "underwater": false, "descriptionNl": "Hoofdeiland, zuidwestelijk gebied, bij locatie 11", "descriptionEn": "Main island, southwest area, near spot 11", "descriptionEs": "Isla principal, zona suroeste, cerca del punto 11", "descriptionPt": "Ilha principal, área sudoeste, perto do ponto 11"},
+      {"num": 13, "x": 59.2, "y": 80.2, "underwater": false, "descriptionNl": "Hoofdeiland, zuidelijk gebied", "descriptionEn": "Main island, south area", "descriptionEs": "Isla principal, zona sur", "descriptionPt": "Ilha principal, área sul"},
+      {"num": 14, "x": 75.2, "y": 74.8, "underwater": false, "descriptionNl": "Hoofdeiland, zuidoostelijk gebied", "descriptionEn": "Main island, southeast area", "descriptionEs": "Isla principal, zona sureste", "descriptionPt": "Ilha principal, área sudeste"},
+      {"num": 15, "x": 92, "y": 78.9, "underwater": false, "descriptionNl": "Hoofdeiland, zuidoostelijk gebied", "descriptionEn": "Main island, southeast area", "descriptionEs": "Isla principal, zona sureste", "descriptionPt": "Ilha principal, área sudeste"},
+      {"num": 16, "x": 66.1, "y": 51.5, "underwater": true, "descriptionNl": "Whalefall Canyon, centraal gebied", "descriptionEn": "Whalefall Canyon, central area", "descriptionEs": "Whalefall Canyon, zona central", "descriptionPt": "Whalefall Canyon, área central"},
+      {"num": 17, "x": 52.2, "y": 25.9, "underwater": true, "descriptionNl": "Whalefall Canyon, noordelijk gebied", "descriptionEn": "Whalefall Canyon, north area", "descriptionEs": "Whalefall Canyon, zona norte", "descriptionPt": "Whalefall Canyon, área norte"},
+      {"num": 18, "x": 37.7, "y": 26.7, "underwater": true, "descriptionNl": "Whalefall Canyon, noordelijk gebied", "descriptionEn": "Whalefall Canyon, north area", "descriptionEs": "Whalefall Canyon, zona norte", "descriptionPt": "Whalefall Canyon, área norte"},
+      {"num": 19, "x": 47, "y": 51.2, "underwater": true, "descriptionNl": "Whalefall Canyon, centraal gebied", "descriptionEn": "Whalefall Canyon, central area", "descriptionEs": "Whalefall Canyon, zona central", "descriptionPt": "Whalefall Canyon, área central"}
     ]
   },
   "weekForecast": [
@@ -379,17 +434,26 @@
     {"date": "2026-10-15", "kinds": ["normal"]},
     {"date": "2026-10-16", "kinds": ["normal"]},
     {"date": "2026-10-17", "kinds": [{"kind": "rain", "block": "12-18"}, {"kind": "rain", "block": "18-00"}]},
-    {"date": "2026-10-18", "kinds": ["normal"]}
+    {"date": "2026-10-18", "kinds": ["normal"]},
+    {"date": "2026-10-19", "kinds": ["normal"]},
+    {"date": "2026-10-20", "kinds": ["normal"]},
+    {"date": "2026-10-21", "kinds": [{"kind": "meteor", "block": "18-00"}]},
+    {"date": "2026-10-22", "kinds": [{"kind": "meteor", "block": "18-00"}]},
+    {"date": "2026-10-23", "kinds": [{"kind": "rain", "block": "06-12"}, {"kind": "rainbow", "block": "12-18"}]},
+    {"date": "2026-10-24", "kinds": ["normal"]},
+    {"date": "2026-10-25", "kinds": [{"kind": "rain", "block": "18-00"}]},
+    {"date": "2026-10-26", "kinds": ["normal"]},
+    {"date": "2026-10-27", "kinds": ["normal"]},
+    {"date": "2026-10-28", "kinds": ["normal"]},
+    {"date": "2026-10-29", "kinds": ["normal"]},
+    {"date": "2026-10-30", "kinds": ["normal"]},
+    {"date": "2026-10-31", "kinds": ["normal"]},
+    {"date": "2026-11-01", "kinds": ["normal"]}
   ],
   "codes": [
     {"code": "r2q7a4m9k3n6", "rewardNl": "3x Wensterren, 3x Meermin Vislokmiddel, 10x Mest", "rewardEn": "3x Wishing Stars, 3x Mermaid Fish Attractor, 10x Fertilizer", "expiresNl": "3 dec 2026", "expiresEn": "Dec 3, 2026", "rewardEs": "3x Estrellas de los Deseos, 3x Atrayente de Peces Sirena, 10x Fertilizante", "rewardPt": "3x Estrelas dos Desejos, 3x Atrativo de Peixes Sereia, 10x Fertilizante", "expiresEs": "3 dic 2026", "expiresPt": "3 de dez de 2026"},
-    {"code": "k9n3m5q1a7r4", "rewardNl": "3x Wensterren, 3x Meermin Vislokmiddel, 10x Mest", "rewardEn": "3x Wishing Stars, 3x Mermaid Fish Attractor, 10x Fertilizer", "expiresNl": "3 dec 2026", "expiresEn": "Dec 3, 2026", "rewardEs": "3x Estrellas de los Deseos, 3x Atrayente de Peces Sirena, 10x Fertilizante", "rewardPt": "3x Estrelas dos Desejos, 3x Atrativo de Peixes Sereia, 10x Fertilizante", "expiresEs": "3 dic 2026", "expiresPt": "3 de dez de 2026"}
-  ],
-  "nextEventRecipes": [
-    {"nameNl": "Pompoen Soep", "nameEn": "Pumpkin Soup", "ingredientsNl": ["Pompoen", "Melk", "Boter", "Tarwe"], "ingredientsEn": ["Pumpkin", "Milk", "Butter", "Wheat"], "emoji": "🍲"},
-    {"nameNl": "Spinnen Kom", "nameEn": "Spider Bowl", "ingredientsNl": ["2x Pompoen", "Kaas", "Olie"], "ingredientsEn": ["2x Pumpkin", "Cheese", "Oil"], "emoji": "🕷️"},
-    {"nameNl": "Spook Dessert", "nameEn": "Ghost Dessert", "ingredientsNl": ["Pompoen", "2x Melk", "Chocoladepasta"], "ingredientsEn": ["Pumpkin", "2x Milk", "Chocolate Jam"], "emoji": "👻"},
-    {"nameNl": "Spookachtige Koekjes", "nameEn": "Spooky Cookies", "ingredientsNl": ["Pompoen", "Kaas", "Boter", "Tarwe"], "ingredientsEn": ["Pumpkin", "Cheese", "Butter", "Wheat"], "emoji": "🍪"}
-  ],
-  "nextEventName": "Eerie Eve"
+    {"code": "k9n3m5q1a7r4", "rewardNl": "3x Wensterren, 3x Meermin Vislokmiddel, 10x Mest", "rewardEn": "3x Wishing Stars, 3x Mermaid Fish Attractor, 10x Fertilizer", "expiresNl": "3 dec 2026", "expiresEn": "Dec 3, 2026", "rewardEs": "3x Estrellas de los Deseos, 3x Atrayente de Peces Sirena, 10x Fertilizante", "rewardPt": "3x Estrelas dos Desejos, 3x Atrativo de Peixes Sereia, 10x Fertilizante", "expiresEs": "3 dic 2026", "expiresPt": "3 de dez de 2026"},
+    {"code": "a4m8r2k7n6q5", "rewardNl": "3x Wensterren, 3x Meermin Vislokmiddel, 10x Mest", "rewardEn": "3x Wishing Stars, 3x Mermaid Fish Attractor, 10x Fertilizer", "expiresNl": "3 dec 2026", "expiresEn": "Dec 3, 2026", "rewardEs": "3x Estrellas de los Deseos, 3x Atrayente de Peces Sirena, 10x Fertilizante", "rewardPt": "3x Estrelas dos Desejos, 3x Atrativo de Peixes Sereia, 10x Fertilizante", "expiresEs": "3 dic 2026", "expiresPt": "3 de dez de 2026"},
+    {"code": "p7k5a3n9r2m8", "rewardNl": "3x Wensterren, 3x Meermin Vislokmiddel, 10x Mest", "rewardEn": "3x Wishing Stars, 3x Mermaid Fish Attractor, 10x Fertilizer", "expiresNl": "3 dec 2026", "expiresEn": "Dec 3, 2026", "rewardEs": "3x Estrellas de los Deseos, 3x Atrayente de Peces Sirena, 10x Fertilizante", "rewardPt": "3x Estrelas dos Desejos, 3x Atrativo de Peixes Sereia, 10x Fertilizante", "expiresEs": "3 dic 2026", "expiresPt": "3 de dez de 2026"}
+  ]
 }
