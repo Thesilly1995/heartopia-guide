@@ -185,7 +185,7 @@
   "pastEvents": [
     {
       "nameNl": "Eerie Eve", "nameEn": "Eerie Eve",
-      "datesNl": "Vanaf 30 oktober 2026", "datesEn": "From October 30, 2026",
+      "datesNl": "30 oktober – 15 november 2026", "datesEn": "October 30 – November 15, 2026",
       "recipes": [
         {"nameNl": "Pompoen Soep", "nameEn": "Pumpkin Soup", "ingredientsNl": ["Pompoen", "Melk", "Boter", "Tarwe"], "ingredientsEn": ["Pumpkin", "Milk", "Butter", "Wheat"], "emoji": "🍲"},
         {"nameNl": "Spinnen Kom", "nameEn": "Spider Bowl", "ingredientsNl": ["2x Pompoen", "Kaas", "Olie"], "ingredientsEn": ["2x Pumpkin", "Cheese", "Oil"], "emoji": "🕷️"},
