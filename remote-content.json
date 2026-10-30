@@ -184,6 +184,16 @@
   },
   "pastEvents": [
     {
+      "nameNl": "Eerie Eve", "nameEn": "Eerie Eve",
+      "datesNl": "Vanaf 30 oktober 2026", "datesEn": "From October 30, 2026",
+      "recipes": [
+        {"nameNl": "Pompoen Soep", "nameEn": "Pumpkin Soup", "ingredientsNl": ["Pompoen", "Melk", "Boter", "Tarwe"], "ingredientsEn": ["Pumpkin", "Milk", "Butter", "Wheat"], "emoji": "🍲"},
+        {"nameNl": "Spinnen Kom", "nameEn": "Spider Bowl", "ingredientsNl": ["2x Pompoen", "Kaas", "Olie"], "ingredientsEn": ["2x Pumpkin", "Cheese", "Oil"], "emoji": "🕷️"},
+        {"nameNl": "Spook Dessert", "nameEn": "Ghost Dessert", "ingredientsNl": ["Pompoen", "2x Melk", "Chocoladepasta"], "ingredientsEn": ["Pumpkin", "2x Milk", "Chocolate Jam"], "emoji": "👻"},
+        {"nameNl": "Spookachtige Koekjes", "nameEn": "Spooky Cookies", "ingredientsNl": ["Pompoen", "Kaas", "Boter", "Tarwe"], "ingredientsEn": ["Pumpkin", "Cheese", "Butter", "Wheat"], "emoji": "🍪"}
+      ]
+    },
+    {
       "nameNl": "Echo of Ancients", "nameEn": "Echo of Ancients",
       "datesNl": "29 augustus – 10 oktober 2026", "datesEn": "August 29 – October 10, 2026",
       "fish": [
@@ -445,12 +455,5 @@
     {"code": "k9n3m5q1a7r4", "rewardNl": "3x Wensterren, 3x Meermin Vislokmiddel, 10x Mest", "rewardEn": "3x Wishing Stars, 3x Mermaid Fish Attractor, 10x Fertilizer", "expiresNl": "3 dec 2026", "expiresEn": "Dec 3, 2026", "rewardEs": "3x Estrellas de los Deseos, 3x Atrayente de Peces Sirena, 10x Fertilizante", "rewardPt": "3x Estrelas dos Desejos, 3x Atrativo de Peixes Sereia, 10x Fertilizante", "expiresEs": "3 dic 2026", "expiresPt": "3 de dez de 2026"},
     {"code": "a4m8r2k7n6q5", "rewardNl": "3x Wensterren, 3x Meermin Vislokmiddel, 10x Mest", "rewardEn": "3x Wishing Stars, 3x Mermaid Fish Attractor, 10x Fertilizer", "expiresNl": "3 dec 2026", "expiresEn": "Dec 3, 2026", "rewardEs": "3x Estrellas de los Deseos, 3x Atrayente de Peces Sirena, 10x Fertilizante", "rewardPt": "3x Estrelas dos Desejos, 3x Atrativo de Peixes Sereia, 10x Fertilizante", "expiresEs": "3 dic 2026", "expiresPt": "3 de dez de 2026"},
     {"code": "p7k5a3n9r2m8", "rewardNl": "3x Wensterren, 3x Meermin Vislokmiddel, 10x Mest", "rewardEn": "3x Wishing Stars, 3x Mermaid Fish Attractor, 10x Fertilizer", "expiresNl": "3 dec 2026", "expiresEn": "Dec 3, 2026", "rewardEs": "3x Estrellas de los Deseos, 3x Atrayente de Peces Sirena, 10x Fertilizante", "rewardPt": "3x Estrelas dos Desejos, 3x Atrativo de Peixes Sereia, 10x Fertilizante", "expiresEs": "3 dic 2026", "expiresPt": "3 de dez de 2026"}
-  ],
-  "nextEventRecipes": [
-    {"nameNl": "Pompoen Soep", "nameEn": "Pumpkin Soup", "ingredientsNl": ["Pompoen", "Melk", "Boter", "Tarwe"], "ingredientsEn": ["Pumpkin", "Milk", "Butter", "Wheat"], "emoji": "🍲"},
-    {"nameNl": "Spinnen Kom", "nameEn": "Spider Bowl", "ingredientsNl": ["2x Pompoen", "Kaas", "Olie"], "ingredientsEn": ["2x Pumpkin", "Cheese", "Oil"], "emoji": "🕷️"},
-    {"nameNl": "Spook Dessert", "nameEn": "Ghost Dessert", "ingredientsNl": ["Pompoen", "2x Melk", "Chocoladepasta"], "ingredientsEn": ["Pumpkin", "2x Milk", "Chocolate Jam"], "emoji": "👻"},
-    {"nameNl": "Spookachtige Koekjes", "nameEn": "Spooky Cookies", "ingredientsNl": ["Pompoen", "Kaas", "Boter", "Tarwe"], "ingredientsEn": ["Pumpkin", "Cheese", "Butter", "Wheat"], "emoji": "🍪"}
-  ],
-  "nextEventName": "Eerie Eve"
+  ]
 }
