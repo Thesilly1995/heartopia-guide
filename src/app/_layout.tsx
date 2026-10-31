@@ -58,10 +58,13 @@ function AppContent() {
   const lifetimeNoticeShownRef = useRef(false);
 
   // Op alle schermen behalve (tabs) is er geen bottom-tab-balk die al ruimte
-  // reserveert voor de los-zwevende AdBanner (zie ad-banner.tsx) — zonder deze
-  // padding tekent de banner over het onderste stuk scrollbare inhoud heen.
-  // Op web is er geen AdBanner (zie ad-banner.web.tsx), dus ook geen padding nodig.
-  const contentPadding = premium || Platform.OS === 'web' ? 0 : insets.bottom + AdBannerHeight;
+  // reserveert — zonder insets.bottom hier zou de onderkant van scrollbare
+  // inhoud onder de systeem-navigatiebalk (home indicator/gebaren) vallen.
+  // Niet-Premium gebruikers krijgen er ook nog AdBannerHeight bij voor de
+  // los-zwevende AdBanner (zie ad-banner.tsx), anders tekent die banner over
+  // het onderste stuk inhoud heen. Op web is er geen AdBanner (zie
+  // ad-banner.web.tsx) en geen systeem-navigatiebalk, dus geen padding nodig.
+  const contentPadding = Platform.OS === 'web' ? 0 : insets.bottom + (premium ? 0 : AdBannerHeight);
 
   // Kleine vertraging zodat de echte (RevenueCat-)premiumstatus tijd heeft om op
   // te halen voordat we beslissen of de promo getoond wordt — anders zou een
