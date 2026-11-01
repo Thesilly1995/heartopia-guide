@@ -27,7 +27,18 @@ const STRINGS = {
  * pinch/pan-modal. Geef `trigger` mee om i.p.v. de standaard-thumbnail een eigen
  * knop te tonen (bv. een kalender-icoon) die dezelfde zoom-modal opent.
  */
-export function ZoomableImage({ source, aspectRatio, trigger }: { source: ImageSourcePropType; aspectRatio: number; trigger?: React.ReactNode }) {
+export function ZoomableImage({
+  source,
+  aspectRatio,
+  trigger,
+  cachePolicy,
+}: {
+  source: ImageSourcePropType;
+  aspectRatio: number;
+  trigger?: React.ReactNode;
+  /** Standaard expo-image-gedrag (permanente disk-cache per URL) tenzij hier iets anders meegegeven wordt — zie de kalender-afbeelding in (tabs)/index.tsx, die elke maand onder dezelfde URL vervangen wordt. */
+  cachePolicy?: 'none' | 'disk' | 'memory' | 'memory-disk';
+}) {
   const colors = useHeartopiaColors();
   const styles = useMemo(() => makeStyles(colors), [colors]);
   const { language } = useLanguage();
@@ -40,7 +51,7 @@ export function ZoomableImage({ source, aspectRatio, trigger }: { source: ImageS
         <Pressable onPress={() => setZoomed(true)}>{trigger}</Pressable>
       ) : (
         <Pressable style={[styles.thumbnail, { aspectRatio }]} onPress={() => setZoomed(true)}>
-          <Image source={source} style={StyleSheet.absoluteFill} contentFit="contain" />
+          <Image source={source} style={StyleSheet.absoluteFill} contentFit="contain" cachePolicy={cachePolicy} />
           <View style={styles.hintBadge}>
             <Text style={styles.hintText}>{s.hint}</Text>
           </View>
@@ -54,7 +65,7 @@ export function ZoomableImage({ source, aspectRatio, trigger }: { source: ImageS
               <Text style={styles.closeButtonText}>✕</Text>
             </Pressable>
             <ZoomableContent aspectRatio={aspectRatio} active={zoomed} resetLabel={s.reset} styles={styles}>
-              <Image source={source} style={StyleSheet.absoluteFill} contentFit="contain" />
+              <Image source={source} style={StyleSheet.absoluteFill} contentFit="contain" cachePolicy={cachePolicy} />
             </ZoomableContent>
           </SafeAreaView>
         </GestureHandlerRootView>
