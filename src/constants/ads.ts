@@ -11,7 +11,7 @@ import mobileAds, { TestIds } from 'react-native-google-mobile-ads';
  */
 const PRODUCTION_BANNER_AD_UNIT_ID: { android: string | null; ios: string | null } = {
   android: 'ca-app-pub-4511788652457861/5234614952',
-  ios: null,
+  ios: 'ca-app-pub-4511788652457861/9419769918',
 };
 
 export function getBannerAdUnitId(): string {
