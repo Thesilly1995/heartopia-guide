@@ -8,7 +8,7 @@ import Purchases, { CustomerInfo, LOG_LEVEL } from 'react-native-purchases';
  * gewoon door, alleen zonder echte aankoopfunctionaliteit.
  */
 const REVENUECAT_API_KEY_ANDROID = 'goog_EUKxUeYsehsTVrungKGTngsqfyw';
-const REVENUECAT_API_KEY_IOS = '';
+const REVENUECAT_API_KEY_IOS = 'appl_PluGsDbcmbYHxZgYWjpwikxdPDq';
 
 /** Entitlement-identifier zoals aangemaakt in het RevenueCat-dashboard. */
 export const PREMIUM_ENTITLEMENT_ID = 'premium';
