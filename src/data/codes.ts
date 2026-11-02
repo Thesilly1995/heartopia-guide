@@ -55,7 +55,9 @@ export function useCodes(): CodeItem[] {
 
   return useMemo(() => {
     const source = payload?.codes && payload.codes.length > 0 ? payload.codes : CODES_RAW;
-    return source.map((r) => ({
+    // Nieuwste code eerst: codes worden altijd achteraan in de bron (JSON/CODES_RAW)
+    // toegevoegd, dus de weergavevolgorde is simpelweg omgedraaid.
+    return [...source].reverse().map((r) => ({
       reward: localizedReward(r, language),
       expires: localizedExpires(r, language),
       code: r.code,
