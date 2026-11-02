@@ -16,9 +16,7 @@ cloud, ook zonder Apple-hardware.
 
 ## 1. Apple Developer Account aanmaken
 
-- [x] Ingeschreven en betaald (€99/jaar).
-- [ ] Wacht op verificatie door Apple (kan enkele uren tot 1-2 dagen duren —
-      je krijgt een mail zodra het account actief is).
+- [x] Ingeschreven, betaald en geverifieerd — account is actief.
 
 ## 2. AdMob — iOS App-ID en ad unit aanmaken
 
