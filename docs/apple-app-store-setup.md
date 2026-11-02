@@ -35,8 +35,10 @@ cloud, ook zonder Apple-hardware.
 
 Zelfde stappen als in `docs/revenuecat-setup.md`, nu voor iOS:
 
-- [ ] In App Store Connect: in-app-abonnementen aanmaken (Monthly + Annual,
-      zelfde structuur als de Google Play-producten).
+- [x] In App Store Connect: Subscription Group "Heartopedia Premium"
+      aangemaakt met `heartopedia_premium_monthly` (€2,99/maand) en
+      `heartopedia_premium_annual` (€29,99/jaar), beide op "Prepare for
+      Submission" (nog niet ingediend voor review).
 - [ ] In RevenueCat: iOS-app toevoegen aan het project, App Store Connect
       koppelen (API-key vanuit App Store Connect → Users and Access →
       Integrations), de twee producten aan dezelfde `premium`-entitlement
