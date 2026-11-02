@@ -30,6 +30,9 @@ cloud, ook zonder Apple-hardware.
 
 ## 3. RevenueCat — iOS product + key
 
+- [x] Paid Apps Agreement actief (Legal Entity, Banking, Tax/W-8BEN en
+      DSA-trader-status allemaal afgerond).
+
 Zelfde stappen als in `docs/revenuecat-setup.md`, nu voor iOS:
 
 - [ ] In App Store Connect: in-app-abonnementen aanmaken (Monthly + Annual,
