@@ -20,18 +20,13 @@ cloud, ook zonder Apple-hardware.
 
 ## 2. AdMob — iOS App-ID en ad unit aanmaken
 
-Zelfde stappen als in `docs/admob-setup.md` deed voor Android, nu voor iOS:
-
-- [ ] [apps.admob.com](https://apps.admob.com) → **Apps → App toevoegen** →
-      platform **iOS** → naam `Heartopedia`.
-- [ ] Nieuwe **banner-advertentie-eenheid** aanmaken (zelfde als Android-stap 2
-      in `admob-setup.md`).
-- [ ] In `app.json`, bij de `react-native-google-mobile-ads`-plugin, `iosAppId`
-      vervangen (staat nu nog op Google's test-ID
-      `ca-app-pub-3940256099942544~1458002511`).
-- [ ] In `src/constants/ads.ts`, `PRODUCTION_BANNER_AD_UNIT_ID.ios` invullen
-      (staat nu op `null`).
-- [ ] Nieuwe `eas build` nodig na deze wijziging (zit in native config).
+- [x] iOS-app aangemaakt in AdMob, App-ID `ca-app-pub-4511788652457861~2746550352`
+      ingevuld in `app.json`.
+- [x] Banner-advertentie-eenheid aangemaakt, Ad unit-ID
+      `ca-app-pub-4511788652457861/9419769918` ingevuld in
+      `src/constants/ads.ts`.
+- [ ] Nog in een (gecombineerde) `eas build` nodig — zit in native config, dus
+      geen `eas update`.
 
 ## 3. RevenueCat — iOS product + key
 
