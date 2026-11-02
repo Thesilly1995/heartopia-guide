@@ -39,13 +39,13 @@ Zelfde stappen als in `docs/revenuecat-setup.md`, nu voor iOS:
       aangemaakt met `heartopedia_premium_monthly` (€2,99/maand) en
       `heartopedia_premium_annual` (€29,99/jaar), beide op "Prepare for
       Submission" (nog niet ingediend voor review).
-- [ ] In RevenueCat: iOS-app toevoegen aan het project, App Store Connect
-      koppelen (API-key vanuit App Store Connect → Users and Access →
-      Integrations), de twee producten aan dezelfde `premium`-entitlement
-      hangen als Android.
-- [ ] `src/constants/purchases.ts` → `REVENUECAT_API_KEY_IOS` invullen (staat
-      nu leeg).
-- [ ] Nieuwe `eas build` nodig (key zit in de JS-bundle).
+- [x] In RevenueCat: iOS-app toegevoegd aan het project, App Store Connect
+      gekoppeld (via een In-App Purchase-key, niet de algemene App Store
+      Connect API-key), beide producten gekoppeld aan dezelfde
+      `premium`-entitlement als Android (nu 4 producten in totaal).
+- [x] `src/constants/purchases.ts` → `REVENUECAT_API_KEY_IOS` ingevuld.
+- [ ] Nieuwe `eas build` nodig (key zit in de JS-bundle) — kan gecombineerd
+      met de andere punten die ook een build nodig hebben.
 
 ## 4. Push notifications — APNs
 
