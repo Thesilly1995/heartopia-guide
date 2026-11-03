@@ -76,10 +76,11 @@ Zelfde stappen als in `docs/revenuecat-setup.md`, nu voor iOS:
       niet gekoppeld aan identiteit, wél tracking — vandaar de
       ATT-toestemmingsvraag die hierdoor is toegevoegd, zie onderstaande
       commit).
-- [x] Screenshots in de vereiste iPhone-formaten gegenereerd (6,9" = 1320×2868,
-      6,5" = 1242×2688) via Playwright op de live webversie (home, codes,
-      vissen, koken) — geen Mac/simulator nodig geweest. Geüpload in App
-      Store Connect bij "App Previews and Screenshots".
+- [x] Screenshots gegenereerd via Playwright op de live webversie (home, codes,
+      vissen, koken) — geen Mac/simulator nodig geweest. App Store Connect
+      vraagt (nieuwe categorie-indeling, geen losse 6,9"/6,5" meer) om
+      **1206×2622** voor "iPhone with Dynamic Island (medium display)" —
+      geüpload en geaccepteerd.
 - [x] Beschrijving + keywords (100/100 tekens) + promotional text ingevuld
       in de versie-sectie.
 - [x] Support URL (`https://heartopia-guide-nine.vercel.app/support`, nieuwe
