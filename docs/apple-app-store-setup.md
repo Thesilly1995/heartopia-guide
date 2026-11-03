@@ -68,10 +68,14 @@ Zelfde stappen als in `docs/revenuecat-setup.md`, nu voor iOS:
       `ITSAppUsesNonExemptEncryption: false` in `app.json`, hoeft niet meer
       los ingevuld te worden bij het indienen van een build.
 - [x] Privacybeleid-URL ingevuld (zelfde Artifact-link als bij Android).
-- [ ] **App Privacy**-vragenlijst: data-typen aangevinkt (Name, Email,
-      Other User Content, User ID, Device ID, Purchases, Advertising Data —
-      overige categorieën niet van toepassing), maar de per-type
-      vervolgvragen (doel/gekoppeld aan identiteit/tracking) staan nog open.
+- [x] **App Privacy**-vragenlijst volledig doorlopen (data-typen + per-type
+      doel/identiteit/tracking-vragen): Name + Other User Content (App
+      Functionality, niet gekoppeld aan identiteit, geen tracking), Email +
+      User ID + Purchases (App Functionality, niet gekoppeld aan identiteit,
+      geen tracking), Device ID + Advertising Data (Third-Party Advertising,
+      niet gekoppeld aan identiteit, wél tracking — vandaar de
+      ATT-toestemmingsvraag die hierdoor is toegevoegd, zie onderstaande
+      commit).
 - [ ] Screenshots in de vereiste iPhone-formaten (6,9" en 6,5" verplicht;
       bestaande Play Store-screenshots zijn andere verhoudingen, dus nieuwe
       nodig).
