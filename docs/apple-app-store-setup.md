@@ -107,9 +107,20 @@ Zelfde stappen als in `docs/revenuecat-setup.md`, nu voor iOS:
       `expo-modules-core@57.0.24` bestaat — alle SDK 57-dependencies zijn
       bijgewerkt naar hun nieuwste compatibele patch via `expo install --fix`.
       Build-artifact: https://expo.dev/artifacts/eas/Mu1S9s6Gd9mw7-vrpL5iXgae0DHIfdhfAhphKRfC8qw.ipa
+- [x] `eas submit --platform ios --profile production --latest` succesvol
+      gedraaid. Ook hiervoor was eenmalig een interactieve stap nodig: EAS
+      wil voor submissions een eigen "App Store Connect API Key"-record
+      (los van de build-credentials) — gekozen voor "eigen key opgeven"
+      (niet laten genereren, dat vraagt om een echte Apple ID-wachtwoord-
+      login die we niet kunnen automatiseren) en daar dezelfde Admin-key
+      van `eas.json`'s `ascAppId`-stap voor hergebruikt (`ascAppId`:
+      `6829876925`, ook te vinden via de App Store Connect API
+      `GET /v1/apps?filter[bundleId]=...`).
+      Submission-details: https://expo.dev/accounts/gamerdex/projects/heartopedia/submissions/0487a978-1a8b-4c0a-825c-371b44149383
+      Apple verwerkt de build nu (duurt ~5-10 min, mailtje volgt); daarna
+      zichtbaar in TestFlight: https://appstoreconnect.apple.com/apps/6829876925/testflight/ios
 - [ ] Build testen via **TestFlight** (eigen toestel + evt. een paar
       testers toevoegen).
-- [ ] `eas submit --platform ios` → koppelt de build aan de App Store Connect-listing.
 - [ ] Apple-review afwachten (meestal 1-3 dagen, soms vragen ze om
       verduidelijking — reageer gewoon in Resolution Center).
 
