@@ -79,8 +79,12 @@ Zelfde stappen als in `docs/revenuecat-setup.md`, nu voor iOS:
 - [ ] Screenshots in de vereiste iPhone-formaten (6,9" en 6,5" verplicht;
       bestaande Play Store-screenshots zijn andere verhoudingen, dus nieuwe
       nodig).
-- [ ] Volledige beschrijving + keywords + promotional text invullen in de
-      versie-sectie (tekst staat al klaar in `docs/app-store-listing.md`).
+- [x] Beschrijving + keywords (100/100 tekens) + promotional text ingevuld
+      in de versie-sectie.
+- [x] Support URL (`https://heartopia-guide-nine.vercel.app/support`, nieuwe
+      statische pagina via `public/support.html`) en Marketing URL
+      (`https://heartopia-guide-nine.vercel.app`) ingevuld.
+- [x] Version-veld gecorrigeerd naar `1.0.1` (moet matchen met `app.json`).
 
 ## 6. Build, testen, indienen
 
