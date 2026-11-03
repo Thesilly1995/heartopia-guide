@@ -15,7 +15,10 @@
     },
     "ios": {
       "icon": "./assets/expo.icon",
-      "bundleIdentifier": "com.thesilly1995.heartopiagids"
+      "bundleIdentifier": "com.thesilly1995.heartopiagids",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "package": "com.thesilly1995.heartopiagids",
