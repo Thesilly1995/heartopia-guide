@@ -76,9 +76,10 @@ Zelfde stappen als in `docs/revenuecat-setup.md`, nu voor iOS:
       niet gekoppeld aan identiteit, wél tracking — vandaar de
       ATT-toestemmingsvraag die hierdoor is toegevoegd, zie onderstaande
       commit).
-- [ ] Screenshots in de vereiste iPhone-formaten (6,9" en 6,5" verplicht;
-      bestaande Play Store-screenshots zijn andere verhoudingen, dus nieuwe
-      nodig).
+- [x] Screenshots in de vereiste iPhone-formaten gegenereerd (6,9" = 1320×2868,
+      6,5" = 1242×2688) via Playwright op de live webversie (home, codes,
+      vissen, koken) — geen Mac/simulator nodig geweest. Geüpload in App
+      Store Connect bij "App Previews and Screenshots".
 - [x] Beschrijving + keywords (100/100 tekens) + promotional text ingevuld
       in de versie-sectie.
 - [x] Support URL (`https://heartopia-guide-nine.vercel.app/support`, nieuwe
