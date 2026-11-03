@@ -95,8 +95,18 @@ Zelfde stappen als in `docs/revenuecat-setup.md`, nu voor iOS:
 
 ## 6. Build, testen, indienen
 
-- [ ] `eas build --platform ios` (genereert certificaten/profielen automatisch
-      via EAS, geen handmatig Xcode-werk nodig).
+- [x] `eas build --platform ios --profile production` succesvol gedraaid.
+      Credentials (Distribution Certificate + Provisioning Profile) zijn
+      eenmalig aangemaakt via een App Store Connect API Key met **Admin**-
+      rechten (apart aangemaakt naast de RevenueCat "In-App Purchase"-key —
+      env vars `EXPO_ASC_API_KEY_PATH`/`EXPO_ASC_KEY_ID`/`EXPO_ASC_ISSUER_ID`),
+      staan nu permanent opgeslagen op Expo's servers, dus toekomstige
+      builds hoeven dit niet opnieuw te doen.
+      Onderweg kwam een losstaande bug aan het licht: `expo-store-review`
+      (SDK 57) gebruikt de Swift-utility `SceneGeometry`, die pas vanaf
+      `expo-modules-core@57.0.24` bestaat — alle SDK 57-dependencies zijn
+      bijgewerkt naar hun nieuwste compatibele patch via `expo install --fix`.
+      Build-artifact: https://expo.dev/artifacts/eas/Mu1S9s6Gd9mw7-vrpL5iXgae0DHIfdhfAhphKRfC8qw.ipa
 - [ ] Build testen via **TestFlight** (eigen toestel + evt. een paar
       testers toevoegen).
 - [ ] `eas submit --platform ios` → koppelt de build aan de App Store Connect-listing.
