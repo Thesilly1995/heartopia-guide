@@ -75,7 +75,9 @@
         {
           "userTrackingPermission": "Heartopedia gebruikt dit om soms wat relevantere advertenties te tonen. Je kan hier altijd nee op zeggen."
         }
-      ]
+      ],
+      "expo-image",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true,
