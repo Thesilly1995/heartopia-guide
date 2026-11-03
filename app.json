@@ -69,6 +69,12 @@
             "enableShrinkResourcesInReleaseBuilds": true
           }
         }
+      ],
+      [
+        "expo-tracking-transparency",
+        {
+          "userTrackingPermission": "Heartopedia gebruikt dit om soms wat relevantere advertenties te tonen. Je kan hier altijd nee op zeggen."
+        }
       ]
     ],
     "experiments": {
