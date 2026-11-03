@@ -49,14 +49,10 @@ Zelfde stappen als in `docs/revenuecat-setup.md`, nu voor iOS:
 
 ## 4. Push notifications — APNs
 
-Zelfde flow als `docs/push-notifications-setup.md`, nu voor iOS:
-
-- [ ] In Apple Developer account: **Certificates, Identifiers & Profiles** →
-      een APNs-key aanmaken (.p8-bestand + Key ID + Team ID).
-- [ ] Die gegevens uploaden naar het Expo-project
-      (`eas credentials` → iOS → Push Notifications), of via de
-      Expo-dashboard.
-- [ ] Geen codewijziging nodig — `registerForPushNotificationsAsync()` werkt
+- [x] Push key aangemaakt en gekoppeld aan het EAS-project via
+      `eas credentials` (ingelogd met Apple ID, EAS regelde de key
+      automatisch — Developer Portal ID `K8JN4JYR65`).
+- [x] Geen codewijziging nodig — `registerForPushNotificationsAsync()` werkt
       dan vanzelf ook op iOS (geeft nu nog gewoon `null` terug, geen crash).
 
 ## 5. App Store Connect — de listing
