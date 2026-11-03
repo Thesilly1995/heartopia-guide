@@ -1,4 +1,5 @@
 import { Platform } from 'react-native';
+import { getTrackingPermissionsAsync, requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 import mobileAds, { TestIds } from 'react-native-google-mobile-ads';
 
 /**
@@ -20,7 +21,16 @@ export function getBannerAdUnitId(): string {
   return id ?? TestIds.BANNER;
 }
 
-/** Eenmalig aanroepen bij app-start (native only, zie _layout.tsx + ads.web.ts). */
-export function initializeAdsIfNeeded() {
+/**
+ * Eenmalig aanroepen bij app-start (native only, zie _layout.tsx + ads.web.ts).
+ * Op iOS eerst (indien nog niet gevraagd) om ATT-toestemming vragen — AdMob
+ * valt vanzelf terug op niet-gepersonaliseerde advertenties als dit geweigerd
+ * of nog niet beantwoord is.
+ */
+export async function initializeAdsIfNeeded() {
+  if (Platform.OS === 'ios') {
+    const { status } = await getTrackingPermissionsAsync();
+    if (status === 'undetermined') await requestTrackingPermissionsAsync();
+  }
   mobileAds().initialize();
 }
