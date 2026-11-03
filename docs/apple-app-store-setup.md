@@ -57,20 +57,26 @@ Zelfde stappen als in `docs/revenuecat-setup.md`, nu voor iOS:
 
 ## 5. App Store Connect — de listing
 
-- [ ] App aanmaken in [appstoreconnect.apple.com](https://appstoreconnect.apple.com),
-      bundle ID `com.thesilly1995.heartopiagids` koppelen.
+- [x] App aangemaakt in App Store Connect, bundle ID
+      `com.thesilly1995.heartopiagids` gekoppeld (SKU `heartopedia-ios`).
+- [x] App Information: categorie Games (+ Reference), Content Rights, Name +
+      Subtitle (`docs/app-store-listing.md`) ingevuld.
+- [x] Age Rating-vragenlijst volledig doorlopen.
+- [x] Digital Services Act trader-status: non-trader (al bevestigd op
+      accountniveau).
+- [x] Export-compliance (encryptie): vooraf afgehandeld via
+      `ITSAppUsesNonExemptEncryption: false` in `app.json`, hoeft niet meer
+      los ingevuld te worden bij het indienen van een build.
+- [x] Privacybeleid-URL ingevuld (zelfde Artifact-link als bij Android).
+- [ ] **App Privacy**-vragenlijst: data-typen aangevinkt (Name, Email,
+      Other User Content, User ID, Device ID, Purchases, Advertising Data —
+      overige categorieën niet van toepassing), maar de per-type
+      vervolgvragen (doel/gekoppeld aan identiteit/tracking) staan nog open.
 - [ ] Screenshots in de vereiste iPhone-formaten (6,9" en 6,5" verplicht;
       bestaande Play Store-screenshots zijn andere verhoudingen, dus nieuwe
-      nodig — zie `docs/play-store-listing.md` voor de teksten die hergebruikt
-      kunnen worden).
-- [ ] Beschrijving/trefwoorden: tekst uit `docs/play-store-listing.md` als
-      basis.
-- [ ] Privacybeleid-URL: `docs/privacy-policy.html` (moet ergens gehost staan,
-      bv. als GitHub Pages — check of dat al zo is of nog moet gebeuren).
-- [ ] Leeftijdsclassificatie invullen (vragenlijst in App Store Connect).
-- [ ] **App Privacy**-vragenlijst invullen: welke data verzameld wordt via
-      AdMob (advertentie-ID, diagnostiek), RevenueCat (aankoopgeschiedenis) en
-      Supabase (push-token, cloud-save/account-gegevens indien van toepassing).
+      nodig).
+- [ ] Volledige beschrijving + keywords + promotional text invullen in de
+      versie-sectie (tekst staat al klaar in `docs/app-store-listing.md`).
 
 ## 6. Build, testen, indienen
 
