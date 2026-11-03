@@ -87,6 +87,11 @@ Zelfde stappen als in `docs/revenuecat-setup.md`, nu voor iOS:
       statische pagina via `public/support.html`) en Marketing URL
       (`https://heartopia-guide-nine.vercel.app`) ingevuld.
 - [x] Version-veld gecorrigeerd naar `1.0.1` (moet matchen met `app.json`).
+- [x] English-localization toegevoegd (Name/Subtitle/Promotional Text/
+      Keywords/Description uit `docs/app-store-listing.md`, eigen Engelse
+      screenshots via dezelfde Playwright-aanpak met `localStorage`
+      `heartopia:language` op `en` gezet). ES/PT/FR/DE bewust overgeslagen
+      — niet verplicht, kan altijd later los toegevoegd worden.
 
 ## 6. Build, testen, indienen
 
