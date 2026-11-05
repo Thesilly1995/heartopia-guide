@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
 import { useLanguage } from '@/hooks/use-language';
-import { useKindWindowActive } from '@/lib/event-window';
+import { useActiveKindBlockStart } from '@/lib/event-window';
 import { useRemoteContent } from '@/lib/remote-content';
 
 export interface EventSpot {
@@ -22,17 +22,24 @@ const RAINBOW_SPOTS_FALLBACK: EventSpot[] = [];
 /**
  * Alle Rainbow-locaties (hoofdeiland + Whalefall Canyon + Doris) horen bij
  * hetzelfde 6-uursblok — automatisch verborgen zodra dat blok voorbij is
- * o.b.v. `weekForecast` (zie `useKindWindowActive`), zodat ze niet langer
+ * o.b.v. `weekForecast` (zie `useActiveKindBlockStart`), zodat ze niet langer
  * handmatig geleegd hoeven te worden. Anders dan bij meteorenregen is er
  * geen langer "hakvenster" erna.
+ *
+ * `rainbowSpotsUpdatedAt` moet op of na de start van het huidige blok liggen
+ * — anders zijn `rainbowSpots` nog de (mogelijk verouderde) locaties van een
+ * eerdere periode die vergeten is bij te werken, en toont de app liever
+ * niets dan foutieve locaties.
  */
 export function useRainbowSpots(): EventSpot[] {
   const { language } = useLanguage();
   const { payload } = useRemoteContent();
-  const active = useKindWindowActive('rainbow', 6);
+  const activeStart = useActiveKindBlockStart('rainbow', 6);
 
   return useMemo(() => {
-    if (active && payload?.rainbowSpots && payload.rainbowSpots.length > 0) {
+    const updatedAt = payload?.rainbowSpotsUpdatedAt ? new Date(payload.rainbowSpotsUpdatedAt) : null;
+    const isFresh = !!activeStart && !!updatedAt && updatedAt.getTime() >= activeStart.getTime();
+    if (isFresh && payload?.rainbowSpots && payload.rainbowSpots.length > 0) {
       return payload.rainbowSpots.map((spot) => ({
         num: spot.num,
         x: spot.x,
@@ -49,5 +56,5 @@ export function useRainbowSpots(): EventSpot[] {
       }));
     }
     return RAINBOW_SPOTS_FALLBACK;
-  }, [payload, language, active]);
+  }, [payload, language, activeStart]);
 }
