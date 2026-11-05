@@ -119,8 +119,10 @@ Zelfde stappen als in `docs/revenuecat-setup.md`, nu voor iOS:
       Submission-details: https://expo.dev/accounts/gamerdex/projects/heartopedia/submissions/0487a978-1a8b-4c0a-825c-371b44149383
       Apple verwerkt de build nu (duurt ~5-10 min, mailtje volgt); daarna
       zichtbaar in TestFlight: https://appstoreconnect.apple.com/apps/6829876925/testflight/ios
-- [ ] Build testen via **TestFlight** (eigen toestel + evt. een paar
-      testers toevoegen).
+- [x] Build getest via **TestFlight** (geen eigen iPhone, dus getest door een
+      vriendin als tester) — alle kernfuncties werken: menu's, Premium-
+      abonnement, kalender, dailies, profiel, taal/regio.
+- [ ] **Submit for Review** in App Store Connect.
 - [ ] Apple-review afwachten (meestal 1-3 dagen, soms vragen ze om
       verduidelijking — reageer gewoon in Resolution Center).
 
