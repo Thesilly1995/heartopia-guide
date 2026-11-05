@@ -28,12 +28,24 @@ function findBlockStarts(weekForecast: RemoteWeekForecastDay[] | undefined, kind
  * legen achteraf. Geen matchend blok gevonden → altijd `false` (fail-safe).
  */
 export function useKindWindowActive(kind: WeekForecastKind, windowHours: number): boolean {
+  return useActiveKindBlockStart(kind, windowHours) !== null;
+}
+
+/**
+ * Startmoment van het meest recente actieve `kind`-blok (zie
+ * `useKindWindowActive`), of `null` als er nu geen actief blok is. Gebruikt
+ * door `useRainbowSpots`/`useMeteorSpots` om te bepalen of de ingevulde
+ * locaties daadwerkelijk bij déze periode horen (i.p.v. per ongeluk nog de
+ * vorige, verouderde locaties te tonen omdat ze zijn vergeten bij te werken).
+ */
+export function useActiveKindBlockStart(kind: WeekForecastKind, windowHours: number): Date | null {
   const { server } = useServer();
   const { payload } = useRemoteContent();
 
   return useMemo(() => {
     const starts = findBlockStarts(payload?.weekForecast, kind);
     const now = serverNow(server.offsetHours);
-    return starts.some((start) => now >= start && now.getTime() - start.getTime() < windowHours * 3600000);
+    const active = starts.find((start) => now >= start && now.getTime() - start.getTime() < windowHours * 3600000);
+    return active ?? null;
   }, [payload, server.offsetHours, kind, windowHours]);
 }

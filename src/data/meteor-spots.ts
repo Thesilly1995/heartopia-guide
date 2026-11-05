@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
 import { useLanguage } from '@/hooks/use-language';
-import { useKindWindowActive } from '@/lib/event-window';
+import { useActiveKindBlockStart } from '@/lib/event-window';
 import { useRemoteContent } from '@/lib/remote-content';
 
 export interface EventSpot {
@@ -21,22 +21,30 @@ const METEOR_SPOTS_FALLBACK: EventSpot[] = [];
 
 /**
  * Ertsplekken/Doris automatisch verbergen zodra het meteorenregen-venster
- * voorbij is, o.b.v. `weekForecast` (zie `useKindWindowActive`) — voorkomt
- * dat ze "actief" blijven staan als vergeten wordt `meteorSpots` handmatig
- * te legen. Doris' eigen venster is alleen het 6-uursblok zelf; het
- * hakvenster van de ertsplekken loopt 24u vanaf diezelfde blokstart.
+ * voorbij is, o.b.v. `weekForecast` (zie `useActiveKindBlockStart`) —
+ * voorkomt dat ze "actief" blijven staan als vergeten wordt `meteorSpots`
+ * handmatig te legen. Doris' eigen venster is alleen het 6-uursblok zelf;
+ * het hakvenster van de ertsplekken loopt 24u vanaf diezelfde blokstart.
+ *
+ * `meteorSpotsUpdatedAt` moet op of na de start van het huidige blok liggen
+ * — anders zijn `meteorSpots` nog de (mogelijk verouderde) locaties van een
+ * eerdere periode die vergeten is bij te werken, en toont de app liever
+ * niets dan foutieve locaties.
  */
 export function useMeteorSpots(): EventSpot[] {
   const { language } = useLanguage();
   const { payload } = useRemoteContent();
-  const oreActive = useKindWindowActive('meteor', 24);
-  const dorisActive = useKindWindowActive('meteor', 6);
+  const oreStart = useActiveKindBlockStart('meteor', 24);
+  const dorisStart = useActiveKindBlockStart('meteor', 6);
 
   return useMemo(() => {
     if (!payload?.meteorSpots || payload.meteorSpots.length === 0) return METEOR_SPOTS_FALLBACK;
 
+    const updatedAt = payload.meteorSpotsUpdatedAt ? new Date(payload.meteorSpotsUpdatedAt) : null;
+    const isFreshFor = (start: Date | null) => !!start && !!updatedAt && updatedAt.getTime() >= start.getTime();
+
     return payload.meteorSpots
-      .filter((spot) => (spot.isDoris ? dorisActive : oreActive))
+      .filter((spot) => (spot.isDoris ? isFreshFor(dorisStart) : isFreshFor(oreStart)))
       .map((spot) => ({
         num: spot.num,
         x: spot.x,
@@ -51,5 +59,5 @@ export function useMeteorSpots(): EventSpot[] {
         underwater: spot.underwater,
         isDoris: spot.isDoris ?? false,
       }));
-  }, [payload, language, oreActive, dorisActive]);
+  }, [payload, language, oreStart, dorisStart]);
 }

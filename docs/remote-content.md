@@ -125,6 +125,14 @@ dat specifieke onderdeel.
   zorgen dat de `weekForecast`-entry voor die dag het bijbehorende
   `kind` + `block` heeft vóórdat je de coördinaten invult, anders blijven
   de plekken (bewust, fail-safe) verborgen.
+  **Sinds nov 2026: zet ook `rainbowSpotsUpdatedAt` / `meteorSpotsUpdatedAt`
+  (ISO-tijdstip) elke keer dat je `rainbowSpots`/`meteorSpots` bijwerkt** —
+  staat dit tijdstip vóór de start van het huidige blok (bv. omdat je
+  vergeten bent de locaties aan te passen voor een nieuwe periode), dan
+  toont de app niets i.p.v. de oude locaties van de vorige keer. Dit
+  voorkomt verwarring bij spelers (gebeurd op de SEA-server: oude Rainbow-
+  locaties stonden er nog terwijl de periode allang ververst was). Zet het
+  tijdstip dus ook opnieuw als de coördinaten toevallig ongewijzigd blijven.
   `rainbowSpots` ondersteunt `underwater: true` voor de 4 boeketplekken
   in Whalefall Canyon (`whalefall-map.jpg`, van de 4 kan een speler er
   maar 1 daadwerkelijk pakken, verschilt per speler) — die krijgen in
