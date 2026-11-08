@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
 import * as Updates from 'expo-updates';
 
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
@@ -72,6 +72,17 @@ export function UpdateBanner() {
       .catch(() => {
         // geen internet, of check mislukt om een andere reden — gewoon stil laten falen
       });
+  }, []);
+
+  // Tijdelijke, onmisbare debug-popup (nov 2026) om te verifiëren welke
+  // OTA-update daadwerkelijk draait op een toestel — zie sessielog voor
+  // context. Mag weer weg zodra het mysterie rond uitblijvende updates is
+  // opgelost. Altijd tonen (ook in __DEV__) zodat er geen twijfel is.
+  useEffect(() => {
+    Alert.alert(
+      'Debug: actieve update',
+      `updateId: ${Updates.updateId ?? '(embedded/geen OTA)'}\nchannel: ${Updates.channel ?? '?'}\ncreatedAt: ${Updates.createdAt ?? '?'}\nisEmbeddedLaunch: ${Updates.isEmbeddedLaunch}\nruntimeVersion: ${Updates.runtimeVersion ?? '?'}`
+    );
   }, []);
 
   const onUpdate = async () => {
