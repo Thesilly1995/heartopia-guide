@@ -74,8 +74,6 @@ export function UpdateBanner() {
       });
   }, []);
 
-  if (!available || dismissed) return null;
-
   const onUpdate = async () => {
     setUpdating(true);
     try {
@@ -86,23 +84,48 @@ export function UpdateBanner() {
     }
   };
 
+  // Tijdelijk debug-regeltje (nov 2026) om te verifiëren welke OTA-update
+  // daadwerkelijk draait op een toestel — zie sessielog voor context. Mag
+  // weer weg zodra het mysterie rond uitblijvende updates is opgelost.
+  const debugInfo = __DEV__ ? null : (
+    <Text style={debugStyles.text} selectable>
+      build: {Updates.updateId ?? 'embedded'} · ch: {Updates.channel ?? '?'}
+    </Text>
+  );
+
+  if (!available || dismissed) return debugInfo;
+
   return (
-    <View style={styles.banner}>
-      <View style={styles.textWrap}>
-        <Text style={styles.title}>{s.title}</Text>
-        <Text style={styles.text}>{s.text}</Text>
+    <>
+      <View style={styles.banner}>
+        <View style={styles.textWrap}>
+          <Text style={styles.title}>{s.title}</Text>
+          <Text style={styles.text}>{s.text}</Text>
+        </View>
+        <View style={styles.actions}>
+          <Pressable onPress={() => setDismissed(true)} disabled={updating} hitSlop={6}>
+            <Text style={styles.dismissText}>{s.dismiss}</Text>
+          </Pressable>
+          <Pressable style={styles.updateButton} onPress={onUpdate} disabled={updating}>
+            <Text style={styles.updateButtonText}>{updating ? s.updating : s.update}</Text>
+          </Pressable>
+        </View>
       </View>
-      <View style={styles.actions}>
-        <Pressable onPress={() => setDismissed(true)} disabled={updating} hitSlop={6}>
-          <Text style={styles.dismissText}>{s.dismiss}</Text>
-        </Pressable>
-        <Pressable style={styles.updateButton} onPress={onUpdate} disabled={updating}>
-          <Text style={styles.updateButtonText}>{updating ? s.updating : s.update}</Text>
-        </Pressable>
-      </View>
-    </View>
+      {debugInfo}
+    </>
   );
 }
+
+const debugStyles = StyleSheet.create({
+  text: {
+    position: 'absolute',
+    bottom: 2,
+    right: 6,
+    fontSize: 8,
+    color: '#99999980',
+    zIndex: 999,
+  },
+});
 
 function makeStyles(c: ThemeColors) {
   return StyleSheet.create({
