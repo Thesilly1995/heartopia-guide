@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import * as Updates from 'expo-updates';
 
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
@@ -74,16 +74,7 @@ export function UpdateBanner() {
       });
   }, []);
 
-  // Tijdelijke, onmisbare debug-popup (nov 2026) om te verifiëren welke
-  // OTA-update daadwerkelijk draait op een toestel — zie sessielog voor
-  // context. Mag weer weg zodra het mysterie rond uitblijvende updates is
-  // opgelost. Altijd tonen (ook in __DEV__) zodat er geen twijfel is.
-  useEffect(() => {
-    Alert.alert(
-      'Debug: actieve update',
-      `updateId: ${Updates.updateId ?? '(embedded/geen OTA)'}\nchannel: ${Updates.channel ?? '?'}\ncreatedAt: ${Updates.createdAt ?? '?'}\nisEmbeddedLaunch: ${Updates.isEmbeddedLaunch}\nruntimeVersion: ${Updates.runtimeVersion ?? '?'}`
-    );
-  }, []);
+  if (!available || dismissed) return null;
 
   const onUpdate = async () => {
     setUpdating(true);
@@ -95,48 +86,23 @@ export function UpdateBanner() {
     }
   };
 
-  // Tijdelijk debug-regeltje (nov 2026) om te verifiëren welke OTA-update
-  // daadwerkelijk draait op een toestel — zie sessielog voor context. Mag
-  // weer weg zodra het mysterie rond uitblijvende updates is opgelost.
-  const debugInfo = __DEV__ ? null : (
-    <Text style={debugStyles.text} selectable>
-      build: {Updates.updateId ?? 'embedded'} · ch: {Updates.channel ?? '?'}
-    </Text>
-  );
-
-  if (!available || dismissed) return debugInfo;
-
   return (
-    <>
-      <View style={styles.banner}>
-        <View style={styles.textWrap}>
-          <Text style={styles.title}>{s.title}</Text>
-          <Text style={styles.text}>{s.text}</Text>
-        </View>
-        <View style={styles.actions}>
-          <Pressable onPress={() => setDismissed(true)} disabled={updating} hitSlop={6}>
-            <Text style={styles.dismissText}>{s.dismiss}</Text>
-          </Pressable>
-          <Pressable style={styles.updateButton} onPress={onUpdate} disabled={updating}>
-            <Text style={styles.updateButtonText}>{updating ? s.updating : s.update}</Text>
-          </Pressable>
-        </View>
+    <View style={styles.banner}>
+      <View style={styles.textWrap}>
+        <Text style={styles.title}>{s.title}</Text>
+        <Text style={styles.text}>{s.text}</Text>
       </View>
-      {debugInfo}
-    </>
+      <View style={styles.actions}>
+        <Pressable onPress={() => setDismissed(true)} disabled={updating} hitSlop={6}>
+          <Text style={styles.dismissText}>{s.dismiss}</Text>
+        </Pressable>
+        <Pressable style={styles.updateButton} onPress={onUpdate} disabled={updating}>
+          <Text style={styles.updateButtonText}>{updating ? s.updating : s.update}</Text>
+        </Pressable>
+      </View>
+    </View>
   );
 }
-
-const debugStyles = StyleSheet.create({
-  text: {
-    position: 'absolute',
-    bottom: 2,
-    right: 6,
-    fontSize: 8,
-    color: '#99999980',
-    zIndex: 999,
-  },
-});
 
 function makeStyles(c: ThemeColors) {
   return StyleSheet.create({
