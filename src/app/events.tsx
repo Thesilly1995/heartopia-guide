@@ -82,6 +82,7 @@ const STRINGS = {
     insects: 'Insecten',
     ingredients: 'Wilde ingrediënten',
     bestResult: 'Hoogste resultaat',
+    totalStars: 'Totaal verzameld',
     empty: 'Geen actief event op dit moment — zodra een nieuw event begint, komt de content hier te staan.',
     goldLabel: 'Goud (verkocht aan Albert Jr.)',
     tokensLabel: 'Tokens (verkocht aan Azure)',
@@ -98,6 +99,7 @@ const STRINGS = {
     insects: 'Insects',
     ingredients: 'Wild Ingredients',
     bestResult: 'Best result',
+    totalStars: 'Total collected',
     empty: 'No active event right now — once a new event starts, its content will appear here.',
     goldLabel: 'Gold (sold to Albert Jr.)',
     tokensLabel: 'Tokens (sold to Azure)',
@@ -114,6 +116,7 @@ const STRINGS = {
     insects: 'Insectos',
     ingredients: 'Ingredientes Silvestres',
     bestResult: 'Mejor resultado',
+    totalStars: 'Total conseguido',
     empty: 'No hay ningún evento activo en este momento — en cuanto empiece un nuevo evento, su contenido aparecerá aquí.',
     goldLabel: 'Oro (vendido a Albert Jr.)',
     tokensLabel: 'Fichas (vendidas a Azure)',
@@ -130,6 +133,7 @@ const STRINGS = {
     insects: 'Insetos',
     ingredients: 'Ingredientes Selvagens',
     bestResult: 'Melhor resultado',
+    totalStars: 'Total conquistado',
     empty: 'Nenhum evento ativo no momento — assim que um novo evento começar, o conteúdo vai aparecer aqui.',
     goldLabel: 'Ouro (vendido a Albert Jr.)',
     tokensLabel: 'Fichas (vendidas a Azure)',
@@ -146,6 +150,7 @@ const STRINGS = {
     insects: 'Insectes',
     ingredients: 'Ingrédients Sauvages',
     bestResult: 'Meilleur résultat',
+    totalStars: 'Total obtenu',
     empty: "Aucun événement actif pour le moment — dès qu'un nouvel événement commence, son contenu apparaîtra ici.",
     goldLabel: 'Or (vendu à Albert Jr.)',
     tokensLabel: 'Jetons (vendus à Azure)',
@@ -162,6 +167,7 @@ const STRINGS = {
     insects: 'Insekten',
     ingredients: 'Wilde Zutaten',
     bestResult: 'Bestes Ergebnis',
+    totalStars: 'Insgesamt gesammelt',
     empty: 'Momentan kein aktives Event — sobald ein neues Event beginnt, erscheint der Inhalt hier.',
     goldLabel: 'Gold (verkauft an Albert Jr.)',
     tokensLabel: 'Token (verkauft an Azure)',
@@ -326,6 +332,9 @@ export default function EventsScreen() {
   };
 
   const activeTab = TABS.find((t) => t.key === tab)!;
+  const hasStars = !!STORAGE_KEY_BY_TAB[tab];
+  const totalStars = hasStars ? activeTab.items.reduce((sum, item) => sum + (stars[item.name] || 0), 0) : 0;
+  const maxStars = hasStars ? activeTab.items.length * 5 : 0;
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -346,6 +355,12 @@ export default function EventsScreen() {
           <View style={{ gap: 10, marginBottom: 10 }}>
             <DisclaimerBox text={s.disclaimer} />
             {tab === 'insects' && eventInsects.length === 0 && <DisclaimerBox text={s.insectsNote} warning />}
+            {hasStars && activeTab.items.length > 0 && (
+              <View style={styles.totalStarsBox}>
+                <Text style={styles.totalStarsLabel}>{s.totalStars}</Text>
+                <Text style={styles.totalStarsValue}>{totalStars} / {maxStars} ⭐</Text>
+              </View>
+            )}
           </View>
         }
         ListEmptyComponent={tab === 'insects' && eventInsects.length === 0 ? null : <Text style={styles.emptyText}>{s.empty}</Text>}
@@ -425,5 +440,8 @@ function makeStyles(c: ThemeColors) {
     priceValue: { fontSize: 12, color: c.forestSoft },
     starBox: { marginTop: 10, padding: 8, borderRadius: 8, backgroundColor: c.disclaimerBg, borderWidth: 1, borderColor: c.disclaimerBorder, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
     starBoxLabel: { fontSize: 12, fontWeight: '700', color: c.forest },
+    totalStarsBox: { padding: 12, borderRadius: 12, backgroundColor: c.card, borderWidth: 1, borderColor: c.line, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+    totalStarsLabel: { fontSize: 13, fontWeight: '700', color: c.forest },
+    totalStarsValue: { fontSize: 15, fontWeight: '700', color: c.yellow },
   });
 }
