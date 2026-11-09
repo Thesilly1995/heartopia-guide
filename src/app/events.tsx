@@ -83,6 +83,8 @@ const STRINGS = {
     ingredients: 'Wilde ingrediënten',
     bestResult: 'Hoogste resultaat',
     totalStars: 'Totaal verzameld',
+    overview: 'Overzicht',
+    collectionPoints: 'Seizoenspunten',
     empty: 'Geen actief event op dit moment — zodra een nieuw event begint, komt de content hier te staan.',
     goldLabel: 'Goud (verkocht aan Albert Jr.)',
     tokensLabel: 'Tokens (verkocht aan Azure)',
@@ -100,6 +102,8 @@ const STRINGS = {
     ingredients: 'Wild Ingredients',
     bestResult: 'Best result',
     totalStars: 'Total collected',
+    overview: 'Overview',
+    collectionPoints: 'Season Collection Points',
     empty: 'No active event right now — once a new event starts, its content will appear here.',
     goldLabel: 'Gold (sold to Albert Jr.)',
     tokensLabel: 'Tokens (sold to Azure)',
@@ -117,6 +121,8 @@ const STRINGS = {
     ingredients: 'Ingredientes Silvestres',
     bestResult: 'Mejor resultado',
     totalStars: 'Total conseguido',
+    overview: 'Resumen',
+    collectionPoints: 'Puntos de la temporada',
     empty: 'No hay ningún evento activo en este momento — en cuanto empiece un nuevo evento, su contenido aparecerá aquí.',
     goldLabel: 'Oro (vendido a Albert Jr.)',
     tokensLabel: 'Fichas (vendidas a Azure)',
@@ -134,6 +140,8 @@ const STRINGS = {
     ingredients: 'Ingredientes Selvagens',
     bestResult: 'Melhor resultado',
     totalStars: 'Total conquistado',
+    overview: 'Resumo',
+    collectionPoints: 'Pontos da temporada',
     empty: 'Nenhum evento ativo no momento — assim que um novo evento começar, o conteúdo vai aparecer aqui.',
     goldLabel: 'Ouro (vendido a Albert Jr.)',
     tokensLabel: 'Fichas (vendidas a Azure)',
@@ -151,6 +159,8 @@ const STRINGS = {
     ingredients: 'Ingrédients Sauvages',
     bestResult: 'Meilleur résultat',
     totalStars: 'Total obtenu',
+    overview: 'Aperçu',
+    collectionPoints: 'Points de la saison',
     empty: "Aucun événement actif pour le moment — dès qu'un nouvel événement commence, son contenu apparaîtra ici.",
     goldLabel: 'Or (vendu à Albert Jr.)',
     tokensLabel: 'Jetons (vendus à Azure)',
@@ -168,6 +178,8 @@ const STRINGS = {
     ingredients: 'Wilde Zutaten',
     bestResult: 'Bestes Ergebnis',
     totalStars: 'Insgesamt gesammelt',
+    overview: 'Übersicht',
+    collectionPoints: 'Saisonpunkte',
     empty: 'Momentan kein aktives Event — sobald ein neues Event beginnt, erscheint der Inhalt hier.',
     goldLabel: 'Gold (verkauft an Albert Jr.)',
     tokensLabel: 'Token (verkauft an Azure)',
@@ -238,6 +250,7 @@ export default function EventsScreen() {
   const remoteEvent = payload?.event;
   const [tab, setTab] = useState('fish');
   const [stars, setStars] = useState<Record<string, number>>({});
+  const [overviewStars, setOverviewStars] = useState<Record<string, Record<string, number>>>({});
 
   const eventFish = remoteEvent ? remoteEvent.fish.map((item) => mapSighting(item, language)) : bundledEventFish;
   const eventBirds = remoteEvent ? remoteEvent.birds.map((item) => mapSighting(item, language)) : bundledEventBirds;
@@ -248,6 +261,7 @@ export default function EventsScreen() {
   const subtitle = `${eventMeta.emoji} ${eventMeta.name} · ${eventMeta.dates}`;
 
   const TABS: { key: string; label: string; items: EventItem[] }[] = [
+    { key: 'overview', label: s.overview, items: [] },
     { key: 'fish', label: s.fish, items: eventFish },
     { key: 'birds', label: s.birds, items: eventBirds },
     { key: 'recipes', label: s.recipes, items: eventRecipes },
@@ -281,6 +295,26 @@ export default function EventsScreen() {
       } catch {
         setStars({});
       }
+    })();
+  }, [tab]);
+
+  // Laadt de sterren van ALLE categorieën tegelijk (niet alleen het actieve
+  // tabblad) zodra het Overzicht-tabblad geopend wordt, zodat daar een
+  // totaaloverzicht over het hele event getoond kan worden.
+  useEffect(() => {
+    if (tab !== 'overview') return;
+    (async () => {
+      const entries = await Promise.all(
+        Object.entries(STORAGE_KEY_BY_TAB).map(async ([tabKey, storageKey]) => {
+          try {
+            const raw = await AsyncStorage.getItem(storageKey);
+            return [tabKey, raw ? JSON.parse(raw) : {}] as const;
+          } catch {
+            return [tabKey, {}] as const;
+          }
+        })
+      );
+      setOverviewStars(Object.fromEntries(entries));
     })();
   }, [tab]);
 
@@ -336,6 +370,20 @@ export default function EventsScreen() {
   const totalStars = hasStars ? activeTab.items.reduce((sum, item) => sum + (stars[item.name] || 0), 0) : 0;
   const maxStars = hasStars ? activeTab.items.length * 5 : 0;
 
+  const CATEGORY_SUMMARIES = [
+    { key: 'fish', emoji: '🐟', label: s.fish, items: eventFish },
+    { key: 'birds', emoji: '🐦', label: s.birds, items: eventBirds },
+    { key: 'recipes', emoji: '🍲', label: s.recipes, items: eventRecipes },
+    { key: 'insects', emoji: '🦋', label: s.insects, items: eventInsects },
+  ].map((c) => {
+    const starsForCat = overviewStars[c.key] || {};
+    const total = c.items.reduce((sum, item) => sum + (starsForCat[item.name] || 0), 0);
+    const max = c.items.length * 5;
+    return { ...c, total, max };
+  });
+  const grandTotal = CATEGORY_SUMMARIES.reduce((sum, c) => sum + c.total, 0);
+  const grandMax = CATEGORY_SUMMARIES.reduce((sum, c) => sum + c.max, 0);
+
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <ScreenHeader
@@ -347,6 +395,25 @@ export default function EventsScreen() {
         activeTab={tab}
         onTabChange={setTab}
       />
+      {tab === 'overview' ? (
+        <View style={styles.listContent}>
+          <View style={styles.collectionPointsBox}>
+            <Text style={styles.collectionPointsLabel}>{s.collectionPoints}</Text>
+            <Text style={styles.collectionPointsValue}>⭐ {grandTotal}/{grandMax}</Text>
+          </View>
+          <View style={styles.categoryGrid}>
+            {CATEGORY_SUMMARIES.map((c) => (
+              <View key={c.key} style={styles.categoryCard}>
+                <View style={styles.categoryBadge}>
+                  <Text style={styles.categoryEmoji}>{c.emoji}</Text>
+                </View>
+                <Text style={styles.categoryLabel} numberOfLines={1}>{c.label}</Text>
+                <Text style={styles.categoryValue}>⭐ {c.total}/{c.max}</Text>
+              </View>
+            ))}
+          </View>
+        </View>
+      ) : (
       <FlatList
         data={activeTab.items}
         keyExtractor={(item) => item.name}
@@ -415,6 +482,7 @@ export default function EventsScreen() {
           </View>
         )}
       />
+      )}
     </SafeAreaView>
   );
 }
@@ -443,5 +511,14 @@ function makeStyles(c: ThemeColors) {
     totalStarsBox: { padding: 12, borderRadius: 12, backgroundColor: c.card, borderWidth: 1, borderColor: c.line, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
     totalStarsLabel: { fontSize: 13, fontWeight: '700', color: c.forest },
     totalStarsValue: { fontSize: 15, fontWeight: '700', color: c.yellow },
+    collectionPointsBox: { padding: 14, borderRadius: 12, backgroundColor: c.disclaimerBg, borderWidth: 1, borderColor: c.disclaimerBorder, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 },
+    collectionPointsLabel: { fontSize: 14, fontWeight: '700', color: c.forest },
+    collectionPointsValue: { fontSize: 17, fontWeight: '700', color: c.yellow },
+    categoryGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
+    categoryCard: { width: '31%', backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.line, padding: 12, alignItems: 'center', gap: 6 },
+    categoryBadge: { width: 48, height: 48, borderRadius: 24, backgroundColor: c.iconBg, alignItems: 'center', justifyContent: 'center' },
+    categoryEmoji: { fontSize: 22 },
+    categoryLabel: { fontSize: 12, fontWeight: '700', color: c.forest, textAlign: 'center' },
+    categoryValue: { fontSize: 13, fontWeight: '700', color: c.yellow },
   });
 }
