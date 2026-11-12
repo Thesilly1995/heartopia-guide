@@ -12,6 +12,7 @@ import { currentDailyResetKey, currentWeeklyResetKey } from '@/lib/reset-schedul
 
 const STORAGE_KEY = 'heartopia:missies:vinkjes';
 const CUSTOM_STORAGE_KEY = 'heartopia:missies:eigen-dailies';
+const CUSTOM_WEEKLY_STORAGE_KEY = 'heartopia:missies:eigen-weeklies';
 const DAILY_RESET_DAY_KEY = 'heartopia:missies:laatste-reset-dag';
 const WEEKLY_RESET_WEEK_KEY = 'heartopia:missies:laatste-reset-week';
 
@@ -252,6 +253,10 @@ const STRINGS = {
     ownDailiesPlaceholder: 'Bijv. Ka Ching-aanbieding kopen...',
     add: 'Toevoegen',
     ownDailiesEmpty: 'Nog niks toegevoegd — zet hier je eigen dagelijkse taakjes bij.',
+    weeklyTasks: 'Wekelijkse taken',
+    ownWeeklies: 'Eigen wekelijkse taken',
+    ownWeekliesPlaceholder: 'Bijv. Event-weekdoel afronden...',
+    ownWeekliesEmpty: 'Nog niks toegevoegd — zet hier je eigen wekelijkse taakjes bij.',
   },
   en: {
     title: 'Missions',
@@ -267,6 +272,10 @@ const STRINGS = {
     ownDailiesPlaceholder: 'E.g. buy Ka Ching offer...',
     add: 'Add',
     ownDailiesEmpty: 'Nothing added yet — put your own daily tasks here.',
+    weeklyTasks: 'Weekly tasks',
+    ownWeeklies: 'Your own weekly tasks',
+    ownWeekliesPlaceholder: 'E.g. finish event weekly goal...',
+    ownWeekliesEmpty: 'Nothing added yet — put your own weekly tasks here.',
   },
   es: {
     title: 'Misiones',
@@ -282,6 +291,10 @@ const STRINGS = {
     ownDailiesPlaceholder: 'Ej. comprar oferta de Ka Ching...',
     add: 'Añadir',
     ownDailiesEmpty: 'Todavía no has añadido nada — pon aquí tus propias tareas diarias.',
+    weeklyTasks: 'Tareas semanales',
+    ownWeeklies: 'Tus propias tareas semanales',
+    ownWeekliesPlaceholder: 'Ej. completar objetivo semanal del evento...',
+    ownWeekliesEmpty: 'Todavía no has añadido nada — pon aquí tus propias tareas semanales.',
   },
   pt: {
     title: 'Missões',
@@ -297,6 +310,10 @@ const STRINGS = {
     ownDailiesPlaceholder: 'Ex.: comprar oferta da Ka Ching...',
     add: 'Adicionar',
     ownDailiesEmpty: 'Nada adicionado ainda — coloque aqui suas próprias tarefas diárias.',
+    weeklyTasks: 'Tarefas semanais',
+    ownWeeklies: 'Suas próprias tarefas semanais',
+    ownWeekliesPlaceholder: 'Ex.: concluir meta semanal do evento...',
+    ownWeekliesEmpty: 'Nada adicionado ainda — coloque aqui suas próprias tarefas semanais.',
   },
   fr: {
     title: 'Missions',
@@ -312,6 +329,10 @@ const STRINGS = {
     ownDailiesPlaceholder: 'Ex. acheter une offre Ka Ching...',
     add: 'Ajouter',
     ownDailiesEmpty: "Rien d'ajouté pour l'instant — ajoute ici tes propres tâches quotidiennes.",
+    weeklyTasks: 'Tâches hebdomadaires',
+    ownWeeklies: 'Tes propres tâches hebdomadaires',
+    ownWeekliesPlaceholder: "Ex. terminer l'objectif hebdomadaire de l'événement...",
+    ownWeekliesEmpty: "Rien d'ajouté pour l'instant — ajoute ici tes propres tâches hebdomadaires.",
   },
   de: {
     title: 'Missionen',
@@ -327,6 +348,10 @@ const STRINGS = {
     ownDailiesPlaceholder: 'Z. B. Ka Ching-Angebot kaufen...',
     add: 'Hinzufügen',
     ownDailiesEmpty: 'Noch nichts hinzugefügt — trage hier deine eigenen täglichen Aufgaben ein.',
+    weeklyTasks: 'Wöchentliche Aufgaben',
+    ownWeeklies: 'Eigene wöchentliche Aufgaben',
+    ownWeekliesPlaceholder: 'Z. B. wöchentliches Event-Ziel abschließen...',
+    ownWeekliesEmpty: 'Noch nichts hinzugefügt — trage hier deine eigenen wöchentlichen Aufgaben ein.',
   },
 } as const;
 
@@ -348,6 +373,10 @@ export default function MissiesScreen() {
   const [customOpen, setCustomOpen] = useState(false);
   const [customItems, setCustomItems] = useState<CustomItem[]>([]);
   const [customText, setCustomText] = useState('');
+  const [weeklyOpen, setWeeklyOpen] = useState(true);
+  const [customWeeklyOpen, setCustomWeeklyOpen] = useState(false);
+  const [customWeeklyItems, setCustomWeeklyItems] = useState<CustomItem[]>([]);
+  const [customWeeklyText, setCustomWeeklyText] = useState('');
 
   useEffect(() => {
     (async () => {
@@ -367,8 +396,17 @@ export default function MissiesScreen() {
         loadedCustom = [];
       }
 
+      let loadedCustomWeekly: CustomItem[] = [];
+      try {
+        const rawCustomWeekly = await AsyncStorage.getItem(CUSTOM_WEEKLY_STORAGE_KEY);
+        loadedCustomWeekly = rawCustomWeekly ? JSON.parse(rawCustomWeekly) : [];
+      } catch {
+        loadedCustomWeekly = [];
+      }
+
       let checkedChanged = false;
       let customChanged = false;
+      let customWeeklyChanged = false;
 
       try {
         const todayKey = currentDailyResetKey(server.offsetHours);
@@ -386,6 +424,10 @@ export default function MissiesScreen() {
         if ((await AsyncStorage.getItem(WEEKLY_RESET_WEEK_KEY)) !== weekKey) {
           loadedChecked = Object.fromEntries(Object.entries(loadedChecked).filter(([key]) => !WEEKLY_KEYS.includes(key)));
           checkedChanged = true;
+          if (loadedCustomWeekly.some((item) => item.done)) {
+            loadedCustomWeekly = loadedCustomWeekly.map((item) => ({ ...item, done: false }));
+            customWeeklyChanged = true;
+          }
           await AsyncStorage.setItem(WEEKLY_RESET_WEEK_KEY, weekKey);
         }
       } catch {
@@ -394,8 +436,10 @@ export default function MissiesScreen() {
 
       setChecked(loadedChecked);
       setCustomItems(loadedCustom);
+      setCustomWeeklyItems(loadedCustomWeekly);
       if (checkedChanged) AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(loadedChecked)).catch(() => {});
       if (customChanged) AsyncStorage.setItem(CUSTOM_STORAGE_KEY, JSON.stringify(loadedCustom)).catch(() => {});
+      if (customWeeklyChanged) AsyncStorage.setItem(CUSTOM_WEEKLY_STORAGE_KEY, JSON.stringify(loadedCustomWeekly)).catch(() => {});
     })();
   }, [server.offsetHours]);
 
@@ -426,6 +470,9 @@ export default function MissiesScreen() {
     if (tab === 'daily' && customItems.some((item) => item.done)) {
       saveCustom(customItems.map((item) => ({ ...item, done: false })));
     }
+    if (tab === 'weekly' && customWeeklyItems.some((item) => item.done)) {
+      saveCustomWeekly(customWeeklyItems.map((item) => ({ ...item, done: false })));
+    }
   };
 
   const saveCustom = async (updated: CustomItem[]) => {
@@ -451,9 +498,33 @@ export default function MissiesScreen() {
     saveCustom(customItems.filter((_, idx) => idx !== i));
   };
 
+  const saveCustomWeekly = async (updated: CustomItem[]) => {
+    setCustomWeeklyItems(updated);
+    try {
+      await AsyncStorage.setItem(CUSTOM_WEEKLY_STORAGE_KEY, JSON.stringify(updated));
+    } catch {
+      // opslaan mislukt
+    }
+  };
+
+  const addCustomWeeklyItem = () => {
+    if (!customWeeklyText.trim()) return;
+    saveCustomWeekly([...customWeeklyItems, { text: customWeeklyText.trim(), done: false }]);
+    setCustomWeeklyText('');
+  };
+
+  const toggleCustomWeeklyItem = (i: number) => {
+    saveCustomWeekly(customWeeklyItems.map((item, idx) => (idx === i ? { ...item, done: !item.done } : item)));
+  };
+
+  const removeCustomWeeklyItem = (i: number) => {
+    saveCustomWeekly(customWeeklyItems.filter((_, idx) => idx !== i));
+  };
+
   const items = tab === 'daily' ? DAILY[language] : WEEKLY[language];
   const resetText = tab === 'daily' ? s.resetDaily : s.resetWeekly;
   const dailyDoneCount = DAILY[language].filter((item) => checked[item.key]).length;
+  const weeklyDoneCount = WEEKLY[language].filter((item) => checked[item.key]).length;
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -541,9 +612,63 @@ export default function MissiesScreen() {
           </>
         ) : (
           <>
-            {items.map((item) => (
-              <ChecklistRow key={item.key} label={item.label} checked={!!checked[item.key]} onPress={() => toggle(item.key)} />
-            ))}
+            <View style={styles.collapsibleCard}>
+              <Pressable style={styles.collapsibleHeader} onPress={() => setWeeklyOpen(!weeklyOpen)}>
+                <Text style={styles.collapsibleTitle}>{s.weeklyTasks}</Text>
+                <Text style={styles.progressBadge}>
+                  {weeklyDoneCount}/{WEEKLY[language].length}
+                </Text>
+                <Text style={styles.chevron}>{weeklyOpen ? '⌄' : '›'}</Text>
+              </Pressable>
+              {weeklyOpen && (
+                <View style={styles.collapsibleBody}>
+                  {items.map((item) => (
+                    <ChecklistRow key={item.key} label={item.label} checked={!!checked[item.key]} onPress={() => toggle(item.key)} />
+                  ))}
+                </View>
+              )}
+            </View>
+
+            <View style={styles.collapsibleCard}>
+              <Pressable style={styles.collapsibleHeader} onPress={() => setCustomWeeklyOpen(!customWeeklyOpen)}>
+                <Text style={styles.collapsibleTitle}>{s.ownWeeklies}</Text>
+                {customWeeklyItems.length > 0 && (
+                  <Text style={styles.progressBadge}>
+                    {customWeeklyItems.filter((i) => i.done).length}/{customWeeklyItems.length}
+                  </Text>
+                )}
+                <Text style={styles.chevron}>{customWeeklyOpen ? '⌄' : '›'}</Text>
+              </Pressable>
+              {customWeeklyOpen && (
+                <View style={styles.collapsibleBody}>
+                  <View style={styles.addRow}>
+                    <TextInput
+                      value={customWeeklyText}
+                      onChangeText={setCustomWeeklyText}
+                      onSubmitEditing={addCustomWeeklyItem}
+                      placeholder={s.ownWeekliesPlaceholder}
+                      placeholderTextColor={colors.forestSoft}
+                      style={styles.input}
+                    />
+                    <Pressable style={styles.addButton} onPress={addCustomWeeklyItem}>
+                      <Text style={styles.addButtonText}>{s.add}</Text>
+                    </Pressable>
+                  </View>
+                  {customWeeklyItems.length === 0 && <Text style={styles.emptyText}>{s.ownWeekliesEmpty}</Text>}
+                  {customWeeklyItems.map((item, i) => (
+                    <View key={i} style={styles.customRow}>
+                      <Pressable style={[styles.checkbox, item.done && styles.checkboxActive]} onPress={() => toggleCustomWeeklyItem(i)}>
+                        {item.done && <Text style={styles.checkmark}>✓</Text>}
+                      </Pressable>
+                      <Text style={[styles.customItemText, item.done && styles.customItemTextDone]}>{item.text}</Text>
+                      <Pressable onPress={() => removeCustomWeeklyItem(i)} hitSlop={8}>
+                        <Text style={styles.removeText}>✕</Text>
+                      </Pressable>
+                    </View>
+                  ))}
+                </View>
+              )}
+            </View>
 
             <View style={styles.shopsCard}>
               <Pressable style={styles.shopsHeader} onPress={() => setShopsOpen(!shopsOpen)}>
