@@ -330,7 +330,7 @@
     {"num": 7, "x": 20.9, "y": 48.8, "underwater": true, "descriptionNl": "Whalefall Canyon, westelijk gebied", "descriptionEn": "Whalefall Canyon, west area", "descriptionEs": "Whalefall Canyon, zona oeste", "descriptionPt": "Whalefall Canyon, área oeste"},
     {"num": 8, "x": 33.9, "y": 42.2, "underwater": true, "isDoris": true, "descriptionNl": "Whalefall Canyon, centraal gebied", "descriptionEn": "Whalefall Canyon, central area", "descriptionEs": "Whalefall Canyon, zona central", "descriptionPt": "Whalefall Canyon, área central"}
   ],
-  "rainbowSpotsUpdatedAt": "2026-11-12T17:53:00Z",
+  "rainbowSpotsUpdatedAt": "2026-11-12T23:00:00Z",
   "meteorSpots": [
     {"num": 1, "x": 20.5, "y": 40.1, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied", "descriptionEn": "Main island, west area", "descriptionEs": "Isla principal, zona oeste", "descriptionPt": "Ilha principal, área oeste"},
     {"num": 2, "x": 14.4, "y": 39.7, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied, bij locatie 1", "descriptionEn": "Main island, west area, near spot 1", "descriptionEs": "Isla principal, zona oeste, cerca del punto 1", "descriptionPt": "Ilha principal, área oeste, perto do ponto 1"},
