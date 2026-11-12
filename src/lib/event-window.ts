@@ -37,6 +37,15 @@ export function useKindWindowActive(kind: WeekForecastKind, windowHours: number)
  * door `useRainbowSpots`/`useMeteorSpots` om te bepalen of de ingevulde
  * locaties daadwerkelijk bij déze periode horen (i.p.v. per ongeluk nog de
  * vorige, verouderde locaties te tonen omdat ze zijn vergeten bij te werken).
+ *
+ * Het teruggegeven moment is het **echte (UTC) tijdstip** waarop dit blok
+ * voor déze server inging — niet de letterlijke datum+blok-uit-de-JSON (die
+ * staat vast, ongeacht server, en is dus voor de ene server te vroeg en voor
+ * de andere te laat als drempel). Zonder deze correctie kon een server met
+ * een offset groter dan `windowHours` (Sea +7, Tw/Hk/Mo +8, Asia +9 t.o.v.
+ * het 6-uursvenster) nooit een geldige `rainbowSpotsUpdatedAt`/
+ * `meteorSpotsUpdatedAt` krijgen: hun venster was altijd al voorbij vóórdat
+ * dat letterlijke tijdstip bereikt werd.
  */
 export function useActiveKindBlockStart(kind: WeekForecastKind, windowHours: number): Date | null {
   const { server } = useServer();
@@ -46,6 +55,7 @@ export function useActiveKindBlockStart(kind: WeekForecastKind, windowHours: num
     const starts = findBlockStarts(payload?.weekForecast, kind);
     const now = serverNow(server.offsetHours);
     const active = starts.find((start) => now >= start && now.getTime() - start.getTime() < windowHours * 3600000);
-    return active ?? null;
+    if (!active) return null;
+    return new Date(active.getTime() - server.offsetHours * 3600000);
   }, [payload, server.offsetHours, kind, windowHours]);
 }
