@@ -320,6 +320,7 @@
       ]
     }
   ],
+  "nextEventName": "My Little Pony: Friendship Journey",
   "rainbowSpots": [
     {"num": 1, "x": 43.5, "y": 16, "underwater": false, "isDoris": true, "descriptionNl": "Hoofdeiland, noordelijk gebied", "descriptionEn": "Main island, north area", "descriptionEs": "Isla principal, zona norte", "descriptionPt": "Ilha principal, área norte"},
     {"num": 2, "x": 41.5, "y": 22.4, "underwater": false, "descriptionNl": "Hoofdeiland, noordelijk gebied, bij locatie 1", "descriptionEn": "Main island, north area, near spot 1", "descriptionEs": "Isla principal, zona norte, cerca del punto 1", "descriptionPt": "Ilha principal, área norte, perto do ponto 1"},
