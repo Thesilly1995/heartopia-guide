@@ -13,6 +13,7 @@ import { usePremium } from '@/hooks/use-premium';
 
 const NIGHT_OF_DIVINATION_PREP = require('@/assets/images/events/night-of-divination-prep.jpg');
 const EERIE_EVE_RECIPES = require('@/assets/images/events/eerie-eve-recipes.jpg');
+const MLP_FRIENDSHIP_JOURNEY_PREP = require('@/assets/images/events/my-little-pony-friendship-journey-prep.jpg');
 
 const STRINGS = {
   nl: {
@@ -74,6 +75,7 @@ export default function NextEventScreen() {
   const s = STRINGS[language];
   const recipes = useNextEventRecipes();
   const eventName = useNextEventName();
+  const hasPrepContent = recipes.length > 0 || eventName === 'My Little Pony: Friendship Journey';
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -87,16 +89,23 @@ export default function NextEventScreen() {
             <View style={styles.disclaimerWrap}>
               {eventName && (
                 <View style={styles.sideEventBadge}>
-                  <Text style={styles.sideEventName}>🎃 {eventName}</Text>
-                  <Text style={styles.sideEventNote}>{s.sideEventNote}</Text>
+                  <Text style={styles.sideEventName}>
+                    {eventName === 'My Little Pony: Friendship Journey' ? '🦄' : '🎃'} {eventName}
+                  </Text>
+                  {eventName !== 'My Little Pony: Friendship Journey' && <Text style={styles.sideEventNote}>{s.sideEventNote}</Text>}
                 </View>
               )}
               <DisclaimerBox text={s.disclaimer} />
+              {eventName === 'My Little Pony: Friendship Journey' && (
+                <ZoomableImage source={MLP_FRIENDSHIP_JOURNEY_PREP} aspectRatio={912 / 1168} />
+              )}
               {recipes.length > 0 && !eventName && <ZoomableImage source={NIGHT_OF_DIVINATION_PREP} aspectRatio={928 / 1152} />}
-              {recipes.length > 0 && eventName && <ZoomableImage source={EERIE_EVE_RECIPES} aspectRatio={896 / 1200} />}
+              {recipes.length > 0 && eventName && eventName !== 'My Little Pony: Friendship Journey' && (
+                <ZoomableImage source={EERIE_EVE_RECIPES} aspectRatio={896 / 1200} />
+              )}
             </View>
           }
-          ListEmptyComponent={<Text style={styles.emptyText}>{s.empty}</Text>}
+          ListEmptyComponent={hasPrepContent ? null : <Text style={styles.emptyText}>{s.empty}</Text>}
           renderItem={({ item }) => (
             <View style={styles.card}>
               <View style={styles.topRow}>
