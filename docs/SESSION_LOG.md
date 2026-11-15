@@ -2,6 +2,24 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-11-12/15 — Weekly-tab als dailies, bubbels 14-21 nov, My Little Pony-event-afbeelding, bubbelkaart deelbaar, Play Store-update-popup, weekvoorspelling 16-22 nov + nieuw weertype sneeuw
+
+**Missies-scherm**: "Weekly"-tabblad nu hetzelfde patroon als "Daily" — uitklapbaar, met daaronder een eigen uitklapbare sectie voor eigen/custom weekly-taken (`src/app/missies.tsx`, PR #306).
+
+**Content-updates in `remote-content.json`**: `rainbowSpots` bijgewerkt (8 nieuwe coördinaten, zelfde regio-namen als voorheen); `bubbleWeek` volledig vervangen voor 14-21 nov (19 locaties, bewust generieke "Locatie N"-namen i.p.v. gokken); `nextEventName` toegevoegd ("My Little Pony: Friendship Journey").
+
+**"Volgend Event"-scherm**: ingrediënten-voorbereidingsafbeelding voor My Little Pony: Friendship Journey geplaatst (premium-only, alleen de afbeelding, geen losse receptnamen) — `src/app/volgend-event.tsx` (PR #308), afbeelding 1x gecorrigeerd na verkeerde eerste versie (PR #309). Mag rond 21 nov eruit als het echte event van start gaat.
+
+**Bubbelkaart deelbaar**: `react-native-view-shot` + `expo-sharing` toegevoegd (nieuwe native dependencies — nog niet in een build, zit klaar voor de volgende `eas build`). Schermopname van de kaart + native deelvenster via een "📤 Delen"-knop onder beide kaarten (`src/app/bubbels.tsx`, PR #310).
+
+**Eenmalige Play Store-update-popup (Android, alle gebruikers, niet alleen Premium)**: crashpercentage liep weer op (3,08%) doordat niet iedereen van de crashende versie 29 naar versie 30 was geüpdatet. Pure JS/AsyncStorage-oplossing (geen nieuwe native dependency nodig), dus direct uitrolbaar via OTA naar iedereen, ook toestellen die nog op de oude build zitten — `src/lib/play-store-update-notice.ts` + `src/components/heartopia/play-store-update-modal.tsx`, ingehaakt in `_layout.tsx` met een gedeelde `anyModalShownRef` zodat 'ie nooit overlapt met de Premium-popups (PR #311).
+
+**Weekvoorspelling 16-22 nov + nieuw weertype**: "sneeuw" bestond nog niet als `WeekForecastKind` (alleen regen/regenboog/warme zon/meteor/hittegolf) — toegevoegd met eigen emoji (❄️) en label in alle 6 talen, omdat de gebruiker meldde dat zondag 22 nov sneeuw i.p.v. regen is. Week: zonnig ma/di/do/vr, meteorenregen woensdag 18-00u, regen+regenboog zaterdag, sneeuw zondag in 3 blokken (`src/lib/remote-content.ts`, `src/data/week-forecast.ts`, `remote-content.json`, PR #312).
+
+**Apple App Store**: iOS 1.0.1 zat 8+ dagen vast op "Waiting for Review" zonder reviewer-activiteit — gebruiker heeft via App Store Connect (Contact Us → App Submission → Expedited App Review Request) een versnelde beoordeling aangevraagd en Apple heeft dat geaccepteerd. Nog niet bevestigd of de status inmiddels is veranderd.
+
+**Staande afspraken (ongewijzigd, ter herinnering)**: weer-events mogen altijd automatisch live per server, zonder te vragen; bubbels komt elke zaterdag; weer-/bubbel-bevestigingen gebeuren in deze chat (niet een andere "routine"-chat); gebruikers eigen server is Global.
+
 ## 2026-11-07/12 — Android-productiecrash gevonden+gefixt, build 30 live, debug-code per ongeluk live geweest, Rainbow/meteor per-server vers-check structureel gefixt
 
 **Android-crash (18-26% crashpercentage op versie 29)**: dependency-bump van 3 nov (`3ac5c3d`, bedoeld om een iOS-buildfout met `expo-store-review`/`SceneGeometry` op te lossen) bleek niet compatibel met de laatste Android-native-build (22 aug, versionCode 29) — elke daaropvolgende OTA-update crashte de app meteen bij openen voor Android-gebruikers. **Hotfix**: `package.json`/`package-lock.json` teruggezet naar de staat van vóór de bump (`77230cb`) + `eas update`, als directe verlichting. **Permanente fix**: nieuwe volledige Android-native-build (versionCode 30) gemaakt en geüpload, door Google goedgekeurd op 11 nov. Crashpercentage van versie 29 (cumulatief, incl. de crash-periode) lag op bevestigingsmoment rond 1,86%, zou niet verder moeten stijgen; versie 30 is de echte oplossing voor al wie 'm binnenkrijgt via de Play Store.
