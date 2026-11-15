@@ -211,7 +211,7 @@ export interface RemoteCode {
   expiresDe?: string;
 }
 
-export type WeekForecastKind = 'normal' | 'rain' | 'rainbow' | 'warm_sun' | 'meteor' | 'heatwave';
+export type WeekForecastKind = 'normal' | 'rain' | 'rainbow' | 'warm_sun' | 'meteor' | 'heatwave' | 'snow';
 
 /** De vier vaste 6-uursblokken (servertijd) waarin het spelweer wisselt. */
 export type WeekForecastBlock = '00-06' | '06-12' | '12-18' | '18-00';
