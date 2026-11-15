@@ -31,6 +31,7 @@ const EMOJI: Record<WeekForecastKind, string> = {
   warm_sun: '☀️',
   meteor: '☄️',
   heatwave: '😎',
+  snow: '❄️',
 };
 
 const LABELS = {
@@ -41,6 +42,7 @@ const LABELS = {
     warm_sun: 'Warme zon',
     meteor: 'Meteorenregen',
     heatwave: 'Hittegolf',
+    snow: 'Sneeuw',
   },
   en: {
     normal: 'Nothing special',
@@ -49,6 +51,7 @@ const LABELS = {
     warm_sun: 'Warm sun',
     meteor: 'Meteor shower',
     heatwave: 'Heatwave',
+    snow: 'Snow',
   },
   es: {
     normal: 'Nada especial',
@@ -57,6 +60,7 @@ const LABELS = {
     warm_sun: 'Sol cálido',
     meteor: 'Lluvia de meteoros',
     heatwave: 'Ola de calor',
+    snow: 'Nieve',
   },
   pt: {
     normal: 'Nada de especial',
@@ -65,6 +69,7 @@ const LABELS = {
     warm_sun: 'Sol quente',
     meteor: 'Chuva de meteoros',
     heatwave: 'Onda de calor',
+    snow: 'Neve',
   },
   fr: {
     normal: 'Rien de spécial',
@@ -73,6 +78,7 @@ const LABELS = {
     warm_sun: 'Soleil chaud',
     meteor: 'Pluie de météores',
     heatwave: 'Canicule',
+    snow: 'Neige',
   },
   de: {
     normal: 'Nichts Besonderes',
@@ -81,6 +87,7 @@ const LABELS = {
     warm_sun: 'Warme Sonne',
     meteor: 'Meteorenregen',
     heatwave: 'Hitzewelle',
+    snow: 'Schnee',
   },
 } as const;
 
