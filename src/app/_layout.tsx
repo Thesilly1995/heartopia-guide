@@ -8,6 +8,7 @@ import 'react-native-url-polyfill/auto';
 
 import { AnimatedSplashOverlay } from '@/components/animated-icon';
 import { AdBanner } from '@/components/heartopia/ad-banner';
+import { PlayStoreUpdateModal } from '@/components/heartopia/play-store-update-modal';
 import { PremiumLifetimeModal } from '@/components/heartopia/premium-lifetime-modal';
 import { PremiumPromoModal } from '@/components/heartopia/premium-promo-modal';
 import { UpdateBanner } from '@/components/heartopia/update-banner';
@@ -19,6 +20,7 @@ import { LanguageProvider } from '@/hooks/use-language';
 import { NotificationsProvider } from '@/hooks/use-notifications';
 import { usePremium, PremiumProvider } from '@/hooks/use-premium';
 import { ServerProvider } from '@/hooks/use-server';
+import { markPlayStoreUpdateNoticeShown, shouldShowPlayStoreUpdateNotice } from '@/lib/play-store-update-notice';
 import { markPremiumLifetimeNoticeShown, shouldShowPremiumLifetimeNotice } from '@/lib/premium-lifetime-notice';
 import { markPremiumPromoShown, shouldShowPremiumPromo } from '@/lib/premium-promo';
 import { maybeRequestReview } from '@/lib/store-review';
@@ -56,6 +58,10 @@ function AppContent() {
   const promoShownRef = useRef(false);
   const [showLifetimeNotice, setShowLifetimeNotice] = useState(false);
   const lifetimeNoticeShownRef = useRef(false);
+  const [showPlayStoreNotice, setShowPlayStoreNotice] = useState(false);
+  // Gedeeld tussen alle opstart-popups hieronder, zodat er nooit twee
+  // tegelijk verschijnen — wie als eerste "ja" krijgt, wint.
+  const anyModalShownRef = useRef(false);
 
   // Op alle schermen behalve (tabs) is er geen bottom-tab-balk die al ruimte
   // reserveert — zonder insets.bottom hier zou de onderkant van scrollbare
@@ -72,9 +78,11 @@ function AppContent() {
   useEffect(() => {
     if (promoShownRef.current) return;
     const timer = setTimeout(async () => {
+      if (anyModalShownRef.current) return;
       const show = await shouldShowPremiumPromo(premium);
-      if (show) {
+      if (show && !anyModalShownRef.current) {
         promoShownRef.current = true;
+        anyModalShownRef.current = true;
         setShowPremiumPromo(true);
         markPremiumPromoShown();
       }
@@ -88,9 +96,11 @@ function AppContent() {
   useEffect(() => {
     if (lifetimeNoticeShownRef.current) return;
     const timer = setTimeout(async () => {
+      if (anyModalShownRef.current) return;
       const show = await shouldShowPremiumLifetimeNotice(isLifetimePremium);
-      if (show) {
+      if (show && !anyModalShownRef.current) {
         lifetimeNoticeShownRef.current = true;
+        anyModalShownRef.current = true;
         setShowLifetimeNotice(true);
         markPremiumLifetimeNoticeShown();
       }
@@ -98,11 +108,28 @@ function AppContent() {
     return () => clearTimeout(timer);
   }, [isLifetimePremium]);
 
+  // Losstaande, eenmalige meldingen (bv. "update via de Play Store") krijgen
+  // voorrang boven de Premium-popups hierboven — vandaar de kortere
+  // vertraging en dezelfde `anyModalShownRef`-bescherming.
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      if (anyModalShownRef.current) return;
+      const show = await shouldShowPlayStoreUpdateNotice();
+      if (show && !anyModalShownRef.current) {
+        anyModalShownRef.current = true;
+        setShowPlayStoreNotice(true);
+        markPlayStoreUpdateNoticeShown();
+      }
+    }, 1200);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <View style={styles.webContentWrapper}>
         <AnimatedSplashOverlay />
         <UpdateBanner />
+        <PlayStoreUpdateModal visible={showPlayStoreNotice} onClose={() => setShowPlayStoreNotice(false)} />
         <PremiumPromoModal visible={showPremiumPromo} onClose={() => setShowPremiumPromo(false)} />
         <PremiumLifetimeModal visible={showLifetimeNotice} onClose={() => setShowLifetimeNotice(false)} />
         <Stack screenOptions={{ headerShown: false, contentStyle: { paddingBottom: contentPadding } }}>
