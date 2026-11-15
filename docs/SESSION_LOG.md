@@ -2,6 +2,17 @@
 
 Doel van dit bestand: een nieuwe Claude-chat kan dit lezen om snel te snappen wat er al is gebouwd, welke keuzes zijn gemaakt, en wat er nog open staat. Voeg bij een volgende sessie een nieuwe sectie bovenaan toe (nieuwste eerst).
 
+## 2026-11-15 (vervolg) — Productiecrash door nieuwe native dependency via OTA, direct gehotfixt
+
+**Wat er misging**: de bubbelkaart-deelfunctie uit PR #310 (zie sectie hieronder) voegde `react-native-view-shot` + `expo-sharing` toe — nieuwe *native* dependencies die nog niet in een echte `eas build` zaten. Deze is per ongeluk via `eas update` (OTA) live gezet. `app.json`'s `runtimeVersion.policy` staat op `"appVersion"` (niet `"fingerprint"`), dus Expo Updates checkt alleen het versienummer (1.0.1) en niet of de native modules daadwerkelijk aanwezig zijn in de geïnstalleerde build. Gevolg: elk toestel op versie 1.0.1 kreeg de OTA-update binnen, en crashte zodra het JS de ontbrekende native modules aanriep ("Heartopedia stopt steeds") — gemeld door een vriendin van de gebruiker, later ook bij de gebruiker zelf (bij het openen van de bubbelkaart).
+
+**Hotfix**: `git revert` van PR #310 (commit `788f63b` → revert-commit `14b9539`, PR #314) — deelfunctie + beide dependencies volledig teruggedraaid uit `main`/`package.json`/`package-lock.json`/`app.json`, meteen daarna via `eas update` gepubliceerd. De feature-code blijft bewaard in de git-historie en kan na de eerstvolgende écht nieuwe `eas build` opnieuw toegevoegd worden (dan zitten de native modules wél in de build).
+
+**Les/afspraak voor volgende sessies**:
+- **Nooit** een `eas update` draaien over code die een nieuwe native dependency toevoegt/gebruikt, tenzij er al een passende `eas build` voor is uitgerold — ook al is de bedoeling "vast klaarzetten voor de volgende build". Zet zulke code liever op een aparte branch (niet mergen naar `main`) totdat de build er is, of voeg 'm pas toe ná de build.
+- Na een `eas update` wordt de nieuwe bundel pas **bij de eerstvolgende volledige herstart** (niet zomaar heropenen) van de app toegepast — bij het testen/verifiëren van een hotfix de app dus 2x helemaal afsluiten+heropenen voor je concludeert dat 'ie niet werkt.
+- Zou overwogen kunnen worden: `runtimeVersion.policy` omzetten naar `"fingerprint"` i.p.v. `"appVersion"` — dan blokkeert Expo Updates zelf OTA-updates die niet matchen met de native build, in plaats van dat dit soort crashes pas achteraf opvalt. Nog niet doorgevoerd, bewust niet zonder overleg (verandert build-gedrag).
+
 ## 2026-11-12/15 — Weekly-tab als dailies, bubbels 14-21 nov, My Little Pony-event-afbeelding, bubbelkaart deelbaar, Play Store-update-popup, weekvoorspelling 16-22 nov + nieuw weertype sneeuw
 
 **Missies-scherm**: "Weekly"-tabblad nu hetzelfde patroon als "Daily" — uitklapbaar, met daaronder een eigen uitklapbare sectie voor eigen/custom weekly-taken (`src/app/missies.tsx`, PR #306).
