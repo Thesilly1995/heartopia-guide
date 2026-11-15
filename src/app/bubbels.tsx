@@ -1,8 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Sharing from 'expo-sharing';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FlatList, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { captureRef } from 'react-native-view-shot';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { DisclaimerBox } from '@/components/heartopia/disclaimer-box';
@@ -28,8 +26,6 @@ const STRINGS = {
     map: '🗺️ Kaart',
     list: '📋 Lijst',
     whalefallLabel: '🌊 16-19 (Whalefall Canyon)',
-    shareMap: '📤 Delen',
-    sharing: 'Bezig...',
   },
   en: {
     title: 'Weekly Bubbles',
@@ -41,8 +37,6 @@ const STRINGS = {
     map: '🗺️ Map',
     list: '📋 List',
     whalefallLabel: '🌊 16-19 (Whalefall Canyon)',
-    shareMap: '📤 Share',
-    sharing: 'Working...',
   },
   es: {
     title: 'Burbujas Semanales',
@@ -54,8 +48,6 @@ const STRINGS = {
     map: '🗺️ Mapa',
     list: '📋 Lista',
     whalefallLabel: '🌊 16-19 (Whalefall Canyon)',
-    shareMap: '📤 Compartir',
-    sharing: 'Procesando...',
   },
   pt: {
     title: 'Bolhas Semanais',
@@ -67,8 +59,6 @@ const STRINGS = {
     map: '🗺️ Mapa',
     list: '📋 Lista',
     whalefallLabel: '🌊 16-19 (Whalefall Canyon)',
-    shareMap: '📤 Compartilhar',
-    sharing: 'Processando...',
   },
   fr: {
     title: 'Bulles Hebdomadaires',
@@ -80,8 +70,6 @@ const STRINGS = {
     map: '🗺️ Carte',
     list: '📋 Liste',
     whalefallLabel: '🌊 16-19 (Whalefall Canyon)',
-    shareMap: '📤 Partager',
-    sharing: 'En cours...',
   },
   de: {
     title: 'Wöchentliche Blasen',
@@ -93,8 +81,6 @@ const STRINGS = {
     map: '🗺️ Karte',
     list: '📋 Liste',
     whalefallLabel: '🌊 16-19 (Whalefall Canyon)',
-    shareMap: '📤 Teilen',
-    sharing: 'Lädt...',
   },
 } as const;
 
@@ -111,9 +97,6 @@ export default function BubbelsScreen() {
   const weekLabel = useBubbleWeekLabel();
   const [checked, setChecked] = useState<Record<number, boolean>>({});
   const [view, setView] = useState<'map' | 'list'>('map');
-  const [sharing, setSharing] = useState<'island' | 'whalefall' | null>(null);
-  const islandMapRef = useRef<View>(null);
-  const whalefallMapRef = useRef<View>(null);
 
   useEffect(() => {
     (async () => {
@@ -160,26 +143,6 @@ export default function BubbelsScreen() {
     }
   };
 
-  /**
-   * Maakt een schermopname van de kaart (inclusief de pinnetjes van deze week)
-   * en opent het native deelvenster, zodat spelers de kaart kunnen bewaren of
-   * doorsturen. Negeert stil als delen op dit toestel niet beschikbaar is.
-   */
-  const shareMap = async (ref: React.RefObject<View | null>, key: 'island' | 'whalefall') => {
-    if (!ref.current || sharing) return;
-    setSharing(key);
-    try {
-      const uri = await captureRef(ref, { format: 'jpg', quality: 0.92 });
-      if (await Sharing.isAvailableAsync()) {
-        await Sharing.shareAsync(uri);
-      }
-    } catch {
-      // delen/opslaan mislukt — stil negeren
-    } finally {
-      setSharing(null);
-    }
-  };
-
   const islandPins = BUBBLE_LOCATIONS.filter((b) => !b.underwater);
   const whalefallPins = BUBBLE_LOCATIONS.filter((b) => b.underwater);
 
@@ -212,33 +175,16 @@ export default function BubbelsScreen() {
       {view === 'map' ? (
         <ScrollView contentContainerStyle={styles.listContent}>
           {header}
-          <View ref={islandMapRef} collapsable={false}>
-            <PinMap source={ISLAND_MAP} aspectRatio={825 / 799} pins={islandPins} checked={checked} onToggle={toggle} pinColor={colors.coral} />
-          </View>
-          <Pressable
-            style={[styles.shareButton, sharing !== null && styles.shareButtonDisabled]}
-            onPress={() => shareMap(islandMapRef, 'island')}
-            disabled={sharing !== null}>
-            <Text style={styles.shareButtonText}>{sharing === 'island' ? s.sharing : s.shareMap}</Text>
-          </Pressable>
-
+          <PinMap source={ISLAND_MAP} aspectRatio={825 / 799} pins={islandPins} checked={checked} onToggle={toggle} pinColor={colors.coral} />
           <Text style={styles.mapLabel}>{s.whalefallLabel}</Text>
-          <View ref={whalefallMapRef} collapsable={false}>
-            <PinMap
-              source={WHALEFALL_MAP}
-              aspectRatio={1197 / 880}
-              pins={whalefallPins}
-              checked={checked}
-              onToggle={toggle}
-              pinColor={colors.skyDark}
-            />
-          </View>
-          <Pressable
-            style={[styles.shareButton, sharing !== null && styles.shareButtonDisabled]}
-            onPress={() => shareMap(whalefallMapRef, 'whalefall')}
-            disabled={sharing !== null}>
-            <Text style={styles.shareButtonText}>{sharing === 'whalefall' ? s.sharing : s.shareMap}</Text>
-          </Pressable>
+          <PinMap
+            source={WHALEFALL_MAP}
+            aspectRatio={1197 / 880}
+            pins={whalefallPins}
+            checked={checked}
+            onToggle={toggle}
+            pinColor={colors.skyDark}
+          />
         </ScrollView>
       ) : (
         <FlatList
@@ -281,9 +227,6 @@ function makeStyles(c: ThemeColors) {
     viewChipText: { fontSize: 12, fontWeight: '700', color: c.skyDark },
     viewChipTextActive: { color: '#FFFFFF' },
     mapLabel: { fontSize: 13, fontWeight: '700', color: c.forest, marginTop: 4 },
-    shareButton: { alignSelf: 'flex-start', paddingHorizontal: 12, paddingVertical: 6, borderRadius: 999, backgroundColor: c.chipBg, marginTop: -2 },
-    shareButtonDisabled: { opacity: 0.6 },
-    shareButtonText: { fontSize: 11, fontWeight: '700', color: c.skyDark },
     row: { flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.line, padding: 12, marginBottom: 10 },
     numBadge: { width: 28, height: 28, borderRadius: 14, backgroundColor: c.iconBg, alignItems: 'center', justifyContent: 'center' },
     numBadgeActive: { backgroundColor: c.yellow },
