@@ -22,6 +22,7 @@ const YOUTHFULL_KINGDOM = 'Youthfull Kingdom';
 const SPRING_CAMPING_SEASON = 'Spring Camping Season';
 const SPRING_FESTIVAL = 'Spring Festival';
 const BEACH_UTOPIA_SEASON = 'Beach Utopia Season';
+const PYROFROST_BATHHOUSE = 'Pyrofrost Bathhouse';
 
 /** Bron: eigen screenshots van de Ordering Machine + fan-gemaakte prijzenlijst-infographic ("奇灵夜返场手册+全新价格"). */
 const ITEMS: OrderingMachineItem[] = [
@@ -903,6 +904,93 @@ const ITEMS: OrderingMachineItem[] = [
   { slug: 'spring-festival-dance-pose-6', name: 'Dance Pose 6', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 12000 },
   { slug: 'spring-festival-dance-pose-7', name: 'Dance Pose 7', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 12000 },
   { slug: 'spring-festival-dance-pose-8', name: 'Dance Pose 8', category: 'fashion', catalog: SPRING_FESTIVAL, ticketCost: 1, currency: 'coins', currencyCost: 12000 },
+
+  // --- Fashion (Pyrofrost Bathhouse): Character + Pet Outfit ---
+  { slug: 'pyrofrost-boots-brown', name: 'Pyrofrost Reindeer Boots (Brown)', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 65 },
+  { slug: 'pyrofrost-coat-tan', name: 'Pyrofrost Fleece Coat', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 3, currency: 'hearts', currencyCost: 170 },
+  { slug: 'pyrofrost-hat-trapper', name: 'Pyrofrost Trapper Hat', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 65 },
+  { slug: 'pyrofrost-boots-white', name: 'Pyrofrost Reindeer Boots (White)', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 65 },
+  { slug: 'pyrofrost-cape-dress', name: 'Pyrofrost Fur Cape Dress', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 3, currency: 'hearts', currencyCost: 170 },
+  { slug: 'pyrofrost-hair-braid', name: 'Pyrofrost Starlit Braid', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 65 },
+  { slug: 'pyrofrost-face-paint', name: 'Pyrofrost Festive Face Paint', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 5 },
+  { slug: 'pyrofrost-wrap-tail', name: 'Pyrofrost Pastel Tail Wrap', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 50 },
+  { slug: 'pyrofrost-pants-blue', name: 'Pyrofrost Frost Onesie Bottoms', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 50 },
+  { slug: 'pyrofrost-face-blush', name: 'Pyrofrost Rosy Blush', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 5 },
+  { slug: 'pyrofrost-beanie', name: 'Pyrofrost Heart Beanie', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 50 },
+  { slug: 'pyrofrost-onesie-cream', name: 'Pyrofrost Cream Onesie', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 50 },
+
+  // --- Fashion (Pyrofrost Bathhouse): Building Permit ---
+  { slug: 'pyrofrost-door-glass', name: 'Pyrofrost Glass Door', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 28 },
+  { slug: 'pyrofrost-door-slat', name: 'Pyrofrost Slatted Door', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 24 },
+  { slug: 'pyrofrost-stairs-wood', name: 'Pyrofrost Wooden Stairs', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 28 },
+  { slug: 'pyrofrost-fence-lattice', name: 'Pyrofrost Lattice Fence', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 28 },
+  { slug: 'pyrofrost-window-glass', name: 'Pyrofrost Glass Window', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'stars', currencyCost: 28 },
+  { slug: 'pyrofrost-wood-post', name: 'Pyrofrost Wood Post Panel', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 28 },
+  { slug: 'pyrofrost-railing-round', name: 'Pyrofrost Round Railing', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 12 },
+  { slug: 'pyrofrost-fence-round', name: 'Pyrofrost Round Fence', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 28 },
+  { slug: 'pyrofrost-lamp-post', name: 'Pyrofrost Lamp Post', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 55 },
+  { slug: 'pyrofrost-wood-slats', name: 'Pyrofrost Wood Slat Panel', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'stars', currencyCost: 24 },
+  { slug: 'pyrofrost-gate-floral', name: 'Pyrofrost Floral Gate', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 28 },
+  { slug: 'pyrofrost-steps-tan', name: 'Pyrofrost Wooden Steps', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 28 },
+  { slug: 'pyrofrost-post-pillar', name: 'Pyrofrost Pillar Post', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 28 },
+  { slug: 'pyrofrost-roof-curved', name: 'Pyrofrost Curved Roof', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 28 },
+  { slug: 'pyrofrost-floor-herring', name: 'Pyrofrost Herringbone Floor', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 24 },
+  { slug: 'pyrofrost-planks-flat', name: 'Pyrofrost Wood Planks', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 24 },
+  { slug: 'pyrofrost-railing-slat', name: 'Pyrofrost Slat Railing', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 23 },
+  { slug: 'pyrofrost-window-frame', name: 'Pyrofrost Window Frame', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 28 },
+  { slug: 'pyrofrost-bench-corner', name: 'Pyrofrost Corner Bench', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 55 },
+  { slug: 'pyrofrost-bathtub-blue', name: 'Pyrofrost Stone Bathtub', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'coins', currencyCost: 380 },
+  { slug: 'pyrofrost-tree-white', name: 'Pyrofrost Snowy Birch', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 55 },
+  { slug: 'pyrofrost-tree-dark', name: 'Pyrofrost Withered Tree', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 28 },
+
+  // --- Fashion (Pyrofrost Bathhouse): Crafting Guide Book ---
+  { slug: 'pyrofrost-deer-cushion', name: 'Pyrofrost Deer Cushion', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 1, currency: 'coins', currencyCost: 14800 },
+  { slug: 'pyrofrost-deer-thermo', name: 'Pyrofrost Deer Thermometer', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 1, currency: 'coins', currencyCost: 14800 },
+  { slug: 'pyrofrost-wood-bucket', name: 'Pyrofrost Wooden Bucket', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 1, currency: 'coins', currencyCost: 14800 },
+  { slug: 'pyrofrost-sauna-cabin', name: 'Pyrofrost Sauna Cabin', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 60 },
+  { slug: 'pyrofrost-towel-shelf', name: 'Pyrofrost Towel Shelf', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 1, currency: 'coins', currencyCost: 14800 },
+  { slug: 'pyrofrost-firewood-rack', name: 'Pyrofrost Firewood Rack', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 1, currency: 'coins', currencyCost: 14800 },
+  { slug: 'pyrofrost-fire-pit', name: 'Pyrofrost Stone Fire Pit', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'pyrofrost-wood-bathtub', name: 'Pyrofrost Wooden Bathtub', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'pyrofrost-bench-wood', name: 'Pyrofrost Wooden Bench', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 1, currency: 'coins', currencyCost: 15200 },
+  { slug: 'pyrofrost-towel-stand', name: 'Pyrofrost Towel Stand', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+  { slug: 'pyrofrost-hanging-towel', name: 'Pyrofrost Hanging Towel', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 1, currency: 'coins', currencyCost: 14800 },
+  { slug: 'pyrofrost-lounge-chair', name: 'Pyrofrost Lounge Chair', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 1, currency: 'coins', currencyCost: 14800 },
+  { slug: 'pyrofrost-sauna-stove', name: 'Pyrofrost Sauna Stove', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'stars', currencyCost: 30 },
+
+  // --- Fashion (Pyrofrost Bathhouse): Handheld Clothing and furniture ---
+  { slug: 'pyrofrost-reindeer-purple', name: 'Pyrofrost Reindeer Plush (Purple)', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'stars', currencyCost: 20 },
+  { slug: 'pyrofrost-reindeer-white', name: 'Pyrofrost Reindeer Plush (White)', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'stars', currencyCost: 20 },
+  { slug: 'pyrofrost-reindeer-green', name: 'Pyrofrost Reindeer Plush (Green)', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'stars', currencyCost: 20 },
+  { slug: 'pyrofrost-reindeer-yellow', name: 'Pyrofrost Reindeer Plush (Tan)', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'stars', currencyCost: 20 },
+  { slug: 'pyrofrost-reindeer-blue', name: 'Pyrofrost Reindeer Plush (Blue)', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'stars', currencyCost: 20 },
+  { slug: 'pyrofrost-reindeer-brown', name: 'Pyrofrost Reindeer Plush (Brown)', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'stars', currencyCost: 20 },
+  { slug: 'pyrofrost-pine-backdrop', name: 'Pyrofrost Snowy Pine Backdrop', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 70 },
+  { slug: 'pyrofrost-small-tree', name: 'Pyrofrost Small Tree', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 1, currency: 'hearts', currencyCost: 4 },
+  { slug: 'pyrofrost-reindeer-house', name: 'Pyrofrost Reindeer House', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 70 },
+  { slug: 'pyrofrost-well-pump', name: 'Pyrofrost Well Pump', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 70 },
+  { slug: 'pyrofrost-cloth-cream', name: 'Pyrofrost Snowflake Cloth (Cream)', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 1, currency: 'coins', currencyCost: 7200 },
+  { slug: 'pyrofrost-cloth-blue', name: 'Pyrofrost Cloud Cloth (Blue)', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 1, currency: 'coins', currencyCost: 7200 },
+  { slug: 'pyrofrost-cloth-tan', name: 'Pyrofrost Patterned Cloth (Tan)', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 1, currency: 'coins', currencyCost: 7200 },
+  { slug: 'pyrofrost-cloth-orange', name: 'Pyrofrost Floral Cloth (Orange)', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 1, currency: 'coins', currencyCost: 7200 },
+  { slug: 'pyrofrost-igloo-purple', name: 'Pyrofrost Igloo (Purple)', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'stars', currencyCost: 20 },
+  { slug: 'pyrofrost-igloo-blue', name: 'Pyrofrost Igloo (Blue)', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'stars', currencyCost: 20 },
+  { slug: 'pyrofrost-igloo-pink', name: 'Pyrofrost Igloo (Pink)', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'stars', currencyCost: 20 },
+  { slug: 'pyrofrost-pillow-yellow', name: 'Pyrofrost Bolster Pillow (Yellow)', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+  { slug: 'pyrofrost-pillow-blue', name: 'Pyrofrost Bolster Pillow (Blue)', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+  { slug: 'pyrofrost-pillow-pink', name: 'Pyrofrost Bolster Pillow (Pink)', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+  { slug: 'pyrofrost-pillow-cream', name: 'Pyrofrost Bolster Pillow (Cream)', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
+
+  // --- Fashion (Pyrofrost Bathhouse): Instruments, Tools, Actions ---
+  { slug: 'pyrofrost-pose-cover-eyes', name: 'Pyrofrost Dance Pose (Cover Eyes)', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 1, currency: 'coins', currencyCost: 18000 },
+  { slug: 'pyrofrost-pose-shy-bow', name: 'Pyrofrost Dance Pose (Shy Bow)', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 1, currency: 'coins', currencyCost: 18000 },
+  { slug: 'pyrofrost-pose-wave', name: 'Pyrofrost Dance Pose (Wave)', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 1, currency: 'coins', currencyCost: 18000 },
+  { slug: 'pyrofrost-pose-run', name: 'Pyrofrost Dance Pose (Run)', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 1, currency: 'hearts', currencyCost: 10 },
+  { slug: 'pyrofrost-pose-sneeze', name: 'Pyrofrost Dance Pose (Sneeze)', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 1, currency: 'coins', currencyCost: 18000 },
+  { slug: 'pyrofrost-pose-point-laugh', name: 'Pyrofrost Dance Pose (Point & Laugh)', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 1, currency: 'coins', currencyCost: 18000 },
+  { slug: 'pyrofrost-pose-cross-arms', name: 'Pyrofrost Dance Pose (Cross Arms)', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 1, currency: 'coins', currencyCost: 18000 },
+  { slug: 'pyrofrost-music-reindeer', name: 'Pyrofrost Reindeer Music Toy', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 155 },
+  { slug: 'pyrofrost-guitar-frost', name: 'Pyrofrost Frost Guitar', category: 'fashion', catalog: PYROFROST_BATHHOUSE, ticketCost: 2, currency: 'hearts', currencyCost: 55 },
 ];
 
 export function useOrderingMachineItems(category: OrderingMachineCategory): OrderingMachineItem[] {
