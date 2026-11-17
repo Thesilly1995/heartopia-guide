@@ -748,7 +748,6 @@ export const ORDERING_MACHINE_IMAGE_MAP: Record<string, ImageSourcePropType> = {
   'wall-lantern-post': require('@/assets/images/ordering-machine/fashion/wall-lantern-post.png'),
   'wheelbarrow-produce': require('@/assets/images/ordering-machine/fashion/wheelbarrow-produce.png'),
   'white-bear-plush': require('@/assets/images/ordering-machine/fashion/white-bear-plush.png'),
-  'white-door-an': require('@/assets/images/ordering-machine/fashion/white-door-an.png'),
   'white-door-panel': require('@/assets/images/ordering-machine/fashion/white-door-panel.png'),
   'white-ghost-plush': require('@/assets/images/ordering-machine/fashion/white-ghost-plush.png'),
   'white-lattice-fence': require('@/assets/images/ordering-machine/fashion/white-lattice-fence.png'),
