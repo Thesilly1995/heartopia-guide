@@ -15,6 +15,7 @@ const TIME_WORDS: Record<string, { es: string; pt: string; fr: string; de: strin
 const WEATHER_WORDS: Record<string, { es: string; pt: string; fr: string; de: string }> = {
   Sunny: { es: 'Soleado', pt: 'Ensolarado', fr: 'Ensoleillé', de: 'Sonnig' },
   Rainy: { es: 'Lluvioso', pt: 'Chuvoso', fr: 'Pluvieux', de: 'Regnerisch' },
+  Snow: { es: 'Nieve', pt: 'Neve', fr: 'Neige', de: 'Schnee' },
   Rainbow: { es: 'Arcoíris', pt: 'Arco-íris', fr: 'Arc-en-ciel', de: 'Regenbogen' },
 };
 
