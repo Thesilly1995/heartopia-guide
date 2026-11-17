@@ -255,7 +255,6 @@ const ITEMS: OrderingMachineItem[] = [
   { slug: 'dance-pose-an-shimmy', name: 'Dance Pose (Shimmy)', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 1, currency: 'coins', currencyCost: 18000 },
   { slug: 'dance-pose-an-aim', name: 'Dance Pose (Aim)', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 1, currency: 'coins', currencyCost: 18000 },
   { slug: 'heart-pattern-door', name: 'Heart Pattern Door', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 2, currency: 'hearts', currencyCost: 140 },
-  { slug: 'white-door-an', name: 'White Door', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 2, currency: 'hearts', currencyCost: 140 },
   { slug: 'animal-picture-frame-16', name: 'Animal Picture Frame (16)', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
   { slug: 'animal-picture-frame-17', name: 'Animal Picture Frame (17)', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
   { slug: 'animal-picture-frame-18', name: 'Animal Picture Frame (18)', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
