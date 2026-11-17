@@ -68,6 +68,7 @@ const STRINGS = {
     back: '‹ Terug',
     itemsInGuide: (n: number) => `${n} items in deze gids`,
     searchPlaceholder: 'Zoeken op naam...',
+    sortAz: '🔤 A-Z sorteren',
     all: 'Alle',
     allWeather: 'Alle weer',
     allTime: 'Alle tijdstippen',
@@ -96,6 +97,7 @@ const STRINGS = {
     back: '‹ Back',
     itemsInGuide: (n: number) => `${n} items in this guide`,
     searchPlaceholder: 'Search by name...',
+    sortAz: '🔤 Sort A-Z',
     all: 'All',
     allWeather: 'All weather',
     allTime: 'All times',
@@ -124,6 +126,7 @@ const STRINGS = {
     back: '‹ Volver',
     itemsInGuide: (n: number) => `${n} elementos en esta guía`,
     searchPlaceholder: 'Buscar por nombre...',
+    sortAz: '🔤 Ordenar A-Z',
     all: 'Todos',
     allWeather: 'Todo el clima',
     allTime: 'Todos los horarios',
@@ -152,6 +155,7 @@ const STRINGS = {
     back: '‹ Voltar',
     itemsInGuide: (n: number) => `${n} itens neste guia`,
     searchPlaceholder: 'Buscar por nome...',
+    sortAz: '🔤 Ordenar A-Z',
     all: 'Todos',
     allWeather: 'Todo o clima',
     allTime: 'Todos os horários',
@@ -180,6 +184,7 @@ const STRINGS = {
     back: '‹ Retour',
     itemsInGuide: (n: number) => `${n} éléments dans ce guide`,
     searchPlaceholder: 'Rechercher par nom...',
+    sortAz: '🔤 Trier A-Z',
     all: 'Tous',
     allWeather: 'Toute météo',
     allTime: 'Tous les horaires',
@@ -208,6 +213,7 @@ const STRINGS = {
     back: '‹ Zurück',
     itemsInGuide: (n: number) => `${n} Einträge in diesem Guide`,
     searchPlaceholder: 'Nach Namen suchen...',
+    sortAz: '🔤 A-Z sortieren',
     all: 'Alle',
     allWeather: 'Alles Wetter',
     allTime: 'Alle Zeiten',
@@ -271,6 +277,7 @@ export function HobbyListScreen({
   const [spotFilter, setSpotFilter] = useState<string>('Alle');
   const [spotExpanded, setSpotExpanded] = useState(false);
   const [progressFilter, setProgressFilter] = useState<ProgressFilter>('all');
+  const [sortAz, setSortAz] = useState(false);
   const [activeSub, setActiveSub] = useState<string>(subTabs?.[0]?.key ?? '');
   const [stars, setStars] = useState<Record<string, number>>({});
   const [mastery, setMastery] = useState<Record<string, boolean>>({});
@@ -319,6 +326,7 @@ export function HobbyListScreen({
         setWeatherIndex(f?.weatherIndex ?? -1);
         setTimeIndex(f?.timeIndex ?? -1);
         setSpotFilter(f?.spotFilter ?? 'Alle');
+        setSortAz(f?.sortAz ?? false);
       } catch {
         setStars({});
         setMastery({});
@@ -331,11 +339,11 @@ export function HobbyListScreen({
     if (hydratedKeyRef.current !== activeStorageKey) return;
     AsyncStorage.setItem(
       filtersStorageKey,
-      JSON.stringify({ maxLevel, progressFilter, weatherIndex, timeIndex, spotFilter })
+      JSON.stringify({ maxLevel, progressFilter, weatherIndex, timeIndex, spotFilter, sortAz })
     ).catch(() => {
       // opslaan mislukt, lokale state blijft zichtbaar tot een herstart
     });
-  }, [activeStorageKey, filtersStorageKey, maxLevel, progressFilter, weatherIndex, timeIndex, spotFilter]);
+  }, [activeStorageKey, filtersStorageKey, maxLevel, progressFilter, weatherIndex, timeIndex, spotFilter, sortAz]);
 
   const setItemStar = async (name: string, value: number) => {
     const current = stars[name] ?? 0;
@@ -385,14 +393,20 @@ export function HobbyListScreen({
       filtered = filtered.filter((item) => !!item.time?.includes(timeFilter));
     }
 
-    if (weatherFilter === 'Alle') return filtered;
+    if (weatherFilter !== 'Alle') {
+      filtered = [...filtered].sort((a, b) => {
+        const aScore = a.weather?.includes(weatherFilter) ? 1 : 0;
+        const bScore = b.weather?.includes(weatherFilter) ? 1 : 0;
+        return bScore - aScore;
+      });
+    }
 
-    return [...filtered].sort((a, b) => {
-      const aScore = a.weather?.includes(weatherFilter) ? 1 : 0;
-      const bScore = b.weather?.includes(weatherFilter) ? 1 : 0;
-      return bScore - aScore;
-    });
-  }, [activeItems, query, maxLevel, weatherFilter, timeFilter, spotFilter, progressFilter, stars, mastery]);
+    if (sortAz) {
+      filtered = [...filtered].sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    return filtered;
+  }, [activeItems, query, maxLevel, weatherFilter, timeFilter, spotFilter, progressFilter, stars, mastery, sortAz]);
 
   const listHeader = (
     <>
@@ -438,6 +452,12 @@ export function HobbyListScreen({
           placeholderTextColor={colors.forestSoft}
           style={styles.searchInput}
         />
+
+        <View style={styles.chipRow}>
+          <Pressable onPress={() => setSortAz(!sortAz)} style={[styles.chip, sortAz && styles.chipActive]}>
+            <Text style={[styles.chipText, sortAz && styles.chipTextActive]}>{s.sortAz}</Text>
+          </Pressable>
+        </View>
 
         <View style={styles.chipRow}>
           {LEVEL_FILTERS.map((lvl) => {
