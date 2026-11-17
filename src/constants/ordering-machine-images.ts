@@ -542,7 +542,6 @@ export const ORDERING_MACHINE_IMAGE_MAP: Record<string, ImageSourcePropType> = {
   'roof-tile-floor': require('@/assets/images/ordering-machine/fashion/roof-tile-floor.png'),
   'round-bush-topiary': require('@/assets/images/ordering-machine/fashion/round-bush-topiary.png'),
   'round-doily-rug': require('@/assets/images/ordering-machine/fashion/round-doily-rug.png'),
-  'sausage-cat-toy': require('@/assets/images/ordering-machine/fashion/sausage-cat-toy.png'),
   'ship-picture-frame': require('@/assets/images/ordering-machine/fashion/ship-picture-frame.png'),
   'sink-basin-box': require('@/assets/images/ordering-machine/fashion/sink-basin-box.png'),
   'sleeping-cat-fence': require('@/assets/images/ordering-machine/fashion/sleeping-cat-fence.png'),

@@ -237,7 +237,6 @@ const ITEMS: OrderingMachineItem[] = [
   { slug: 'wood-platform-table', name: 'Wood Platform Table', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 1, currency: 'coins', currencyCost: 3500 },
   { slug: 'oval-cat-bed', name: 'Oval Cat Bed', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 1, currency: 'coins', currencyCost: 3500 },
   { slug: 'purple-cat-toy', name: 'Purple Cat Toy', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 1, currency: 'coins', currencyCost: 2400 },
-  { slug: 'sausage-cat-toy', name: 'Sausage Cat Toy', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 1, currency: 'coins', currencyCost: 2400 },
   { slug: 'wood-ladder-stairs-2', name: 'Wood Ladder Stairs (2)', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
   { slug: 'leafy-plant-2', name: 'Leafy Plant (2)', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
   { slug: 'leafy-plant-3', name: 'Leafy Plant (3)', category: 'fashion', catalog: NEW_ANIMAL_NEIGHBOURS, ticketCost: 1, currency: 'coins', currencyCost: 4000 },
