@@ -30,6 +30,7 @@ const DOGS_RAW: DogRaw[] = [
   { nameNl: "Rottweiler", nameEn: "Rottweiler", nameEs: "Rottweiler", namePt: "Rottweiler", nameFr: "Rottweiler", nameDe: "Rottweiler", emoji: "🐶" },
   { nameNl: "Berner Sennenhond", nameEn: "Bernese Mountain Dog", nameEs: "Boyero de Berna", namePt: "Boiadeiro de Berna", nameFr: "Bouvier Bernois", nameDe: "Berner Sennenhund", emoji: "🐶" },
   { nameNl: "Plattelandshond", nameEn: "Rural Dog", nameEs: "Perro Rural", namePt: "Cão Rural", nameFr: "Chien de Campagne", nameDe: "Landhund", emoji: "🐶" },
+  { nameNl: "Sledehond", nameEn: "Sled Dog", nameEs: "Perro de Trineo", namePt: "Cão de Trenó", nameFr: "Chien de Traîneau", nameDe: "Schlittenhund", emoji: "🐶" },
 ];
 
 export function useDogs(): DogItem[] {

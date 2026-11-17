@@ -38,6 +38,10 @@ const CATS_RAW: CatRaw[] = [
   { nameNl: "Gouden Luipaardkat", nameEn: "Golden Leopard Cat", nameEs: "Gato Leopardo Dorado", namePt: "Gato Leopardo Dourado", nameFr: "Chat léopard doré", nameDe: "Goldene Leopardenkatze", emoji: "🐱" },
   { nameNl: "Koeienkat", nameEn: "Cow Cat", nameEs: "Gato Vaca", namePt: "Gato Vaca", nameFr: "Chat vache", nameDe: "Kuh-Katze", emoji: "🐱" },
   { nameNl: "Zilver Shaded Kat", nameEn: "Silver Shaded Cat", nameEs: "Gato Plateado Sombreado", namePt: "Gato Prateado Sombreado", nameFr: "Chat argenté ombré", nameDe: "Silberschattierte Katze", emoji: "🐱" },
+  { nameNl: "Oranje Makreel Cyperse Kat", nameEn: "Orange Mackerel Tabby", nameEs: "Atigrado Makrel Naranja", namePt: "Malhado Makrel Laranja", nameFr: "Chat tigré makrel orange", nameDe: "Orangefarbener Makrel-Tabby", emoji: "🐱" },
+  { nameNl: "Grijze Makreel Cyperse Kat", nameEn: "Grey Mackerel Tabby", nameEs: "Atigrado Makrel Gris", namePt: "Malhado Makrel Cinza", nameFr: "Chat tigré makrel gris", nameDe: "Grauer Makrel-Tabby", emoji: "🐱" },
+  { nameNl: "Goud Shaded Kat", nameEn: "Golden Shaded", nameEs: "Gato Dorado Sombreado", namePt: "Gato Dourado Sombreado", nameFr: "Chat doré ombré", nameDe: "Goldschattierte Katze", emoji: "🐱" },
+  { nameNl: "Witte Cyperse Kat", nameEn: "White Tabby", nameEs: "Atigrado Blanco", namePt: "Malhado Branco", nameFr: "Chat cyprien blanc", nameDe: "Weiße Zypernkatze", emoji: "🐱" },
 ];
 
 export function useCats(): CatItem[] {

@@ -63,6 +63,7 @@ const STRINGS = {
     title: 'Dog & Cat Moments',
     cats: 'Katten',
     dogs: 'Honden',
+    sortAz: '🔤 A-Z sorteren',
     adoptionSlots: 'Adoptieslots per level',
     care: 'Verzorging',
     careValue: 'Aaien, voeren, wassen, samen zijn, trucjes, wandelen',
@@ -89,6 +90,7 @@ const STRINGS = {
     title: 'Dog & Cat Moments',
     cats: 'Cats',
     dogs: 'Dogs',
+    sortAz: '🔤 Sort A-Z',
     adoptionSlots: 'Adoption slots per level',
     care: 'Care',
     careValue: 'Petting, feeding, washing, hanging out, tricks, walking',
@@ -115,6 +117,7 @@ const STRINGS = {
     title: 'Dog & Cat Moments',
     cats: 'Gatos',
     dogs: 'Perros',
+    sortAz: '🔤 Ordenar A-Z',
     adoptionSlots: 'Espacios de adopción por nivel',
     care: 'Cuidado',
     careValue: 'Acariciar, alimentar, lavar, pasar tiempo juntos, trucos, pasear',
@@ -141,6 +144,7 @@ const STRINGS = {
     title: 'Dog & Cat Moments',
     cats: 'Gatos',
     dogs: 'Cachorros',
+    sortAz: '🔤 Ordenar A-Z',
     adoptionSlots: 'Vagas de adoção por nível',
     care: 'Cuidados',
     careValue: 'Fazer carinho, alimentar, dar banho, passar tempo junto, truques, passear',
@@ -167,6 +171,7 @@ const STRINGS = {
     title: 'Dog & Cat Moments',
     cats: 'Chats',
     dogs: 'Chiens',
+    sortAz: '🔤 Trier A-Z',
     adoptionSlots: "Places d'adoption par niveau",
     care: 'Soins',
     careValue: 'Caresser, nourrir, laver, passer du temps ensemble, tours, promener',
@@ -193,6 +198,7 @@ const STRINGS = {
     title: 'Dog & Cat Moments',
     cats: 'Katzen',
     dogs: 'Hunde',
+    sortAz: '🔤 A-Z sortieren',
     adoptionSlots: 'Adoptionsplätze pro Level',
     care: 'Pflege',
     careValue: 'Streicheln, füttern, waschen, zusammen sein, Tricks, spazieren gehen',
@@ -257,6 +263,7 @@ export default function HuisdierenScreen() {
   const [petNames, setPetNames] = useState<Record<string, string[]>>({});
   const [triedDishes, setTriedDishes] = useState<Record<string, string[]>>({});
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
+  const [sortAz, setSortAz] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -384,16 +391,15 @@ export default function HuisdierenScreen() {
 
   const items: (CatItem | DogItem)[] = tab === 'cats' ? CATS : DOGS;
   const petActions = tab === 'cats' ? CAT_ACTIONS : DOG_ACTIONS;
-  const sortedItems = useMemo(
-    () =>
-      [...items].sort((a, b) => {
-        const aBonded = (bonds[a.name] || 0) > 0;
-        const bBonded = (bonds[b.name] || 0) > 0;
-        if (aBonded === bBonded) return 0;
-        return aBonded ? -1 : 1;
-      }),
-    [items, bonds]
-  );
+  const sortedItems = useMemo(() => {
+    if (sortAz) return [...items].sort((a, b) => a.name.localeCompare(b.name));
+    return [...items].sort((a, b) => {
+      const aBonded = (bonds[a.name] || 0) > 0;
+      const bBonded = (bonds[b.name] || 0) > 0;
+      if (aBonded === bBonded) return 0;
+      return aBonded ? -1 : 1;
+    });
+  }, [items, bonds, sortAz]);
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -424,6 +430,9 @@ export default function HuisdierenScreen() {
               <InfoCard label={s.adoptionSlots} value={tab === 'cats' ? 'Lv.1 / 2 / 5 / 7 / 9' : 'Lv.1 / 4 / 8'} />
               <InfoCard label={s.care} value={s.careValue} />
             </View>
+            <Pressable style={[styles.sortToggle, sortAz && styles.sortToggleActive]} onPress={() => setSortAz(!sortAz)}>
+              <Text style={[styles.sortToggleText, sortAz && styles.sortToggleTextActive]}>{s.sortAz}</Text>
+            </Pressable>
             <Text style={styles.disclaimer}>{FAVORITE_FOOD_NOTE[language]}</Text>
           </View>
         }
@@ -613,6 +622,10 @@ function makeStyles(c: ThemeColors) {
     headerInfo: { marginBottom: 10, gap: 8 },
     infoRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
     disclaimer: { padding: 12, borderRadius: 12, backgroundColor: c.disclaimerBg, borderWidth: 1, borderColor: c.disclaimerBorder, color: c.forestSoft, fontSize: 11 },
+    sortToggle: { alignSelf: 'flex-start', paddingHorizontal: 12, paddingVertical: 6, borderRadius: 999, backgroundColor: c.chipBg },
+    sortToggleActive: { backgroundColor: c.coral },
+    sortToggleText: { fontSize: 11, fontWeight: '700', color: c.skyDark },
+    sortToggleTextActive: { color: '#FFFFFF' },
     card: { backgroundColor: c.card, borderRadius: 16, borderWidth: 1, borderColor: c.line, overflow: 'hidden', marginBottom: 10 },
     cardHeader: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14 },
     emojiBadge: { width: 44, height: 44, borderRadius: 22, backgroundColor: c.iconBg, alignItems: 'center', justifyContent: 'center' },
