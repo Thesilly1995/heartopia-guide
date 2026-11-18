@@ -333,17 +333,17 @@
   ],
   "rainbowSpotsUpdatedAt": "2026-11-12T23:00:00Z",
   "meteorSpots": [
-    {"num": 1, "x": 20.5, "y": 40.1, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied", "descriptionEn": "Main island, west area", "descriptionEs": "Isla principal, zona oeste", "descriptionPt": "Ilha principal, área oeste"},
-    {"num": 2, "x": 14.4, "y": 39.7, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied, bij locatie 1", "descriptionEn": "Main island, west area, near spot 1", "descriptionEs": "Isla principal, zona oeste, cerca del punto 1", "descriptionPt": "Ilha principal, área oeste, perto do ponto 1"},
-    {"num": 3, "x": 13.2, "y": 46.2, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied, bij locatie 2", "descriptionEn": "Main island, west area, near spot 2", "descriptionEs": "Isla principal, zona oeste, cerca del punto 2", "descriptionPt": "Ilha principal, área oeste, perto do ponto 2"},
-    {"num": 4, "x": 8.9, "y": 49.5, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied, bij locatie 3", "descriptionEn": "Main island, west area, near spot 3", "descriptionEs": "Isla principal, zona oeste, cerca del punto 3", "descriptionPt": "Ilha principal, área oeste, perto do ponto 3"},
-    {"num": 5, "x": 10.4, "y": 58.9, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied, bij locatie 4", "descriptionEn": "Main island, west area, near spot 4", "descriptionEs": "Isla principal, zona oeste, cerca del punto 4", "descriptionPt": "Ilha principal, área oeste, perto do ponto 4"},
-    {"num": 6, "x": 10.6, "y": 65.2, "underwater": false, "isDoris": true, "descriptionNl": "Hoofdeiland, westelijk gebied, bij locatie 5", "descriptionEn": "Main island, west area, near spot 5", "descriptionEs": "Isla principal, zona oeste, cerca del punto 5", "descriptionPt": "Ilha principal, área oeste, perto do ponto 5"},
-    {"num": 7, "x": 14.2, "y": 66.5, "underwater": false, "descriptionNl": "Hoofdeiland, westelijk gebied, bij locatie 6", "descriptionEn": "Main island, west area, near spot 6", "descriptionEs": "Isla principal, zona oeste, cerca del punto 6", "descriptionPt": "Ilha principal, área oeste, perto do ponto 6"},
-    {"num": 8, "x": 16.6, "y": 72.3, "underwater": false, "descriptionNl": "Hoofdeiland, zuidwestelijk gebied", "descriptionEn": "Main island, southwest area", "descriptionEs": "Isla principal, zona suroeste", "descriptionPt": "Ilha principal, área sudoeste"},
-    {"num": 9, "x": 19.8, "y": 80.7, "underwater": false, "descriptionNl": "Hoofdeiland, zuidwestelijk gebied, bij locatie 8", "descriptionEn": "Main island, southwest area, near spot 8", "descriptionEs": "Isla principal, zona suroeste, cerca del punto 8", "descriptionPt": "Ilha principal, área sudoeste, perto do ponto 8"},
-    {"num": 10, "x": 24.9, "y": 85.3, "underwater": false, "descriptionNl": "Hoofdeiland, zuidwestelijk gebied, bij locatie 9", "descriptionEn": "Main island, southwest area, near spot 9", "descriptionEs": "Isla principal, zona suroeste, cerca del punto 9", "descriptionPt": "Ilha principal, área sudoeste, perto do ponto 9"}
+    {"num": 1, "x": 32, "y": 28.6, "underwater": false, "descriptionNl": "Locatie 1", "descriptionEn": "Location 1", "descriptionEs": "Ubicación 1", "descriptionPt": "Local 1", "descriptionFr": "Emplacement 1", "descriptionDe": "Standort 1"},
+    {"num": 2, "x": 21.5, "y": 31.5, "underwater": false, "descriptionNl": "Locatie 2", "descriptionEn": "Location 2", "descriptionEs": "Ubicación 2", "descriptionPt": "Local 2", "descriptionFr": "Emplacement 2", "descriptionDe": "Standort 2"},
+    {"num": 3, "x": 21.3, "y": 23.6, "underwater": false, "descriptionNl": "Locatie 3", "descriptionEn": "Location 3", "descriptionEs": "Ubicación 3", "descriptionPt": "Local 3", "descriptionFr": "Emplacement 3", "descriptionDe": "Standort 3"},
+    {"num": 4, "x": 32.8, "y": 15.2, "underwater": false, "descriptionNl": "Locatie 4", "descriptionEn": "Location 4", "descriptionEs": "Ubicación 4", "descriptionPt": "Local 4", "descriptionFr": "Emplacement 4", "descriptionDe": "Standort 4"},
+    {"num": 5, "x": 47.1, "y": 17.7, "underwater": false, "descriptionNl": "Locatie 5", "descriptionEn": "Location 5", "descriptionEs": "Ubicación 5", "descriptionPt": "Local 5", "descriptionFr": "Emplacement 5", "descriptionDe": "Standort 5"},
+    {"num": 6, "x": 53.6, "y": 23.8, "underwater": false, "descriptionNl": "Locatie 6", "descriptionEn": "Location 6", "descriptionEs": "Ubicación 6", "descriptionPt": "Local 6", "descriptionFr": "Emplacement 6", "descriptionDe": "Standort 6"},
+    {"num": 7, "x": 54.2, "y": 31.9, "underwater": false, "descriptionNl": "Locatie 7", "descriptionEn": "Location 7", "descriptionEs": "Ubicación 7", "descriptionPt": "Local 7", "descriptionFr": "Emplacement 7", "descriptionDe": "Standort 7"},
+    {"num": 8, "x": 61.7, "y": 33, "underwater": false, "descriptionNl": "Locatie 8", "descriptionEn": "Location 8", "descriptionEs": "Ubicación 8", "descriptionPt": "Local 8", "descriptionFr": "Emplacement 8", "descriptionDe": "Standort 8"},
+    {"num": 9, "x": 65.5, "y": 30.3, "underwater": false, "descriptionNl": "Locatie 9", "descriptionEn": "Location 9", "descriptionEs": "Ubicación 9", "descriptionPt": "Local 9", "descriptionFr": "Emplacement 9", "descriptionDe": "Standort 9"}
   ],
+  "meteorSpotsUpdatedAt": "2026-11-18T12:10:00Z",
   "bubbleWeek": {
     "weekLabelNl": "Deze week (14-21 nov 2026)",
     "weekLabelEn": "This week (Nov 14-21, 2026)",
