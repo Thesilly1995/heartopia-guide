@@ -16,3 +16,7 @@ eas update --branch production --message "..."
 ```
 
 Dit voorkomt dat een oude bundel (zonder de nieuwste commit) per ongeluk opnieuw gepubliceerd wordt.
+
+# Lokale projectmap van de gebruiker
+
+De gebruiker (Silvana) heeft dit project lokaal op Windows staan in `C:\Users\Silvana\heartopia-guide`. Bij vragen over het lokaal openen van de map in VS Code / terminal (bv. om `git pull` + `eas update` te draaien) kan dit pad direct genoemd worden.
