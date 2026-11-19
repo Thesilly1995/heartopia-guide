@@ -11,6 +11,7 @@ import { AdBanner } from '@/components/heartopia/ad-banner';
 import { PlayStoreUpdateModal } from '@/components/heartopia/play-store-update-modal';
 import { PremiumLifetimeModal } from '@/components/heartopia/premium-lifetime-modal';
 import { PremiumPromoModal } from '@/components/heartopia/premium-promo-modal';
+import { ReviewPromptModal } from '@/components/heartopia/review-prompt-modal';
 import { UpdateBanner } from '@/components/heartopia/update-banner';
 import { initializeAdsIfNeeded } from '@/constants/ads';
 import { initializePurchasesIfNeeded } from '@/constants/purchases';
@@ -23,7 +24,7 @@ import { ServerProvider } from '@/hooks/use-server';
 import { markPlayStoreUpdateNoticeShown, shouldShowPlayStoreUpdateNotice } from '@/lib/play-store-update-notice';
 import { markPremiumLifetimeNoticeShown, shouldShowPremiumLifetimeNotice } from '@/lib/premium-lifetime-notice';
 import { markPremiumPromoShown, shouldShowPremiumPromo } from '@/lib/premium-promo';
-import { maybeRequestReview } from '@/lib/store-review';
+import { markReviewPromptShown, shouldShowReviewPrompt } from '@/lib/review-prompt';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -31,7 +32,6 @@ export default function RootLayout() {
   useEffect(() => {
     initializeAdsIfNeeded();
     initializePurchasesIfNeeded();
-    maybeRequestReview();
   }, []);
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -59,6 +59,7 @@ function AppContent() {
   const [showLifetimeNotice, setShowLifetimeNotice] = useState(false);
   const lifetimeNoticeShownRef = useRef(false);
   const [showPlayStoreNotice, setShowPlayStoreNotice] = useState(false);
+  const [showReviewPrompt, setShowReviewPrompt] = useState(false);
   // Gedeeld tussen alle opstart-popups hieronder, zodat er nooit twee
   // tegelijk verschijnen — wie als eerste "ja" krijgt, wint.
   const anyModalShownRef = useRef(false);
@@ -124,6 +125,23 @@ function AppContent() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Eigen "vind je de app leuk?"-pop-up, na de andere (belangrijkere,
+  // eenmalige) meldingen — zie `src/lib/review-prompt.ts` voor de precieze
+  // voorwaarden (pas na een paar keer openen, daarna max. 1x/maand, nooit
+  // meer na "Ja").
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      if (anyModalShownRef.current) return;
+      const show = await shouldShowReviewPrompt();
+      if (show && !anyModalShownRef.current) {
+        anyModalShownRef.current = true;
+        setShowReviewPrompt(true);
+        markReviewPromptShown();
+      }
+    }, 2500);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <View style={styles.webContentWrapper}>
@@ -132,6 +150,7 @@ function AppContent() {
         <PlayStoreUpdateModal visible={showPlayStoreNotice} onClose={() => setShowPlayStoreNotice(false)} />
         <PremiumPromoModal visible={showPremiumPromo} onClose={() => setShowPremiumPromo(false)} />
         <PremiumLifetimeModal visible={showLifetimeNotice} onClose={() => setShowLifetimeNotice(false)} />
+        <ReviewPromptModal visible={showReviewPrompt} onClose={() => setShowReviewPrompt(false)} />
         <Stack screenOptions={{ headerShown: false, contentStyle: { paddingBottom: contentPadding } }}>
           <Stack.Screen name="(tabs)" options={{ contentStyle: { paddingBottom: 0 } }} />
           <Stack.Screen name="vissen" />
