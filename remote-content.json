@@ -125,13 +125,30 @@
     "validUntil": "2026-08-06T18:00:00Z"
   },
   "event": {
-    "nameNl": "Night of Divination",
-    "nameEn": "Night of Divination",
-    "datesNl": "10 oktober – 21 november 2026",
-    "datesEn": "October 10 – November 21, 2026",
-    "datesEs": "10 de octubre – 21 de noviembre de 2026",
-    "datesPt": "10 de outubro – 21 de novembro de 2026",
-    "fish": [
+    "nameNl": "My Little Pony: Friendship Journey",
+    "nameEn": "My Little Pony: Friendship Journey",
+    "datesNl": "21 november – 27 december 2026",
+    "datesEn": "November 21 – December 27, 2026",
+    "datesEs": "21 de noviembre – 27 de diciembre de 2026",
+    "datesPt": "21 de novembro – 27 de dezembro de 2026",
+    "fish": [],
+    "birds": [],
+    "insects": [],
+    "recipes": [
+      {"nameNl": "Twilight Sparkle Cupcake", "nameEn": "Twilight Sparkle Cupcake", "ingredientsNl": ["Tarwe", "Ei", "Melk", "Druif"], "ingredientsEn": ["Wheat", "Egg", "Milk", "Grape"], "emoji": "🧁", "gold": [1020, 1530, 2040, 4080, 8160]},
+      {"nameNl": "Soft & Soft Cupcake", "nameEn": "Soft & Soft Cupcake", "ingredientsNl": ["Tarwe", "Ei", "Melk", "Ananas"], "ingredientsEn": ["Wheat", "Egg", "Milk", "Pineapple"], "emoji": "🧁", "gold": [590, 885, 1180, 2360, 4720]},
+      {"nameNl": "Rainbow Dash Cupcake", "nameEn": "Rainbow Dash Cupcake", "ingredientsNl": ["Tarwe", "Ei", "Melk", "Bosbes"], "ingredientsEn": ["Wheat", "Egg", "Milk", "Blueberry"], "emoji": "🧁", "gold": [570, 855, 1140, 2280, 4560]},
+      {"nameNl": "Rare Cupcake", "nameEn": "Rare Cupcake", "ingredientsNl": ["Tarwe", "Ei", "Melk", "Melk"], "ingredientsEn": ["Wheat", "Egg", "Milk", "Milk"], "emoji": "🧁", "gold": [590, 885, 1180, 2360, 4720]},
+      {"nameNl": "Pinkie Pie Cupcake", "nameEn": "Pinkie Pie Cupcake", "ingredientsNl": ["Tarwe", "Ei", "Melk", "Framboos"], "ingredientsEn": ["Wheat", "Egg", "Milk", "Raspberry"], "emoji": "🧁", "gold": [590, 885, 1180, 2360, 4720]},
+      {"nameNl": "Applejack Cupcake", "nameEn": "Applejack Cupcake", "ingredientsNl": ["Tarwe", "Ei", "Melk", "Appel"], "ingredientsEn": ["Wheat", "Egg", "Milk", "Apple"], "emoji": "🧁", "gold": [590, 885, 1180, 2360, 4720]}
+    ]
+  },
+  "pastEvents": [
+    {
+      "nameNl": "Night of Divination", "nameEn": "Night of Divination",
+      "datesNl": "10 oktober – 21 november 2026", "datesEn": "October 10 – November 21, 2026",
+      "datesEs": "10 de octubre – 21 de noviembre de 2026", "datesPt": "10 de outubro – 21 de novembro de 2026",
+      "fish": [
       {"nameNl": "Blauwe Zee-engel", "nameEn": "Blue Sea Angel", "spotNl": "Onsen Berg (Oude Zee)", "spotEn": "Onsen Mountain (Old Sea)", "noteNl": null, "noteEn": null, "emoji": "🐟", "gold": [100, 150, 200, 400, 800], "tokens": [15, 22, 30, 60, 120]},
       {"nameNl": "Farao-Inktvis", "nameEn": "Pharaoh Cuttlefish", "spotNl": "Onsen Berg (Oude Zee)", "spotEn": "Onsen Mountain (Old Sea)", "noteNl": null, "noteEn": null, "emoji": "🦑", "gold": [155, 232, 310, 620, 1240], "tokens": [25, 37, 50, 100, 200]},
       {"nameNl": "Ruggengraatloze Inktvis", "nameEn": "Spineless Cuttlefish", "spotNl": "Onsen Berg (Oude Zee)", "spotEn": "Onsen Mountain (Old Sea)", "noteNl": null, "noteEn": null, "emoji": "🦑", "gold": [155, 232, 310, 620, 1240], "tokens": [25, 37, 50, 100, 200]},
@@ -184,8 +201,7 @@
       {"nameNl": "Honingzwam", "nameEn": "Honey Mushroom", "spotNl": "Vissersdorp Plein", "spotEn": "Fishing Village Square", "noteNl": "14 plekken, ververst elke 1 minuut 30 seconden. Bruikbaar als ingrediënt in limited recepten (o.a. de Pompoenroom Soepen), eetbaar en neer te zetten in huis.", "noteEn": "14 spots, refreshes every 1 minute 30 seconds. Usable as an ingredient in limited recipes (incl. the Pumpkin Creamy Soups), edible and can be placed at home.", "emoji": "🍄", "price": 16},
       {"nameNl": "Holle Boom", "nameEn": "Hollow Tree", "spotNl": "Boseiland", "spotEn": "Forest Island", "noteNl": "12 plekken, ververst dagelijks om 6:00. Verzamelen geeft willekeurig: windgong, vogelbeeldje, boekenkast of een lolly.", "noteEn": "12 spots, refreshes daily at 6:00 AM. Gathering gives a random: wind chime, bird figurine, bookshelf or lollipop.", "emoji": "🌳", "price": null}
     ]
-  },
-  "pastEvents": [
+    },
     {
       "nameNl": "Eerie Eve", "nameEn": "Eerie Eve",
       "datesNl": "30 oktober – 15 november 2026", "datesEn": "October 30 – November 15, 2026",
@@ -319,15 +335,6 @@
         {"nameNl": "Kussenvormige Zongzi met Eidooier & Varkensvlees", "nameEn": "Pillow Shaped Egg Yolk & Pork Zongzi", "ingredientsNl": ["Rijst", "Ei", "Bamboeblad", "Vlees"], "ingredientsEn": ["Paddy Rice", "Egg", "Bamboo Leaf", "Meat"], "emoji": "🍙"}
       ]
     }
-  ],
-  "nextEventName": "My Little Pony: Friendship Journey",
-  "nextEventRecipes": [
-    {"nameNl": "Twilight Sparkle Cupcake", "nameEn": "Twilight Sparkle Cupcake", "ingredientsNl": ["Tarwe", "Ei", "Melk", "Druif"], "ingredientsEn": ["Wheat", "Egg", "Milk", "Grape"], "emoji": "🧁", "gold": [1020, 1530, 2040, 4080, 8160]},
-    {"nameNl": "Soft & Soft Cupcake", "nameEn": "Soft & Soft Cupcake", "ingredientsNl": ["Tarwe", "Ei", "Melk", "Ananas"], "ingredientsEn": ["Wheat", "Egg", "Milk", "Pineapple"], "emoji": "🧁", "gold": [590, 885, 1180, 2360, 4720]},
-    {"nameNl": "Rainbow Dash Cupcake", "nameEn": "Rainbow Dash Cupcake", "ingredientsNl": ["Tarwe", "Ei", "Melk", "Bosbes"], "ingredientsEn": ["Wheat", "Egg", "Milk", "Blueberry"], "emoji": "🧁", "gold": [570, 855, 1140, 2280, 4560]},
-    {"nameNl": "Rare Cupcake", "nameEn": "Rare Cupcake", "ingredientsNl": ["Tarwe", "Ei", "Melk", "Melk"], "ingredientsEn": ["Wheat", "Egg", "Milk", "Milk"], "emoji": "🧁", "gold": [590, 885, 1180, 2360, 4720]},
-    {"nameNl": "Pinkie Pie Cupcake", "nameEn": "Pinkie Pie Cupcake", "ingredientsNl": ["Tarwe", "Ei", "Melk", "Framboos"], "ingredientsEn": ["Wheat", "Egg", "Milk", "Raspberry"], "emoji": "🧁", "gold": [590, 885, 1180, 2360, 4720]},
-    {"nameNl": "Applejack Cupcake", "nameEn": "Applejack Cupcake", "ingredientsNl": ["Tarwe", "Ei", "Melk", "Appel"], "ingredientsEn": ["Wheat", "Egg", "Milk", "Apple"], "emoji": "🧁", "gold": [590, 885, 1180, 2360, 4720]}
   ],
   "rainbowSpots": [
     {"num": 1, "x": 94.4, "y": 38.1, "underwater": false, "descriptionNl": "Locatie 1", "descriptionEn": "Location 1", "descriptionEs": "Ubicación 1", "descriptionPt": "Local 1", "descriptionFr": "Emplacement 1", "descriptionDe": "Standort 1"},
