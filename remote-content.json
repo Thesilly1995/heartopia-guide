@@ -322,16 +322,16 @@
   ],
   "nextEventName": "My Little Pony: Friendship Journey",
   "rainbowSpots": [
-    {"num": 1, "x": 43.5, "y": 16, "underwater": false, "isDoris": true, "descriptionNl": "Hoofdeiland, noordelijk gebied", "descriptionEn": "Main island, north area", "descriptionEs": "Isla principal, zona norte", "descriptionPt": "Ilha principal, área norte"},
-    {"num": 2, "x": 41.5, "y": 22.4, "underwater": false, "descriptionNl": "Hoofdeiland, noordelijk gebied, bij locatie 1", "descriptionEn": "Main island, north area, near spot 1", "descriptionEs": "Isla principal, zona norte, cerca del punto 1", "descriptionPt": "Ilha principal, área norte, perto do ponto 1"},
-    {"num": 3, "x": 50.4, "y": 22.7, "underwater": false, "descriptionNl": "Hoofdeiland, noordelijk gebied, bij locatie 2", "descriptionEn": "Main island, north area, near spot 2", "descriptionEs": "Isla principal, zona norte, cerca del punto 2", "descriptionPt": "Ilha principal, área norte, perto do ponto 2"},
-    {"num": 4, "x": 63, "y": 75.8, "underwater": true, "descriptionNl": "Whalefall Canyon, zuidelijk gebied", "descriptionEn": "Whalefall Canyon, south area", "descriptionEs": "Whalefall Canyon, zona sur", "descriptionPt": "Whalefall Canyon, área sul"},
-    {"num": 5, "x": 67, "y": 49.6, "underwater": true, "descriptionNl": "Whalefall Canyon, oostelijk gebied", "descriptionEn": "Whalefall Canyon, east area", "descriptionEs": "Whalefall Canyon, zona este", "descriptionPt": "Whalefall Canyon, área leste"},
-    {"num": 6, "x": 46.4, "y": 48.5, "underwater": true, "descriptionNl": "Whalefall Canyon, centraal gebied", "descriptionEn": "Whalefall Canyon, central area", "descriptionEs": "Whalefall Canyon, zona central", "descriptionPt": "Whalefall Canyon, área central"},
-    {"num": 7, "x": 20.9, "y": 48.8, "underwater": true, "descriptionNl": "Whalefall Canyon, westelijk gebied", "descriptionEn": "Whalefall Canyon, west area", "descriptionEs": "Whalefall Canyon, zona oeste", "descriptionPt": "Whalefall Canyon, área oeste"},
-    {"num": 8, "x": 33.9, "y": 42.2, "underwater": true, "isDoris": true, "descriptionNl": "Whalefall Canyon, centraal gebied", "descriptionEn": "Whalefall Canyon, central area", "descriptionEs": "Whalefall Canyon, zona central", "descriptionPt": "Whalefall Canyon, área central"}
+    {"num": 1, "x": 94.4, "y": 38.1, "underwater": false, "descriptionNl": "Locatie 1", "descriptionEn": "Location 1", "descriptionEs": "Ubicación 1", "descriptionPt": "Local 1", "descriptionFr": "Emplacement 1", "descriptionDe": "Standort 1"},
+    {"num": 2, "x": 85.1, "y": 50.4, "underwater": false, "isDoris": true, "descriptionNl": "Locatie 2", "descriptionEn": "Location 2", "descriptionEs": "Ubicación 2", "descriptionPt": "Local 2", "descriptionFr": "Emplacement 2", "descriptionDe": "Standort 2"},
+    {"num": 3, "x": 79.3, "y": 54.4, "underwater": false, "descriptionNl": "Locatie 3", "descriptionEn": "Location 3", "descriptionEs": "Ubicación 3", "descriptionPt": "Local 3", "descriptionFr": "Emplacement 3", "descriptionDe": "Standort 3"},
+    {"num": 4, "x": 20.6, "y": 48.2, "underwater": true, "descriptionNl": "Locatie 4", "descriptionEn": "Location 4", "descriptionEs": "Ubicación 4", "descriptionPt": "Local 4", "descriptionFr": "Emplacement 4", "descriptionDe": "Standort 4"},
+    {"num": 5, "x": 45.1, "y": 46.6, "underwater": true, "descriptionNl": "Locatie 5", "descriptionEn": "Location 5", "descriptionEs": "Ubicación 5", "descriptionPt": "Local 5", "descriptionFr": "Emplacement 5", "descriptionDe": "Standort 5"},
+    {"num": 6, "x": 67.5, "y": 48.8, "underwater": true, "descriptionNl": "Locatie 6", "descriptionEn": "Location 6", "descriptionEs": "Ubicación 6", "descriptionPt": "Local 6", "descriptionFr": "Emplacement 6", "descriptionDe": "Standort 6"},
+    {"num": 7, "x": 63.1, "y": 77.4, "underwater": true, "descriptionNl": "Locatie 7", "descriptionEn": "Location 7", "descriptionEs": "Ubicación 7", "descriptionPt": "Local 7", "descriptionFr": "Emplacement 7", "descriptionDe": "Standort 7"},
+    {"num": 8, "x": 35, "y": 44.1, "underwater": true, "isDoris": true, "descriptionNl": "Locatie 8", "descriptionEn": "Location 8", "descriptionEs": "Ubicación 8", "descriptionPt": "Local 8", "descriptionFr": "Emplacement 8", "descriptionDe": "Standort 8"}
   ],
-  "rainbowSpotsUpdatedAt": "2026-11-12T23:00:00Z",
+  "rainbowSpotsUpdatedAt": "2026-11-21T10:00:00Z",
   "meteorSpots": [
     {"num": 1, "x": 32, "y": 28.6, "underwater": false, "descriptionNl": "Locatie 1", "descriptionEn": "Location 1", "descriptionEs": "Ubicación 1", "descriptionPt": "Local 1", "descriptionFr": "Emplacement 1", "descriptionDe": "Standort 1"},
     {"num": 2, "x": 21.5, "y": 31.5, "underwater": false, "descriptionNl": "Locatie 2", "descriptionEn": "Location 2", "descriptionEs": "Ubicación 2", "descriptionPt": "Local 2", "descriptionFr": "Emplacement 2", "descriptionDe": "Standort 2"},
