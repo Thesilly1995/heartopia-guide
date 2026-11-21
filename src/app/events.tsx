@@ -388,7 +388,7 @@ export default function EventsScreen() {
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <ScreenHeader
         gradient={['#3D7EA6', '#6EC6E8']}
-        icon="🎉"
+        icon={eventMeta.emoji}
         title={s.title}
         subtitle={subtitle}
         tabs={TABS}
