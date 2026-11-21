@@ -321,6 +321,14 @@
     }
   ],
   "nextEventName": "My Little Pony: Friendship Journey",
+  "nextEventRecipes": [
+    {"nameNl": "Twilight Sparkle Cupcake", "nameEn": "Twilight Sparkle Cupcake", "ingredientsNl": ["Tarwe", "Ei", "Melk", "Druif"], "ingredientsEn": ["Wheat", "Egg", "Milk", "Grape"], "emoji": "🧁", "gold": [1020, 1530, 2040, 4080, 8160]},
+    {"nameNl": "Soft & Soft Cupcake", "nameEn": "Soft & Soft Cupcake", "ingredientsNl": ["Tarwe", "Ei", "Melk", "Ananas"], "ingredientsEn": ["Wheat", "Egg", "Milk", "Pineapple"], "emoji": "🧁", "gold": [590, 885, 1180, 2360, 4720]},
+    {"nameNl": "Rainbow Dash Cupcake", "nameEn": "Rainbow Dash Cupcake", "ingredientsNl": ["Tarwe", "Ei", "Melk", "Bosbes"], "ingredientsEn": ["Wheat", "Egg", "Milk", "Blueberry"], "emoji": "🧁", "gold": [570, 855, 1140, 2280, 4560]},
+    {"nameNl": "Rare Cupcake", "nameEn": "Rare Cupcake", "ingredientsNl": ["Tarwe", "Ei", "Melk", "Melk"], "ingredientsEn": ["Wheat", "Egg", "Milk", "Milk"], "emoji": "🧁", "gold": [590, 885, 1180, 2360, 4720]},
+    {"nameNl": "Pinkie Pie Cupcake", "nameEn": "Pinkie Pie Cupcake", "ingredientsNl": ["Tarwe", "Ei", "Melk", "Framboos"], "ingredientsEn": ["Wheat", "Egg", "Milk", "Raspberry"], "emoji": "🧁", "gold": [590, 885, 1180, 2360, 4720]},
+    {"nameNl": "Applejack Cupcake", "nameEn": "Applejack Cupcake", "ingredientsNl": ["Tarwe", "Ei", "Melk", "Appel"], "ingredientsEn": ["Wheat", "Egg", "Milk", "Apple"], "emoji": "🧁", "gold": [590, 885, 1180, 2360, 4720]}
+  ],
   "rainbowSpots": [
     {"num": 1, "x": 94.4, "y": 38.1, "underwater": false, "descriptionNl": "Locatie 1", "descriptionEn": "Location 1", "descriptionEs": "Ubicación 1", "descriptionPt": "Local 1", "descriptionFr": "Emplacement 1", "descriptionDe": "Standort 1"},
     {"num": 2, "x": 85.1, "y": 50.4, "underwater": false, "isDoris": true, "descriptionNl": "Locatie 2", "descriptionEn": "Location 2", "descriptionEs": "Ubicación 2", "descriptionPt": "Local 2", "descriptionFr": "Emplacement 2", "descriptionDe": "Standort 2"},
