@@ -10,6 +10,7 @@ const EVENT_EMOJI_BY_NAME_EN: Record<string, string> = {
   'Night of Divination': '🎃',
   'Eerie Eve': '👻',
   'Midsummer Rhyme': '☀️',
+  'My Little Pony: Friendship Journey': '🦄',
 };
 
 export function eventEmoji(nameEn: string, fallback: string): string {
