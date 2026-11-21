@@ -492,7 +492,14 @@
     {"date": "2026-11-19", "kinds": ["warm_sun"]},
     {"date": "2026-11-20", "kinds": ["warm_sun"]},
     {"date": "2026-11-21", "kinds": [{"kind": "rain", "block": "06-12"}, {"kind": "rainbow", "block": "12-18"}]},
-    {"date": "2026-11-22", "kinds": [{"kind": "snow", "block": "06-12"}, {"kind": "snow", "block": "12-18"}, {"kind": "snow", "block": "18-00"}]}
+    {"date": "2026-11-22", "kinds": [{"kind": "snow", "block": "06-12"}, {"kind": "snow", "block": "12-18"}, {"kind": "snow", "block": "18-00"}]},
+    {"date": "2026-11-23", "kinds": ["warm_sun"]},
+    {"date": "2026-11-24", "kinds": [{"kind": "rain", "block": "06-12"}, {"kind": "rain", "block": "18-00"}]},
+    {"date": "2026-11-25", "kinds": ["warm_sun"]},
+    {"date": "2026-11-26", "kinds": [{"kind": "meteor", "block": "18-00"}]},
+    {"date": "2026-11-27", "kinds": [{"kind": "rain", "block": "00-06"}, {"kind": "rain", "block": "06-12"}]},
+    {"date": "2026-11-28", "kinds": [{"kind": "snow", "block": "00-06"}]},
+    {"date": "2026-11-29", "kinds": [{"kind": "rain", "block": "06-12"}, {"kind": "rain", "block": "18-00"}]}
   ],
   "codes": [
     {"code": "r2q7a4m9k3n6", "rewardNl": "3x Wensterren, 3x Meermin Vislokmiddel, 10x Mest", "rewardEn": "3x Wishing Stars, 3x Mermaid Fish Attractor, 10x Fertilizer", "expiresNl": "3 dec 2026", "expiresEn": "Dec 3, 2026", "rewardEs": "3x Estrellas de los Deseos, 3x Atrayente de Peces Sirena, 10x Fertilizante", "rewardPt": "3x Estrelas dos Desejos, 3x Atrativo de Peixes Sereia, 10x Fertilizante", "expiresEs": "3 dic 2026", "expiresPt": "3 de dez de 2026"},
