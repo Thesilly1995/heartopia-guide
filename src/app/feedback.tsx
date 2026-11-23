@@ -36,6 +36,12 @@ const STRINGS = {
     deleteConfirm: 'Verwijderen',
     cancel: 'Annuleren',
     deleteError: 'Verwijderen mislukt — probeer het opnieuw.',
+    report: '🚩 Melden',
+    reported: 'Gemeld ✓',
+    reportConfirmText: 'Dit idee melden als ongepast of spam? De beheerder bekijkt het dan.',
+    reportConfirm: 'Melden',
+    reportError: 'Melden mislukt — probeer het opnieuw.',
+    reportCountLabel: (n: number) => `🚩 ${n} melding${n === 1 ? '' : 'en'}`,
   },
   en: {
     title: 'Feedback',
@@ -62,6 +68,12 @@ const STRINGS = {
     deleteConfirm: 'Delete',
     cancel: 'Cancel',
     deleteError: 'Delete failed — please try again.',
+    report: '🚩 Report',
+    reported: 'Reported ✓',
+    reportConfirmText: 'Report this idea as inappropriate or spam? The admin will review it.',
+    reportConfirm: 'Report',
+    reportError: 'Reporting failed — please try again.',
+    reportCountLabel: (n: number) => `🚩 ${n} report${n === 1 ? '' : 's'}`,
   },
   es: {
     title: 'Comentarios',
@@ -88,6 +100,12 @@ const STRINGS = {
     deleteConfirm: 'Eliminar',
     cancel: 'Cancelar',
     deleteError: 'Error al eliminar — inténtalo de nuevo.',
+    report: '🚩 Denunciar',
+    reported: 'Denunciado ✓',
+    reportConfirmText: '¿Denunciar esta idea como inapropiada o spam? El administrador la revisará.',
+    reportConfirm: 'Denunciar',
+    reportError: 'Error al denunciar — inténtalo de nuevo.',
+    reportCountLabel: (n: number) => `🚩 ${n} denuncia${n === 1 ? '' : 's'}`,
   },
   pt: {
     title: 'Feedback',
@@ -114,6 +132,12 @@ const STRINGS = {
     deleteConfirm: 'Excluir',
     cancel: 'Cancelar',
     deleteError: 'Falha ao excluir — tente novamente.',
+    report: '🚩 Denunciar',
+    reported: 'Denunciado ✓',
+    reportConfirmText: 'Denunciar esta ideia como inadequada ou spam? O administrador vai revisar.',
+    reportConfirm: 'Denunciar',
+    reportError: 'Falha ao denunciar — tente novamente.',
+    reportCountLabel: (n: number) => `🚩 ${n} denúncia${n === 1 ? '' : 's'}`,
   },
   fr: {
     title: 'Retours',
@@ -140,6 +164,12 @@ const STRINGS = {
     deleteConfirm: 'Supprimer',
     cancel: 'Annuler',
     deleteError: 'La suppression a échoué — réessaie.',
+    report: '🚩 Signaler',
+    reported: 'Signalé ✓',
+    reportConfirmText: 'Signaler cette idée comme inappropriée ou spam ? L\'administrateur l\'examinera.',
+    reportConfirm: 'Signaler',
+    reportError: 'Le signalement a échoué — réessaie.',
+    reportCountLabel: (n: number) => `🚩 ${n} signalement${n === 1 ? '' : 's'}`,
   },
   de: {
     title: 'Feedback',
@@ -166,6 +196,12 @@ const STRINGS = {
     deleteConfirm: 'Löschen',
     cancel: 'Abbrechen',
     deleteError: 'Löschen fehlgeschlagen — versuch es noch einmal.',
+    report: '🚩 Melden',
+    reported: 'Gemeldet ✓',
+    reportConfirmText: 'Diese Idee als unangemessen oder Spam melden? Der Administrator prüft es dann.',
+    reportConfirm: 'Melden',
+    reportError: 'Melden fehlgeschlagen — versuch es noch einmal.',
+    reportCountLabel: (n: number) => `🚩 ${n} Meldung${n === 1 ? '' : 'en'}`,
   },
 } as const;
 
@@ -174,6 +210,7 @@ interface FeedbackEntry {
   name: string;
   idea: string;
   date: string;
+  reportCount: number;
 }
 
 export default function FeedbackScreen() {
@@ -193,6 +230,9 @@ export default function FeedbackScreen() {
   const [adminError, setAdminError] = useState(false);
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
   const [deleteError, setDeleteError] = useState<string | null>(null);
+  const [confirmReportId, setConfirmReportId] = useState<string | null>(null);
+  const [reportedIds, setReportedIds] = useState<Set<string>>(new Set());
+  const [reportError, setReportError] = useState<string | null>(null);
 
   const loadEntries = async () => {
     const { data, error: fetchError } = await supabase
@@ -205,12 +245,20 @@ export default function FeedbackScreen() {
       return;
     }
     setError(null);
+
+    const { data: reportRows } = await supabase.from('feedback_reports').select('feedback_id');
+    const reportCounts = new Map<string, number>();
+    for (const row of reportRows ?? []) {
+      reportCounts.set(row.feedback_id, (reportCounts.get(row.feedback_id) ?? 0) + 1);
+    }
+
     setEntries(
       (data ?? []).map((row) => ({
         id: row.id,
         name: row.name?.trim() || s.anonymous,
         idea: row.idea_en || row.idea,
         date: String(row.created_at).slice(0, 10),
+        reportCount: reportCounts.get(row.id) ?? 0,
       }))
     );
   };
@@ -260,6 +308,18 @@ export default function FeedbackScreen() {
       setDeleteError(s.deleteError);
       return;
     }
+    await loadEntries();
+  };
+
+  const reportEntry = async (id: string) => {
+    setReportError(null);
+    const { error: insertErr } = await supabase.from('feedback_reports').insert({ feedback_id: id });
+    setConfirmReportId(null);
+    if (insertErr) {
+      setReportError(s.reportError);
+      return;
+    }
+    setReportedIds((prev) => new Set(prev).add(id));
     await loadEntries();
   };
 
@@ -329,9 +389,32 @@ export default function FeedbackScreen() {
                 </Pressable>
               )}
             </View>
-            <Text style={styles.entryMeta}>
-              {item.name} · {item.date}
-            </Text>
+            <View style={styles.entryFooterRow}>
+              <Text style={styles.entryMeta}>
+                {item.name} · {item.date}
+              </Text>
+              {reportedIds.has(item.id) ? (
+                <Text style={styles.reportedText}>{s.reported}</Text>
+              ) : (
+                <Pressable onPress={() => setConfirmReportId(item.id)} hitSlop={8}>
+                  <Text style={styles.reportLink}>{s.report}</Text>
+                </Pressable>
+              )}
+            </View>
+            {isAdmin && item.reportCount > 0 && <Text style={styles.reportCountText}>{s.reportCountLabel(item.reportCount)}</Text>}
+            {confirmReportId === item.id && (
+              <View style={styles.confirmBox}>
+                <Text style={styles.confirmText}>{s.reportConfirmText}</Text>
+                <View style={styles.confirmButtonRow}>
+                  <Pressable style={styles.confirmCancelButton} onPress={() => setConfirmReportId(null)}>
+                    <Text style={styles.confirmCancelText}>{s.cancel}</Text>
+                  </Pressable>
+                  <Pressable style={styles.confirmReportButton} onPress={() => reportEntry(item.id)}>
+                    <Text style={styles.confirmDestructiveText}>{s.reportConfirm}</Text>
+                  </Pressable>
+                </View>
+              </View>
+            )}
             {confirmDeleteId === item.id && (
               <View style={styles.confirmBox}>
                 <Text style={styles.confirmText}>{s.deleteConfirmText}</Text>
@@ -350,6 +433,7 @@ export default function FeedbackScreen() {
         ListFooterComponent={
           <View style={styles.adminSection}>
             {deleteError && <Text style={styles.errorText}>{deleteError}</Text>}
+            {reportError && <Text style={styles.errorText}>{reportError}</Text>}
             {isAdmin ? (
               <Pressable onPress={() => setIsAdmin(false)} hitSlop={8}>
                 <Text style={styles.adminLink}>{s.adminLockLink}</Text>
@@ -405,12 +489,17 @@ function makeStyles(c: ThemeColors) {
     entryIdea: { fontSize: 14, color: c.forest },
     entryMeta: { fontSize: 10, color: c.forestSoft, marginTop: 4 },
     deleteIcon: { fontSize: 16 },
+    entryFooterRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8 },
+    reportLink: { fontSize: 10, color: c.forestSoft, textDecorationLine: 'underline', marginTop: 4 },
+    reportedText: { fontSize: 10, color: c.forestSoft, marginTop: 4 },
+    reportCountText: { fontSize: 10, color: c.coralDark, marginTop: 2, fontWeight: '700' },
     confirmBox: { backgroundColor: c.surfaceSoft, borderWidth: 1, borderColor: c.line, borderRadius: 12, padding: 10, gap: 8, marginTop: 8 },
     confirmText: { fontSize: 12, color: c.forest, lineHeight: 17 },
     confirmButtonRow: { flexDirection: 'row', gap: 8 },
     confirmCancelButton: { flex: 1, backgroundColor: c.card, borderWidth: 1, borderColor: c.line, borderRadius: 10, paddingVertical: 9, alignItems: 'center' },
     confirmCancelText: { color: c.forest, fontWeight: '700', fontSize: 13 },
     confirmDestructiveButton: { flex: 1, backgroundColor: c.coral, borderRadius: 10, paddingVertical: 9, alignItems: 'center' },
+    confirmReportButton: { flex: 1, backgroundColor: c.forestSoft, borderRadius: 10, paddingVertical: 9, alignItems: 'center' },
     confirmDestructiveText: { color: '#FFFFFF', fontWeight: '700', fontSize: 13 },
     adminSection: { marginTop: 16, alignItems: 'center', gap: 8 },
     adminLink: { fontSize: 11, color: c.forestSoft, textDecorationLine: 'underline' },

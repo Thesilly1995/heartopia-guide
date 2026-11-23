@@ -35,6 +35,11 @@ const STRINGS = {
     restoreConfirmText: 'Dit overschrijft de voortgang op dit toestel met de laatste cloud-back-up. Weet je het zeker?',
     cancel: 'Annuleren',
     confirm: 'Herstellen',
+    deleteAccountLink: 'Account verwijderen',
+    deleteAccountConfirmTitle: 'Account definitief verwijderen?',
+    deleteAccountConfirmText: 'Dit verwijdert je account en je cloud-back-up permanent. Dit kan niet ongedaan worden gemaakt.',
+    deleteAccountConfirm: 'Definitief verwijderen',
+    deleteAccountError: 'Verwijderen mislukt — probeer het opnieuw.',
   },
   en: {
     title: 'Cloud Save',
@@ -60,6 +65,11 @@ const STRINGS = {
     restoreConfirmText: 'This overwrites the progress on this device with the latest cloud backup. Are you sure?',
     cancel: 'Cancel',
     confirm: 'Restore',
+    deleteAccountLink: 'Delete account',
+    deleteAccountConfirmTitle: 'Permanently delete your account?',
+    deleteAccountConfirmText: 'This permanently deletes your account and your cloud backup. This cannot be undone.',
+    deleteAccountConfirm: 'Delete permanently',
+    deleteAccountError: 'Deletion failed — please try again.',
   },
   es: {
     title: 'Cloud Save',
@@ -85,6 +95,11 @@ const STRINGS = {
     restoreConfirmText: 'Esto sobrescribirá el progreso de este dispositivo con la última copia de seguridad en la nube. ¿Estás seguro?',
     cancel: 'Cancelar',
     confirm: 'Restaurar',
+    deleteAccountLink: 'Eliminar cuenta',
+    deleteAccountConfirmTitle: '¿Eliminar tu cuenta definitivamente?',
+    deleteAccountConfirmText: 'Esto elimina tu cuenta y tu copia de seguridad en la nube de forma permanente. No se puede deshacer.',
+    deleteAccountConfirm: 'Eliminar definitivamente',
+    deleteAccountError: 'Error al eliminar — inténtalo de nuevo.',
   },
   pt: {
     title: 'Cloud Save',
@@ -110,6 +125,11 @@ const STRINGS = {
     restoreConfirmText: 'Isso vai substituir o progresso deste aparelho pelo último backup na nuvem. Tem certeza?',
     cancel: 'Cancelar',
     confirm: 'Restaurar',
+    deleteAccountLink: 'Excluir conta',
+    deleteAccountConfirmTitle: 'Excluir sua conta definitivamente?',
+    deleteAccountConfirmText: 'Isso exclui sua conta e seu backup na nuvem permanentemente. Isso não pode ser desfeito.',
+    deleteAccountConfirm: 'Excluir definitivamente',
+    deleteAccountError: 'Falha ao excluir — tente novamente.',
   },
   fr: {
     title: 'Cloud Save',
@@ -135,6 +155,11 @@ const STRINGS = {
     restoreConfirmText: "Cela remplace la progression sur cet appareil par la dernière sauvegarde cloud. Tu es sûr(e) ?",
     cancel: 'Annuler',
     confirm: 'Restaurer',
+    deleteAccountLink: 'Supprimer le compte',
+    deleteAccountConfirmTitle: 'Supprimer définitivement ton compte ?',
+    deleteAccountConfirmText: 'Cela supprime définitivement ton compte et ta sauvegarde cloud. Cette action est irréversible.',
+    deleteAccountConfirm: 'Supprimer définitivement',
+    deleteAccountError: 'La suppression a échoué — réessaie.',
   },
   de: {
     title: 'Cloud Save',
@@ -160,6 +185,11 @@ const STRINGS = {
     restoreConfirmText: 'Dadurch wird der Fortschritt auf diesem Gerät mit dem neuesten Cloud-Backup überschrieben. Bist du sicher?',
     cancel: 'Abbrechen',
     confirm: 'Wiederherstellen',
+    deleteAccountLink: 'Konto löschen',
+    deleteAccountConfirmTitle: 'Konto endgültig löschen?',
+    deleteAccountConfirmText: 'Dadurch werden dein Konto und dein Cloud-Backup dauerhaft gelöscht. Das kann nicht rückgängig gemacht werden.',
+    deleteAccountConfirm: 'Endgültig löschen',
+    deleteAccountError: 'Löschen fehlgeschlagen — versuch es noch einmal.',
   },
 } as const;
 
@@ -252,10 +282,21 @@ function AuthForm({ s, styles }: { s: Strings; styles: ReturnType<typeof makeSty
 }
 
 function AccountPanel({ s, styles, userId, email }: { s: Strings; styles: ReturnType<typeof makeStyles>; userId: string; email: string }) {
-  const { signOut } = useAuth();
-  const [busy, setBusy] = useState<'backup' | 'restore' | null>(null);
+  const { signOut, deleteAccount } = useAuth();
+  const [busy, setBusy] = useState<'backup' | 'restore' | 'delete' | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [confirmingRestore, setConfirmingRestore] = useState(false);
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
+
+  const confirmDeleteAccount = async () => {
+    setConfirmingDelete(false);
+    setBusy('delete');
+    setDeleteError(null);
+    const error = await deleteAccount();
+    setBusy(null);
+    if (error) setDeleteError(s.deleteAccountError);
+  };
 
   const backup = async () => {
     setBusy('backup');
@@ -306,6 +347,26 @@ function AccountPanel({ s, styles, userId, email }: { s: Strings; styles: Return
       <Pressable onPress={signOut} hitSlop={6}>
         <Text style={styles.linkText}>{s.signOut}</Text>
       </Pressable>
+
+      {deleteError && <Text style={styles.errorText}>{deleteError}</Text>}
+      {confirmingDelete ? (
+        <View style={styles.confirmBox}>
+          <Text style={styles.confirmTitle}>{s.deleteAccountConfirmTitle}</Text>
+          <Text style={styles.confirmText}>{s.deleteAccountConfirmText}</Text>
+          <View style={styles.confirmButtonRow}>
+            <Pressable style={styles.confirmCancelButton} onPress={() => setConfirmingDelete(false)}>
+              <Text style={styles.confirmCancelText}>{s.cancel}</Text>
+            </Pressable>
+            <Pressable style={styles.confirmDestructiveButton} disabled={busy !== null} onPress={confirmDeleteAccount}>
+              <Text style={styles.confirmDestructiveText}>{busy === 'delete' ? s.working : s.deleteAccountConfirm}</Text>
+            </Pressable>
+          </View>
+        </View>
+      ) : (
+        <Pressable onPress={() => setConfirmingDelete(true)} hitSlop={6}>
+          <Text style={styles.deleteAccountLink}>{s.deleteAccountLink}</Text>
+        </Pressable>
+      )}
     </View>
   );
 }
@@ -326,6 +387,7 @@ function makeStyles(c: ThemeColors) {
     secondaryButton: { backgroundColor: c.surfaceSoft, borderWidth: 1, borderColor: c.line, borderRadius: 12, paddingVertical: 12, alignItems: 'center' },
     secondaryButtonText: { color: c.forest, fontWeight: '700', fontSize: 14 },
     linkText: { fontSize: 12, color: c.forestSoft, textDecorationLine: 'underline', textAlign: 'center' },
+    deleteAccountLink: { fontSize: 12, color: c.coralDark, textDecorationLine: 'underline', textAlign: 'center' },
     errorText: { fontSize: 12, color: c.coralDark },
     confirmBox: { backgroundColor: c.surfaceSoft, borderWidth: 1, borderColor: c.line, borderRadius: 12, padding: 12, gap: 8 },
     confirmTitle: { fontSize: 13, fontWeight: '700', color: c.forest },

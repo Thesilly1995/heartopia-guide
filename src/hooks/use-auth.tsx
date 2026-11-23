@@ -11,6 +11,8 @@ interface AuthContextValue {
   signUp: (email: string, password: string) => Promise<string | null>;
   signIn: (email: string, password: string) => Promise<string | null>;
   signOut: () => Promise<void>;
+  /** Verwijdert het account en alle bijbehorende cloud-save-data definitief (zie `delete_own_account` in Supabase), daarna automatisch uitgelogd. */
+  deleteAccount: () => Promise<string | null>;
 }
 
 const AuthContext = createContext<AuthContextValue>({
@@ -20,6 +22,7 @@ const AuthContext = createContext<AuthContextValue>({
   signUp: async () => 'not configured',
   signIn: async () => 'not configured',
   signOut: async () => {},
+  deleteAccount: async () => 'not configured',
 });
 
 /**
@@ -66,8 +69,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await supabase.auth.signOut();
   };
 
+  const deleteAccount = async () => {
+    const { error } = await supabase.rpc('delete_own_account');
+    if (error) return error.message;
+    await supabase.auth.signOut();
+    return null;
+  };
+
   return (
-    <AuthContext.Provider value={{ session, loading, configured: isSupabaseConfigured, signUp, signIn, signOut }}>
+    <AuthContext.Provider value={{ session, loading, configured: isSupabaseConfigured, signUp, signIn, signOut, deleteAccount }}>
       {children}
     </AuthContext.Provider>
   );

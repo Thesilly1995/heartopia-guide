@@ -116,6 +116,38 @@ Nieuwe kolom is nullable — bestaande rijen blijven gewoon werken (de app valt 
 de originele `idea`-tekst als `idea_en` leeg is, bijvoorbeeld bij oude feedback of als
 de vertaling een keer mislukt).
 
+### 3b.3 Meldknop voor gebruikers (`feedback_reports`-tabel)
+
+Apple eist voor apps met user-generated content (zoals dit gedeelde ideeënbord) een
+manier voor gebruikers om ongepaste content te melden (naast de bestaande
+beheerderscode om het dan te verwijderen, zie 3b.1). Elk feedback-item heeft nu een
+🚩 Melden-link; dat schrijft een rij naar een aparte tabel, zonder de bestaande
+`feedback`-tabel te hoeven aanpassen:
+
+```sql
+create table feedback_reports (
+  id uuid primary key default gen_random_uuid(),
+  feedback_id uuid not null references feedback(id) on delete cascade,
+  created_at timestamptz not null default now()
+);
+
+alter table feedback_reports enable row level security;
+
+create policy "Anyone can report feedback"
+  on feedback_reports for insert
+  with check (true);
+
+create policy "Anyone can read report counts"
+  on feedback_reports for select
+  using (true);
+```
+
+Net als bij `feedback` zelf is dit geen echte authenticatie — de meldknop is
+laagdrempelig en zonder account, passend bij de rest van dit scherm. Als beheerder
+zie je bij elk item met 1+ melding(en) een rood 🚩-teller-label; de rest van de
+afhandeling (bekijken en zo nodig verwijderen) doe je zoals al kon via de
+beheerderscode.
+
 ## 4. App koppelen
 
 Project Settings → API, en kopieer:
@@ -125,6 +157,39 @@ Project Settings → API, en kopieer:
 Vul die twee in bij `SUPABASE_URL` en `SUPABASE_ANON_KEY` in
 `src/constants/supabase.ts`. Zodra beide ingevuld zijn, schakelt de app
 automatisch van "Cloud save wordt nog opgezet" naar het echte login-scherm.
+
+## 5. Account verwijderen (Apple-verplichting)
+
+Apple eist dat een app met account aanmaken ook account **verwijderen** aanbiedt,
+vanuit de app zelf (Guideline 5.1.1(v)). De normale Supabase-client (met de publieke
+`anon`-key) mag een gebruiker niet zelf uit `auth.users` verwijderen — dat vereist
+normaal de geheime `service_role`-key, die nooit in de app mag staan. Oplossing:
+een database-functie die als eigenaar (`security definer`) wél die rechten heeft,
+maar vanbinnen alleen het eigen account (`auth.uid()`) mag verwijderen — dus precies
+zo veilig als de rest van deze tabellen, geen extra server/Edge Function nodig.
+
+Plak dit in de SQL Editor:
+
+```sql
+create or replace function delete_own_account()
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  delete from cloud_saves where user_id = auth.uid();
+  delete from auth.users where id = auth.uid();
+end;
+$$;
+
+grant execute on function delete_own_account() to authenticated;
+```
+
+De app roept dit aan via `supabase.rpc('delete_own_account')` (zie
+`deleteAccount` in `src/hooks/use-auth.tsx`), gevolgd door automatisch uitloggen.
+Op het Cloud Save-scherm staat nu een "Account verwijderen"-link onder "Uitloggen",
+met een bevestigingsstap omdat dit onomkeerbaar is.
 
 ## Wat de app al doet
 
