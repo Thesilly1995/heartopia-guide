@@ -21,6 +21,7 @@ import { LanguageProvider } from '@/hooks/use-language';
 import { NotificationsProvider } from '@/hooks/use-notifications';
 import { usePremium, PremiumProvider } from '@/hooks/use-premium';
 import { ServerProvider } from '@/hooks/use-server';
+import { initializeAnalyticsIfNeeded } from '@/lib/analytics';
 import { markPlayStoreUpdateNoticeShown, shouldShowPlayStoreUpdateNotice } from '@/lib/play-store-update-notice';
 import { markPremiumLifetimeNoticeShown, shouldShowPremiumLifetimeNotice } from '@/lib/premium-lifetime-notice';
 import { markPremiumPromoShown, shouldShowPremiumPromo } from '@/lib/premium-promo';
@@ -32,6 +33,7 @@ export default function RootLayout() {
   useEffect(() => {
     initializeAdsIfNeeded();
     initializePurchasesIfNeeded();
+    initializeAnalyticsIfNeeded();
   }, []);
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
