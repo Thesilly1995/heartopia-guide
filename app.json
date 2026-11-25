@@ -15,6 +15,7 @@
     },
     "ios": {
       "bundleIdentifier": "com.thesilly1995.heartopiagids",
+      "googleServicesFile": "./GoogleService-Info.plist",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -36,6 +37,7 @@
     },
     "plugins": [
       "expo-router",
+      "@react-native-firebase/app",
       [
         "expo-splash-screen",
         {
