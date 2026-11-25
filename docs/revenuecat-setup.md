@@ -166,3 +166,60 @@ testabonnementen in minuten i.p.v. maanden, handig om de hele flow te
 controleren). Check in de app: beide knoppen tonen de juiste
 Play Store-prijs (`€3,00`/`€30,00`), en na aankoop van **beide** varianten
 hoort `premium` in de app actief te worden.
+
+## iOS — nog niet opgezet (gaf "Aankoop mislukt" bij eerste test, 25 nov)
+
+Alles hierboven was alleen voor Android. De `REVENUECAT_API_KEY_IOS` in
+`src/constants/purchases.ts` staat al ingevuld, maar dat maakt de koopflow
+zelf nog niet werkend — daarvoor moeten ook de App Store-kant en RevenueCat's
+iOS-koppeling nog opgezet worden. Twee losse dingen, allebei vereist:
+
+### 1. Agreements, Tax, and Banking accepteren
+
+App Store Connect → **Agreements, Tax, and Banking** — zonder een volledig
+geaccepteerde "Paid Applications"-overeenkomst verwerkt Apple **geen enkele**
+in-app-aankoop, ook niet in sandbox/test. Dit is waarschijnlijk de eerste
+blokkade als dit nog nooit ingevuld is.
+
+### 2. Abonnementsproducten aanmaken in App Store Connect
+
+App → **Monetization/In-App Purchases → Subscriptions** (Apple's abonnementen
+zitten altijd in een "Subscription Group", anders dan Play Console's losse
+basisplannen):
+
+1. Eén **Subscription Group** aanmaken (bv. "Heartopedia Premium").
+2. Daarin twee subscriptions:
+   - **Product ID** bv. `heartopedia_premium_monthly`, periode **1 Month**, prijs €3,00 (kies de prijstabel-rij die het dichtst bij €3 zit).
+   - **Product ID** bv. `heartopedia_premium_annual`, periode **1 Year**, prijs €30,00.
+3. Voor beide: vul de verplichte review-informatie in (naam, beschrijving, screenshot van het slotscherm) en zet ze op **Ready to Submit** — Apple reviewt nieuwe IAP's apart, maar sandbox-testen kan al zodra ze opgeslagen zijn, ook vóór die review.
+
+### 3. Producten koppelen aan dezelfde `premium`-entitlement in RevenueCat
+
+RevenueCat → **Project settings → Integrations → App Store Connect** — hier
+moet een App Store Connect API-key (gegenereerd in App Store Connect → Users
+and Access → Integrations → App Store Connect API) gekoppeld worden, zodat
+RevenueCat de producten kan importeren. Daarna, net als bij Android:
+
+1. **Products → New/Import** voor beide iOS-producten.
+2. Koppel **beide** aan de bestaande **`premium`**-entitlement (dezelfde als
+   de Android-producten — dit is waarom de app-code niets platform-specifieks
+   hoeft te weten).
+3. In de bestaande Offering: voeg de iOS-packages toe met package-type
+   **Monthly** → `heartopedia_premium_monthly`, **Annual** →
+   `heartopedia_premium_annual`.
+4. Zorg dat deze Offering nog steeds **Current** staat.
+
+### 4. Testen op de iPhone
+
+**Niet** met je gewone Apple ID/App Store-account testen — zolang de app niet
+live is, worden die aankopen sowieso geweigerd. In plaats daarvan:
+
+1. App Store Connect → **Users and Access → Sandbox → Testers** → een
+   testaccount aanmaken (los e-mailadres, hoeft niet te bestaan als
+   mailbox).
+2. Op de iPhone: **Instellingen → App Store** (niet je normale Apple ID-
+   instellingen) → helemaal onderaan **Sandbox Account** → met dat
+   testaccount inloggen.
+3. Open de app en probeer opnieuw — sandbox-aankopen gaan altijd door een
+   bevestigingsscherm met "[Environment: Sandbox]" erbij, en er wordt nooit
+   echt geld afgeschreven.
