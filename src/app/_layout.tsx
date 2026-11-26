@@ -1,7 +1,7 @@
 import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useRef, useState } from 'react';
-import { Platform, StyleSheet, View, useColorScheme } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import 'react-native-url-polyfill/auto';
@@ -21,6 +21,7 @@ import { LanguageProvider } from '@/hooks/use-language';
 import { NotificationsProvider } from '@/hooks/use-notifications';
 import { usePremium, PremiumProvider } from '@/hooks/use-premium';
 import { ServerProvider } from '@/hooks/use-server';
+import { ThemePreferenceProvider, useThemePreference } from '@/hooks/use-theme-preference';
 import { initializeAnalyticsIfNeeded } from '@/lib/analytics';
 import { markPlayStoreUpdateNoticeShown, shouldShowPlayStoreUpdateNotice } from '@/lib/play-store-update-notice';
 import { markPremiumLifetimeNoticeShown, shouldShowPremiumLifetimeNotice } from '@/lib/premium-lifetime-notice';
@@ -37,23 +38,25 @@ export default function RootLayout() {
   }, []);
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <LanguageProvider>
-        <ServerProvider>
-          <PremiumProvider>
-            <AuthProvider>
-              <NotificationsProvider>
-                <AppContent />
-              </NotificationsProvider>
-            </AuthProvider>
-          </PremiumProvider>
-        </ServerProvider>
-      </LanguageProvider>
+      <ThemePreferenceProvider>
+        <LanguageProvider>
+          <ServerProvider>
+            <PremiumProvider>
+              <AuthProvider>
+                <NotificationsProvider>
+                  <AppContent />
+                </NotificationsProvider>
+              </AuthProvider>
+            </PremiumProvider>
+          </ServerProvider>
+        </LanguageProvider>
+      </ThemePreferenceProvider>
     </GestureHandlerRootView>
   );
 }
 
 function AppContent() {
-  const colorScheme = useColorScheme();
+  const { scheme: colorScheme } = useThemePreference();
   const insets = useSafeAreaInsets();
   const { premium, isLifetimePremium } = usePremium();
   const [showPremiumPromo, setShowPremiumPromo] = useState(false);
