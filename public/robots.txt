@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://heartopia-guide-nine.vercel.app/sitemap.xml
