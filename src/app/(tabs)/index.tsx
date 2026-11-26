@@ -1,6 +1,6 @@
 import { Link } from 'expo-router';
 import { useMemo, useState } from 'react';
-import { Modal, Platform, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Modal, Platform, Pressable, ScrollView, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { MembershipCard } from '@/components/heartopia/membership-card';
@@ -18,6 +18,7 @@ import { useWeekForecast } from '@/data/week-forecast';
 import { LANGUAGES, useLanguage } from '@/hooks/use-language';
 import { usePremium } from '@/hooks/use-premium';
 import { SERVERS, useServer } from '@/hooks/use-server';
+import { useThemePreference } from '@/hooks/use-theme-preference';
 import { formatGmtOffset } from '@/lib/reset-schedule';
 
 type LocalizedText = { nl: string; en: string; es: string; pt: string; fr: string; de: string };
@@ -186,6 +187,7 @@ export default function HomeScreen() {
   const { language, setLanguage } = useLanguage();
   const { premium, togglePremium } = usePremium();
   const { server, setServer } = useServer();
+  const { scheme, setDarkMode } = useThemePreference();
   const s = STRINGS[language];
   const [forecastExpanded, setForecastExpanded] = useState(false);
   const [comingSoonKey, setComingSoonKey] = useState<string | null>(null);
@@ -214,6 +216,17 @@ export default function HomeScreen() {
               <Pressable style={styles.langSwitch} onPress={() => setLangPickerOpen(true)} hitSlop={8}>
                 <Text style={styles.langSwitchText}>🌍 {language.toUpperCase()}</Text>
               </Pressable>
+              {Platform.OS === 'web' && (
+                <View style={styles.darkModeSwitch}>
+                  <Text style={styles.darkModeSwitchText}>{scheme === 'dark' ? '🌙' : '☀️'}</Text>
+                  <Switch
+                    value={scheme === 'dark'}
+                    onValueChange={setDarkMode}
+                    trackColor={{ false: colors.line, true: colors.forest }}
+                    thumbColor={colors.card}
+                  />
+                </View>
+              )}
             </View>
           </View>
         </View>
@@ -445,6 +458,8 @@ function makeStyles(c: ThemeColors) {
     langSwitchText: { fontSize: 11, fontWeight: '700', color: c.forestSoft },
     serverSwitch: { backgroundColor: c.card, borderWidth: 1, borderColor: c.line, borderRadius: 999, paddingHorizontal: 10, paddingVertical: 6 },
     serverSwitchText: { fontSize: 11, fontWeight: '700', color: c.forestSoft },
+    darkModeSwitch: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+    darkModeSwitchText: { fontSize: 13 },
     modalBackdrop: { flex: 1, backgroundColor: 'rgba(0,0,0,0.4)', alignItems: 'center', justifyContent: 'center', padding: 24 },
     modalCard: { width: '100%', maxWidth: 320, backgroundColor: c.card, borderRadius: 18, padding: 16, gap: 8 },
     modalTitle: { fontSize: 15, fontWeight: '700', color: c.forest, marginBottom: 4 },

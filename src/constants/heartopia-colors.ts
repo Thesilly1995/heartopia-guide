@@ -1,4 +1,4 @@
-import { useColorScheme } from 'react-native';
+import { useThemePreference } from '@/hooks/use-theme-preference';
 
 const light = {
   bg: '#EFF7EC',
@@ -49,6 +49,6 @@ export type ColorKey = keyof ThemeColors;
 export const COLORS = light;
 
 export function useHeartopiaColors(): ThemeColors {
-  const scheme = useColorScheme();
+  const { scheme } = useThemePreference();
   return scheme === 'dark' ? dark : light;
 }
