@@ -19,18 +19,25 @@ Heartopedia
 
 ### Subtitle (max 30 tekens)
 ```
-Jouw gids voor Heartopia
+Catalogi, kaarten & codes
 ```
 (25 tekens)
 
+**Let op (27 nov 2026)**: oorspronkelijk stond hier "Jouw gids voor Heartopia" —
+afgewezen door Apple onder Guideline 4.1(a) (Copycats): de subtitle/
+beschrijving verwees te prominent naar de merknaam "Heartopia". Hierboven de
+aangepaste, veiligere versie zonder die naam. Zie ook de aangepaste
+Promotional text, Keywords en de "Heartopia-UID" → "je spel-UID"-wijziging
+in de beschrijving hieronder.
+
 ### Promotional text (max 170 tekens, los van de beschrijving te wijzigen zonder nieuwe review)
 ```
-Onofficiële fan-gids voor Heartopia: catalogi, live kaarten, actieve codes en badges — altijd actueel, voor elke server.
+Onofficiële fan-gids: catalogi, live kaarten, actieve codes en badges — altijd actueel, voor elke server.
 ```
 
 ### Keywords (max 100 tekens)
 ```
-heartopia,gids,vissen,koken,tuinieren,insecten,vogels,codes,badges,kaart,event,catalogus,missies
+gids,vissen,koken,tuinieren,insecten,vogels,codes,badges,kaart,event,catalogus,missies
 ```
 (check het live teken-telertje in App Store Connect bij het plakken)
 
@@ -71,7 +78,7 @@ meteorenregens), en waar de Zwervende Eik en de Fluoriet-plek vandaag staan.
 Een bijgehouden lijst met geldige redemption-codes en hun beloningen.
 
 🆔 PROFIEL & MEMBERSHIP
-Je eigen profielkaart met foto en Heartopia-UID, plus een aftelling voor je
+Je eigen profielkaart met foto en je spel-UID, plus een aftelling voor je
 Membership-type met een overzicht van de beloningen die eraan komen.
 
 💡 FEEDBACK & TO-DO
@@ -101,18 +108,25 @@ Heartopedia
 
 ### Subtitle (max 30 characters)
 ```
-Your guide to Heartopia
+Catalogs, maps & codes
 ```
-(24 characters)
+(22 characters)
+
+**Note (27 Nov 2026)**: originally "Your guide to Heartopia" —
+rejected by Apple under Guideline 4.1(a) (Copycats): the subtitle/
+description referenced the "Heartopia" trademark too prominently. Updated,
+safer version above with that name removed. See also the updated
+Promotional text, Keywords, and the "Heartopia UID" → "your in-game UID"
+change in the description below.
 
 ### Promotional text (max 170 characters)
 ```
-Unofficial Heartopia fan guide: catalogs, live maps, active codes and badges — always up to date, for every server.
+Unofficial fan guide: catalogs, live maps, active codes and badges — always up to date, for every server.
 ```
 
 ### Keywords (max 100 characters)
 ```
-heartopia,guide,fishing,cooking,gardening,insects,birds,codes,badges,map,event,catalog,missions
+guide,fishing,cooking,gardening,insects,birds,codes,badges,map,event,catalog,missions
 ```
 (check the live character counter in App Store Connect when pasting)
 
@@ -149,7 +163,7 @@ and where today's Wandering Oak and Fluorite spot are.
 A maintained list of valid redemption codes and their rewards.
 
 🆔 PROFILE & MEMBERSHIP
-Your own profile card with a photo and your Heartopia UID, plus a countdown
+Your own profile card with a photo and your in-game UID, plus a countdown
 for your Membership tier with an overview of the rewards coming your way.
 
 💡 FEEDBACK & TO-DO
