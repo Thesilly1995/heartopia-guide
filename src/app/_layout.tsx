@@ -14,6 +14,7 @@ import { PremiumPromoModal } from '@/components/heartopia/premium-promo-modal';
 import { ReviewPromptModal } from '@/components/heartopia/review-prompt-modal';
 import { UpdateBanner } from '@/components/heartopia/update-banner';
 import { initializeAdsIfNeeded } from '@/constants/ads';
+import { useHeartopiaColors } from '@/constants/heartopia-colors';
 import { initializePurchasesIfNeeded } from '@/constants/purchases';
 import { AdBannerHeight } from '@/constants/theme';
 import { AuthProvider } from '@/hooks/use-auth';
@@ -57,6 +58,7 @@ export default function RootLayout() {
 
 function AppContent() {
   const { scheme: colorScheme } = useThemePreference();
+  const colors = useHeartopiaColors();
   const insets = useSafeAreaInsets();
   const { premium, isLifetimePremium } = usePremium();
   const [showPremiumPromo, setShowPremiumPromo] = useState(false);
@@ -77,6 +79,16 @@ function AppContent() {
   // het onderste stuk inhoud heen. Op web is er geen AdBanner (zie
   // ad-banner.web.tsx) en geen systeem-navigatiebalk, dus geen padding nodig.
   const contentPadding = Platform.OS === 'web' ? 0 : insets.bottom + (premium ? 0 : AdBannerHeight);
+
+  // Op web staat de (breedte-beperkte) app-inhoud midden op de pagina — de
+  // rest van de pagina errond blijft anders de standaard (witte) browser-
+  // achtergrond houden, ook als de gebruiker donkere modus aan heeft staan.
+  // Dit zet de paginakleur zelf gelijk aan het huidige thema.
+  useEffect(() => {
+    if (Platform.OS !== 'web') return;
+    document.documentElement.style.backgroundColor = colors.bg;
+    document.body.style.backgroundColor = colors.bg;
+  }, [colors.bg]);
 
   // Kleine vertraging zodat de echte (RevenueCat-)premiumstatus tijd heeft om op
   // te halen voordat we beslissen of de promo getoond wordt — anders zou een
