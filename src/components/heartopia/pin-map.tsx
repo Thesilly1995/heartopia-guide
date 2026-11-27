@@ -96,7 +96,7 @@ export function PinMap({
       <Modal visible={zoomed} animationType="fade" onRequestClose={() => setZoomed(false)}>
         <GestureHandlerRootView style={styles.modalSafeArea}>
           <SafeAreaView style={styles.modalSafeArea} edges={['top', 'bottom']}>
-            <Pressable style={[styles.closeButton, { top: insets.top + 12 }]} onPress={() => setZoomed(false)}>
+            <Pressable style={[styles.closeButton, { top: insets.top + 24 }]} onPress={() => setZoomed(false)}>
               <Text style={styles.closeButtonText}>✕</Text>
             </Pressable>
             <ZoomableMap aspectRatio={aspectRatio} active={zoomed} resetLabel={s.reset} styles={styles}>
