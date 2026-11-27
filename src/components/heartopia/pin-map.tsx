@@ -2,7 +2,7 @@ import { Image } from 'expo-image';
 import { useEffect, useMemo, useState } from 'react';
 import { Dimensions, ImageSourcePropType, Modal, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
@@ -52,6 +52,7 @@ export function PinMap({
   const { language } = useLanguage();
   const s = STRINGS[language];
   const [zoomed, setZoomed] = useState(false);
+  const insets = useSafeAreaInsets();
 
   const mapContent = (
     <>
@@ -95,7 +96,7 @@ export function PinMap({
       <Modal visible={zoomed} animationType="fade" onRequestClose={() => setZoomed(false)}>
         <GestureHandlerRootView style={styles.modalSafeArea}>
           <SafeAreaView style={styles.modalSafeArea} edges={['top', 'bottom']}>
-            <Pressable style={styles.closeButton} onPress={() => setZoomed(false)}>
+            <Pressable style={[styles.closeButton, { top: insets.top + 12 }]} onPress={() => setZoomed(false)}>
               <Text style={styles.closeButtonText}>✕</Text>
             </Pressable>
             <ZoomableMap aspectRatio={aspectRatio} active={zoomed} resetLabel={s.reset} styles={styles}>
@@ -238,7 +239,6 @@ function makeStyles(c: ThemeColors) {
     modalSafeArea: { flex: 1, backgroundColor: '#000000' },
     closeButton: {
       position: 'absolute',
-      top: 12,
       right: 12,
       zIndex: 10,
       width: 36,
