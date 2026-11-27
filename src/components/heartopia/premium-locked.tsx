@@ -1,10 +1,15 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Linking, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { ThemeColors, useHeartopiaColors } from '@/constants/heartopia-colors';
 import { getPremiumPackagePrices, isPurchasesConfigured, type PremiumPackagePrices } from '@/constants/purchases';
 import { useLanguage } from '@/hooks/use-language';
 import { usePremium } from '@/hooks/use-premium';
+
+/** Apple's standaard EULA, van toepassing tenzij een eigen EULA is ingevuld in App Store Connect. */
+const EULA_URL = 'https://www.apple.com/legal/internet-services/itunes/dev/stdeula/';
+/** Zelfde privacybeleid als gebruikt bij de App Store/Play Store-listing. */
+const PRIVACY_POLICY_URL = 'https://claude.ai/code/artifact/f70c2a59-1ef4-441c-aab0-670257df2744';
 
 const STRINGS = {
   nl: {
@@ -14,6 +19,8 @@ const STRINGS = {
     annualBadge: '2 maanden gratis',
     working: 'Bezig...',
     restore: 'Aankopen herstellen',
+    privacyPolicy: 'Privacybeleid',
+    termsOfUse: 'Gebruiksvoorwaarden',
     purchaseError: 'Aankoop mislukt — probeer het later opnieuw.',
     notConfigured: 'Aankopen zijn nog niet beschikbaar — dit wordt binnenkort geactiveerd.',
     webNotice: 'Premium is alleen te koop in de Heartopedia-app. Deze webversie is gratis, met iets minder functies.',
@@ -27,6 +34,8 @@ const STRINGS = {
     annualBadge: '2 months free',
     working: 'Working...',
     restore: 'Restore purchases',
+    privacyPolicy: 'Privacy Policy',
+    termsOfUse: 'Terms of Use',
     purchaseError: 'Purchase failed — please try again later.',
     notConfigured: 'Purchases are not available yet — this will be enabled soon.',
     webNotice: 'Premium can only be purchased in the Heartopedia app. This web version is free, with slightly fewer features.',
@@ -40,6 +49,8 @@ const STRINGS = {
     annualBadge: '2 meses gratis',
     working: 'Cargando...',
     restore: 'Restaurar compras',
+    privacyPolicy: 'Política de privacidad',
+    termsOfUse: 'Términos de uso',
     purchaseError: 'La compra falló — inténtalo de nuevo más tarde.',
     notConfigured: 'Las compras aún no están disponibles — se activarán pronto.',
     webNotice: 'Premium solo se puede comprar en la app de Heartopedia. Esta versión web es gratuita, con algunas funciones menos.',
@@ -53,6 +64,8 @@ const STRINGS = {
     annualBadge: '2 meses grátis',
     working: 'Processando...',
     restore: 'Restaurar compras',
+    privacyPolicy: 'Política de Privacidade',
+    termsOfUse: 'Termos de Uso',
     purchaseError: 'Falha na compra — tente novamente mais tarde.',
     notConfigured: 'As compras ainda não estão disponíveis — isso será ativado em breve.',
     webNotice: 'O Premium só pode ser comprado no app do Heartopedia. Esta versão web é gratuita, com um pouco menos de funções.',
@@ -66,6 +79,8 @@ const STRINGS = {
     annualBadge: '2 mois gratuits',
     working: 'Chargement...',
     restore: 'Restaurer les achats',
+    privacyPolicy: 'Politique de confidentialité',
+    termsOfUse: "Conditions d'utilisation",
     purchaseError: "L'achat a échoué — réessaie plus tard.",
     notConfigured: "Les achats ne sont pas encore disponibles — ce sera bientôt activé.",
     webNotice: "Premium ne peut être acheté que dans l'application Heartopedia. Cette version web est gratuite, avec un peu moins de fonctionnalités.",
@@ -79,6 +94,8 @@ const STRINGS = {
     annualBadge: '2 Monate gratis',
     working: 'Wird bearbeitet...',
     restore: 'Käufe wiederherstellen',
+    privacyPolicy: 'Datenschutzrichtlinie',
+    termsOfUse: 'Nutzungsbedingungen',
     purchaseError: 'Kauf fehlgeschlagen — versuch es später noch einmal.',
     notConfigured: 'Käufe sind noch nicht verfügbar — das wird bald freigeschaltet.',
     webNotice: 'Premium kann nur in der Heartopedia-App gekauft werden. Diese Webversion ist kostenlos, mit etwas weniger Funktionen.',
@@ -118,6 +135,15 @@ export function PremiumLockedView({ text }: { text: string }) {
             <Text style={styles.restoreLink}>{s.restore}</Text>
           </Pressable>
           {purchaseError && <Text style={styles.errorText}>{s.purchaseError}</Text>}
+          <View style={styles.legalLinksRow}>
+            <Pressable onPress={() => Linking.openURL(PRIVACY_POLICY_URL)} hitSlop={6}>
+              <Text style={styles.legalLink}>{s.privacyPolicy}</Text>
+            </Pressable>
+            <Text style={styles.legalLinkSeparator}>·</Text>
+            <Pressable onPress={() => Linking.openURL(EULA_URL)} hitSlop={6}>
+              <Text style={styles.legalLink}>{s.termsOfUse}</Text>
+            </Pressable>
+          </View>
         </>
       ) : (
         <Text style={styles.notConfiguredText}>{Platform.OS === 'web' ? s.webNotice : s.notConfigured}</Text>
@@ -146,6 +172,9 @@ function makeStyles(c: ThemeColors) {
     annualBadge: { color: '#FFFFFF', fontSize: 10, fontWeight: '800', opacity: 0.85, marginBottom: 2 },
     upgradeButtonText: { color: '#FFFFFF', fontSize: 14, fontWeight: '700' },
     restoreLink: { fontSize: 12, color: c.skyDark, textDecorationLine: 'underline', marginTop: 2 },
+    legalLinksRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 6 },
+    legalLink: { fontSize: 11, color: c.forestSoft, textDecorationLine: 'underline' },
+    legalLinkSeparator: { fontSize: 11, color: c.forestSoft },
     errorText: { fontSize: 12, color: c.coralDark, textAlign: 'center' },
     notConfiguredText: { fontSize: 12, color: c.forestSoft, textAlign: 'center', marginTop: 4 },
     testButton: { backgroundColor: c.surfaceSoft, borderWidth: 1, borderColor: c.line, borderRadius: 999, paddingHorizontal: 16, paddingVertical: 9, marginTop: 10 },
