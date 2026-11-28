@@ -11,6 +11,13 @@ const EULA_URL = 'https://www.apple.com/legal/internet-services/itunes/dev/stdeu
 /** Zelfde privacybeleid als gebruikt bij de App Store/Play Store-listing. */
 const PRIVACY_POLICY_URL = 'https://claude.ai/code/artifact/f70c2a59-1ef4-441c-aab0-670257df2744';
 
+/**
+ * Apple's subscripties zijn nog niet goedgekeurd — tot die tijd tonen we op iOS
+ * een "binnenkort beschikbaar"-tekst i.p.v. koopknoppen die toch mislukken.
+ * Zet terug op true zodra Apple de app met Premium heeft geaccepteerd.
+ */
+const IOS_PREMIUM_LIVE = false;
+
 const STRINGS = {
   nl: {
     lockedTitle: 'Alleen voor Premium-leden',
@@ -111,6 +118,7 @@ export function PremiumLockedView({ text }: { text: string }) {
   const s = STRINGS[language];
   const { setPremium, purchasing, purchaseError, purchasePremium, restorePurchases } = usePremium();
   const [prices, setPrices] = useState<PremiumPackagePrices>({ monthly: null, annual: null });
+  const purchasesAvailable = isPurchasesConfigured && (Platform.OS !== 'ios' || IOS_PREMIUM_LIVE);
 
   useEffect(() => {
     getPremiumPackagePrices().then(setPrices);
@@ -122,7 +130,7 @@ export function PremiumLockedView({ text }: { text: string }) {
       <Text style={styles.lockedTitle}>{s.lockedTitle}</Text>
       <Text style={styles.lockedText}>{text}</Text>
 
-      {isPurchasesConfigured ? (
+      {purchasesAvailable ? (
         <>
           <Pressable style={styles.upgradeButton} disabled={purchasing} onPress={() => purchasePremium('monthly')}>
             <Text style={styles.upgradeButtonText}>{purchasing ? s.working : s.monthlyButton(prices.monthly)}</Text>
