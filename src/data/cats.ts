@@ -42,6 +42,7 @@ const CATS_RAW: CatRaw[] = [
   { nameNl: "Grijze Makreel Cyperse Kat", nameEn: "Grey Mackerel Tabby", nameEs: "Atigrado Makrel Gris", namePt: "Malhado Makrel Cinza", nameFr: "Chat tigré makrel gris", nameDe: "Grauer Makrel-Tabby", emoji: "🐱" },
   { nameNl: "Goud Shaded Kat", nameEn: "Golden Shaded", nameEs: "Gato Dorado Sombreado", namePt: "Gato Dourado Sombreado", nameFr: "Chat doré ombré", nameDe: "Goldschattierte Katze", emoji: "🐱" },
   { nameNl: "Witte Cyperse Kat", nameEn: "White Tabby", nameEs: "Atigrado Blanco", namePt: "Malhado Branco", nameFr: "Chat cyprien blanc", nameDe: "Weiße Zypernkatze", emoji: "🐱" },
+  { nameNl: "Oranje & Witte Kat", nameEn: "Orange & White Cat", nameEs: "Gato Naranja y Blanco", namePt: "Gato Laranja e Branco", nameFr: "Chat orange et blanc", nameDe: "Orange-weiße Katze", emoji: "🐱" },
 ];
 
 export function useCats(): CatItem[] {
